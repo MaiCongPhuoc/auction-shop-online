@@ -1,22 +1,9 @@
-import '../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
-import '../../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
-import '../../../assets/css/sb-admin-2.min.css';
+import AccountAdmin from "../../Layout/Header/AccountAdmin";
+import Search from "../../Layout/Header/Search";
+import Sidebar from "../../Layout/Sidebar";
+import BangTaiKhoan from './BangTaiKhoan';
 
-import '../../../../node_modules/jquery/dist/jquery.min.js';
-import '../../../../node_modules/jquery.easing/jquery.easing.min.js';
-// import '../../../../node_modules/startbootstrap-sb-admin-2/js/sb-admin-2';
-import '../../../../node_modules/chart.js/dist/Chart.min.js';
-import Sidebar from '../../Layout/Sidebar';
-import Search from '../../Layout/Header/Search';
-import AccountAdmin from '../../Layout/Header/AccountAdmin';
-import TongQuanThuNhap from './BieuDo/DoanhThuNam';
-import DoanhThu from './BieuDo/DoanhThuThang';
-import TongQuanDashboard from './TongQuanDashboard';
-// import '../../../assets/js/chart-area-demo';
-// import '../../../assets/js/chart-pie-demo';
-
-function Dashboard() {
-    
+function DanhSachTaiKhoan() {
     return (
         <>
             <div id="wrapper">
@@ -40,25 +27,7 @@ function Dashboard() {
                         </nav>
                         {/* End of Topbar */}
                         {/* Begin Page Content */}
-                        <div className="container-fluid">
-                            {/* Page Heading */}
-                            <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
-                                <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                    <i className="fas fa-download fa-sm text-white-50" /> Generate Report
-                                </a>
-                            </div>
-                            {/* Content Row */}
-                            <TongQuanDashboard />
-                            {/* Content Row */}
-
-                            <div className="row">
-                                {/* Area Chart */}
-                                <TongQuanThuNhap />
-                                {/* Pie Chart */}
-                                <DoanhThu />
-                            </div>
-                        </div>
+                        <BangTaiKhoan />
                         {/* /.container-fluid */}
                     </div>
                     {/* End of Main Content */}
@@ -113,7 +82,8 @@ function Dashboard() {
                 </div>
             </div>
         </>
+        
     );
 }
 
-export default Dashboard;
+export default DanhSachTaiKhoan;
