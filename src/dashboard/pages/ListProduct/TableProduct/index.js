@@ -6,6 +6,9 @@ import Moment from 'moment';
 import { NumericFormat } from 'react-number-format';
 import Spiner from '../../../Spiner';
 import ModalDetailProduct from '../../../modal/product/ModalDetailProduct';
+import { Button, Modal } from 'react-bootstrap';
+
+let product = {};
 
 function BangSanPham() {
     Moment.locale('en');
@@ -15,6 +18,14 @@ function BangSanPham() {
         products: [],
         errorMessage: '',
     });
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+
+    const handleShow = (p) => {
+        setShow(true);
+        return (product = p);
+    };
 
     useEffect(() => {
         try {
@@ -38,12 +49,8 @@ function BangSanPham() {
     }, []);
 
     const { loading, products, errorMessage } = state;
-    console.log(products);
-    
-    const handleDetailProduct = () => {
-        ModalDetailProduct('alo' , '#btnModalDetailProduct');
-    };
-    
+    console.log(product);
+
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">
@@ -239,7 +246,7 @@ function BangSanPham() {
                                         <th>Ảnh</th>
                                         <th>Tên SP</th>
                                         <th>Người tạo</th>
-                                        <th>Ngày tạo</th>
+                                        <th className="text-center">Ngày tạo</th>
                                         <th>Thể loại</th>
                                         <th>Bán/đấu giá</th>
                                         <th>Số lượng</th>
@@ -261,11 +268,14 @@ function BangSanPham() {
                                                 </td>
                                                 <td>
                                                     <button
-                                                        onClick={handleDetailProduct}
+                                                        onClick={() => handleShow(product)}
                                                         className="btnDetailProduct"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#btnModalDetailProduct"
+                                                        // data-bs-toggle="modal"
+                                                        // data-bs-target="#btnModalDetailProduct"
                                                     >
+                                                        {/* <Button variant="btnDetailProduct" onClick={handleShow}>
+                                                            {product.title}
+                                                        </Button> */}
                                                         {product.title}
                                                     </button>
                                                 </td>
@@ -454,7 +464,81 @@ function BangSanPham() {
             </div>
 
             {/* =================== Modal detail products ===================== */}
-            {/* <ModalDetailProduct /> */}
+            {product ? (
+                <Modal
+                    show={show}
+                    onHide={handleClose}
+                    backdrop="static"
+                    keyboard={false}
+                    size="xl"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal title</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="row g-0">
+                            <div className="col-md-3">
+                                <img src={product.image} className="img-fluid rounded-start" alt="Ảnh sản phẩm" />
+                            </div>
+                            <div className="col-md-8 ml-3">
+                                <div className="row">
+                                    <h5 className="col-sm-3">Title:</h5>
+                                    <p className="col-sm-9">{product.title}</p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Ngày Tạo:</h5>
+                                    <p className="col-sm-9">{product.createdAt}</p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Người tạo:</h5>
+                                    <p className="col-sm-9">{product.createdBy}</p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Ngày Sửa Đổi Gần Nhất</h5>
+                                    <p className="col-sm-9">{product.updateAt}</p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Người Sửa Đổi:</h5>
+                                    <p className="col-sm-9">{product.updateBy}</p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Đấu Giá / Bán</h5>
+                                    <p className="col-sm-9">{product.action ? 'Bán' : 'Đấu Giá'}</p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Số Lượng Còn Lại</h5>
+                                    <p className="col-sm-9">{product.available}</p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Đã Kiểm Duyệt:</h5>
+                                    <p className="col-sm-9">
+                                        {product.moderation ? 'Đã kiểm duyệt' : 'Chưa kiểm duyệt'}
+                                    </p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Giá:</h5>
+                                    <p className="col-sm-9">{product.price}</p>
+                                </div>
+                                <div className="row">
+                                    <h5 className="col-sm-3">Đã bán:</h5>
+                                    <p className="col-sm-9">{product.sold}</p>
+                                </div>
+                                {/* <div className="row">
+                                    <h5 className="col-sm-3">Thể Loại:</h5>
+                                    <p className="col-sm-9">{product.category[1]}</p>
+                                </div> */}
+                            </div>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            ) : (
+                ''
+            )}
         </div>
     );
 }

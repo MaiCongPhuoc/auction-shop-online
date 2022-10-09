@@ -1,6 +1,14 @@
-function ModalDetailProduct( product, modal ) {
-    console.log('product');
-    console.log(product);
+import { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+
+function ModalDetailProduct(a) {
+    console.log(a);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = (a) => {
+        console.log(a);
+        setShow(true)};
     return (
         <div
             className="modal fade"
