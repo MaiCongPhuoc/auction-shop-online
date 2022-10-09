@@ -112,21 +112,21 @@ function AccountAdmin() {
 
     const renderAccuont = () => {
         return (
-            <div className="dropdown-menu-right shadow animated--grow-in accountAdmin" aria-labelledby="userDropdown">
-                <a className="dropdown-item" href="#">
+            <div className="dropdown-menu-right shadow animated--grow-in accountAdmin rounded-3" aria-labelledby="userDropdown">
+                <a className="dropdown-item p-2" href="#">
                     <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400" />
                     Profile
                 </a>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item p-2" href="#">
                     <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400" />
                     Settings
                 </a>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item p-2" href="#">
                     <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400" />
                     Activity Log
                 </a>
                 <div className="dropdown-divider" />
-                <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a className="dropdown-item p-2" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" />
                     Logout
                 </a>
