@@ -1,14 +1,16 @@
+import React from 'react';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactDOM from 'react-dom/client';
 import { useEffect, useState } from 'react';
 import ProductService from '../../../services/productService';
 import Moment from 'moment';
 import { NumericFormat } from 'react-number-format';
 import Spiner from '../../../Spiner';
-import ModalDetailProduct from '../../../modal/product/ModalDetailProduct';
+import ModalDetailProduct from '../../../modal/product/ModalDetail';
 import { Button, Modal } from 'react-bootstrap';
-
-let product = {};
+import ModalAddProduct from '../../../modal/product/ModalAdd';
+import ModalEditProduct from '../../../modal/product/ModalEdit';
 
 function BangSanPham() {
     Moment.locale('en');
@@ -18,14 +20,27 @@ function BangSanPham() {
         products: [],
         errorMessage: '',
     });
-    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
+    // modal detail
+    const [showDetail, setShowDetail] = useState({
+        product: {},
+        showdetail: false,
+    });
+    const { product, showdetail } = showDetail;
 
-    const handleShow = (p) => {
-        setShow(true);
-        return (product = p);
-    };
+    const handleCloseDetail = () => setShowDetail({ ...showDetail, showdetail: false });
+
+    //modal add
+    const [showAdd, setShowAdd] = useState(false);
+    const handCloseAdd = () => setShowAdd(false);
+
+    //modal edit
+    const [showEdit, setShowEdit] = useState({
+        productEdit: [],
+        showedit: false,
+    });
+    const { productEdit, showedit } = showEdit;
+    const handleCloseEdit = () => setShowEdit(false);
 
     useEffect(() => {
         try {
@@ -49,7 +64,6 @@ function BangSanPham() {
     }, []);
 
     const { loading, products, errorMessage } = state;
-    console.log(product);
 
     return (
         <div className="container-fluid">
@@ -80,162 +94,11 @@ function BangSanPham() {
                         <h6 className="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
                         <div>
                             {/* Button trigger modal */}
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#btnAdd"
-                            >
+                            <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
                                 Add
-                            </button>
+                            </Button>
                             {/*==================== Modal Add ===========================*/}
-                            <div
-                                className="modal fade"
-                                id="btnAdd"
-                                data-bs-backdrop="static"
-                                data-bs-keyboard="false"
-                                tabIndex={-1}
-                                aria-labelledby="staticBackdropLabel"
-                                aria-hidden="true"
-                            >
-                                <div className="modal-dialog-centered modal-dialog modal-xl">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                                                Thêm sản phẩm
-                                            </h1>
-                                            <button
-                                                type="button"
-                                                className="btn btn-light"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"
-                                            >
-                                                <FontAwesomeIcon icon={faClose} />
-                                            </button>
-                                        </div>
-                                        <form>
-                                            <div className="modal-body">
-                                                <div className="row">
-                                                    <div className="mb-3 col-6">
-                                                        <label
-                                                            htmlFor="addTitle"
-                                                            className="form-label text-dark font-weight-bold ml-2"
-                                                        >
-                                                            Tên sản phẩm
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            id="addTitle"
-                                                            placeholder="Tên sản phẩm..."
-                                                        />
-                                                    </div>
-                                                    <div className="mb-3 col-6">
-                                                        <label
-                                                            htmlFor="addPrice"
-                                                            className="form-label text-dark font-weight-bold ml-2"
-                                                        >
-                                                            Giá
-                                                        </label>
-                                                        <input
-                                                            type="number"
-                                                            className="form-control"
-                                                            id="addPrice"
-                                                            placeholder="Giá..."
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="mb-3 col-4">
-                                                        <label
-                                                            htmlFor="addAvailable"
-                                                            className="form-label text-dark font-weight-bold ml-2"
-                                                        >
-                                                            Số Lượng
-                                                        </label>
-                                                        <input
-                                                            type="number"
-                                                            className="form-control"
-                                                            id="addAvailable"
-                                                            placeholder="Số lượng..."
-                                                        />
-                                                    </div>
-                                                    <div className="form-check form-switch mb-3 col-4">
-                                                        <label
-                                                            htmlFor="addAction"
-                                                            className="form-label text-dark font-weight-bold ml-2"
-                                                        >
-                                                            Bày bán/Đấu giá
-                                                        </label>
-                                                        <div className="ml-5">
-                                                            <input
-                                                                className="form-check-input form-control mt-2 p-2"
-                                                                type="checkbox"
-                                                                id="addAction"
-                                                                // defaultChecked
-                                                            />
-                                                            <label
-                                                                className="form-check-label form-label mt-1"
-                                                                htmlFor="addAction"
-                                                            >
-                                                                Bày bán/Đấu giá
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mb-3 col-4">
-                                                        <label
-                                                            htmlFor="addCateglory"
-                                                            className="form-label text-dark font-weight-bold ml-2"
-                                                        >
-                                                            Thể loại
-                                                        </label>
-                                                        <select className="form-select">
-                                                            <option value={-1} key={-1} selected disabled>
-                                                                Chọn
-                                                            </option>
-                                                            <option value="2" key="2">
-                                                                Điện thoại
-                                                            </option>
-                                                            <option value="3" key="3">
-                                                                Máy tính bảng
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="mb-3 col-12">
-                                                        <label
-                                                            htmlFor="addImage"
-                                                            className="form-label text-dark font-weight-bold ml-2"
-                                                        >
-                                                            Images
-                                                        </label>
-                                                        <input
-                                                            type="file"
-                                                            className="form-control"
-                                                            accept="image/*"
-                                                            id="addImage"
-                                                            placeholder="Vui lòng chọn file..."
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-secondary"
-                                                    data-bs-dismiss="modal"
-                                                >
-                                                    Close
-                                                </button>
-                                                <button type="button" className="btn btn-primary">
-                                                    Create
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <ModalAddProduct show={showAdd} handleClose={handCloseAdd} />
                         </div>
                     </div>
                     <div className="card-body">
@@ -268,14 +131,11 @@ function BangSanPham() {
                                                 </td>
                                                 <td>
                                                     <button
-                                                        onClick={() => handleShow(product)}
+                                                        onClick={() =>
+                                                            setShowDetail({ product: product, showdetail: true })
+                                                        }
                                                         className="btnDetailProduct"
-                                                        // data-bs-toggle="modal"
-                                                        // data-bs-target="#btnModalDetailProduct"
                                                     >
-                                                        {/* <Button variant="btnDetailProduct" onClick={handleShow}>
-                                                            {product.title}
-                                                        </Button> */}
                                                         {product.title}
                                                     </button>
                                                 </td>
@@ -290,8 +150,9 @@ function BangSanPham() {
                                                 <td className="text-center">
                                                     <button
                                                         className="btn btn-outline-secondary"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#btnEdit"
+                                                        onClick={() =>
+                                                            setShowEdit({ productEdit: product, showedit: true })
+                                                        }
                                                     >
                                                         Edit
                                                     </button>
@@ -327,218 +188,11 @@ function BangSanPham() {
                 </div>
             )}
             {/* ================== Modal Edit ================== */}
-            <div
-                className="modal fade"
-                id="btnEdit"
-                data-bs-backdrop="static"
-                data-bs-keyboard="false"
-                tabIndex={-1}
-                aria-labelledby="staticBackdropLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog-centered modal-dialog modal-xl">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                                Thêm sản phẩm
-                            </h1>
-                            <button type="button" className="btn btn-light" data-bs-dismiss="modal" aria-label="Close">
-                                <FontAwesomeIcon icon={faClose} />
-                            </button>
-                        </div>
-                        <form>
-                            <div className="modal-body">
-                                <div className="row">
-                                    <div className="mb-3 col-6">
-                                        <label
-                                            htmlFor="addTitle"
-                                            className="form-label text-dark font-weight-bold ml-2"
-                                        >
-                                            Tên sản phẩm
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="addTitle"
-                                            placeholder="Tên sản phẩm..."
-                                        />
-                                    </div>
-                                    <div className="mb-3 col-6">
-                                        <label
-                                            htmlFor="addPrice"
-                                            className="form-label text-dark font-weight-bold ml-2"
-                                        >
-                                            Giá
-                                        </label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            id="addPrice"
-                                            placeholder="Giá..."
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="mb-3 col-4">
-                                        <label
-                                            htmlFor="addAvailable"
-                                            className="form-label text-dark font-weight-bold ml-2"
-                                        >
-                                            Số Lượng
-                                        </label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            id="addAvailable"
-                                            placeholder="Số lượng..."
-                                        />
-                                    </div>
-                                    <div className="form-check form-switch mb-3 col-4">
-                                        <label
-                                            htmlFor="addAction"
-                                            className="form-label text-dark font-weight-bold ml-2"
-                                        >
-                                            Bày bán/Đấu giá
-                                        </label>
-                                        <div className="ml-5">
-                                            <input
-                                                className="form-check-input form-control mt-2 p-2"
-                                                type="checkbox"
-                                                id="addAction"
-                                                // defaultChecked
-                                            />
-                                            <label className="form-check-label form-label mt-1" htmlFor="addAction">
-                                                Bày bán/Đấu giá
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="mb-3 col-4">
-                                        <label
-                                            htmlFor="addCateglory"
-                                            className="form-label text-dark font-weight-bold ml-2"
-                                        >
-                                            Thể loại
-                                        </label>
-                                        <select className="form-select">
-                                            <option value={-1} key={-1} selected disabled>
-                                                Chọn
-                                            </option>
-                                            <option value="2" key="2">
-                                                Điện thoại
-                                            </option>
-                                            <option value="3" key="3">
-                                                Máy tính bảng
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="mb-3 col-12">
-                                        <label
-                                            htmlFor="addImage"
-                                            className="form-label text-dark font-weight-bold ml-2"
-                                        >
-                                            Images
-                                        </label>
-                                        <input
-                                            type="file"
-                                            className="form-control"
-                                            accept="image/*"
-                                            id="addImage"
-                                            placeholder="Vui lòng chọn file..."
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="button" className="btn btn-primary">
-                                    Create
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <ModalEditProduct product={product} showEdit={showedit} handleCloseEdit={handleCloseEdit} />
 
             {/* =================== Modal detail products ===================== */}
-            {product ? (
-                <Modal
-                    show={show}
-                    onHide={handleClose}
-                    backdrop="static"
-                    keyboard={false}
-                    size="xl"
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal title</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="row g-0">
-                            <div className="col-md-3">
-                                <img src={product.image} className="img-fluid rounded-start" alt="Ảnh sản phẩm" />
-                            </div>
-                            <div className="col-md-8 ml-3">
-                                <div className="row">
-                                    <h5 className="col-sm-3">Title:</h5>
-                                    <p className="col-sm-9">{product.title}</p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Ngày Tạo:</h5>
-                                    <p className="col-sm-9">{product.createdAt}</p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Người tạo:</h5>
-                                    <p className="col-sm-9">{product.createdBy}</p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Ngày Sửa Đổi Gần Nhất</h5>
-                                    <p className="col-sm-9">{product.updateAt}</p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Người Sửa Đổi:</h5>
-                                    <p className="col-sm-9">{product.updateBy}</p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Đấu Giá / Bán</h5>
-                                    <p className="col-sm-9">{product.action ? 'Bán' : 'Đấu Giá'}</p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Số Lượng Còn Lại</h5>
-                                    <p className="col-sm-9">{product.available}</p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Đã Kiểm Duyệt:</h5>
-                                    <p className="col-sm-9">
-                                        {product.moderation ? 'Đã kiểm duyệt' : 'Chưa kiểm duyệt'}
-                                    </p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Giá:</h5>
-                                    <p className="col-sm-9">{product.price}</p>
-                                </div>
-                                <div className="row">
-                                    <h5 className="col-sm-3">Đã bán:</h5>
-                                    <p className="col-sm-9">{product.sold}</p>
-                                </div>
-                                {/* <div className="row">
-                                    <h5 className="col-sm-3">Thể Loại:</h5>
-                                    <p className="col-sm-9">{product.category[1]}</p>
-                                </div> */}
-                            </div>
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            ) : (
-                ''
-            )}
+            <ModalDetailProduct product={product} showdetail={showdetail} handleCloseDetail={handleCloseDetail} />
+
         </div>
     );
 }
