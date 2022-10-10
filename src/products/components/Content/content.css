@@ -1,0 +1,50 @@
+.base-width {
+    max-width: 98%;
+}
+
+#homepage-lot {
+    width: 100%;
+    display: block;
+    padding-top: 20px;
+}
+
+#homepage-lot-list {
+    overflow-anchor: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.lot-cards img {
+    height: 200px;
+    transition: 0.5s all ease-in-out;
+}
+
+.lot-cards img:hover {
+    transform: scale(1.5);
+}
+
+.tab-sel-wrapper .tab-item.left-end{
+    border-radius: 50px 50px 50px 50px;
+}
+
+.tab-sel-wrapper .tab-item:hover {
+    background-color: rgb(211, 211, 211);
+    border-radius: 50px;
+    /* animation-name: example;
+    animation-duration: 4s; */
+}
+.tab-sel-wrapper .tab-item .i-label{
+    font-size: large;
+}
+
+@keyframes example {
+    from {
+        background-color: red;
+    }
+
+    to {
+        background-color: yellow;
+    }
+}
