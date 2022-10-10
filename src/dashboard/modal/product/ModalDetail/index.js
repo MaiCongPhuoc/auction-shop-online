@@ -3,6 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 
 function ModalDetailProduct(props) {
     const {product, showdetail, handleCloseDetail} = props;
+    console.log(product);
 
     return (
         <Modal show={showdetail} onHide={handleCloseDetail} backdrop="static" keyboard={false} size="xl">
