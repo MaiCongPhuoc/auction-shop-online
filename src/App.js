@@ -1,17 +1,8 @@
-<<<<<<< HEAD
+// import logo from './logo.svg';
+import Dashboard from './dashboard/pages/Dashboard';
 import React from 'react';
 import './App.css';
 import Product from './products/Product';
-
-
-function App() {
-    return (
-        <React.Fragment>
-            <Product />
-        </React.Fragment>
-=======
-// import logo from './logo.svg';
-import Dashboard from './dashboard/pages/Dashboard';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './assets/bootstrap-5.2.0-dist/css/bootstrap.min.css'
@@ -35,10 +26,10 @@ function App() {
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/danhsachsanpham' element={<DanhSachSanPham />} />
                     <Route path='/danhsachtaikhoan' element={<DanhSachTaiKhoan />} />
+                    <Route path='/product' element={<Product />} />
                 </Routes>
             </div>
         </Router>
->>>>>>> phuoc-dev
     );
 }
 
