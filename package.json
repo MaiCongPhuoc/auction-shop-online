@@ -18,6 +18,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",
     "classnames": "^2.3.1",
+    "formik": "^2.2.9",
     "jquery": "^3.6.1",
     "jquery.easing": "^1.4.1",
     "moment": "^2.29.4",
@@ -34,8 +35,10 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "reselect": "^4.1.6",
+    "sha1": "^1.1.1",
     "startbootstrap-sb-admin-2": "^4.1.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^4.1.0",
