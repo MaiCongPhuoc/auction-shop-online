@@ -17,6 +17,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",
     "classnames": "^2.3.1",
+    "formik": "^2.2.9",
     "jquery": "^3.6.1",
     "jquery.easing": "^1.4.1",
     "moment": "^2.29.4",
@@ -26,13 +27,16 @@
     "react-collapsed": "^3.4.0",
     "react-dom": "^18.1.0",
     "react-modal": "^3.15.1",
+    "react-number-format": "^5.0.1",
+    "react-redux": "^8.0.4",
+    "react-responsive": "^9.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
-    "react-number-format": "^5.0.1",
-    "react-responsive": "^9.0.0",
+    "sha1": "^1.1.1",
     "startbootstrap-sb-admin-2": "^4.1.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^4.1.0",

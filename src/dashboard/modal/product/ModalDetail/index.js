@@ -60,6 +60,10 @@ function ModalDetailProduct(props) {
                             <h5 className="col-sm-4">Thể Loại:</h5>
                             <p className="col-sm-8">{product.category && product.category.title}</p>
                         </div>
+                        <div className="row">
+                            <h5 className="col-sm-4">Mô tả:</h5>
+                            <p className="col-sm-8">{product.description}</p>
+                        </div>
                     </div>
                 </div>
             </Modal.Body>

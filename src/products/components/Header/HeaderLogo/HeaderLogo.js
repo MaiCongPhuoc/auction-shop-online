@@ -1,5 +1,5 @@
 import React from "react";
-import logoShop from './../../../asset/images/logoaso.png';
+import logoShop from '../../../../assets/images/logoaso.png';
 
 const HeaderLogo = () => {
     return (
