@@ -3,17 +3,16 @@ import HeaderAction from "./HeaderAction/HeaderAction";
 import HeaderEnd from "./HeaderEnd/HeaderEnd";
 import HeaderLogo from "./HeaderLogo/HeaderLogo";
 import HeaderSearch from './HeardSearch/HeaderSearch';
-import './header.css';
 import './../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './../../../../node_modules/bootstrap/dist/js/bootstrap.js'
-import { useStore } from './../context/store/hooks';
 import HeaderAfterLogin from './HeaderAfterLogin/HeaderAfterLogin';
+import './header.css';
+import { useSelector } from 'react-redux/es/exports';
+import { getLoginStatus } from './../../redux/selector';
 
 const Header = () => {
 
-    const [state, dispatch] = useStore();
-
-    const login = state.login;
+    const login = useSelector(getLoginStatus);
     
     return (
         <>
@@ -26,11 +25,7 @@ const Header = () => {
                             {login ? <HeaderAfterLogin /> : <HeaderAction />}
                             
                         </div>
-
-                        <div className="main-nav-div">
-                            <HeaderEnd />
-                            
-                        </div>
+                            <HeaderEnd />                                              
                     </div>
                 </div>
             </div>

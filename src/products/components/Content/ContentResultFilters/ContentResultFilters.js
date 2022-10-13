@@ -1,50 +1,45 @@
 import React, { useState, useEffect } from "react";
-import ProductService from './../../../service/Product/ProductService';
-import CategoriesService from './../../../service/Categories/CategoriesService';
-import LoadData from "../../Loading/LoadData";
-import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { getAllProducts, getLoadData } from "../../../redux/selector";
-import { setCategories, setProducts, setLoadData, setShowInfoProduct, setProduct } from "../../../redux/actions";
+import { getLoadData, productsRemainingCategorySelector } from "../../../redux/selector";
+import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { FormatMoney } from './../../../Hooks/Hooks';
+import NotFound from './../../Loading/NotFound';
+import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
+import Searching from './../../Loading/Searching';
 
 
-const ContentAll = () => {
-
-
+const ContentResultFilters = () => {
     const dispatch = useDispatch();
 
+    const products = useSelector(productsRemainingCategorySelector);
+
+    const [checkData, setCheckData] = useState(false);
 
     useEffect(() => {
+        dispatch(setLoadData(true));
         try {
-            dispatch(setLoadData(true))
-            async function getData() {
-                let productsRes = await ProductService.getAllProducts();
-                let categoriesRes = await CategoriesService.getAllCategories();
-
-                dispatch(setProducts(productsRes.data));
-                dispatch(setCategories(categoriesRes.data))
-                dispatch(setLoadData(false))
+            if (products.length > 0) {
+                setCheckData(true);
+                dispatch(setLoadData(false));
+            } else {
+                setCheckData(false);
+                dispatch(setLoadData(false));
             }
-            getData();
         } catch (error) {
             console.log(error);
         }
     }, []);
 
-    const handleShowInfoProduct = (product) => {
+    const handleShowInfoProduct = () => {
         dispatch(setShowInfoProduct(true));
-        dispatch(setProduct(product));
     };
-    
-    const products = useSelector(getAllProducts);
+
     const loadData = useSelector(getLoadData);
 
-    
     return (
         <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? <LoadData /> :
+            {loadData ? <Searching /> : (checkData ? (
                 products.map(product => (
-                    <a key={product.id} className="card small-12 medium-6 cell" style={{ transform: 'none' }} onClick={() => handleShowInfoProduct(product)}>
+                    <a key={product.id} className="card small-12 medium-6 cell" onClick={handleShowInfoProduct} style={{ transform: 'none' }}>
                         {product.action ? (
                             <>
                                 <figure className="card__image">
@@ -58,7 +53,6 @@ const ContentAll = () => {
                                 <div className="card__info-container">
                                     <div className="info-container__label">
                                         <span className="ico-circle c-bid">
-                                            {/* <i class="fa-solid fa-tag"></i> */}
                                             <i className="fas fa-gavel"></i>
                                         </span>
                                         <span className="label__main"> Đấu giá </span>
@@ -129,10 +123,9 @@ const ContentAll = () => {
                         )}
                     </a>
                 ))
-
-            }
+            ) : <NotFound />)}
         </div>
-    );
+    )
 }
 
-export default ContentAll;
+export default ContentResultFilters;

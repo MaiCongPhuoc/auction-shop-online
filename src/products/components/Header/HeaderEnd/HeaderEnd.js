@@ -1,7 +1,5 @@
 import React from "react";
 
-import ExploreLots from './ExploreLots/ExploreLots';
-
 const HeaderEnd = () => {
 
     return (
@@ -9,7 +7,7 @@ const HeaderEnd = () => {
             <ul className="navigation">
                 <li className="left"><a className="home" href="/">Trang chủ</a></li>
                 <li className="left">
-                    <a className="nav-explore drop-category">Danh mục<span className="watch-circle my-cb-circle my-cb-count hidden">0</span></a>
+                    <a className="nav-explore drop-category">Cửa hàng<span className="watch-circle my-cb-circle my-cb-count hidden">0</span></a>
                 </li>
                 <li className="left"><a className="btn-bin" href="/theme/buy-now/lots">Đấu giá</a></li>
                 <li className="left"><a className="contact" href="/contact_us">Liên hệ</a></li>

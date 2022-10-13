@@ -24,9 +24,9 @@ function App() {
             <div className="App">
                 <Routes>
                     <Route path='/' element={<Dashboard />} />
+                    <Route path='/product' element={<Product />} />
                     <Route path='/danhsachsanpham' element={<DanhSachSanPham />} />
                     <Route path='/danhsachtaikhoan' element={<DanhSachTaiKhoan />} />
-                    <Route path='/product' element={<Product />} />
                 </Routes>
             </div>
         </Router>
