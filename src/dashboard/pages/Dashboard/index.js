@@ -6,16 +6,30 @@ import '../../../../node_modules/jquery/dist/jquery.min.js';
 import '../../../../node_modules/jquery.easing/jquery.easing.min.js';
 // import '../../../../node_modules/startbootstrap-sb-admin-2/js/sb-admin-2';
 import '../../../../node_modules/chart.js/dist/Chart.min.js';
+<<<<<<< HEAD
 import Sidebar from './Sidebar';
 import Search from './Header/Search';
 import AccountAdmin from './Header/AccountAdmin';
+=======
+import Sidebar from '../../Layout/Sidebar';
+import Search from '../../Layout/Header/Search';
+import AccountAdmin from '../../Layout/Header/AccountAdmin';
+import TongQuanThuNhap from './BieuDo/DoanhThuNam';
+import DoanhThu from './BieuDo/DoanhThuThang';
+import TongQuanDashboard from './TongQuanDashboard';
+import Footer from '../../Layout/Footer';
+>>>>>>> development
 // import '../../../assets/js/chart-area-demo';
 // import '../../../assets/js/chart-pie-demo';
 
 function Dashboard() {
     
     return (
+<<<<<<< HEAD
         <div>
+=======
+        <>
+>>>>>>> development
             <div id="wrapper">
                 {/* Sidebar */}
                 <Sidebar />
@@ -46,6 +60,7 @@ function Dashboard() {
                                 </a>
                             </div>
                             {/* Content Row */}
+<<<<<<< HEAD
                             <div className="row">
                                 {/* Earnings (Monthly) Card Example */}
                                 <div className="col-xl-3 col-md-6 mb-4">
@@ -435,12 +450,23 @@ function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
+=======
+                            <TongQuanDashboard />
+                            {/* Content Row */}
+
+                            <div className="row">
+                                {/* Area Chart */}
+                                <TongQuanThuNhap />
+                                {/* Pie Chart */}
+                                <DoanhThu />
+>>>>>>> development
                             </div>
                         </div>
                         {/* /.container-fluid */}
                     </div>
                     {/* End of Main Content */}
                     {/* Footer */}
+<<<<<<< HEAD
                     <footer className="sticky-footer bg-white">
                         <div className="container my-auto">
                             <div className="copyright text-center my-auto">
@@ -448,6 +474,9 @@ function Dashboard() {
                             </div>
                         </div>
                     </footer>
+=======
+                    <Footer />
+>>>>>>> development
                     {/* End of Footer */}
                 </div>
                 {/* End of Content Wrapper */}
@@ -490,7 +519,11 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
         </div>
+=======
+        </>
+>>>>>>> development
     );
 }
 
