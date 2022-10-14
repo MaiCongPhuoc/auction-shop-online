@@ -2,12 +2,13 @@
     align-content: space-around;
 }
 
-.logo-home-link-new h1{
+.logo-home-link-new p{
     color: #367289;
     background-image: linear-gradient(to right, #ffffff 20%, #cacaca 40%, #5bafcf 50%, #5bafcf 55%, #cacaca 80%, #ffffff 100%);
-    font-size: 300%;
+    font-size: 250%;
     font-weight: bold;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    margin-top: 50px;
 }
 
 .login-button-container {
