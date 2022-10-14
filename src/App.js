@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 842f2d45cbaf81b4b77d15e465d62d7f26b3385b
 // import logo from './logo.svg';
 import Dashboard from './dashboard/pages/Dashboard';
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import './assets/bootstrap-5.2.0-dist/css/bootstrap.min.css'
+import './assets/bootstrap-5.2.0-dist/css/bootstrap.min.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -27,10 +23,10 @@ function App() {
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path='/' element={<Dashboard />} />
+                    <Route path="/" element={<Dashboard />} />
                     {/* <Route path='/product' element={<Product />} /> */}
-                    <Route path='/danhsachsanpham' element={<DanhSachSanPham />} />
-                    <Route path='/danhsachtaikhoan' element={<DanhSachTaiKhoan />} />
+                    <Route path="/danhsachsanpham" element={<DanhSachSanPham />} />
+                    <Route path="/danhsachtaikhoan" element={<DanhSachTaiKhoan />} />
                 </Routes>
             </div>
         </Router>
