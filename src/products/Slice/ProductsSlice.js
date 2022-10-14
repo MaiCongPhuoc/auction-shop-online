@@ -1,7 +1,8 @@
 const initState = {
     loadData: false,
     products: [],
-    product: {}
+    product: {},
+    checkProduct: false
 }
 
 const productsReducer = (state = initState, action) => {
@@ -20,6 +21,11 @@ const productsReducer = (state = initState, action) => {
             return {
                 ...state,
                 loadData: action.payload
+            }
+        case 'products/setCheckProduct':
+            return {
+                ...state,
+                checkProduct: action.payload
             }
 
         default:

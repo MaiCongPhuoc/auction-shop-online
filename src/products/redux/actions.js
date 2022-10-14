@@ -11,7 +11,12 @@ export const setProduct = object => {
         type: 'products/setProduct',
         payload: object
     }
-
+}
+export const setCheckProduct = boolean => {
+    return {
+        type: 'products/setCheckProduct',
+        payload: boolean
+    }
 }
 
 export const setLoadData = boolean => {
