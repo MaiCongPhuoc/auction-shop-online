@@ -20,8 +20,8 @@ export const isEmpty = (obj) => {
 }
 
 // Slide Image
-export const Carousel = ({ children }) => {
-    const MAX_VISIBILITY = 3;
+export const Carousel = ({ children }, maxVisibility) => {
+    // const MAX_VISIBILITY = 3;
 
     const [active, setActive] = useState(2);
     const count = React.Children.count(children);
@@ -39,8 +39,8 @@ export const Carousel = ({ children }) => {
                     '--direction': Math.sign(active - i),
                     '--abs-offset': Math.abs(active - i) / 3,
                     'pointer-events': active === i ? 'auto' : 'none',
-                    'opacity': Math.abs(active - i) >= MAX_VISIBILITY ? '0' : '1',
-                    'display': Math.abs(active - i) > MAX_VISIBILITY ? 'none' : 'block',
+                    'opacity': Math.abs(active - i) >= maxVisibility ? '0' : '1',
+                    'display': Math.abs(active - i) > maxVisibility ? 'none' : 'block',
                 }}>
                     {child}
                 </div>

@@ -31,6 +31,7 @@ const InfoProductModal = () => {
 
     const showInfoProduct = useSelector(getShowInfoProduct);
 
+    let max_visibility = medias.length;
     console.log(medias);
     return (
         <>
@@ -50,7 +51,7 @@ const InfoProductModal = () => {
                             <Col xs={12} md={8}>
                                 <div className="title-modal mx-2 my-2">{product.title}</div>
                                 <div className="slide-image">
-                                    <Carousel>
+                                    <Carousel maxVisibility={max_visibility}>
                                         {medias.map((media, i) => (
                                             <img key={i} src={media.fileUrl} alt="" />
                                         ))}
