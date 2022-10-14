@@ -11,6 +11,7 @@ import ModalDetailProduct from '../../../modal/product/ModalDetail';
 import { Button, Modal } from 'react-bootstrap';
 import ModalAddProduct from '../../../modal/product/ModalAdd';
 import ModalEditProduct from '../../../modal/product/ModalEdit';
+import DefaultProduct from '../../../Spiner/defaultProduct';
 
 function BangSanPham() {
     Moment.locale('en');
@@ -36,10 +37,10 @@ function BangSanPham() {
 
     //modal edit
     const [showEdit, setShowEdit] = useState({
-        productEdit: [],
+        productEditId: 0,
         showedit: false,
     });
-    const { productEdit, showedit } = showEdit;
+    const { productEditId, showedit } = showEdit;
     const handleCloseEdit = () => setShowEdit(false);
 
     useEffect(() => {
@@ -61,7 +62,7 @@ function BangSanPham() {
                 errorMessage: error.message,
             });
         }
-    }, []);
+    }, [showAdd, showEdit]);
 
     const { loading, products, errorMessage } = state;
 
@@ -97,8 +98,6 @@ function BangSanPham() {
                             <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
                                 Add
                             </Button>
-                            {/*==================== Modal Add ===========================*/}
-                            <ModalAddProduct show={showAdd} handleClose={handCloseAdd} />
                         </div>
                     </div>
                     <div className="card-body">
@@ -113,7 +112,7 @@ function BangSanPham() {
                                         <th>Thể loại</th>
                                         <th>Bán/đấu giá</th>
                                         <th>Số lượng</th>
-                                        <th>Giá ($)</th>
+                                        <th>Giá (đ)</th>
                                         <th className="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -124,7 +123,10 @@ function BangSanPham() {
                                             <tr key={product.id}>
                                                 <td>
                                                     <img
-                                                        src={product.image}
+                                                        src={
+                                                            product.image ||
+                                                            'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'
+                                                        }
                                                         alt="ảnh sản phẩm"
                                                         style={{ width: '100px' }}
                                                     />
@@ -132,7 +134,7 @@ function BangSanPham() {
                                                 <td>
                                                     <button
                                                         onClick={() =>
-                                                            setShowDetail({ product: product, showdetail: true })
+                                                            setShowDetail({ product: product, showdetail: true, productId: product.id })
                                                         }
                                                         className="btnDetailProduct"
                                                     >
@@ -144,14 +146,14 @@ function BangSanPham() {
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
                                                 </td>
                                                 <td>{product.category.title}</td>
-                                                <td>{product.action ? 'Bán' : 'Đấu giá'}</td>
+                                                <td>{product.action ? 'Đấu giá' : 'Bán'}</td>
                                                 <td className="text-end">{product.available}</td>
                                                 <td className="text-end">{product.price}</td>
                                                 <td className="text-center">
                                                     <button
                                                         className="btn btn-outline-secondary"
                                                         onClick={() =>
-                                                            setShowEdit({ productEdit: product, showedit: true })
+                                                            setShowEdit({...showEdit, productEditId: product.id, showedit: true })
                                                         }
                                                     >
                                                         Edit
@@ -188,11 +190,13 @@ function BangSanPham() {
                 </div>
             )}
             {/* ================== Modal Edit ================== */}
-            <ModalEditProduct product={product} showEdit={showedit} handleCloseEdit={handleCloseEdit} />
+            <ModalEditProduct productEditId={productEditId} showEdit={showedit} handleCloseEdit={handleCloseEdit} />
 
             {/* =================== Modal detail products ===================== */}
             <ModalDetailProduct product={product} showdetail={showdetail} handleCloseDetail={handleCloseDetail} />
 
+            {/*==================== Modal Add ===========================*/}
+            <ModalAddProduct show={showAdd} handleClose={handCloseAdd} />
         </div>
     );
 }

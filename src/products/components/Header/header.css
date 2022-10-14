@@ -12,9 +12,13 @@
 
 .login-button-container {
     display: flex;
-    width: 60%;
+    width: 80%;
     justify-content: space-evenly;
     align-items: baseline;
+}
+
+a {
+    text-decoration: none !important;
 }
 
 .login-button-container a{
@@ -28,4 +32,14 @@
 .ic-cart:hover {
     color: #ff523d;
     animation: WiggleAnimation 1000ms cubic-bezier(1, 0.01, 0.28, 1) forwards;
+}
+
+.main-login-div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.new-login-button {
+    width: 200px;
 }

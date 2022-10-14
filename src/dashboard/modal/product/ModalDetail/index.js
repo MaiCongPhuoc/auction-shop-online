@@ -3,6 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 
 function ModalDetailProduct(props) {
     const {product, showdetail, handleCloseDetail} = props;
+    console.log(product);
 
     return (
         <Modal show={showdetail} onHide={handleCloseDetail} backdrop="static" keyboard={false} size="xl">
@@ -58,6 +59,10 @@ function ModalDetailProduct(props) {
                         <div className="row">
                             <h5 className="col-sm-4">Thể Loại:</h5>
                             <p className="col-sm-8">{product.category && product.category.title}</p>
+                        </div>
+                        <div className="row">
+                            <h5 className="col-sm-4">Mô tả:</h5>
+                            <p className="col-sm-8">{product.description}</p>
                         </div>
                     </div>
                 </div>

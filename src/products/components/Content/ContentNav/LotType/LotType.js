@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { useStore, actions } from "../../../context/store";
-const LotType = () => {
-    const [state, dispatch] = useStore();
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { getType, getTypes } from './../../../../redux/selector';
+import { changeType } from "../../../../redux/actions";
 
-    const lotTypes = state.lotTypes;
-    const type = state.type;
+const LotType = () => {
+    const dispatch = useDispatch();
+    const lotTypes = useSelector(getTypes);
+
+    const type = useSelector(getType);
 
     return (
         <>
@@ -16,7 +19,7 @@ const LotType = () => {
                             <div className="tab-item left-end cell small-4"
                                 key={lotType}
                                 onClick={() => {
-                                    dispatch(actions.setType(lotType))
+                                    dispatch(changeType(lotType))
                                 }}
                                 style={type === lotType ? { color: '#fff', background: '#ff523d', borderRadius: '50px 50px 50px 50px' } : {}}
                             >
@@ -27,7 +30,6 @@ const LotType = () => {
                     }
                 </div>
             </div>
-            {/* <ContentAll /> */}
         </>
     );
 }
