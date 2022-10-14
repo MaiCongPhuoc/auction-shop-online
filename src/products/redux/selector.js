@@ -12,6 +12,8 @@ export const getAllProducts = (state) => state.products.products;
 
 export const getProduct = (state) => state.products.product;
 
+export const getCheckProduct = (state) => state.products.checkProduct;
+
 // categories
 export const getAllCategories = (state) => state.categories.categories;
 

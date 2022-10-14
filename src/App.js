@@ -19,8 +19,8 @@ import './assets/css/sb-admin-2.min.css';
 import '../node_modules/chart.js/dist/Chart.min.js';
 
 import Product from './products/Product';
-import DanhSachSanPham from './dashboard/pages/ListProduct';
-import DanhSachTaiKhoan from './dashboard/pages/ListAccount';
+import ListProduct from './dashboard/pages/ListProduct';
+import ListAccount from './dashboard/pages/ListAccount';
 
 function App() {
     return (
@@ -28,9 +28,10 @@ function App() {
             <div className="App">
                 <Routes>
                     <Route path='/' element={<Dashboard />} />
-                    {/* <Route path='/product' element={<Product />} /> */}
-                    <Route path='/danhsachsanpham' element={<DanhSachSanPham />} />
-                    <Route path='/danhsachtaikhoan' element={<DanhSachTaiKhoan />} />
+                    <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='/product' element={<Product />} />
+                    <Route path='/list-product' element={<ListProduct />} />
+                    <Route path='/list-account' element={<ListAccount />} />
                 </Routes>
             </div>
         </Router>
