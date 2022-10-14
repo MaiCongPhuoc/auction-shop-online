@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
-import './App.css';
-import Product from './products/Product';
 
-
-function App() {
-    return (
-        <React.Fragment>
-            <Product />
-        </React.Fragment>
-=======
 // import logo from './logo.svg';
 import Dashboard from './dashboard/pages/Dashboard';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -38,7 +27,6 @@ function App() {
                 </Routes>
             </div>
         </Router>
->>>>>>> phuoc-dev
     );
 }
 
