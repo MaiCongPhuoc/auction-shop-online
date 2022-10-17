@@ -12,7 +12,7 @@ import { Button, Modal } from 'react-bootstrap';
 import ModalAddProduct from '../../../modal/product/ModalAdd';
 import ModalEditProduct from '../../../modal/product/ModalEdit';
 import DefaultProduct from '../../../Spiner/defaultProduct';
-
+import Pagination from '@mui/material/Pagination';
 function BangSanPham() {
     Moment.locale('en');
     let tongtien = 0;
@@ -27,6 +27,7 @@ function BangSanPham() {
         product: {},
         showdetail: false,
     });
+
     const { product, showdetail } = showDetail;
 
     const handleCloseDetail = () => setShowDetail({ ...showDetail, showdetail: false });
@@ -134,7 +135,11 @@ function BangSanPham() {
                                                 <td>
                                                     <button
                                                         onClick={() =>
-                                                            setShowDetail({ product: product, showdetail: true, productId: product.id })
+                                                            setShowDetail({
+                                                                product: product,
+                                                                showdetail: true,
+                                                                productId: product.id,
+                                                            })
                                                         }
                                                         className="btnDetailProduct"
                                                     >
@@ -153,7 +158,11 @@ function BangSanPham() {
                                                     <button
                                                         className="btn btn-outline-secondary"
                                                         onClick={() =>
-                                                            setShowEdit({...showEdit, productEditId: product.id, showedit: true })
+                                                            setShowEdit({
+                                                                ...showEdit,
+                                                                productEditId: product.id,
+                                                                showedit: true,
+                                                            })
                                                         }
                                                     >
                                                         Edit

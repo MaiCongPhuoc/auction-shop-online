@@ -174,7 +174,7 @@ function BangTaiKhoan() {
                                         </td>
                                     </tr>
                                 </tbody>
-                                <tfoot>
+                                {/* <tfoot>
                                     <tr>
                                         <th>Avatar</th>
                                         <th>Tên đầy đủ</th>
@@ -186,7 +186,7 @@ function BangTaiKhoan() {
                                         <th>Thôn/ Xã</th>
                                         <th className="text-center">Action</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot> */}
                             </table>
                         </div>
                     </div>

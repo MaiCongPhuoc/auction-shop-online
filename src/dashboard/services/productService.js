@@ -12,7 +12,7 @@ class ProductService {
         return axios.put(`${EDITPRODUCT_URL}/${editProduct}`, editProductId);
     }
     static ProductById(editProductId) {
-        return axios.get(`${PRODUCTBYID_URL}/`+ editProductId);
+        return axios.get(`${PRODUCTBYID_URL}/` + editProductId);
     }
 }
 

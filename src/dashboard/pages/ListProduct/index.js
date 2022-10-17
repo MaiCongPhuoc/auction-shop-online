@@ -1,8 +1,9 @@
-import Footer from "../../Layout/Footer";
-import AccountAdmin from "../../Layout/Header/AccountAdmin";
-import Search from "../../Layout/Header/Search";
-import Sidebar from "../../Layout/Sidebar";
-import BangSanPham from "./TableProduct";
+import Footer from '../../Layout/Footer';
+import AccountAdmin from '../../Layout/Header/AccountAdmin';
+import Search from '../../Layout/Header/Search';
+import Sidebar from '../../Layout/Sidebar';
+import BangSanPham from './TableProduct';
+import ProductsComponent from './TableProduct/ProductsComponent';
 
 function DanhSachSanPham() {
     return (
@@ -28,8 +29,8 @@ function DanhSachSanPham() {
                         </nav>
                         {/* End of Topbar */}
                         {/* Begin Page Content */}
-                        <BangSanPham />
-                        {/* /.container-fluid */}
+                        <BangSanPham />;{/* bo phan trang */}
+                        {/* <ProductsComponent /> */}
                     </div>
                     {/* End of Main Content */}
                     <Footer />
@@ -75,7 +76,6 @@ function DanhSachSanPham() {
                 </div>
             </div>
         </>
-        
     );
 }
 
