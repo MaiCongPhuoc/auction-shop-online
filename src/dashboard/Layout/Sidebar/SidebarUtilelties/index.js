@@ -15,7 +15,7 @@ function SidebarUtilities() {
             <div id="collapseUtilities" className="collapse" {...getCollapseProps()}>
                 <div className="bg-white py-2 collapse-inner rounded">
                     <h6 className="collapse-header">Custom Utilities:</h6>
-                    <Link className="collapse-item" to='/danhsachtaikhoan'>
+                    <Link className="collapse-item" to='/list-account'>
                         Tài khoản
                     </Link>
                 </div>

@@ -1,11 +1,6 @@
 import '../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
-import '../../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../../../assets/css/sb-admin-2.min.css';
 
-import '../../../../node_modules/jquery/dist/jquery.min.js';
-import '../../../../node_modules/jquery.easing/jquery.easing.min.js';
-// import '../../../../node_modules/startbootstrap-sb-admin-2/js/sb-admin-2';
-import '../../../../node_modules/chart.js/dist/Chart.min.js';
 import Sidebar from '../../Layout/Sidebar';
 import Search from '../../Layout/Header/Search';
 import AccountAdmin from '../../Layout/Header/AccountAdmin';
@@ -13,6 +8,7 @@ import TongQuanThuNhap from './BieuDo/DoanhThuNam';
 import DoanhThu from './BieuDo/DoanhThuThang';
 import TongQuanDashboard from './TongQuanDashboard';
 import Footer from '../../Layout/Footer';
+import './TongQuanDashboard/dashboard.css'
 // import '../../../assets/js/chart-area-demo';
 // import '../../../assets/js/chart-pie-demo';
 
@@ -34,15 +30,10 @@ function Dashboard() {
                             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                                 <i className="fa fa-bars" />
                             </button>
-                            {/* Topbar Search */}
-                            <Search />
-                            {/* Topbar Navbar */}
+                            {/* <Search /> */}
                             <AccountAdmin />
                         </nav>
-                        {/* End of Topbar */}
-                        {/* Begin Page Content */}
                         <div className="container-fluid">
-                            {/* Page Heading */}
                             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
                                 <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
@@ -53,28 +44,18 @@ function Dashboard() {
                             <TongQuanDashboard />
                             {/* Content Row */}
 
-                            <div className="row">
-                                {/* Area Chart */}
+                            <div className="row dashboard">
                                 <TongQuanThuNhap />
-                                {/* Pie Chart */}
                                 <DoanhThu />
                             </div>
                         </div>
-                        {/* /.container-fluid */}
                     </div>
-                    {/* End of Main Content */}
-                    {/* Footer */}
-                    <Footer />
-                    {/* End of Footer */}
+                    {/* <Footer /> */}
                 </div>
-                {/* End of Content Wrapper */}
             </div>
-            {/* End of Page Wrapper */}
-            {/* Scroll to Top Button*/}
             <a className="scroll-to-top rounded" href="#page-top">
                 <i className="fas fa-angle-up" />
             </a>
-            {/* Logout Modal*/}
             <div
                 className="modal fade"
                 id="logoutModal"

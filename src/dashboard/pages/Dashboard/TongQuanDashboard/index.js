@@ -5,7 +5,7 @@ import TaiKhoan from './TaiKhoan';
 
 function TongQuanDashboard() {
     return (
-        <div className="row">
+        <div className="row dashboard">
             {/* Earnings (Monthly) Card Example */}
             <DoanhThuTrongThang />
             {/* Earnings (Monthly) Card Example */}

@@ -21,25 +21,14 @@ function DanhSachTaiKhoan() {
                             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                                 <i className="fa fa-bars" />
                             </button>
-                            {/* Topbar Search */}
-                            <Search />
-                            {/* Topbar Navbar */}
+                            {/* <Search /> */}
                             <AccountAdmin />
                         </nav>
-                        {/* End of Topbar */}
-                        {/* Begin Page Content */}
                         <BangTaiKhoan />
-                        {/* /.container-fluid */}
                     </div>
-                    {/* End of Main Content */}
-                    {/* Footer */}
-                    <Footer />
-                    {/* End of Footer */}
+                    {/* <Footer /> */}
                 </div>
-                {/* End of Content Wrapper */}
             </div>
-            {/* End of Page Wrapper */}
-            {/* Scroll to Top Button*/}
             <a className="scroll-to-top rounded" href="#page-top">
                 <i className="fas fa-angle-up" />
             </a>

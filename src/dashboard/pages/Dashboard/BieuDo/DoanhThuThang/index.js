@@ -1,3 +1,5 @@
+import CircleChart from '../../../../Chart/CircleChart';
+import '../../TongQuanDashboard/dashboard.css'
 function DoanhThu() {
     return (
         <div className="col-xl-4 col-lg-5">
@@ -36,21 +38,8 @@ function DoanhThu() {
                     </div>
                 </div>
                 {/* Card Body */}
-                <div className="card-body">
-                    <div className="chart-pie pt-4 pb-2">
-                        <canvas id="myPieChart" />
-                    </div>
-                    <div className="mt-4 text-center small">
-                        <span className="mr-2">
-                            <i className="fas fa-circle text-primary" /> Direct
-                        </span>
-                        <span className="mr-2">
-                            <i className="fas fa-circle text-success" /> Social
-                        </span>
-                        <span className="mr-2">
-                            <i className="fas fa-circle text-info" /> Referral
-                        </span>
-                    </div>
+                <div className="card-body right-chart">
+                        <CircleChart />
                 </div>
             </div>
         </div>
