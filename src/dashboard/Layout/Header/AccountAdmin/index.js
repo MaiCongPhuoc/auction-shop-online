@@ -1,6 +1,4 @@
 import Tippy from '@tippyjs/react';
-import { useState } from 'react';
-import AdminInfo from './adminInfo/AdminInfo';
 
 function AccountAdmin() {
     const renderThongBao = () => {
@@ -233,7 +231,7 @@ function AccountAdmin() {
             <div className="topbar-divider d-none d-sm-block" />
             {/* Nav Item - User Information */}
             <li className="nav-item dropdown no-arrow">
-                {/* <Tippy
+                <Tippy
                     // delay={[0, 700]}
                     // offset={[15, 8]}
                     placement="bottom-end"
@@ -254,14 +252,7 @@ function AccountAdmin() {
                         <span className="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                         <img className="img-profile rounded-circle" src="img/undraw_profile.svg" />
                     </a>
-                </Tippy> */}
-                {/* Nav Item - User Information */}
-                <li className="nav-item dropdown no-arrow">
-                    <br />
-                    <AdminInfo />
-                    {/* Dropdown - User Information */}
-                </li>
-                {/* Dropdown - User Information */}
+                </Tippy>
             </li>
         </ul>
     );
