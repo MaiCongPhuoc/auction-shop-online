@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getShowInfoProduct, getProduct } from './../redux/selector';
 import { setProduct, setShowInfoProduct } from './../redux/actions';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
-import ProductService from './../../dashboard/services/productService';
+import ProductService from './../../dashboard/services/ProductService';
 
 const InfoProductModal = () => {
     const [check, setCheck] = useState(false);

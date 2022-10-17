@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CATEGORY_URL } from './commom';
+import { CATEGORY_URL } from './Commom';
 
 class CategoryService{
     static getCategory(){

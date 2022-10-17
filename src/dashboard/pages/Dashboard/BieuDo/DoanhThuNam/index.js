@@ -1,3 +1,5 @@
+import BarChart from "../../../../Chart/BarChart";
+
 function TongQuanThuNhap() {
     return (
         <div className="col-xl-8 col-lg-7">
@@ -36,10 +38,11 @@ function TongQuanThuNhap() {
                     </div>
                 </div>
                 {/* Card Body */}
-                <div className="card-body">
-                    <div className="chart-area">
+                <div className="card-body right-chart">
+                    {/* <div className="chart-area">
                         <canvas id="myAreaChart" />
-                    </div>
+                    </div> */}
+                    <BarChart />
                 </div>
             </div>
         </div>

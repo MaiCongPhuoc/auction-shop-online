@@ -1,0 +1,9 @@
+.select-bg-ori{
+    background-origin: border-box;
+}
+.btn-cl{
+    width: none;
+}
+.btn-secondary{
+    width: none !important;
+}

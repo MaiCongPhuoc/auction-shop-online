@@ -3,7 +3,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactDOM from 'react-dom/client';
 import { useEffect, useState } from 'react';
-import ProductService from '../../../services/productService';
+import ProductService from '../../../services/ProductService';
 import Moment from 'moment';
 import { NumericFormat } from 'react-number-format';
 import Spiner from '../../../Spiner';
@@ -11,16 +11,20 @@ import ModalDetailProduct from '../../../modal/product/ModalDetail';
 import { Button, Modal } from 'react-bootstrap';
 import ModalAddProduct from '../../../modal/product/ModalAdd';
 import ModalEditProduct from '../../../modal/product/ModalEdit';
+import Swal from 'sweetalert2';
 import DefaultProduct from '../../../Spiner/defaultProduct';
+import AlertWarning from '../../../Sweet/SweetWarning';
+import '../../pages.css';
 
 function BangSanPham() {
-    Moment.locale('en');
+    Moment.locale('vi');
     let tongtien = 0;
     const [state, setState] = useState({
         loading: false,
         products: [],
         errorMessage: '',
     });
+    const [reRender, setReRender] = useState(false);
 
     // modal detail
     const [showDetail, setShowDetail] = useState({
@@ -42,6 +46,31 @@ function BangSanPham() {
     });
     const { productEditId, showedit } = showEdit;
     const handleCloseEdit = () => setShowEdit(false);
+    function handleClick(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            type: 'warning',
+            text: "You won't be able to revert this!",
+            footer: '',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            // onOpen: () => {
+            //     console.log('chi day');
+            // },
+        }).then((result) => {
+            async function deleteProduct(id) {
+                await ProductService.DeleteProduct(id);
+                setReRender(!reRender);
+            }
+            deleteProduct(id);
+            if (result.value) {
+                console.log('result.value');
+                Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            }
+        });
+    }
 
     useEffect(() => {
         try {
@@ -62,7 +91,14 @@ function BangSanPham() {
                 errorMessage: error.message,
             });
         }
-    }, [showAdd, showEdit]);
+    }, [showAdd, showEdit, reRender]);
+
+    // const WarningData = {
+    //     title: 'Are you sure?',
+    //     type: 'warning',
+    //     text: "You won't be able to revert this!",
+    //     footer: '',
+    // };
 
     const { loading, products, errorMessage } = state;
 
@@ -90,7 +126,7 @@ function BangSanPham() {
             {loading ? (
                 <Spiner />
             ) : (
-                <div className="card shadow mb-4">
+                <div className="shadow mb-4 cur-div">
                     <div className="card-header py-3 d-flex justify-content-between">
                         <h6 className="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
                         <div>
@@ -122,25 +158,27 @@ function BangSanPham() {
                                         return (
                                             <tr key={product.id}>
                                                 <td>
-                                                    <img
-                                                        src={
-                                                            product.image ||
-                                                            'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'
-                                                        }
-                                                        alt="ảnh sản phẩm"
-                                                        style={{ width: '100px' }}
-                                                    />
-                                                </td>
-                                                <td>
                                                     <button
                                                         onClick={() =>
-                                                            setShowDetail({ product: product, showdetail: true, productId: product.id })
+                                                            setShowDetail({
+                                                                product: product,
+                                                                showdetail: true,
+                                                                productId: product.id,
+                                                            })
                                                         }
                                                         className="btnDetailProduct"
                                                     >
-                                                        {product.title}
+                                                        <img
+                                                            src={
+                                                                product.image ||
+                                                                'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'
+                                                            }
+                                                            alt="ảnh sản phẩm"
+                                                            style={{ width: '100px' }}
+                                                        />
                                                     </button>
                                                 </td>
+                                                <td><strong>{product.title}</strong></td>
                                                 <td className="text-center">{product.createdBy}</td>
                                                 <td className="text-end">
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
@@ -148,17 +186,34 @@ function BangSanPham() {
                                                 <td>{product.category.title}</td>
                                                 <td>{product.action ? 'Đấu giá' : 'Bán'}</td>
                                                 <td className="text-end">{product.available}</td>
-                                                <td className="text-end">{product.price}</td>
+                                                <td className="text-end">
+                                                    <NumericFormat
+                                                        value={product.price}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        suffix={' đ'}
+                                                    />
+                                                </td>
                                                 <td className="text-center">
                                                     <button
                                                         className="btn btn-outline-secondary"
                                                         onClick={() =>
-                                                            setShowEdit({...showEdit, productEditId: product.id, showedit: true })
+                                                            setShowEdit({
+                                                                ...showEdit,
+                                                                productEditId: product.id,
+                                                                showedit: true,
+                                                            })
                                                         }
                                                     >
                                                         Edit
                                                     </button>
-                                                    <button className="btn btn-outline-danger ml-2">Remove</button>
+                                                    {/* <button className="btn btn-outline-danger ml-2">Remove</button> */}
+                                                    <button
+                                                        className="btn btn-outline-danger ml-2"
+                                                        onClick={() => handleClick(product.id)}
+                                                    >
+                                                        Remove
+                                                    </button>
                                                 </td>
                                             </tr>
                                         );
@@ -179,7 +234,7 @@ function BangSanPham() {
                                                 value={tongtien}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
-                                                suffix={'$'}
+                                                suffix={' đ'}
                                             />
                                         </th>
                                     </tr>
