@@ -19,19 +19,11 @@ function App() {
         <Router>
             <div className="App">
                 <Routes>
-<<<<<<< HEAD
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/product' element={<Product />} />
                     <Route path='/list-product' element={<ListProduct />} />
                     <Route path='/list-account' element={<ListAccount />} />
-=======
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/product" element={<Product />} />
-                    <Route path="/list-product" element={<ListProduct />} />
-                    <Route path="/list-account" element={<ListAccount />} />
->>>>>>> development
                 </Routes>
             </div>
         </Router>

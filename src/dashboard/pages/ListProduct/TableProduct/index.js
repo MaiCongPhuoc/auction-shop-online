@@ -3,7 +3,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactDOM from 'react-dom/client';
 import { useEffect, useState } from 'react';
-import ProductService from '../../../services/ProductService';
+import ProductService from '../../../services/productService';
 import Moment from 'moment';
 import { NumericFormat } from 'react-number-format';
 import Spiner from '../../../Spiner';
@@ -13,13 +13,9 @@ import ModalAddProduct from '../../../modal/product/ModalAdd';
 import ModalEditProduct from '../../../modal/product/ModalEdit';
 import Swal from 'sweetalert2';
 import DefaultProduct from '../../../Spiner/defaultProduct';
-<<<<<<< HEAD
-import AlertWarning from '../../../Sweet/SweetWarning';
 import '../../pages.css';
-
-=======
 import Pagination from '@mui/material/Pagination';
->>>>>>> development
+
 function BangSanPham() {
     Moment.locale('vi');
     let tongtien = 0;

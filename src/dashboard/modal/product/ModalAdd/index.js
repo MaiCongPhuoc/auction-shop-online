@@ -4,10 +4,10 @@ import CategoryService from '../../../services/Category';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
-import ProductService from '../../../services/ProductService';
 import FileService from '../../../services/FileService';
 import ProductMediaService from '../../../services/ProductImageService';
 import '../../modal.css';
+import ProductService from '../../../services/productService';
 // import { withSwal } from 'react-sweetalert2';
 
 let flag = false;

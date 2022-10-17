@@ -25,14 +25,10 @@ function DanhSachSanPham() {
                             {/* <Search /> */}
                             <AccountAdmin />
                         </nav>
-<<<<<<< HEAD
-                        <BangSanPham />
-=======
                         {/* End of Topbar */}
                         {/* Begin Page Content */}
                         <BangSanPham />;{/* bo phan trang */}
                         {/* <ProductsComponent /> */}
->>>>>>> development
                     </div>
                     {/* <Footer /> */}
                 </div>

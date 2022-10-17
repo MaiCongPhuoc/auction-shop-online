@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import ProductService from '../../../services/ProductService';
+import ProductService from '../../../services/productService';
 import CategoryService from '../../../services/Category';
 import ProductMediaService from '../../../services/ProductImageService';
 import FileService from '../../../services/FileService';

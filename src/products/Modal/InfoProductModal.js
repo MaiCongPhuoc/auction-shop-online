@@ -3,12 +3,8 @@ import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getShowInfoProduct, getProduct } from './../redux/selector';
 import { setShowInfoProduct, setCheckProduct } from './../redux/actions';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
-<<<<<<< HEAD
-import ProductService from './../../dashboard/services/ProductService';
-=======
 import ProductService from "../service/Product/ProductService";
 import { Carousel } from './../Hooks/Hooks';
->>>>>>> development
 
 const InfoProductModal = () => {
     const dispatch = useDispatch();
