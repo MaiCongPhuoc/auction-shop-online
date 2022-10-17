@@ -13,9 +13,13 @@ import ModalAddProduct from '../../../modal/product/ModalAdd';
 import ModalEditProduct from '../../../modal/product/ModalEdit';
 import Swal from 'sweetalert2';
 import DefaultProduct from '../../../Spiner/defaultProduct';
+<<<<<<< HEAD
 import AlertWarning from '../../../Sweet/SweetWarning';
 import '../../pages.css';
 
+=======
+import Pagination from '@mui/material/Pagination';
+>>>>>>> development
 function BangSanPham() {
     Moment.locale('vi');
     let tongtien = 0;
@@ -31,6 +35,7 @@ function BangSanPham() {
         product: {},
         showdetail: false,
     });
+
     const { product, showdetail } = showDetail;
 
     const handleCloseDetail = () => setShowDetail({ ...showDetail, showdetail: false });

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ALL_PRODUCTS } from './../API';
+import { ALL_MEDIA_PRODUCT, ALL_PRODUCTS } from './../API';
 
 class ProductService{
     static getAllProducts(){
@@ -8,6 +8,10 @@ class ProductService{
 
     static getProductById(id){
         return axios.get(`${ALL_PRODUCTS}/${id}`);
+    }
+
+    static getAllMediaByProductId(productId) {
+        return axios.get(`${ALL_MEDIA_PRODUCT}/${productId}`);
     }
 }
 
