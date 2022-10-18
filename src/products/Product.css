@@ -89,3 +89,13 @@
 .title-buy {
     background-color: rgb(213,235,247,1);
 }
+
+.watcher-btn{
+    border: 1px solid #cac8ca;
+    width: 300px;
+    margin: auto;
+}
+
+.watcher-btn a:hover{
+    color: red !important;
+}

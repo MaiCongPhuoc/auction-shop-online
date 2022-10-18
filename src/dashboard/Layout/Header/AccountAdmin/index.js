@@ -1,8 +1,5 @@
 import Tippy from '@tippyjs/react';
-<<<<<<< HEAD
-=======
 import { useState } from 'react';
->>>>>>> b18a2fce197876ce1d2e7e3bd3c9ca156cabe130
 
 function AccountAdmin() {
     const renderThongBao = () => {

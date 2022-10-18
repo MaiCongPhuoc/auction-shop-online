@@ -1,3 +1,11 @@
+// Account
+export const setAccount = object => {
+    return {
+        type: 'account/setAccount',
+        payload: object
+    }
+}
+
 // Product
 export const setProducts = arr => {
     return {

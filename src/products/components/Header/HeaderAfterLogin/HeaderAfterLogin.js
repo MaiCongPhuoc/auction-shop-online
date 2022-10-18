@@ -1,7 +1,11 @@
 
 import React from "react";
+import { useSelector } from 'react-redux/es/exports';
+import { getAccount } from "../../../redux/selector";
 
 const HeaderAfterLogin = () => {
+
+    const account = useSelector(getAccount);
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
@@ -42,7 +46,7 @@ const HeaderAfterLogin = () => {
                         </div>
                     </div>
                 </div>
-                <a className="logged_in_name mx-3" href="#">Trần Trung</a> |
+                <a className="logged_in_name mx-3" href="#">{account.username}</a> |
                 <a id="customer-logout-link" className="new-login-button" rel="nofollow" href="/logout">LOG OUT</a>
             </div>
         </div>

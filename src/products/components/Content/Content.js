@@ -22,8 +22,6 @@ const Content = () => {
 
     const searchStatus = useSelector(getSearchingFilters);
 
-    const product = useSelector(getProduct);
-
     const checkProduct = useSelector(getCheckProduct);
 
     const showInfoProduct = useSelector(getShowInfoProduct);

@@ -14,7 +14,6 @@ import ModalEditProduct from '../../../modal/product/ModalEdit';
 import Swal from 'sweetalert2';
 import DefaultProduct from '../../../Spiner/defaultProduct';
 import '../../pages.css';
-import Pagination from '@mui/material/Pagination';
 
 function BangSanPham() {
     Moment.locale('vi');

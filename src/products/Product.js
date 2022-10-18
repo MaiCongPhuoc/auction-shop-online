@@ -14,16 +14,17 @@ import 'https://www.googleoptimize.com/optimize.js?id=GTM-MRQV72K';
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import store from './redux/store';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import './Product.css';
 
 
+
 function Product() {
-    
+
     return (
         <Provider store={store}>
-            <Header className="product-client"/>
-            <Content className="product-client"/>
+            <Header className="product-client" />
+            <Content className="product-client" />
         </Provider>
     );
 }

@@ -2,6 +2,10 @@ import { createSelector } from 'reselect';
 //login
 export const getLoginStatus = (state) => state.login.login;
 
+// account
+export const getAccount = (state) => state.account.account;
+
+
 // types
 export const getType = (state) => state.types.type;
 

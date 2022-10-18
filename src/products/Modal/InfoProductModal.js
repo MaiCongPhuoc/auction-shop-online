@@ -68,11 +68,6 @@ const InfoProductModal = () => {
                                 <div className="title-modal">Danh mục: </div>
                                 <p>{product.category.title}</p>
 
-                                <div className="title-modal">Số lượng còn lại: </div>
-                                <p>{product.available}</p>
-
-                                <div className="title-modal">Giá: </div>
-                                <p>{product.price}</p>
                             </Col>
                             <Col xs={12} md={4}>
                                 <Buy product={product} />

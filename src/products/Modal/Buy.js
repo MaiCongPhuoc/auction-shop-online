@@ -1,23 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { FormatMoney } from '../Hooks/Hooks';
 
-const Buy = ({product}) => {
-    console.log(product.available);
+const Buy = ({ product }) => {
+    const [totalPrice, setTotalPrice] = useState(product.price);
+
     return (
         <div className="buy-tool">
             <div className="bb-rows-wrapper">
                 <div className="bb-row bb-current-buy">
                     <div className="bb-row title-buy text-center">
-                        <i className="fa fa-info-circle me-2" aria-hidden="true" style={{color: '#0e78cf'}}/>
+                        <i className="fa fa-info-circle me-2" aria-hidden="true" style={{ color: '#0e78cf' }} />
                         <span>Xem thêm nhều sản phẩm khác trong <b>Cửa hàng</b></span>
                     </div>
                     <div className="bb-item my-3" style={{ paddingLeft: '15px' }}>
                         <div className="current-bidder">
                             <div className="bb-title is-label">
-                                <span className="current-bid bid-box-label">Giá của sản phẩm:</span>
+                                <span className="current-bid bid-box-label">Giá của sản phẩm (VNĐ):</span>
                             </div>
                             <div className="bb-content my-2">
                                 <div className="bin-price bin-price-centered fw-bold">
-                                    <span>$11,250</span>
+                                    <span>{FormatMoney(product.price)}</span>
                                 </div>
                             </div>
                         </div>
@@ -35,31 +37,32 @@ const Buy = ({product}) => {
                                             <option value={5}>5</option>
                                         </select>
                                     </div>
-                                    <div className="bin-button-trigger bb-item-bin-button" style={{ display: 'inline-block', width: '65%', float: 'right' }}>
-                                        <input className="input-submit-bin" style={{ display: 'none' }} type="submit" />
+                                    <div className="ms-1" style={{ marginTop: '37px', float: 'right' }}>
                                         <span className="current-bid bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>&nbsp;</span>
                                         <a className="btn btn-primary">Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </form>
                             <div className="bin-qty text-center mt-3">
-                                <b>5</b> available</div>
+                                số lượng còn lại <strong>{product.available}</strong></div>
                         </div>
                     </div>
                 </div>
-                <div className="bidding-actions">
-                    <div className="watchlist-action exp-1">
-                        <div className="watcher-btn">
-                            <a data-view="watcher" className="watch-button" href="/catalog_items/2470920/toggle_watch">
-                                <div className="relative-wrapper watch-wrapper">
-                                    <b className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
-                                        <i className="fa-heart fal" aria-hidden="true" /></b>
-                                </div><span className="watch-type">Thêm vào yêu thích</span>
+                <div className="bidding-actions mt-4">
+                    <div className="watchlist-action">
+                        <div className="watcher-btn text-center">
+                            <a className="watch-button" href="#">
+                                <div className="relative-wrapper watch-wrapper btn">
+                                    <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
+                                        <i className="fa-regular fa-heart"></i>
+                                        <span className="watch-type"> Thêm vào danh sách yêu thích</span>
+                                    </div>
+                                </div>
                             </a>
                         </div>
                     </div>
-                    <div className="viewers text-center" style={{ fontSize: '14px' }}>30 người đang theo dõi sản phẩm này</div>
-                    <div className="cs-action text">Đã bán: </div>
+                    <div className="viewers text-center mt-2" style={{ fontSize: '14px' }}><b>30</b> người đang theo dõi sản phẩm này</div>
+                    <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>
                 </div>
             </div>
         </div>
