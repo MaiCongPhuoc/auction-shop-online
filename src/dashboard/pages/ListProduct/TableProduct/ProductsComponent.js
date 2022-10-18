@@ -31,7 +31,6 @@ class ProductsComponent extends React.Component {
                     totalElements: data.totalElements, // tổng số phần tử là 14
                     currentPage: data.number + 1, // trang hiện tại là 1
                 });
-                console.log('data: ', data);
             });
     }
     //Writing All the pagination functions
@@ -112,7 +111,6 @@ class ProductsComponent extends React.Component {
         this.getProductsByPagination(this.state.currentPage);
     };
     render() {
-        console.log('state: ', this.state.products);
         const { products, currentPage, totalPages, recordPerPage, search } = this.state;
         return (
             <div>

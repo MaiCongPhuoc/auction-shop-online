@@ -7,8 +7,24 @@ import FileService from '../../../services/FileService';
 import { useDispatch } from 'react-redux';
 import { addAccount, editAccount } from '../../../redux/actions';
 import '../../modal.css';
+<<<<<<< HEAD
+=======
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+>>>>>>> b883806d1f98729cb7cad3e12efa75daa812ba56
 
 function ModalEditProduct(props) {
+    const notify = () =>
+        toast.success('Wow so easy!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
     const dispatch = useDispatch();
     const { showEdit, onCloseEditAccount, accountEditId } = props;
     // console.log('accountEditId: ', accountEditId);
@@ -64,7 +80,6 @@ function ModalEditProduct(props) {
     //         console.log(error);
     //     }
     // }, [showEdit]);
-    console.log('accountById: ', accountById);
 
     const handleProvince = (e) => {
         try {
@@ -161,13 +176,13 @@ function ModalEditProduct(props) {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(5, 'tên của bạn ít nhất là 5 kí tự!')
-                .max(30, 'tên của bạn tối đa nhất là 30 kí tự!')
+                .min(8, 'tên của bạn ít nhất là 8 kí tự!')
+                .max(20, 'tên của bạn tối đa nhất là 20 kí tự!')
                 .required('Vui lòng nhập tên vào!'),
             username: yup
                 .string()
-                .min(5, 'tên sản phẩm nhỏ nhất là 5 kí tự!')
-                .max(30, 'tên sản phẩm nhỏ nhất là 30 kí tự!')
+                .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
+                .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
                 .required('Vui lòng nhập tên sản phẩm vào!'),
             email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
@@ -214,6 +229,7 @@ function ModalEditProduct(props) {
 
             handleReset();
             dispatch(editAccount(account, accountEditId));
+            notify();
         },
     });
 
@@ -233,6 +249,9 @@ function ModalEditProduct(props) {
                             )}
                             {formik.errors.email && formik.errors.email && (
                                 <li className="error">{formik.errors.email}</li>
+                            )}
+                            {formik.errors.username && formik.errors.username && (
+                                <li className="error">{formik.errors.username}</li>
                             )}
                             {formik.errors.password && formik.errors.password && (
                                 <li className="error">{formik.errors.password}</li>
@@ -494,9 +513,10 @@ function ModalEditProduct(props) {
                         </Button>
                     ) : (
                         <Button type="submit" className="btn btn-primary">
-                            Create
+                            Save
                         </Button>
                     )}
+                    <ToastContainer />
                 </Modal.Footer>
             </form>
         </Modal>

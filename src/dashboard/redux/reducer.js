@@ -30,7 +30,6 @@ let initState = {
 };
 
 const rootReducer = (state = initState, action) => {
-    console.log('state: ', state, 'action: ', action);
     switch (action.type) {
         case 'products/addproduct':
             return {

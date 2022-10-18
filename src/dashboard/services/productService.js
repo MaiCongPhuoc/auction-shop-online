@@ -1,9 +1,12 @@
 import axios from 'axios';
-import { ADDPRODUCT_URL, EDITPRODUCT_URL, PRODUCTBYID_URL, PRODUCT_URL, REMOVEPRODUCT_URL } from './Commom';
+import { ADDPRODUCT_URL, DATATABLEPRODUCT_URL, EDITPRODUCT_URL, PRODUCTBYID_URL, PRODUCT_URL, REMOVEPRODUCT_URL } from './Commom';
 
 class ProductService {
     static getProducts() {
         return axios.get(PRODUCT_URL);
+    }
+    static getDataTableProduct(search,currentPage,recordPerPage) {
+        return axios.get(`${DATATABLEPRODUCT_URL}${search}?page=${currentPage}&size=${recordPerPage}`);
     }
     static AddProduct(product) {
         return axios.post(ADDPRODUCT_URL, product);
