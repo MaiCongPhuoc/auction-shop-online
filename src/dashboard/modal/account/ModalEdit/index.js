@@ -7,8 +7,11 @@ import FileService from '../../../services/FileService';
 import { useDispatch } from 'react-redux';
 import { addAccount, editAccount } from '../../../redux/actions';
 import '../../modal.css';
+<<<<<<< HEAD
+=======
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+>>>>>>> b883806d1f98729cb7cad3e12efa75daa812ba56
 
 function ModalEditProduct(props) {
     const notify = () =>
