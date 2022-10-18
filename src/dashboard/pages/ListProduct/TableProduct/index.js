@@ -14,6 +14,9 @@ import ModalEditProduct from '../../../modal/product/ModalEdit';
 import Swal from 'sweetalert2';
 import DefaultProduct from '../../../Spiner/defaultProduct';
 import '../../pages.css';
+import Pagination from '@mui/material/Pagination';
+import ProductsComponent from './ProductsComponent';
+import CategoryService from '../../../services/Category';
 
 function BangSanPham() {
     Moment.locale('vi');
@@ -21,8 +24,14 @@ function BangSanPham() {
     const [state, setState] = useState({
         loading: false,
         products: [],
+        currentPage: 1,
+        recordPerPage: 5,
+        search: '',
         errorMessage: '',
+        totalPages: 0,
+        categories: [],
     });
+
     const [reRender, setReRender] = useState(false);
 
     // modal detail
@@ -56,9 +65,6 @@ function BangSanPham() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!',
-            // onOpen: () => {
-            //     console.log('chi day');
-            // },
         }).then((result) => {
             async function deleteProduct(id) {
                 await ProductService.DeleteProduct(id);
@@ -76,14 +82,16 @@ function BangSanPham() {
         try {
             setState({ ...state, loading: true });
             async function getData() {
-                let productRes = await ProductService.getProducts();
+                let category = await CategoryService.getCategory();
+                console.log('category.data useEffect: ', category.data);
                 setState({
                     ...state,
-                    products: productRes.data,
+                    categories: category.data,
                     loading: false,
                 });
             }
             getData();
+            getProductsByPagination(state.currentPage);
         } catch (error) {
             setState({
                 ...state,
@@ -100,28 +108,143 @@ function BangSanPham() {
     //     footer: '',
     // };
 
-    const { loading, products, errorMessage } = state;
+    // const [dataTable, setDataTable] = useState({
+    //     products: [],
+    //     currentPage: 1,
+    //     recordPerPage: 5,
+    //     search: '',
+    // });
+    // const { productsData, currentPage, recordPerPage, search } = dataTable;
+
+    // data table
+    async function getProductsByPagination(currentPage) {
+        state.currentPage = currentPage - 1;
+        let productData = await ProductService.getDataTableProduct(
+            state.search,
+            state.currentPage,
+            state.recordPerPage,
+        );
+        let category = await CategoryService.getCategory();
+        console.log('productData.data: ', productData.data);
+        setState({
+            ...state,
+            products: productData.data.content,
+            totalPages: productData.data.totalPages,
+            totalElements: productData.data.totalElements,
+            currentPage: productData.data.number + 1,
+            categories: category.data,
+            loading: false,
+        });
+    }
+
+    const showNextPage = () => {
+        let current = state.currentPage;
+        let total = state.totalElements;
+        let record = state.recordPerPage;
+        if (current < Math.ceil(total / record)) {
+            if (state.search !== '') {
+                getProductsByPagination(current + 1);
+            } else {
+                searchBook(current + 1);
+            }
+        }
+    };
+
+    const showLastPage = () => {
+        let current = state.currentPage;
+        let total = state.totalElements;
+        let record = state.recordPerPage;
+        if (current < Math.ceil(total / record)) {
+            if (!state.search) {
+                getProductsByPagination(Math.ceil(total / record));
+            } else {
+                searchBook(Math.ceil(total / record));
+            }
+        }
+    };
+
+    const showFirstPage = () => {
+        let firstPage = state.currentPage - 1;
+        if (state.currentPage > firstPage) {
+            if (state.search === '') {
+                getProductsByPagination(firstPage);
+            } else {
+                searchBook(firstPage);
+            }
+        }
+    };
+
+    const showPrevPage = () => {
+        let prevPage = 1;
+        let curent = state.currentPage;
+        // console.log('curent showPrevPage: ', curent);
+        if (curent > prevPage) {
+            if (state.search === '') {
+                getProductsByPagination(curent - curent + 1);
+            } else {
+                searchBook(curent - prevPage);
+            }
+        }
+    };
+
+    const searchBox = (e) => {
+        setState({
+            ...state,
+            //assigning value to event target
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const searchBook = (currentPage) => {
+        console.log('currentPage: ', currentPage);
+        if (document.querySelector('#search').value === '') {
+            document.querySelector('#select').value = '-1';
+        }
+        currentPage = currentPage - 1;
+        async function getDataTable() {
+            let dataTable = await ProductService.getDataTableProduct(state.search, currentPage, state.recordPerPage);
+            setState({
+                ...state,
+                products: dataTable.data.content,
+                totalPages: dataTable.data.totalPages,
+                totalElements: dataTable.data.totalElements,
+                currentPage: dataTable.data.number + 1,
+            });
+            console.log('state: ', state);
+        }
+        getDataTable();
+    };
+
+    const resetBook = (currentPage) => {
+        setState({ ...state, search: '' });
+        getProductsByPagination(state.currentPage);
+    };
+
+    console.log('state new: ', state);
+    const { loading, products, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
 
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">
                 <h1 className="h3 mb-2 text-gray-800">Danh sách sản phẩm</h1>
-                <form className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div className="input-group">
                         <input
                             type="text"
+                            id="search"
+                            name="search"
+                            size="50"
                             className="form-control bg-light small"
                             placeholder="Tìm kiếm sản phẩm..."
-                            aria-label="Search"
-                            aria-describedby="basic-addon2"
+                            onChange={searchBox}
                         />
                         <div className="input-group-append">
-                            <button className="btn btn-primary" type="button">
+                            <button className="btn btn-primary" type="button" name="search" onClick={searchBook}>
                                 <i className="fas fa-search fa-sm" />
                             </button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             {loading ? (
                 <Spiner />
@@ -129,7 +252,23 @@ function BangSanPham() {
                 <div className="shadow mb-4 cur-div">
                     <div className="card-header py-3 d-flex justify-content-between">
                         <h6 className="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
-                        <div>
+                        <div className="d-flex align-items-center w-50">
+                            <p className="w-100 mb-0">Lọc theo thể loại:</p>
+                            <select
+                                className="form-select mr-3 select-bg-ori"
+                                id="select"
+                                name="search"
+                                onChange={searchBox}
+                            >
+                                <option value={-1} key={-1} disabled selected>
+                                    Chọn
+                                </option>
+                                {categories.map((category) => (
+                                    <option value={category.title} key={category.id}>
+                                        {category.title}
+                                    </option>
+                                ))}
+                            </select>
                             {/* Button trigger modal */}
                             <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
                                 Add
@@ -178,7 +317,9 @@ function BangSanPham() {
                                                         />
                                                     </button>
                                                 </td>
-                                                <td><strong>{product.title}</strong></td>
+                                                <td>
+                                                    <strong>{product.title}</strong>
+                                                </td>
                                                 <td className="text-center">{product.createdBy}</td>
                                                 <td className="text-end">
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
@@ -240,8 +381,65 @@ function BangSanPham() {
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div
+                                style={{
+                                    float: 'left',
+                                    fontFamily: 'monospace',
+                                    color: '#0275d8',
+                                }}
+                            >
+                                Trang {currentPage} Trên tổng số {totalPages}
+                            </div>
+                            <div style={{ float: 'right' }}>
+                                <div class="clearfix"></div>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a
+                                                type="button"
+                                                class="page-link"
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showPrevPage}
+                                            >
+                                                Trang đầu tiên
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a
+                                                type="button"
+                                                class="page-link"
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showFirstPage}
+                                            >
+                                                Lùi
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a
+                                                type="button"
+                                                class="page-link"
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showNextPage}
+                                            >
+                                                Tiếp
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a
+                                                type="button"
+                                                class="page-link"
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showLastPage}
+                                            >
+                                                Trang cuối cùng
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
+                    {/* <ProductsComponent /> */}
                 </div>
             )}
             {/* ================== Modal Edit ================== */}

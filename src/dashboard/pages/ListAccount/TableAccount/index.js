@@ -10,14 +10,17 @@ import ModalEditAccount from '../../../modal/account/ModalEdit';
 import ModalRestartPassword from '../../../modal/account/ModalRestartPassWord';
 import Swal from 'sweetalert2';
 import '../../pages.css';
-import { deleteAccount, listAccount } from '../../../redux/actions';
 
 function BangTaiKhoan() {
     const dispatch = useDispatch();
     const [state, setState] = useState({
         loading: false,
         accounts: [],
+        currentPage: 1,
+        recordPerPage: 5,
+        search: '',
         errorMessage: '',
+        totalPages: 0,
     });
     const [reRender, setReRender] = useState(false);
 
@@ -61,7 +64,7 @@ function BangTaiKhoan() {
         accountEditId: 0,
         showedit: false,
     });
-    const hanldeCloseEditAccount = () => setShowEdit(false);
+    const hanldeCloseEditAccount = () => setShowEdit({...showEdit, showedit: !showEdit.showedit});
 
     //modal restartPassword
     const [showRestart, setShowRestart] = useState(false);
@@ -87,43 +90,128 @@ function BangTaiKhoan() {
             }
         });
     }
-
-    const { loading, accounts, errorMessage } = state;
-
     useEffect(() => {
-        try {
-            setState({ ...state, loading: true });
-            async function getAccounts() {
-                let account = await AccountService.getAccount();
-                setState({ ...state, loading: false, accounts: account.data });
-            }
-            getAccounts();
-        } catch (error) {}
-        dispatch(listAccount());
-        console.log('reRender');
+        getProductsByPagination(state.currentPage);
     }, [showAdd, showEdit, reRender]);
 
+    // data table
+    async function getProductsByPagination(currentPage) {
+        console.log('vao day');
+        state.currentPage = currentPage - 1;
+        let accountData = await AccountService.getDataTableAccount(
+            state.search,
+            state.currentPage,
+            state.recordPerPage,
+        );
+        setState({
+            ...state,
+            accounts: accountData.data.content,
+            totalPages: accountData.data.totalPages,
+            totalElements: accountData.data.totalElements,
+            currentPage: accountData.data.number + 1,
+            loading: false,
+        });
+    }
+
+    const showNextPage = () => {
+        let current = state.currentPage;
+        let total = state.totalElements;
+        let record = state.recordPerPage;
+        if (current < Math.ceil(total / record)) {
+            if (state.search !== '') {
+                getProductsByPagination(current + 1);
+            } else {
+                searchBook(current + 1);
+            }
+        }
+    };
+
+    const showLastPage = () => {
+        let current = state.currentPage;
+        let total = state.totalElements;
+        let record = state.recordPerPage;
+        if (current < Math.ceil(total / record)) {
+            if (!state.search) {
+                getProductsByPagination(Math.ceil(total / record));
+            } else {
+                searchBook(Math.ceil(total / record));
+            }
+        }
+    };
+
+    const showFirstPage = () => {
+        let firstPage = state.currentPage - 1;
+        if (state.currentPage > firstPage) {
+            if (state.search === '') {
+                getProductsByPagination(firstPage);
+            } else {
+                searchBook(firstPage);
+            }
+        }
+    };
+
+    const showPrevPage = () => {
+        let prevPage = 1;
+        let curent = state.currentPage;
+        // console.log('curent showPrevPage: ', curent);
+        if (curent > prevPage) {
+            if (state.search === '') {
+                getProductsByPagination(curent - curent + 1);
+            } else {
+                searchBook(curent - prevPage);
+            }
+        }
+    };
+
+    const searchBox = (e) => {
+        setState({
+            ...state,
+            [e.target.name]: e.target.value,
+        });
+    };
+    
+    const searchBook = (currentPage) => {
+        currentPage = currentPage - 1;
+        async function getDataTable() {
+            let dataTable = await AccountService.getDataTableAccount(state.search, currentPage, state.recordPerPage);
+            setState({
+                ...state,
+                products: dataTable.data.content,
+                totalPages: dataTable.data.totalPages,
+                totalElements: dataTable.data.totalElements,
+                currentPage: dataTable.data.number + 1,
+            });
+        }
+        getDataTable();
+    };
+    
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
-    console.log('accounts: ', accounts);
+    const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">
                 <h1 className="h3 mb-2 text-gray-800">Danh sách tài khoản</h1>
-                <form className=" w-25 mr-5">
+                <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div className="input-group">
                         <input
                             type="text"
+                            id="search"
+                            name="search"
+                            size="50"
                             className="form-control bg-light small"
-                            placeholder="Tìm kiếm người dùng..."
+                            placeholder="Tìm kiếm sản phẩm..."
+                            onChange={searchBox}
                         />
                         <div className="input-group-append">
-                            <button className="btn btn-primary" type="button">
-                                <FontAwesomeIcon icon={faSearch} />
+                            <button className="btn btn-primary" type="button" name="search"
+                             onClick={searchBook}
+                             >
+                                <i className="fas fa-search fa-sm" />
                             </button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             {loading ? (
                 <Spiner />
@@ -140,7 +228,7 @@ function BangTaiKhoan() {
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
-                            <table className="table table-bordered" id="dataTable" width="100%" cellSpacing={0}>
+                            <table className="table table-hover" id="dataTable" width="100%" cellSpacing={0}>
                                 <thead>
                                     <tr>
                                         <th>Avatar</th>
@@ -231,6 +319,62 @@ function BangTaiKhoan() {
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div
+                                style={{
+                                    float: 'left',
+                                    fontFamily: 'monospace',
+                                    color: '#0275d8',
+                                }}
+                            >
+                                Trang {currentPage} Trên tổng số {totalPages}
+                            </div>
+                            <div style={{ float: 'right' }}>
+                                <div class="clearfix"></div>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a
+                                                type="button"
+                                                class="page-link"
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showPrevPage}
+                                            >
+                                                Trang đầu tiên
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a
+                                                type="button"
+                                                class="page-link"
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showFirstPage}
+                                            >
+                                                Lùi
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a
+                                                type="button"
+                                                class="page-link"
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showNextPage}
+                                            >
+                                                Tiếp
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a
+                                                type="button"
+                                                class="page-link"
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showLastPage}
+                                            >
+                                                Trang cuối cùng
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>

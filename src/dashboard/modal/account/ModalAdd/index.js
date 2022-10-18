@@ -6,9 +6,22 @@ import * as yup from 'yup';
 import FileService from '../../../services/FileService';
 import { useDispatch } from 'react-redux';
 import { addAccount } from '../../../redux/actions';
-import '../../modal.css'
+import '../../modal.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ModalDetailAccount(props) {
+    const notify = () =>
+        toast.success('Wow so easy!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
     const dispatch = useDispatch();
     const { account, showAdd, onCloseAddAccount } = props;
     const [stateImg, setStateImg] = useState(false);
@@ -194,6 +207,7 @@ function ModalDetailAccount(props) {
 
             handleReset();
             dispatch(addAccount(account));
+            notify();
         },
     });
 
@@ -479,6 +493,7 @@ function ModalDetailAccount(props) {
                             Create
                         </Button>
                     )}
+                    <ToastContainer />
                 </Modal.Footer>
             </form>
         </Modal>

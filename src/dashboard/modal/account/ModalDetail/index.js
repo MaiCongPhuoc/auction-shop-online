@@ -18,7 +18,6 @@ function ModalDetail(props) {
             console.log(error);
         }
     }, [showDetail]);
-    console.log('propsDetail: ', props);
     return (
         <Modal show={showDetail} onHide={onCloseDetailAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>

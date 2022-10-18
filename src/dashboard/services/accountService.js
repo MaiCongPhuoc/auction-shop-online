@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ACCOUNTBYID_URL, ACCOUNT_URL, ADDACCOUNT_URL, DELETEACCOUNT_URL, DISTRICT_URL, EDITACCOUNT_URL, PROVINCE_URL, ROLES_URL, WARD_URL } from './Commom';
+import { ACCOUNTBYID_URL, ACCOUNT_URL, ADDACCOUNT_URL, DATATABLEACCOUNT_URL, DELETEACCOUNT_URL, DISTRICT_URL, EDITACCOUNT_URL, PROVINCE_URL, ROLES_URL, WARD_URL } from './Commom';
 
 class AccountService{
     static getAccount(){
@@ -7,6 +7,9 @@ class AccountService{
     }
     static getAddAccount(account){
         return axios.post(ADDACCOUNT_URL, account)
+    }
+    static getDataTableAccount(search,currentPage,recordPerPage) {
+        return axios.get(`${DATATABLEACCOUNT_URL}${search}?page=${currentPage}&size=${recordPerPage}`);
     }
     static getAccountById(accountId){
         return axios.get(`${ACCOUNTBYID_URL}/${accountId}`)
