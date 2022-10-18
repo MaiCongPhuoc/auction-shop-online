@@ -1,8 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { FormatMoney } from '../Hooks/Hooks';
+import { getAccount } from '../redux/selector';
+import CartItemService from '../service/CartItem/CartItemService';
 
 const Buy = ({ product }) => {
-    const [totalPrice, setTotalPrice] = useState(product.price);
+    const account = useSelector(getAccount);
+
+    const currentPrice = product.price;
+
+    const [newTotalPrice, setNewTotalPrice] = useState(product.price);
+
+    const [quantity, setQuantity] = useState(1);
+
+
+    useEffect(() => {
+        setNewTotalPrice(currentPrice*quantity);
+    }, [quantity]);
+
+    const cartItem = {
+        product: {
+            id: product.id
+        },
+        title: account.username + product.title,
+        quantity: quantity
+    }
+
+    const handleAddCartItem = () => {
+        try {
+            async function postData() {
+                let result = await CartItemService.addCartItem(account.id, cartItem);
+                if (result.data) {
+                    toast.success(`Đã thêm ${product.title} vào giỏ hàng`);
+                }
+            }
+            postData();
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
 
     return (
         <div className="buy-tool">
@@ -19,27 +56,29 @@ const Buy = ({ product }) => {
                             </div>
                             <div className="bb-content my-2">
                                 <div className="bin-price bin-price-centered fw-bold">
-                                    <span>{FormatMoney(product.price)}</span>
+                                    <span>{FormatMoney(newTotalPrice)}</span>
                                 </div>
                             </div>
                         </div>
                         <div className="bb-row bb-bin-bid">
                             <form>
-                                <input name="opt" type="hidden" defaultValue={688} />
-                                <div className="bb-item" style={{ padding: '0 15px' }}>
+                                <div className="bb-item">
                                     <div className="bb-item-qty" style={{ width: '30%', display: 'inline-block' }}>
-                                        <span className="bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>Quantity</span>
-                                        <select className="quantity_control" name="qty" style={{ lineHeight: '30px' }}>
-                                            <option value={1}>1</option>
-                                            <option value={2}>2</option>
-                                            <option value={3}>3</option>
-                                            <option value={4}>4</option>
-                                            <option value={5}>5</option>
-                                        </select>
+                                        <label htmlFor='quantity' className="bid-box-label" style={{ color: '#333', fontWeight: 600, padding: '3px 0px' }}>Số lượng</label>
+                                        <input
+                                            onChange={(e) => { setQuantity(e.target.value) }} 
+                                            type="number" 
+                                            id='quantity' 
+                                            min="1" 
+                                            max="10" 
+                                            className="quantity_control mt-2" 
+                                            name="qty" 
+                                            style={{ lineHeight: '30px' }} />
+
                                     </div>
                                     <div className="ms-1" style={{ marginTop: '37px', float: 'right' }}>
                                         <span className="current-bid bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>&nbsp;</span>
-                                        <a className="btn btn-primary">Thêm vào giỏ hàng</a>
+                                        <a className="btn btn-primary me-4" onClick={handleAddCartItem}>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </form>
