@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import FileService from '../../../services/FileService';
 import { useDispatch } from 'react-redux';
 import { addAccount, editAccount } from '../../../redux/actions';
-import '../../modal.css'
+import '../../modal.css';
 
 function ModalEditProduct(props) {
     const dispatch = useDispatch();

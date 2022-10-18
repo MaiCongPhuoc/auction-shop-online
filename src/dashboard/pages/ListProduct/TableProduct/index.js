@@ -179,7 +179,9 @@ function BangSanPham() {
                                                         />
                                                     </button>
                                                 </td>
-                                                <td><strong>{product.title}</strong></td>
+                                                <td>
+                                                    <strong>{product.title}</strong>
+                                                </td>
                                                 <td className="text-center">{product.createdBy}</td>
                                                 <td className="text-end">
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
