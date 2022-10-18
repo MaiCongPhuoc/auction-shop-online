@@ -42,8 +42,8 @@ const HeaderAfterLogin = () => {
                         </div>
                     </div>
                 </div>
-                <a className="logged_in_name" href="#">Trần Trung</a> |
-                <a style={{width: '120px'}} id="customer-logout-link" className="new-login-button" rel="nofollow" href="/logout">LOG OUT</a>
+                <a className="logged_in_name mx-3" href="#">Trần Trung</a> |
+                <a id="customer-logout-link" className="new-login-button" rel="nofollow" href="/logout">LOG OUT</a>
             </div>
         </div>
     )

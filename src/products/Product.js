@@ -22,8 +22,8 @@ function Product() {
     
     return (
         <Provider store={store}>
-            <Header />
-            <Content />
+            <Header className="product-client"/>
+            <Content className="product-client"/>
         </Provider>
     );
 }

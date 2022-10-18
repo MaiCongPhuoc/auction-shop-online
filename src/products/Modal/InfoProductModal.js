@@ -5,6 +5,7 @@ import { setShowInfoProduct, setCheckProduct } from './../redux/actions';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import ProductService from "../service/Product/ProductService";
 import { Carousel } from './../Hooks/Hooks';
+import Buy from "./Buy";
 
 const InfoProductModal = () => {
     const dispatch = useDispatch();
@@ -32,7 +33,6 @@ const InfoProductModal = () => {
     const showInfoProduct = useSelector(getShowInfoProduct);
 
     let max_visibility = medias.length;
-    console.log(medias);
     return (
         <>
             <Modal
@@ -75,7 +75,7 @@ const InfoProductModal = () => {
                                 <p>{product.price}</p>
                             </Col>
                             <Col xs={12} md={4}>
-
+                                <Buy product={product} />
                             </Col>
                         </Row>
                     </Container>
@@ -84,7 +84,6 @@ const InfoProductModal = () => {
                     <Button style={{ width: 100 }} variant="secondary" onClick={handleClose}>
                         Đóng
                     </Button>
-                    {/* <Button variant="outline-primary">Understood</Button> */}
                 </Modal.Footer>
             </Modal>
         </>
