@@ -3,10 +3,11 @@ import { Button, Modal } from 'react-bootstrap';
 import CategoryService from '../../../services/Category';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import FileService from '../../../services/FileService';
 import ProductMediaService from '../../../services/ProductImageService';
 import '../../modal.css';
+import "react-toastify/dist/ReactToastify.css";
 import ProductService from '../../../services/productService';
 // import { withSwal } from 'react-sweetalert2';
 
@@ -14,6 +15,17 @@ let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
 function ModalAddProduct(props) {
+    const notify = () =>
+    toast.success("Đã thêm thành công!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
     const { show, handleClose } = props;
     const [category, setCategory] = useState({
         loading: false,
@@ -90,6 +102,7 @@ function ModalAddProduct(props) {
                         // });
                     }
                     saveAvatar();
+                    notify();
                 }
                 postData(submitFrm);
                 setCategory({ ...category, loading: false });
@@ -331,10 +344,11 @@ function ModalAddProduct(props) {
                                 <span className="spinner-border text-info"></span>
                             </Button>
                         ) : (
-                            <Button type="submit" className="btn btn-primary">
+                            <Button type="submit" className="btn btn-primary" >
                                 Create
                             </Button>
                         )}
+                        <ToastContainer />
                     </Modal.Footer>
                 </form>
             )}
