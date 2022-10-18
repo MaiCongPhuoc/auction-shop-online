@@ -3,8 +3,10 @@ import { Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import ProductService from '../../../services/productService';
-import CategoryService from '../../../services/category';
-import ProductMediaService from '../../../services/productImageService';
+import CategoryService from '../../../services/Category';
+import ProductMediaService from '../../../services/ProductImageService';
+import FileService from '../../../services/FileService';
+import '../../modal.css';
 
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
@@ -40,15 +42,18 @@ function ModalEditProduct(props) {
     const handleUpload = (e) => {
         listImg.shift();
         async function uploadAvatar(productEditId) {
-            let images = await ProductMediaService.getListMedia(productEditId)
-            console.log('images.data: ', images.data);
-            // for (let i = 0; i < e.target.files.length; i++) {
-            //     setStateImg(true);
-            //     let uploadResult = await FileService.Upload(e.target.files[i]);
-            //     listImg.push(uploadResult.data.url);
-            //     console.log(listImg);
-            //     setStateImg(false);
-            // }
+            setStateImg(true);
+            let images = await ProductMediaService.getListMedia(productEditId);
+            for (let i = 0; i < images.data.length; i++) {
+                await FileService.destroy(images.data[i].fileUrl);
+                await ProductMediaService.DeleteMedia(images.data[i].id);
+            }
+            for (let i = 0; i < e.target.files.length; i++) {
+                let uploadResult = await FileService.Upload(e.target.files[i]);
+                listImg.push(uploadResult.data.url);
+                setStateImg(false)
+                console.log(listImg);
+            }
         }
         uploadAvatar(productEditId);
     };
@@ -60,19 +65,45 @@ function ModalEditProduct(props) {
                 let apiProduct = await ProductService.ProductById(productEditId);
                 console.log('product api: ', apiProduct.data);
                 setCategory({ ...categorys, categorys: category.data, loading: false });
-                setProduct({...apiProduct.data})
+                setProduct({ ...apiProduct.data });
             }
             getCate();
         } catch (error) {
             setCategory({ ...categorys, errorMessage: error.message, loading: false });
         }
     }, [showEdit]);
+    useEffect(() => {
+        if (flag) {
+            try {
+                async function postData(submitFrm) {
+                    setCategory({ ...category, loading: true });
+                    await ProductService.EditProduct(submitFrm, productEditId);
+                    listImg.reverse();
+                    async function saveAvatar() {
+                        for (let i = 0; i < listImg.length; i++) {
+                            let img = {
+                                id: 0,
+                                fileUrl: listImg[i],
+                            };
+                            await ProductMediaService.AddMedia(img);
+                        }
+                        listImg = [];
+                    }
+                    saveAvatar();
+                }
+                postData(submitFrm);
+                setCategory({ ...category, loading: false });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }, [submitFrm]);
     const formik = useFormik({
         initialValues: {
             action: product.action,
             available: product.available,
-            image: product.image,
-            moderation: product.moderation,
+            image: 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg',
+            moderation: 0,
             price: product.price,
             slug: product.slug,
             sold: product.sold,
@@ -228,7 +259,7 @@ function ModalEditProduct(props) {
                                     Thể loại
                                 </label>
                                 <select
-                                    className="form-select select"
+                                    className="form-select select select-bg-ori"
                                     id="category"
                                     name="category.id"
                                     value={formik.values.category.id || product.categoryId}
@@ -279,7 +310,7 @@ function ModalEditProduct(props) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button type="reset" variant="secondary" onClick={handleCloseEdit}>
+                    <Button type="reset" variant="secondary w-auto" onClick={handleCloseEdit}>
                         Close
                     </Button>
                     {stateImg ? (

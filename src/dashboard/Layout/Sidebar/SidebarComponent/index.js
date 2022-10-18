@@ -17,7 +17,7 @@ function SidebarComponent() {
             <div id="collapseTwo" className="collapse" {...getCollapseProps()}>
                 <div className="bg-white py-2 collapse-inner rounded">
                     <h6 className="collapse-header">Custom Components:</h6>
-                    <Link className="collapse-item" to='/danhsachsanpham'>
+                    <Link className="collapse-item" to='/list-product'>
                         Danh sách sản phẩm
                     </Link>
                     <a className="collapse-item" href="cards.html">

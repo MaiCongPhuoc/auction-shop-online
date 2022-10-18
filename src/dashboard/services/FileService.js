@@ -14,7 +14,7 @@ class FileService {
 
     static destroy(filepath){
         let filename = filepath.split('/').pop().split('.')[0];
-        const CLOUD_NAME = 'dtxyz2s1g';
+        const CLOUD_NAME = 'com-codegym';
         const DESTROY_API = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/destroy`;
         const timestamp = new Date().getTime();
         const public_id = filename;

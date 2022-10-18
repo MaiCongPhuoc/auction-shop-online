@@ -1,8 +1,9 @@
-import Footer from "../../Layout/Footer";
-import AccountAdmin from "../../Layout/Header/AccountAdmin";
-import Search from "../../Layout/Header/Search";
-import Sidebar from "../../Layout/Sidebar";
-import BangSanPham from "./TableProduct";
+import Footer from '../../Layout/Footer';
+import AccountAdmin from '../../Layout/Header/AccountAdmin';
+import Search from '../../Layout/Header/Search';
+import Sidebar from '../../Layout/Sidebar';
+import BangSanPham from './TableProduct';
+import ProductsComponent from './TableProduct/ProductsComponent';
 
 function DanhSachSanPham() {
     return (
@@ -21,23 +22,17 @@ function DanhSachSanPham() {
                             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                                 <i className="fa fa-bars" />
                             </button>
-                            {/* Topbar Search */}
-                            <Search />
-                            {/* Topbar Navbar */}
+                            {/* <Search /> */}
                             <AccountAdmin />
                         </nav>
                         {/* End of Topbar */}
                         {/* Begin Page Content */}
-                        <BangSanPham />
-                        {/* /.container-fluid */}
+                        <BangSanPham />;{/* bo phan trang */}
+                        {/* <ProductsComponent /> */}
                     </div>
-                    {/* End of Main Content */}
-                    <Footer />
+                    {/* <Footer /> */}
                 </div>
-                {/* End of Content Wrapper */}
             </div>
-            {/* End of Page Wrapper */}
-            {/* Scroll to Top Button*/}
             <a className="scroll-to-top rounded" href="#page-top">
                 <i className="fas fa-angle-up" />
             </a>
@@ -75,7 +70,6 @@ function DanhSachSanPham() {
                 </div>
             </div>
         </>
-        
     );
 }
 

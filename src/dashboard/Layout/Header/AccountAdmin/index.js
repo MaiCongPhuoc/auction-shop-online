@@ -1,5 +1,8 @@
 import Tippy from '@tippyjs/react';
+<<<<<<< HEAD
+=======
 import { useState } from 'react';
+>>>>>>> b18a2fce197876ce1d2e7e3bd3c9ca156cabe130
 
 function AccountAdmin() {
     const renderThongBao = () => {
@@ -112,7 +115,10 @@ function AccountAdmin() {
 
     const renderAccuont = () => {
         return (
-            <div className="dropdown-menu-right shadow animated--grow-in accountAdmin rounded-3" aria-labelledby="userDropdown">
+            <div
+                className="dropdown-menu-right shadow animated--grow-in accountAdmin rounded-3"
+                aria-labelledby="userDropdown"
+            >
                 <a className="dropdown-item p-2" href="#">
                     <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400" />
                     Profile
@@ -251,7 +257,6 @@ function AccountAdmin() {
                         <img className="img-profile rounded-circle" src="img/undraw_profile.svg" />
                     </a>
                 </Tippy>
-                {/* Dropdown - User Information */}
             </li>
         </ul>
     );

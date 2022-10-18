@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import CategoryService from '../../../services/category';
+import CategoryService from '../../../services/Category';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import ProductService from '../../../services/productService';
+import { toast } from 'react-toastify';
 import FileService from '../../../services/FileService';
-import ProductMediaService from '../../../services/productImageService';
+import ProductMediaService from '../../../services/ProductImageService';
+import '../../modal.css';
+import ProductService from '../../../services/productService';
+// import { withSwal } from 'react-sweetalert2';
+
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
@@ -75,9 +79,15 @@ function ModalAddProduct(props) {
                                 fileUrl: listImg[i],
                             };
                             await ProductMediaService.AddMedia(img);
-                            
                         }
-                        listImg = []
+                        listImg = [];
+                        // Swal.fire({
+                        //     position: 'top-end',
+                        //     icon: 'success',
+                        //     title: 'Your work has been saved',
+                        //     showConfirmButton: false,
+                        //     timer: 1500,
+                        // });
                     }
                     saveAvatar();
                 }
@@ -262,7 +272,7 @@ function ModalAddProduct(props) {
                                         Thể loại
                                     </label>
                                     <select
-                                        className="form-select select"
+                                        className="form-select select select-bg-ori"
                                         id="category"
                                         name="category.id"
                                         value={formik.values.category.id}
@@ -313,7 +323,7 @@ function ModalAddProduct(props) {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type="reset" variant="secondary" onClick={handleClose}>
+                        <Button type="reset" variant="secondary w-auto" className="" onClick={handleClose}>
                             Close
                         </Button>
                         {stateImg ? (
