@@ -1,9 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import ProductMediaService from '../../../services/ProductImageService';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function ModalDetailProduct(props) {
-    const {product, showdetail, handleCloseDetail} = props;
-    console.log(product);
+    const { product, showdetail, handleCloseDetail, productIdDetail } = props;
+    const [imageProduct, setImageProduct] = useState([{
+        id: 0,
+        fileUrl: '',
+    }]);
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    };
+    console.log('imageProduct: ', imageProduct);
+
+    useEffect(() => {
+        async function getImage() {
+            let imageData = await ProductMediaService.getListMedia(productIdDetail);
+            setImageProduct(imageData.data);
+        }
+        getImage();
+    }, [showdetail]);
 
     return (
         <Modal show={showdetail} onHide={handleCloseDetail} backdrop="static" keyboard={false} size="xl">
@@ -12,9 +35,20 @@ function ModalDetailProduct(props) {
             </Modal.Header>
             <Modal.Body>
                 <div className="row g-0">
-                    <div className="col-md-4">
-                        <img src={product.image} className="img-fluid rounded-start" alt="Ảnh sản phẩm" />
+                    {/* image */}
+                    <div className="col-md-4 ">
+                        <Slider {...settings}>
+                            {imageProduct.map((image) => (
+                                <img
+                                    key={image.id}
+                                    src={image.fileUrl}
+                                    className="img-fluid rounded-start"
+                                    alt="Ảnh sản phẩm"
+                                />
+                            ))}
+                        </Slider>
                     </div>
+
                     <div className="col-md-7 ml-5">
                         <div className="row">
                             <h5 className="col-sm-4">Title:</h5>

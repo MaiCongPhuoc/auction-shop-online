@@ -38,9 +38,10 @@ function BangSanPham() {
     const [showDetail, setShowDetail] = useState({
         product: {},
         showdetail: false,
+        productIdDetail: 0,
     });
 
-    const { product, showdetail } = showDetail;
+    const { product, showdetail, productIdDetail } = showDetail;
 
     const handleCloseDetail = () => setShowDetail({ ...showDetail, showdetail: false });
 
@@ -302,7 +303,7 @@ function BangSanPham() {
                                                             setShowDetail({
                                                                 product: product,
                                                                 showdetail: true,
-                                                                productId: product.id,
+                                                                productIdDetail: product.id,
                                                             })
                                                         }
                                                         className="btnDetailProduct"
@@ -446,7 +447,7 @@ function BangSanPham() {
             <ModalEditProduct productEditId={productEditId} showEdit={showedit} handleCloseEdit={handleCloseEdit} />
 
             {/* =================== Modal detail products ===================== */}
-            <ModalDetailProduct product={product} showdetail={showdetail} handleCloseDetail={handleCloseDetail} />
+            <ModalDetailProduct product={product} showdetail={showdetail} productIdDetail={productIdDetail} handleCloseDetail={handleCloseDetail} />
 
             {/*==================== Modal Add ===========================*/}
             <ModalAddProduct show={showAdd} handleClose={handCloseAdd} />

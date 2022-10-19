@@ -50,6 +50,7 @@ function ModalAddProduct(props) {
             id: 0,
         },
         description: '',
+        images: []
     });
 
     //upload multi image cloudinary
@@ -60,11 +61,15 @@ function ModalAddProduct(props) {
                 setStateImg(true);
                 let uploadResult = await FileService.Upload(e.target.files[i]);
                 listImg.push(uploadResult.data.url);
-                setStateImg(false);
+                setTimeout(() => {
+                    setStateImg(false);
+                }, 1000 * 2);
             }
+            console.log('listImg: ', listImg);
         }
         uploadAvatar();
     };
+
     useEffect(() => {
         try {
             setCategory({ ...category, loading: true });
@@ -80,31 +85,27 @@ function ModalAddProduct(props) {
     useEffect(() => {
         if (flag) {
             try {
+                listImg.reverse();
                 async function postData(submitFrm) {
                     setCategory({ ...category, loading: true });
-                    let result = await ProductService.AddProduct(submitFrm);
-                    listImg.reverse();
-                    async function saveAvatar() {
-                        for (let i = 0; i < listImg.length; i++) {
-                            let img = {
-                                id: 0,
-                                fileUrl: listImg[i],
-                            };
-                            await ProductMediaService.AddMedia(img);
-                        }
-                        listImg = [];
-                        // Swal.fire({
-                        //     position: 'top-end',
-                        //     icon: 'success',
-                        //     title: 'Your work has been saved',
-                        //     showConfirmButton: false,
-                        //     timer: 1500,
-                        // });
-                    }
-                    saveAvatar();
-                    notify();
+                    let createRes =  await ProductService.AddProduct(submitFrm);
+                    console.log('createRes: ', createRes);
                 }
                 postData(submitFrm);
+                // async function saveAvatar() {
+                //     for (let i = 0; i < listImg.length; i++) {
+                //         console.log("here");
+                //         let img = {
+                //             id: 0,
+                //             fileUrl: listImg[i],
+                //         };
+                        
+                //         await ProductMediaService.AddMedia(img);
+                //     }
+                //     listImg = [];
+                // }
+                // saveAvatar();
+                notify();
                 setCategory({ ...category, loading: false });
             } catch (error) {
                 console.log(error);
@@ -114,6 +115,7 @@ function ModalAddProduct(props) {
     // Validate from add
     const handleReset = () => {
         document.querySelector('#image').value = '';
+        listImg = [];
         formik.handleReset();
     };
 
@@ -132,6 +134,7 @@ function ModalAddProduct(props) {
                 id: 0,
             },
             description: '',
+            images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg']
         },
         validationSchema: yup.object({
             title: yup
@@ -155,9 +158,12 @@ function ModalAddProduct(props) {
         }),
         onSubmit: (product) => {
             product.action = radio;
-            console.log('product add: ', product);
+            listImg.reverse();
+            product.image = listImg[0];
+            product.images = listImg;
             flag = true;
             product.category.id = Number(document.querySelector('#category').value);
+            console.log('product add: ', product);
             setSubmitFrm(product);
             handleReset();
         },
