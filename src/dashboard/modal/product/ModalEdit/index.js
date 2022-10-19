@@ -37,6 +37,7 @@ function ModalEditProduct(props) {
             id: 0,
         },
         description: '',
+        images: [],
     });
     const [product, setProduct] = useState({});
     const handleUpload = (e) => {
@@ -51,23 +52,27 @@ function ModalEditProduct(props) {
             for (let i = 0; i < e.target.files.length; i++) {
                 let uploadResult = await FileService.Upload(e.target.files[i]);
                 listImg.push(uploadResult.data.url);
-                setStateImg(false)
-                console.log(listImg);
+                setTimeout(() => {
+                    setStateImg(false);
+                }, 1000 * 2);
             }
+            console.log('listImg: ', listImg);
         }
         uploadAvatar(productEditId);
     };
     useEffect(() => {
         try {
-            setCategory({ ...category, loading: true });
-            async function getCate() {
-                let category = await CategoryService.getCategory();
-                let apiProduct = await ProductService.ProductById(productEditId);
-                console.log('product api: ', apiProduct.data);
-                setCategory({ ...categorys, categorys: category.data, loading: false });
-                setProduct({ ...apiProduct.data });
+            if (productEditId === 0 || productEditId === undefined) {
+                setCategory({ ...category, loading: true });
+                async function getCate() {
+                    let category = await CategoryService.getCategory();
+                    let apiProduct = await ProductService.ProductById(productEditId);
+                    console.log('product api: ', apiProduct.data);
+                    setCategory({ ...categorys, categorys: category.data, loading: false });
+                    setProduct({ ...apiProduct.data });
+                }
+                getCate();
             }
-            getCate();
         } catch (error) {
             setCategory({ ...categorys, errorMessage: error.message, loading: false });
         }
@@ -78,26 +83,32 @@ function ModalEditProduct(props) {
                 async function postData(submitFrm) {
                     setCategory({ ...category, loading: true });
                     await ProductService.EditProduct(submitFrm, productEditId);
-                    listImg.reverse();
-                    async function saveAvatar() {
-                        for (let i = 0; i < listImg.length; i++) {
-                            let img = {
-                                id: 0,
-                                fileUrl: listImg[i],
-                            };
-                            await ProductMediaService.AddMedia(img);
-                        }
-                        listImg = [];
-                    }
-                    saveAvatar();
                 }
                 postData(submitFrm);
+                // async function saveAvatar() {
+                //     for (let i = 0; i < listImg.length; i++) {
+                //         let img = {
+                //             id: 0,
+                //             fileUrl: listImg[i],
+                //         };
+                //         await ProductMediaService.AddMedia(img);
+                //     }
+                //     listImg = [];
+                // }
+                // saveAvatar();
                 setCategory({ ...category, loading: false });
             } catch (error) {
                 console.log(error);
             }
         }
     }, [submitFrm]);
+
+    const handleReset = () => {
+        document.querySelector('#image').value = '';
+        listImg = [];
+        formik.handleReset();
+    };
+
     const formik = useFormik({
         initialValues: {
             action: product.action,
@@ -113,6 +124,7 @@ function ModalEditProduct(props) {
                 id: product.categoryId,
             },
             description: product.description,
+            images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
         },
         validationSchema: yup.object({
             title: yup
@@ -132,13 +144,18 @@ function ModalEditProduct(props) {
                 .required('Vui lòng đổi  số lượng!'),
             action: yup.string(),
             image: yup.mixed(),
-            description: yup.string(),
+            description: yup.string().required('Vui lòng sửa lại mô tả!'),
         }),
         onSubmit: (product) => {
             product.action = radio;
             flag = true;
+            listImg.reverse();
+            product.image = listImg[0];
+            product.images = listImg;
             product.category.id = Number(document.querySelector('#category').value);
+            console.log('product: ', product);
             setSubmitFrm(product);
+            handleReset();
         },
         onReset: (product) => {
             console.log('onReset 2: ', product);
@@ -172,6 +189,9 @@ function ModalEditProduct(props) {
                             )}
                             {formik.errors.image && formik.touched.image && (
                                 <li className="error">{formik.errors.image}</li>
+                            )}
+                            {formik.errors.description && formik.touched.description && (
+                                <li className="error">{formik.errors.description}</li>
                             )}
                         </ul>
                     </div>
@@ -302,6 +322,7 @@ function ModalEditProduct(props) {
                                     className="form-control"
                                     id="description"
                                     rows="3"
+                                    name="description"
                                     value={formik.values.description || product.description}
                                     onChange={formik.handleChange}
                                 ></textarea>

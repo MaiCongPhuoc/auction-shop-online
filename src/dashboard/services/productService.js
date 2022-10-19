@@ -9,7 +9,7 @@ class ProductService {
         return axios.get(`${DATATABLEPRODUCT_URL}${search}?page=${currentPage}&size=${recordPerPage}`);
     }
     static AddProduct(product) {
-        return axios.post(ADDPRODUCT_URL, product);
+        return axios.post(`${ADDPRODUCT_URL}`, product);
     }
     static EditProduct(editProduct, editProductId) {
         return axios.put(`${EDITPRODUCT_URL}/${editProductId}`, editProduct);
