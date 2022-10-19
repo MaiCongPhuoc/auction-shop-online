@@ -8,34 +8,50 @@ const CartItem = () => {
     return (
         <div>
             <div id="show-list-cart-item">
-                <div id="cart">
-                    <table className="table" id="tb-cart-item">
-                        <thead>
-                            <tr>
-                                <th className="text-center" id="image-item"> Image</th>
-                                <th className="text-center" id="title-item">Title</th>
-                                <th className="text-center" id="price-item">Price</th>
-                                <th className="text-center" id="quantity-item">Quantity</th>
-                                <th className="text-center" id="total-item">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cartItems.map(cartItem => (
-                                <tr key={cartItem.id}>
-                                    <td>
-                                        <img src={cartItem.product.image} alt="" />
-                                    </td>
-                                    <td>{cartItem.product.title}</td>
-                                    <td className="text-end">{cartItem.price}</td>
-                                    <td>
-                                        <input type="text" />
-                                        {cartItem.quantity}
-                                    </td>
-                                    <td className="text-end">{cartItem.amountTransaction}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="container">
+                    <div className="row col-12 my-5">
+                        <span className="text-center col-4" id="image-item"> Sản phẩm</span>
+                        <span className="text-center col-2" id="title-item">Đơn giá</span>
+                        <span className="text-center col-2" id="price-item">Số lượng</span>
+                        <span className="text-center col-2" id="quantity-item">Số tiền</span>
+                        <span className="text-center col-2" id="total-item">Thao tác</span>
+                    </div>
+                    {cartItems.map(cartItem => (
+                        <div className="row col-12" key={cartItem.id}>
+                            <span className="col-4">
+                                <img style={{
+                                    padding: '5px',
+                                    width: '100px',
+                                    height: '120px'
+                                }} src={cartItem.product.image} alt="" />
+                                <label>{cartItem.product.title}</label>
+                            </span>
+                            <span className="text-end col-2">{cartItem.price}</span>
+                            <span style={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                                className="text-center col-2">
+                                <span style={{
+                                    fontSize: '36px',
+                                    border: '0.5px solid #cacaca',
+                                    height: '38px',
+                                    lineHeight: '30px',
+                                    cursor: 'pointer'
+                                }}>-</span>
+                                <input style={{ width: '50px', margin: 'auto', textAlign: 'center' }} type="text" defaultValue={cartItem.quantity} />
+                                <span style={{
+                                    fontSize: '28px',
+                                    border: '0.5px solid #cacaca',
+                                    height: '38px',
+                                    lineHeight: '30px',
+                                    cursor: 'pointer'
+                                }}>+</span>
+                            </span>
+                            <span className="text-end col-2">{cartItem.amountTransaction}</span>
+                            <span className="col-2">Xóa</span>
+                        </div>
+                    ))}
                     <h5>Sum: $ total</h5>
                 </div>
             </div>

@@ -121,3 +121,13 @@
     font-size: smaller;
     font-style: italic;
 }
+
+#show-list-cart-item span{
+    font-size: smaller;
+}
+#show-list-cart-item .row{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.156);
+}
