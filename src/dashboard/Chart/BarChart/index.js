@@ -23,61 +23,60 @@ function BarChart() {
     useEffect(() => {
         async function getListProduct() {
             let listProduct = await ProductService.getProducts();
-            setProducts(listProduct.data)
+            setProducts(listProduct.data);
             console.log('listProduct.data: ', listProduct.data);
         }
         getListProduct();
-    },[])
-    
+    }, []);
 
     for (let i = 0; i < products.length; i++) {
         if (month.getMonth(products[i].createdAt) === 0) {
             console.log('2022-1: ', month.getMonth(products[i].createdAt));
-            month1 += (products[i].sold * products[i].price);
+            month1 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 1) {
             console.log('2022-2: ', month.getMonth(products[i].createdAt));
-            month2 += (products[i].sold * products[i].price);
+            month2 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 2) {
             console.log('2022-3: ', month.getMonth(products[i].createdAt));
-            month3 += (products[i].sold * products[i].price);
+            month3 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 3) {
             console.log('2022-4: ', month.getMonth(products[i].createdAt));
-            month4 += (products[i].sold * products[i].price);
+            month4 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 4) {
             console.log('2022-5: ', month.getMonth(products[i].createdAt));
-            month5 += (products[i].sold * products[i].price);
+            month5 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 5) {
             console.log('2022-6: ', month.getMonth(products[i].createdAt));
-            month6 += (products[i].sold * products[i].price);
+            month6 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 6) {
             console.log('2022-7: ', month.getMonth(products[i].createdAt));
-            month7 += (products[i].sold * products[i].price);
+            month7 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 7) {
             console.log('2022-8: ', month.getMonth(products[i].createdAt));
-            month8 += (products[i].sold * products[i].price);
+            month8 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 8) {
             console.log('2022-9: ', month.getMonth(products[i].createdAt));
-            month9 += (products[i].sold * products[i].price);
+            month9 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 9) {
             console.log('2022-10: ', month.getMonth(products[i].createdAt));
-            month10 += (products[i].sold * products[i].price);
+            month10 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 10) {
             console.log('2022-11: ', month.getMonth(products[i].createdAt));
-            month11 += (products[i].sold * products[i].price);
+            month11 += products[i].sold * products[i].price;
         }
         if (month.getMonth(products[i].createdAt) === 11) {
             console.log('2022-12: ', month.getMonth(products[i].createdAt));
-            month12 += (products[i].sold * products[i].price);
+            month12 += products[i].sold * products[i].price;
         }
     }
 
@@ -112,7 +111,20 @@ function BarChart() {
         datasets: [
             {
                 label: 'Bán ra',
-                data: [month1, month2, month3, month4, month5, month6, month7, month8, month9, month10, month11, month12],
+                data: [
+                    month1,
+                    month2,
+                    month3,
+                    month4,
+                    month5,
+                    month6,
+                    month7,
+                    month8,
+                    month9,
+                    month10,
+                    month11,
+                    month12,
+                ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
