@@ -20,9 +20,6 @@ export const ROLES_URL = 'http://localhost:8080/api/roles';
 
 export const CATEGORY_URL = 'http://localhost:8080/api/categories';
 
-
 export const PROVINCE_URL = 'https://vapi.vnappmob.com/api/province/';
 export const DISTRICT_URL = 'https://vapi.vnappmob.com/api/province/district';
 export const WARD_URL = 'https://vapi.vnappmob.com/api/province/ward';
-
-
