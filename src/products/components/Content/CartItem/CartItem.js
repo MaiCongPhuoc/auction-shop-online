@@ -18,13 +18,22 @@ const CartItem = () => {
                     </div>
                     {cartItems.map(cartItem => (
                         <div className="row col-12" key={cartItem.id}>
-                            <span className="col-4">
-                                <img style={{
-                                    padding: '5px',
-                                    width: '100px',
-                                    height: '120px'
-                                }} src={cartItem.product.image} alt="" />
-                                <label>{cartItem.product.title}</label>
+                            <span style={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                                className="col-4">
+                                <div>
+                                    <img style={{
+                                        padding: '5px',
+                                        width: '100px',
+                                        height: '120px'
+                                    }} src={cartItem.product.image} alt="" />
+                                </div>
+                                <div>
+                                    <div>{cartItem.product.title}</div>
+                                    <div>{cartItem.product.description}</div>
+                                </div>
                             </span>
                             <span className="text-end col-2">{cartItem.price}</span>
                             <span style={{
