@@ -4,11 +4,11 @@ import '../../../assets/css/sb-admin-2.min.css';
 import Sidebar from '../../Layout/Sidebar';
 import Search from '../../Layout/Header/Search';
 import AccountAdmin from '../../Layout/Header/AccountAdmin';
-import TongQuanThuNhap from './BieuDo/DoanhThuNam';
-import DoanhThu from './BieuDo/DoanhThuThang';
-import TongQuanDashboard from './TongQuanDashboard';
+import TurnoverYear from './ChartDashboard/TurnoverYear';
+import TurnoverMonth from './ChartDashboard/TurnoverMonth';
+import OverviewDashboard from './OverviewDashboard';
 import Footer from '../../Layout/Footer';
-import './TongQuanDashboard/dashboard.css'
+import './OverviewDashboard/dashboard.css'
 // import '../../../assets/js/chart-area-demo';
 // import '../../../assets/js/chart-pie-demo';
 
@@ -41,12 +41,12 @@ function Dashboard() {
                                 </a>
                             </div>
                             {/* Content Row */}
-                            <TongQuanDashboard />
+                            <OverviewDashboard />
                             {/* Content Row */}
 
                             <div className="row dashboard">
-                                <TongQuanThuNhap />
-                                <DoanhThu />
+                                <TurnoverYear />
+                                <TurnoverMonth />
                             </div>
                         </div>
                     </div>
