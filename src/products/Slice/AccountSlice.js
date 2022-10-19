@@ -1,9 +1,9 @@
 const initState = {
     account: {
         id: 3,
-        username: 'Haley Rollins',
+        username: 'HaleyRollins',
         role: 3
-    },
+    }
 }
 
 const accountReducer = (state = initState, action) => {

@@ -1,22 +1,62 @@
 
 import React from "react";
 import { useSelector } from 'react-redux/es/exports';
-import { getAccount } from "../../../redux/selector";
+import { getAccount, getAllCartItems } from "../../../redux/selector";
 
 const HeaderAfterLogin = () => {
 
     const account = useSelector(getAccount);
+
+    const cartItems = useSelector(getAllCartItems);
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <div className="">
-                    <i className="fa-brands fa-opencart fa-2x ic-cart me-3" aria-hidden="true" />
+                <div>
+                    <i style={{ position: 'relative' }} className="fa-brands fa-opencart fa-2x ic-cart me-3" aria-hidden="true">
+                        <span
+                            style={{
+                                textAlign: 'center',
+                                position: 'absolute',
+                                border: '0.5px solid white',
+                                width: 'auto',
+                                height: '20px',
+                                borderRadius: '10px',
+                                backgroundColor: 'red',
+                                color: 'white',
+                                fontSize: '12px',
+                                left: '40px',
+                                bottom: '26px',
+                                padding: '3px'
+                            }}
+                        >
+                            {cartItems.length}
+                        </span>
+                    </i>
                 </div>
                 <div className="widget-notif-wrapper">
                     <div>
 
                         <div className="ic-notif-num">
-                            <i className="fa-regular fa-bell fa-2x ic-notif " aria-hidden="true" />
+                            <i style={{ position: 'relative' }} className="fa-regular fa-bell fa-2x ic-notif " aria-hidden="true" >
+                                <span
+                                    style={{
+                                        textAlign: 'center',
+                                        position: 'absolute',
+                                        border: '0.5px solid white',
+                                        width: 'auto',
+                                        height: '20px',
+                                        borderRadius: '10px',
+                                        backgroundColor: 'red',
+                                        color: 'white',
+                                        fontSize: '12px',
+                                        left: '15px',
+                                        bottom: '15px',
+                                        padding: '3px'
+                                    }}
+                                >
+                                    1
+                                </span>
+                            </i>
                         </div>
                         <div className="widget-posts-fb-wrapper hidden">
                             <div className="post-fb-inner-wrapper">

@@ -23,6 +23,9 @@ export const getAllCategories = (state) => state.categories.categories;
 
 export const getLoadData = (state) => state.products.loadData;
 
+// cart items
+export const getAllCartItems = (state) => state.cartItems.cartItems;
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 

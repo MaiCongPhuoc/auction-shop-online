@@ -106,3 +106,11 @@ export const setShowInfoProduct = (boolean) => {
         payload: boolean
     }
 }
+
+// Cart Items
+export const setCartItems = (arr) => {
+    return {
+        type: 'cartItems/setCartItems',
+        payload: arr
+    }
+}

@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { FormatMoney } from '../Hooks/Hooks';
+import { ToastContainer, toast } from 'react-toastify';
+import { FormatMoney, isNumber } from '../Hooks/Hooks';
 import { getAccount } from '../redux/selector';
 import CartItemService from '../service/CartItem/CartItemService';
+import ValidationQuantity from '../utils/ValidationQuantity';
 
 const Buy = ({ product }) => {
+
+    const [checkQuantity, setCheckQuantity] = useState(true);
+    const [errorMess, setErrorMess] = useState('');
+
     const account = useSelector(getAccount);
 
     const currentPrice = product.price;
@@ -16,23 +21,52 @@ const Buy = ({ product }) => {
 
 
     useEffect(() => {
-        setNewTotalPrice(currentPrice*quantity);
+        if (!isNumber(quantity)) {
+            setCheckQuantity(false);
+            setErrorMess('Số lượng phải là một số nguyên');
+            return;
+        }
+
+        if (quantity > product.available) {
+            setCheckQuantity(false);
+            setErrorMess(`Vượt quá số lượng còn lại của sản phẩm là ${product.available}`);
+            return;
+        }
+
+        setCheckQuantity(true);
+        setNewTotalPrice(currentPrice * quantity);
     }, [quantity]);
 
     const cartItem = {
         product: {
             id: product.id
         },
-        title: account.username + product.title,
+        title: `${account.username} ${product.title}`,
         quantity: quantity
-    }
+    };
+
+    const reduceQuantity = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const increasingQuantity = () => {
+        if (quantity < product.available) {
+            setQuantity(quantity + 1);
+        }
+    };
 
     const handleAddCartItem = () => {
         try {
+            if (!checkQuantity) {
+                setErrorMess('Hãy chọn số lượng cần mua hợp lệ');
+                return;
+            }
             async function postData() {
                 let result = await CartItemService.addCartItem(account.id, cartItem);
                 if (result.data) {
-                    toast.success(`Đã thêm ${product.title} vào giỏ hàng`);
+                    toast.success(`Đã thêm ${product.title} vào giỏ hàng của bạn`);
                 }
             }
             postData();
@@ -65,21 +99,37 @@ const Buy = ({ product }) => {
                                 <div className="bb-item">
                                     <div className="bb-item-qty" style={{ width: '30%', display: 'inline-block' }}>
                                         <label htmlFor='quantity' className="bid-box-label" style={{ color: '#333', fontWeight: 600, padding: '3px 0px' }}>Số lượng</label>
-                                        <input
-                                            onChange={(e) => { setQuantity(e.target.value) }} 
-                                            type="number" 
-                                            id='quantity' 
-                                            min="1" 
-                                            max="10" 
-                                            className="quantity_control mt-2" 
-                                            name="qty" 
-                                            style={{ lineHeight: '30px' }} />
-
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <div id='reduce-quantity' onClick={reduceQuantity}>
+                                                <i
+                                                    className="fa fa-window-minimize"
+                                                >
+                                                </i>
+                                            </div>
+                                            <input
+                                                onChange={(e) => { setQuantity(e.target.value) }}
+                                                type="text"
+                                                id='quantity'
+                                                min="1"
+                                                max={product.available}
+                                                className="quantity_control ms-2 mt-2"
+                                                name="qty"
+                                                value={quantity}
+                                                style={{ lineHeight: '30px', width: '50px' }}>
+                                            </input>
+                                            <div id='increasing-quantity' onClick={increasingQuantity}>
+                                                <i
+                                                    className="fa fa-plus"
+                                                >
+                                                </i>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="ms-1" style={{ marginTop: '37px', float: 'right' }}>
                                         <span className="current-bid bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>&nbsp;</span>
                                         <a className="btn btn-primary me-4" onClick={handleAddCartItem}>Thêm vào giỏ hàng</a>
                                     </div>
+                                    {checkQuantity ? null: <ValidationQuantity message={errorMess} />}
                                 </div>
                             </form>
                             <div className="bin-qty text-center mt-3">
@@ -104,6 +154,7 @@ const Buy = ({ product }) => {
                     <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

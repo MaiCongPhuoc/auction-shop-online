@@ -83,7 +83,7 @@
 /* add cart */
 .bb-current-buy{
     border: 1px solid #cac8ca;
-    height: 300px;
+    height: 350px;
 }
 
 .title-buy {
@@ -98,4 +98,26 @@
 
 .watcher-btn a:hover{
     color: red !important;
+}
+
+#reduce-quantity {
+    margin: 0 5px 20px 0;
+    cursor: pointer;
+}
+#reduce-quantity:hover {
+    color: red;
+}
+
+#increasing-quantity {
+    margin: 0 0 10px 10px;
+    cursor: pointer
+}
+#increasing-quantity:hover {
+    color: red;
+}
+
+#validationQuantity{
+    color: red;
+    font-size: smaller;
+    font-style: italic;
 }
