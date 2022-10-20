@@ -65,6 +65,6 @@ export const Carousel = ({ children, maxVisibility }) => {
 
 // Typeof Number
 export const isNumber = (value) => {
-    return /^[\d]+(?:e-?\d+)?$/.test(value); 
+    return /^[\d]+(?:e-?\d+)?$/.test(value);
 }
 

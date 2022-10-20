@@ -99,6 +99,13 @@ export const categoryFiltersChange = (arr) => {
     }
 }
 
+export const setShowResultNav = (boolean) => {
+    return {
+        type: 'filters/setShowResultNav',
+        payload: boolean
+    }
+}
+
 // Modal
 export const setShowInfoProduct = (boolean) => {
     return {

@@ -56,7 +56,6 @@ const InfoProductModal = () => {
                                             <img key={i} src={media.fileUrl} alt="" />
                                         ))}
                                     </Carousel>
-                                    {/* <img src={product.image} alt={product.slug} id='img-info-product' /> */}
                                 </div>
 
                                 <div className="title-modal">Người đăng: </div>
