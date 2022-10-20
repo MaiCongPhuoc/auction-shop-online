@@ -32,9 +32,6 @@ const Content = () => {
 
     const account = useSelector(getAccount);
 
-    
-
-
     useEffect(() => {
         if (showInfoProduct) {
             dispatch(setCheckProduct(true));
@@ -70,10 +67,19 @@ const Content = () => {
                                         <div>
                                             <ContentLotType />
 
-                                            {searchStatus ? (<ContentResultFilters />) : (
-                                                type === 'Đấu giá' ? <ContentAuction /> :
-                                                    (type === 'Cửa hàng') ? <ContentTheShop /> :
-                                                        <ContentAll />)}
+                                            {searchStatus ? (<ContentResultFilters />) : 
+                                                (
+                                                    type === 'Đấu giá' ? <ContentAuction /> :
+                                                        (type === 'Cửa hàng') ? <ContentTheShop /> :
+                                                            <ContentAll />)
+                                            }
+                                            
+                                            {/* {
+                                                (
+                                                    type === 'Đấu giá' ? <ContentAuction /> :
+                                                        (type === 'Cửa hàng') ? <ContentTheShop /> :
+                                                            <ContentAll />)
+                                            } */}
 
                                             {
                                                 checkProduct ? <InfoProductModal /> : null

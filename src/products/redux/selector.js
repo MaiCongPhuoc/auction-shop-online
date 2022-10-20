@@ -37,6 +37,8 @@ export const getTypeFiltersChange = (state) => state.filters.type;
 
 export const getCategoriesFiltersChange = (state) => state.filters.categories;
 
+export const getShowResultNav = (state) => state.filters.showResultNav;
+
 
 
 export const getProductsAction = createSelector(
@@ -55,6 +57,7 @@ export const getProductsAction = createSelector(
         }
     }
 );
+
 
 export const productsRemainingSelector = createSelector(
     getAllProducts,

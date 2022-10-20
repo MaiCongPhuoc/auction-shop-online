@@ -1,15 +1,17 @@
 import React from "react";
 import { useDispatch } from 'react-redux/es/exports';
-import { setSearchingFilters, typeFiltersChange } from "../../../../redux/actions";
+import { setSearchingFilters, typeFiltersChange, setShowResultNav } from "../../../../redux/actions";
 
 const ResultsFilters = () => {
     const dispatch = useDispatch();
+
     const handleBackPage = () => {
         dispatch(setSearchingFilters(false));
         dispatch(typeFiltersChange(''));
+        dispatch(setShowResultNav(false));
     };
 
-    
+
     return (
         <>
             <div className="filter-item small cell small-12 medium-7">
@@ -22,10 +24,8 @@ const ResultsFilters = () => {
                             <div className="i-label">Kết quả tìm kiếm</div>
                         </div>
                     </div>
-                    <div className="tab-sel-wrapper grid-x text-center small-3" onClick={handleBackPage}>
-                        <div className="tab-item left-end cell small-12"
-                            style={{ color: '#333', background: '#ffffff', borderRadius: '50px 50px 50px 50px' }}
-                        >
+                    <div className="grid-x text-center small-3" onClick={handleBackPage}>
+                        <div className="left-end cell small-12 back-page">
                             <div className="i-label">Quay lại</div>
                         </div>
                     </div>

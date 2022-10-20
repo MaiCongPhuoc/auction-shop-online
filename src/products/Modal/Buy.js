@@ -41,7 +41,7 @@ const Buy = ({ product }) => {
         product: {
             id: product.id
         },
-        title: `${account.username} ${product.title}`,
+        title: `${account.username}-${product.title}`,
         quantity: quantity
     };
 
