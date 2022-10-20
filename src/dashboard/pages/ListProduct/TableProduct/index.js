@@ -84,7 +84,7 @@ function BangSanPham() {
             setState({ ...state, loading: true });
             async function getData() {
                 let category = await CategoryService.getCategory();
-                console.log('category.data useEffect: ', category.data);
+                // console.log('category.data useEffect: ', category.data);
                 setState({
                     ...state,
                     categories: category.data,
@@ -126,7 +126,7 @@ function BangSanPham() {
             state.recordPerPage,
         );
         let category = await CategoryService.getCategory();
-        console.log('productData.data: ', productData.data);
+        // console.log('productData.data: ', productData.data);
         setState({
             ...state,
             products: productData.data.content,
@@ -197,7 +197,7 @@ function BangSanPham() {
     };
 
     const searchBook = (currentPage) => {
-        console.log('currentPage: ', currentPage);
+        // console.log('currentPage: ', currentPage);
         if (document.querySelector('#search').value === '') {
             document.querySelector('#select').value = '-1';
         }
@@ -211,7 +211,7 @@ function BangSanPham() {
                 totalElements: dataTable.data.totalElements,
                 currentPage: dataTable.data.number + 1,
             });
-            console.log('state: ', state);
+            // console.log('state: ', state);
         }
         getDataTable();
     };

@@ -125,6 +125,7 @@ function BarChart() {
                     month11,
                     month12,
                 ],
+                data: [5, 6, 2, 9, 4, month6, month7, month8, month9, month10, month11, month12],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

@@ -53,7 +53,7 @@ const Content = () => {
         }
     }, [showInfoProduct, loginStatus]);
 
-
+    console.log('type: ', type);
     return (
         <>
             <div className="base-width main-yield">
