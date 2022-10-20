@@ -60,16 +60,74 @@
     top: 50%;
     z-index: 2;
     cursor: pointer;
-    user-select: none;
     width: 30px;
     height: 30px;
-    background: antiquewhite;
 }
 .nav-left {
     left: -50px;
     transform: translateX(-100%) translatey(-50%);
 }
+
 .nav-right {
     right: -50px;
     transform: translateX(100%) translatey(-50%);
+}
+
+.nav-left img, .nav-right img {
+    transition: 0.5s all ease-in-out;
+}
+.nav-left img:hover, .nav-right img:hover {
+    transform: scale(1.3) !important;
+}
+
+/* add cart */
+.bb-current-buy{
+    border: 1px solid #cac8ca;
+    height: 350px;
+}
+
+.title-buy {
+    background-color: rgb(213,235,247,1);
+}
+
+.watcher-btn{
+    border: 1px solid #cac8ca;
+    width: 300px;
+    margin: auto;
+}
+
+.watcher-btn a:hover{
+    color: red !important;
+}
+
+#reduce-quantity {
+    margin: 0 5px 20px 0;
+    cursor: pointer;
+}
+#reduce-quantity:hover {
+    color: red;
+}
+
+#increasing-quantity {
+    margin: 0 0 10px 10px;
+    cursor: pointer
+}
+#increasing-quantity:hover {
+    color: red;
+}
+
+#validationQuantity{
+    color: red;
+    font-size: smaller;
+    font-style: italic;
+}
+
+#show-list-cart-item span{
+    font-size: smaller;
+}
+#show-list-cart-item .row{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.156);
 }

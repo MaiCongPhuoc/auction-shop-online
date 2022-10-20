@@ -1,3 +1,11 @@
+// Account
+export const setAccount = object => {
+    return {
+        type: 'account/setAccount',
+        payload: object
+    }
+}
+
 // Product
 export const setProducts = arr => {
     return {
@@ -91,10 +99,25 @@ export const categoryFiltersChange = (arr) => {
     }
 }
 
+export const setShowResultNav = (boolean) => {
+    return {
+        type: 'filters/setShowResultNav',
+        payload: boolean
+    }
+}
+
 // Modal
 export const setShowInfoProduct = (boolean) => {
     return {
         type: 'modals/showInfoProduct',
         payload: boolean
+    }
+}
+
+// Cart Items
+export const setCartItems = (arr) => {
+    return {
+        type: 'cartItems/setCartItems',
+        payload: arr
     }
 }

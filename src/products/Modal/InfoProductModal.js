@@ -5,6 +5,7 @@ import { setShowInfoProduct, setCheckProduct } from './../redux/actions';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import ProductService from "../service/Product/ProductService";
 import { Carousel } from './../Hooks/Hooks';
+import Buy from "./Buy";
 
 const InfoProductModal = () => {
     const dispatch = useDispatch();
@@ -32,7 +33,6 @@ const InfoProductModal = () => {
     const showInfoProduct = useSelector(getShowInfoProduct);
 
     let max_visibility = medias.length;
-    console.log(medias);
     return (
         <>
             <Modal
@@ -56,7 +56,6 @@ const InfoProductModal = () => {
                                             <img key={i} src={media.fileUrl} alt="" />
                                         ))}
                                     </Carousel>
-                                    {/* <img src={product.image} alt={product.slug} id='img-info-product' /> */}
                                 </div>
 
                                 <div className="title-modal">Người đăng: </div>
@@ -68,14 +67,9 @@ const InfoProductModal = () => {
                                 <div className="title-modal">Danh mục: </div>
                                 <p>{product.category.title}</p>
 
-                                <div className="title-modal">Số lượng còn lại: </div>
-                                <p>{product.available}</p>
-
-                                <div className="title-modal">Giá: </div>
-                                <p>{product.price}</p>
                             </Col>
                             <Col xs={12} md={4}>
-
+                                <Buy product={product} />
                             </Col>
                         </Row>
                     </Container>
@@ -84,7 +78,6 @@ const InfoProductModal = () => {
                     <Button style={{ width: 100 }} variant="secondary" onClick={handleClose}>
                         Đóng
                     </Button>
-                    {/* <Button variant="outline-primary">Understood</Button> */}
                 </Modal.Footer>
             </Modal>
         </>

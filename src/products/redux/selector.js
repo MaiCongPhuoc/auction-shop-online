@@ -2,6 +2,10 @@ import { createSelector } from 'reselect';
 //login
 export const getLoginStatus = (state) => state.login.login;
 
+// account
+export const getAccount = (state) => state.account.account;
+
+
 // types
 export const getType = (state) => state.types.type;
 
@@ -19,6 +23,9 @@ export const getAllCategories = (state) => state.categories.categories;
 
 export const getLoadData = (state) => state.products.loadData;
 
+// cart items
+export const getAllCartItems = (state) => state.cartItems.cartItems;
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 
@@ -29,6 +36,8 @@ export const getSearchingFilters = (state) => state.filters.searching;
 export const getTypeFiltersChange = (state) => state.filters.type;
 
 export const getCategoriesFiltersChange = (state) => state.filters.categories;
+
+export const getShowResultNav = (state) => state.filters.showResultNav;
 
 
 
@@ -48,6 +57,7 @@ export const getProductsAction = createSelector(
         }
     }
 );
+
 
 export const productsRemainingSelector = createSelector(
     getAllProducts,

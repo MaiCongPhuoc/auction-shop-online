@@ -4,25 +4,27 @@ import { getLoadData, getProductsAction } from "../../../redux/selector";
 import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
 import LoadData from './../../Loading/LoadData';
 import { FormatMoney } from './../../../Hooks/Hooks';
+import { setProduct } from './../../../redux/actions';
 
 const ContentTheShop = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         try {
-            dispatch(setLoadData(true));
+            dispatch(setLoadData(false));
 
         } catch (error) {
             console.log(error);
         }
     }, []);
 
-    const handleShowInfoProduct = () => {
+    const handleShowInfoProduct = (product) => {
         dispatch(setShowInfoProduct(true));
+        dispatch(setProduct(product));
     };
 
     const productsAuction = useSelector(getProductsAction);
 
-    dispatch(setLoadData(false));
+    // dispatch(setLoadData(false));
 
     const loadData = useSelector(getLoadData);
 
@@ -31,7 +33,7 @@ const ContentTheShop = () => {
         <div className="lot-cards grid-x grid-margin-x">
             {loadData ? <LoadData /> :
                 productsAuction.map(product => (
-                    <a className="card small-12 medium-6 cell" onClick={handleShowInfoProduct} style={{ transform: 'none' }} key={product.id}>
+                    <a className="card small-12 medium-6 cell" onClick={() => handleShowInfoProduct(product)} style={{ transform: 'none' }} key={product.id}>
                         <figure className="card__image"><img src={product.image} alt="" style={{ transform: 'none' }} />
                             <div className="add-to-watchlist">
                                 <span className="ico-circle" ico_action="fav">

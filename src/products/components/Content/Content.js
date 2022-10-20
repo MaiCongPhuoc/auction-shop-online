@@ -7,11 +7,13 @@ import ContentAuction from './ContentAuction/ContentAuction';
 import ContentTheShop from './ContentTheShop/ContentTheShop';
 import './content.css';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getCheckProduct, getType } from "../../redux/selector";
-import { getSearchingFilters, getProduct, getShowInfoProduct } from './../../redux/selector';
+import { getAccount, getCheckProduct, getType, getAllCartItems } from "../../redux/selector";
+import { getSearchingFilters, getShowInfoProduct, getLoginStatus } from './../../redux/selector';
 import ContentResultFilters from "./ContentResultFilters/ContentResultFilters";
 import InfoProductModal from "../../Modal/InfoProductModal";
-import { setCheckProduct, setProduct } from './../../redux/actions';
+import { setCartItems, setCheckProduct } from './../../redux/actions';
+import CartItem from "./CartItem/CartItem";
+import CartItemService from './../../service/CartItem/CartItemService';
 
 
 
@@ -22,11 +24,13 @@ const Content = () => {
 
     const searchStatus = useSelector(getSearchingFilters);
 
-    const product = useSelector(getProduct);
-
     const checkProduct = useSelector(getCheckProduct);
 
     const showInfoProduct = useSelector(getShowInfoProduct);
+
+    const loginStatus = useSelector(getLoginStatus);
+
+    const account = useSelector(getAccount);
 
     useEffect(() => {
         if (showInfoProduct) {
@@ -34,8 +38,21 @@ const Content = () => {
 
         } else {
             dispatch(setCheckProduct(false));
+        };
+
+        if (loginStatus) {
+            try {
+                async function getCartItems() {
+                    const cartItemsRes = await CartItemService.getCartItems(account.id);
+                    dispatch(setCartItems(cartItemsRes.data));
+                }
+                getCartItems();
+            } catch (error) {
+                console.log(error);
+            }
         }
-    }, [showInfoProduct]);
+    }, [showInfoProduct, loginStatus]);
+
 
     return (
         <>
@@ -50,15 +67,25 @@ const Content = () => {
                                         <div>
                                             <ContentLotType />
 
-                                            {searchStatus ? (<ContentResultFilters />) : (
-                                                type === 'Đấu giá' ? <ContentAuction /> :
-                                                    (type === 'Cửa hàng') ? <ContentTheShop /> :
-                                                        <ContentAll />)}
+                                            {searchStatus ? (<ContentResultFilters />) : 
+                                                (
+                                                    type === 'Đấu giá' ? <ContentAuction /> :
+                                                        (type === 'Cửa hàng') ? <ContentTheShop /> :
+                                                            <ContentAll />)
+                                            }
+                                            
+                                            {/* {
+                                                (
+                                                    type === 'Đấu giá' ? <ContentAuction /> :
+                                                        (type === 'Cửa hàng') ? <ContentTheShop /> :
+                                                            <ContentAll />)
+                                            } */}
 
                                             {
                                                 checkProduct ? <InfoProductModal /> : null
                                             }
 
+                                            <CartItem />
                                         </div>
                                     </div>
                                 </div>
