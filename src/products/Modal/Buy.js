@@ -110,8 +110,6 @@ const Buy = ({ product }) => {
                                                 onChange={(e) => { setQuantity(e.target.value) }}
                                                 type="text"
                                                 id='quantity'
-                                                min="1"
-                                                max={product.available}
                                                 className="quantity_control ms-2 mt-2"
                                                 name="qty"
                                                 value={quantity}
