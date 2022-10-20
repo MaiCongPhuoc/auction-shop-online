@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from 'react';
 import productService from '../../../services/productService';
 import AccountService from '../../../services/AccountService';
 
-
 function TongQuanDashboard() {
     let totalAccount = 0;
     let totalProduct = 0;
@@ -23,9 +22,9 @@ function TongQuanDashboard() {
             setState({
                 accounts: account.data,
                 products: product.data,
-            })
+            });
         }
-        getdashboard()
+        getdashboard();
     }, []);
     for (let i = 0; i < accounts.length; i++) {
         totalAccount += 1;

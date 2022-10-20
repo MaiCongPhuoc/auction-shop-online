@@ -447,7 +447,12 @@ function BangSanPham() {
             <ModalEditProduct productEditId={productEditId} showEdit={showedit} handleCloseEdit={handleCloseEdit} />
 
             {/* =================== Modal detail products ===================== */}
-            <ModalDetailProduct product={product} showdetail={showdetail} productIdDetail={productIdDetail} handleCloseDetail={handleCloseDetail} />
+            <ModalDetailProduct
+                product={product}
+                showdetail={showdetail}
+                productIdDetail={productIdDetail}
+                handleCloseDetail={handleCloseDetail}
+            />
 
             {/*==================== Modal Add ===========================*/}
             <ModalAddProduct show={showAdd} handleClose={handCloseAdd} />

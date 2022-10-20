@@ -11,7 +11,7 @@ class ProductsComponent extends React.Component {
         this.state = {
             products: [],
             currentPage: 1,
-            recordPerPage: 5,
+            recordPerPage: 3,
             search: '',
         };
     }

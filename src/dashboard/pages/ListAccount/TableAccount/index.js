@@ -64,7 +64,7 @@ function BangTaiKhoan() {
         accountEditId: 0,
         showedit: false,
     });
-    const hanldeCloseEditAccount = () => setShowEdit({...showEdit, showedit: !showEdit.showedit});
+    const hanldeCloseEditAccount = () => setShowEdit({ ...showEdit, showedit: !showEdit.showedit });
 
     //modal restartPassword
     const [showRestart, setShowRestart] = useState(false);
@@ -118,7 +118,7 @@ function BangTaiKhoan() {
         let total = state.totalElements;
         let record = state.recordPerPage;
         if (current < Math.ceil(total / record)) {
-            if (state.search !== '') {
+            if (!state.search) {
                 getProductsByPagination(current + 1);
             } else {
                 searchBook(current + 1);
@@ -169,7 +169,7 @@ function BangTaiKhoan() {
             [e.target.name]: e.target.value,
         });
     };
-    
+
     const searchBook = (currentPage) => {
         currentPage = currentPage - 1;
         async function getDataTable() {
@@ -184,7 +184,7 @@ function BangTaiKhoan() {
         }
         getDataTable();
     };
-    
+
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
     const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
@@ -204,9 +204,7 @@ function BangTaiKhoan() {
                             onChange={searchBox}
                         />
                         <div className="input-group-append">
-                            <button className="btn btn-primary" type="button" name="search"
-                             onClick={searchBook}
-                             >
+                            <button className="btn btn-primary" type="button" name="search" onClick={searchBook}>
                                 <i className="fas fa-search fa-sm" />
                             </button>
                         </div>
