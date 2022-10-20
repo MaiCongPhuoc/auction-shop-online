@@ -13,8 +13,8 @@ let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/
 
 function ModalEditProduct(props) {
     const { showEdit, productEditId, handleCloseEdit } = props;
-    console.log('productEditId: ', productEditId);
-    console.log('showEdit: ', showEdit);
+    console.log('props: ', props);
+    // console.log('showEdit: ', showEdit);
     const [radio, setRadio] = useState(true);
     const [stateImg, setStateImg] = useState(false);
     const [category, setCategory] = useState({

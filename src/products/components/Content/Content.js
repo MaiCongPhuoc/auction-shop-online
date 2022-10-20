@@ -32,9 +32,6 @@ const Content = () => {
 
     const account = useSelector(getAccount);
 
-    
-
-
     useEffect(() => {
         if (showInfoProduct) {
             dispatch(setCheckProduct(true));
@@ -56,7 +53,7 @@ const Content = () => {
         }
     }, [showInfoProduct, loginStatus]);
 
-
+    console.log('type: ', type);
     return (
         <>
             <div className="base-width main-yield">

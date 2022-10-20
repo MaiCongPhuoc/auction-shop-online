@@ -38,6 +38,7 @@ const ContentAll = () => {
     
     const products = useSelector(getAllProducts);
     const loadData = useSelector(getLoadData);
+    console.log('products: ', products);
 
     
     return (
@@ -104,7 +105,7 @@ const ContentAll = () => {
 
                                     </div>
                                     <h3 className="card__title">
-                                        <span>Iphone 10</span>
+                                        <span>{product.title}</span>
                                     </h3>
                                     <div className="card__stats-group">
                                         <div className="stats-group__stat">

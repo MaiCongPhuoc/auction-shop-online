@@ -112,7 +112,7 @@ function BarChart() {
         datasets: [
             {
                 label: 'Bán ra',
-                data: [month1, month2, month3, month4, month5, month6, month7, month8, month9, month10, month11, month12],
+                data: [month1, month2, month3, month4, month5, month6, month7, month8, month9, month10, month11, 12],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
