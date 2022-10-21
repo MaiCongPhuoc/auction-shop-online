@@ -12,6 +12,7 @@ import './assets/css/sb-admin-2.min.css';
 import Product from './products/Product';
 import ListProduct from './dashboard/pages/ListProduct';
 import ListAccount from './dashboard/pages/ListAccount';
+import Auction from './Auction';
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/product' element={<Product />} />
+                    <Route path='/product/:auctionId' element={<Auction />} />
                     <Route path='/list-product' element={<ListProduct />} />
                     <Route path='/list-account' element={<ListAccount />} />
                 </Routes>

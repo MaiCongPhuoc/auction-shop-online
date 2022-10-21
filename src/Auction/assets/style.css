@@ -1,0 +1,31 @@
+.watch-button {
+    border: none;
+}
+.iconDollar {
+    padding-bottom: 10px !important;
+    line-height: 10px !important;
+}
+.Slick-img {
+    width: 100px;
+    height: 100px;
+}
+/* .slick-dots {
+    width: 300px !important;
+    display: flex !important;
+    justify-content: space-around !important;
+} */
+.slick-dots>li {
+    padding: 0 100px;
+}
+.auctionImg {
+    width: 100% !important;
+    height: 80% !important;
+}
+.slick-slider {
+    width: 100% !important;
+    max-height: 70% !important;
+}
+.slick-list {
+    width: 100% !important;
+    height: 300px !important;
+}

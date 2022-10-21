@@ -27,7 +27,7 @@ function TongQuanDashboard() {
         }
         getdashboard()
     }, []);
-    for (let i = 0; i <= accounts.length; i++) {
+    for (let i = 0; i < accounts.length; i++) {
         totalAccount += 1;
     }
     for (let i = 0; i < products.length; i++) {
