@@ -26,6 +26,8 @@ export const getLoadData = (state) => state.products.loadData;
 // cart items
 export const getAllCartItems = (state) => state.cartItems.cartItems;
 
+export const getShowCart = (state) => state.cartItems.showCart;
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 

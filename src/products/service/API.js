@@ -14,3 +14,5 @@ export const ALL_CART_ITEM = 'http://localhost:8080/api/cart-items';
 export const ADD_CART_ITEM = ALL_CART_ITEM + '/create';
 export const REDUCE_CART_ITEM = ALL_CART_ITEM + '/reduce';
 export const INCREASING_CART_ITEM = ALL_CART_ITEM + '/increasing';
+export const REMOVE_CART_ITEM = ALL_CART_ITEM + '/remove';
+export const REMOVE_CART_ITEMS = ALL_CART_ITEM + '/remove-list';

@@ -7,11 +7,11 @@ import ContentAuction from './ContentAuction/ContentAuction';
 import ContentTheShop from './ContentTheShop/ContentTheShop';
 import './content.css';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getAccount, getCheckProduct, getType, getAllCartItems } from "../../redux/selector";
+import { getAccount, getCheckProduct, getType, getAllCartItems, getShowCart } from "../../redux/selector";
 import { getSearchingFilters, getShowInfoProduct, getLoginStatus } from './../../redux/selector';
 import ContentResultFilters from "./ContentResultFilters/ContentResultFilters";
 import InfoProductModal from "../../Modal/InfoProductModal";
-import { setCartItems, setCheckProduct } from './../../redux/actions';
+import { setCartItems, setCheckProduct, setShowCart } from './../../redux/actions';
 import CartItem from "./CartItem/CartItem";
 import CartItemService from './../../service/CartItem/CartItemService';
 
@@ -32,6 +32,9 @@ const Content = () => {
 
     const account = useSelector(getAccount);
 
+    const showCart = useSelector(getShowCart);
+
+
     useEffect(() => {
         if (showInfoProduct) {
             dispatch(setCheckProduct(true));
@@ -50,8 +53,9 @@ const Content = () => {
             } catch (error) {
                 console.log(error);
             }
-        }
-    }, [showInfoProduct, loginStatus]);
+        };
+
+    }, [showInfoProduct, loginStatus, showCart]);
 
 
     return (
@@ -65,27 +69,24 @@ const Content = () => {
                                 <div className="sorter-wrapper">
                                     <div>
                                         <div>
-                                            <ContentLotType />
+                                            {showCart ? (<CartItem />) : (
+                                                <ContentLotType />
+                                            )}
 
-                                            {searchStatus ? (<ContentResultFilters />) : 
-                                                (
-                                                    type === 'Đấu giá' ? <ContentAuction /> :
-                                                        (type === 'Cửa hàng') ? <ContentTheShop /> :
-                                                            <ContentAll />)
+
+                                            {showCart ? null :
+                                                searchStatus ? (<ContentResultFilters />) :
+                                                    (
+                                                        type === 'Đấu giá' ? <ContentAuction /> :
+                                                            (type === 'Cửa hàng') ? <ContentTheShop /> :
+                                                                <ContentAll />)
                                             }
-                                            
-                                            {/* {
-                                                (
-                                                    type === 'Đấu giá' ? <ContentAuction /> :
-                                                        (type === 'Cửa hàng') ? <ContentTheShop /> :
-                                                            <ContentAll />)
-                                            } */}
 
                                             {
                                                 checkProduct ? <InfoProductModal /> : null
                                             }
 
-                                            <CartItem />
+
                                         </div>
                                     </div>
                                 </div>

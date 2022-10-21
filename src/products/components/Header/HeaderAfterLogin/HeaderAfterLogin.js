@@ -1,18 +1,41 @@
 
-import React from "react";
-import { useSelector } from 'react-redux/es/exports';
-import { getAccount, getAllCartItems } from "../../../redux/selector";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { setShowCart } from "../../../redux/actions";
+import { getAccount, getAllCartItems, getShowCart } from "../../../redux/selector";
 
 const HeaderAfterLogin = () => {
+    const dispatch = useDispatch();
+
+    const [show_cart, set_show_cart] = useState(false);
 
     const account = useSelector(getAccount);
 
     const cartItems = useSelector(getAllCartItems);
+
+    const show = useSelector(getShowCart);
+
+    useEffect(() => {
+        if (show_cart) {
+            dispatch(setShowCart(true));
+        } else {
+            dispatch(setShowCart(false));
+        }
+    }, [show_cart]);
+
+    const handleShowCart = () => {
+        set_show_cart(!show_cart);
+    };
+
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <div>
-                    <i style={{ position: 'relative' }} className="fa-brands fa-opencart fa-2x ic-cart me-3" aria-hidden="true">
+                <div onClick={handleShowCart}>
+                    <i style={{ position: 'relative' }}
+                        className="fa-brands fa-opencart fa-2x ic-cart me-3"
+                        aria-hidden="true"
+                        
+                    >
                         <span
                             style={{
                                 textAlign: 'center',
@@ -58,32 +81,7 @@ const HeaderAfterLogin = () => {
                                 </span>
                             </i>
                         </div>
-                        <div className="widget-posts-fb-wrapper hidden">
-                            <div className="post-fb-inner-wrapper">
-                                <div className="content-wrapper">
-                                    <div className="widget-tabs">
-                                        <div className="w11 w-tab show active">Updates</div>
-                                        <div className="w11 w-tab">Feedback</div>
-                                        <div className="w11 w-tab">Messages</div>
-                                    </div><div className="widget-posts-wrapper">
-                                        <div className="post-item list-view ">
-                                            <div className="post-header">
-                                                <div className="post-label">
-                                                    <i className="fal fa-comment-alt-smile" aria-hidden="true" style={{ color: 'rgb(43, 156, 214)' }} />Welcome</div>
-                                                <div className="post-time read">2 years ago</div>
-                                            </div>
-                                            <div>
-                                                <span className="post-title">Welcome to Charitybuzz! - </span>
-                                                <span className="post-description">Check out these tips to enhance your bidding experience</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="widget-footer shown">
-                                    <a href="/posts">View All Updates</a>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <a className="logged_in_name mx-3" href="#">{account.username}</a> |
