@@ -24,9 +24,7 @@ function ModalEditProduct(props) {
             progress: undefined,
             theme: 'colored',
         });
-    const dispatch = useDispatch();
     const { showEdit, onCloseEditAccount, accountEditId } = props;
-    // console.log('accountEditId: ', accountEditId);
     const [stateImg, setStateImg] = useState(false);
     const [state, setState] = useState({
         roles: [],
@@ -41,19 +39,21 @@ function ModalEditProduct(props) {
     });
 
     useEffect(() => {
-        try {
-            async function getAddAccount() {
-                let role = await AccountService.getRoles();
-                let Province = await AccountService.getProvinces();
-                let accountEdit = await AccountService.getAccountById(accountEditId);
-                // let accountEdit = await AccountService.getAccountById(accountEditId);
-                setAccountById({ ...accountEdit.data });
-                console.log('accountEdit.data: ', accountEdit.data);
-                setState({ ...state, roles: role.data, provinces: Province.data.results });
+        if (accountEditId !== 0 || accountEditId !== undefined) {
+            try {
+                async function getAddAccount() {
+                    let role = await AccountService.getRoles();
+                    let Province = await AccountService.getProvinces();
+                    let accountEdit = await AccountService.getAccountById(accountEditId);
+                    // let accountEdit = await AccountService.getAccountById(accountEditId);
+                    setAccountById({ ...accountEdit.data });
+                    console.log('accountEdit.data: ', accountEdit.data);
+                    setState({ ...state, roles: role.data, provinces: Province.data.results });
+                }
+                getAddAccount();
+            } catch (error) {
+                console.log(error);
             }
-            getAddAccount();
-        } catch (error) {
-            console.log(error);
         }
     }, [showEdit]);
 

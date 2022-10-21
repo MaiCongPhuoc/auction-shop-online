@@ -117,11 +117,11 @@ function BangTaiKhoan() {
 
     // data table
     async function getProductsByPagination(currentPage) {
-        state.currentPage = currentPage - 1;
-        console.log('currentPage: ', state.currentPage);
+        currentPage = currentPage - 1;
+        console.log('currentPage: ', currentPage);
         let accountData = await AccountService.getDataTableAccount(
             state.search = '',
-            state.currentPage,
+            currentPage,
             state.recordPerPage,
         );
         console.log('accountData.content: ',accountData.content);
@@ -198,7 +198,7 @@ function BangTaiKhoan() {
             let dataTable = await AccountService.getDataTableAccount(state.search, currentPage, state.recordPerPage);
             setState({
                 ...state,
-                products: dataTable.data.content,
+                accounts: dataTable.data.content,
                 totalPages: dataTable.data.totalPages,
                 totalElements: dataTable.data.totalElements,
                 currentPage: dataTable.data.number + 1,
