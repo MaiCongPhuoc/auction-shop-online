@@ -57,7 +57,7 @@ const Content = () => {
 
     }, [showInfoProduct, loginStatus, showCart]);
 
-
+    // console.log('type: ', type);
     return (
         <>
             <div className="base-width main-yield">

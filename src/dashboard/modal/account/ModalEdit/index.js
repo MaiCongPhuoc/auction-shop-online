@@ -10,6 +10,8 @@ import '../../modal.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+let flag = false;
+let img = 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png';
 function ModalEditProduct(props) {
     const notify = () =>
         toast.success('Wow so easy!', {
@@ -22,28 +24,14 @@ function ModalEditProduct(props) {
             progress: undefined,
             theme: 'colored',
         });
-    const dispatch = useDispatch();
     const { showEdit, onCloseEditAccount, accountEditId } = props;
-    // console.log('accountEditId: ', accountEditId);
     const [stateImg, setStateImg] = useState(false);
     const [state, setState] = useState({
         roles: [],
         provinces: [],
     });
     const [accountById, setAccountById] = useState({});
-    const [img, setImg] = useState(
-        'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
-    );
-    const [accountFrm, setAccountFrm] = useState({
-        id: 0,
-        provinceId: 0,
-        provinceName: '',
-        districtId: 0,
-        districtName: '',
-        wardId: 0,
-        wardName: '',
-        address: '',
-    });
+    const [accountFrm, setAccountFrm] = useState({});
 
     const [location, setLocation] = useState({
         districts: [],
@@ -51,32 +39,37 @@ function ModalEditProduct(props) {
     });
 
     useEffect(() => {
-        try {
-            async function getAddAccount() {
-                let role = await AccountService.getRoles();
-                let Province = await AccountService.getProvinces();
-                let accountEdit = await AccountService.getAccountById(accountEditId);
-                // let accountEdit = await AccountService.getAccountById(accountEditId);
-                setAccountById({ ...accountEdit.data });
-                console.log('accountEdit.data: ', accountEdit.data);
-                setState({ ...state, roles: role.data, provinces: Province.data.results });
+        if (accountEditId !== 0 || accountEditId !== undefined) {
+            try {
+                async function getAddAccount() {
+                    let role = await AccountService.getRoles();
+                    let Province = await AccountService.getProvinces();
+                    let accountEdit = await AccountService.getAccountById(accountEditId);
+                    // let accountEdit = await AccountService.getAccountById(accountEditId);
+                    setAccountById({ ...accountEdit.data });
+                    console.log('accountEdit.data: ', accountEdit.data);
+                    setState({ ...state, roles: role.data, provinces: Province.data.results });
+                }
+                getAddAccount();
+            } catch (error) {
+                console.log(error);
             }
-            getAddAccount();
-        } catch (error) {
-            console.log(error);
         }
     }, [showEdit]);
-    // useEffect(() => {
-    //     try {
-    //         async function getAddAccount() {
-    //             let accountEdit = await AccountService.getAccountById(accountEditId);
-    //             setAccountById({ ...accountEdit.data });
-    //         }
-    //         getAddAccount();
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [showEdit]);
+
+    useEffect(() => {
+        if (flag) {
+            try {
+                async function postData(accountFrm) {
+                    let createRes =  await AccountService.getEditAccount(accountFrm, accountEditId);
+                    console.log('createRes: ', createRes.data);
+                }
+                postData(accountFrm);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }, [accountFrm]);
 
     const handleProvince = (e) => {
         try {
@@ -133,7 +126,7 @@ function ModalEditProduct(props) {
             for (let i = 0; i < e.target.files.length; i++) {
                 setStateImg(true);
                 let uploadResult = await FileService.Upload(e.target.files[0]);
-                setImg(uploadResult.data.url);
+                img = uploadResult.data.url;
                 console.log(uploadResult.data);
                 setStateImg(false);
             }
@@ -148,6 +141,10 @@ function ModalEditProduct(props) {
     const formik = useFormik({
         initialValues: {
             id: 0,
+            createdAt: '',
+            createdBy: '',
+            updateAt: '',
+            updateBy: '',
             fullName: accountById.fullName,
             username: accountById.username,
             email: accountById.email,
@@ -173,20 +170,20 @@ function ModalEditProduct(props) {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(8, 'tên của bạn ít nhất là 8 kí tự!')
+                .min(5, 'tên của bạn ít nhất là 5 kí tự!')
                 .max(20, 'tên của bạn tối đa nhất là 20 kí tự!')
                 .required('Vui lòng nhập tên vào!'),
             username: yup
                 .string()
                 .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
                 .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên sản phẩm vào!'),
-            email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
+                .required('Vui lòng nhập họ tên đầy đủ vào!'),
+            email: yup.string().email().required('Vui lòng nhập email vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             password: yup
                 .string()
-                .min(6, 'Mật Khẩu ít nhất là 6 kí tự!')
-                .max(30, 'Mật khẩu tối đa là 30 kí tự!')
+                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .max(20, 'Mật khẩu tối đa là 20 kí tự!')
                 .required('Vui lòng nhập mật khẩu!'),
             repassword: yup
                 .string()
@@ -213,8 +210,10 @@ function ModalEditProduct(props) {
 
             let roleId = Number(document.querySelector('#role').value);
 
+            flag = true
             account.avatar = img;
             account.role.id = roleId;
+            account.blocked = accountById.blocked;
             account.locationregion.id = accountById.locationregion.id;
             account.locationregion.provinceId = provinceId;
             account.locationregion.provinceName = currentProvince;
@@ -223,9 +222,8 @@ function ModalEditProduct(props) {
             account.locationregion.wardId = wardId;
             account.locationregion.wardName = currentWard;
             console.log('account: ', account);
-
+            setAccountFrm({...account});
             handleReset();
-            dispatch(editAccount(account, accountEditId));
             notify();
         },
     });

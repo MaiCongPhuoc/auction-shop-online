@@ -1,6 +1,7 @@
-export const listAccount = () => {
+export const listAccount = (data) => {
     return {
         type: 'accounts/listAccount',
+        payload: data,
     };
 };
 export const addAccount = (data) => {
@@ -13,7 +14,7 @@ export const editAccount = (data, id) => {
     return {
         type: 'accounts/editaccounts',
         payload: data,
-        id : id
+        id: id,
     };
 };
 export const deleteAccount = (data) => {

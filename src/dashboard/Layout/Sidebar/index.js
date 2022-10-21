@@ -45,19 +45,18 @@ function Sidebar() {
             <SidebarPage />
             {/* Nav Item - Charts */}
             
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <a className="nav-link" href="charts.html">
                     <i className="fas fa-fw fa-chart-area" />
                     <span>Charts</span>
                 </a>
             </li>
-            {/* Nav Item - Tables */}
             <li className="nav-item">
                 <a className="nav-link" href="tables.html">
                     <i className="fas fa-fw fa-table" />
                     <span>Tables</span>
                 </a>
-            </li>
+            </li> */}
         </ul>
     );
 }

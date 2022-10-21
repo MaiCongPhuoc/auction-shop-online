@@ -3,7 +3,6 @@ import Dashboard from './dashboard/pages/Dashboard';
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import './assets/bootstrap-5.2.0-dist/css/bootstrap.min.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -13,6 +12,7 @@ import './assets/css/sb-admin-2.min.css';
 import Product from './products/Product';
 import ListProduct from './dashboard/pages/ListProduct';
 import ListAccount from './dashboard/pages/ListAccount';
+import Auction from './Auction';
 
 function App() {
     return (
@@ -22,6 +22,7 @@ function App() {
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/product' element={<Product />} />
+                    <Route path='/product/:auctionId' element={<Auction />} />
                     <Route path='/list-product' element={<ListProduct />} />
                     <Route path='/list-account' element={<ListAccount />} />
                 </Routes>

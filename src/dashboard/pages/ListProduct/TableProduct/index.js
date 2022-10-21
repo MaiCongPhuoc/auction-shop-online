@@ -56,35 +56,56 @@ function BangSanPham() {
     });
     const { productEditId, showedit } = showEdit;
     const handleCloseEdit = () => setShowEdit(false);
-    function handleClick(id) {
-        Swal.fire({
-            title: 'Are you sure?',
-            type: 'warning',
-            text: "You won't be able to revert this!",
-            footer: '',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-        }).then((result) => {
-            async function deleteProduct(id) {
-                await ProductService.DeleteProduct(id);
-                setReRender(!reRender);
-            }
-            deleteProduct(id);
-            if (result.value) {
-                console.log('result.value');
-                Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-            }
-        });
-    }
+    
+    // function handleClick(id) {
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         type: 'warning',
+    //         text: "You won't be able to revert this!",
+    //         footer: '',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, delete it!',
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             async function deleteProduct(id) {
+    //                 await ProductService.DeleteProduct(id);
+    //                 setReRender(!reRender);
+    //             }
+    //             deleteProduct(id);
+    //             console.log('result.value');
+    //             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+    //         }
+    //     });
+    // }
+
+    const notify = (id) =>
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        async function deleteProduct(id) {
+            await ProductService.DeleteProduct(id);
+            setReRender(!reRender);
+        }
+        deleteProduct(id);
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
 
     useEffect(() => {
         try {
             setState({ ...state, loading: true });
             async function getData() {
                 let category = await CategoryService.getCategory();
-                console.log('category.data useEffect: ', category.data);
+                // console.log('category.data useEffect: ', category.data);
                 setState({
                     ...state,
                     categories: category.data,
@@ -126,7 +147,7 @@ function BangSanPham() {
             state.recordPerPage,
         );
         let category = await CategoryService.getCategory();
-        console.log('productData.data: ', productData.data);
+        // console.log('productData.data: ', productData.data);
         setState({
             ...state,
             products: productData.data.content,
@@ -197,7 +218,7 @@ function BangSanPham() {
     };
 
     const searchBook = (currentPage) => {
-        console.log('currentPage: ', currentPage);
+        // console.log('currentPage: ', currentPage);
         if (document.querySelector('#search').value === '') {
             document.querySelector('#select').value = '-1';
         }
@@ -211,7 +232,7 @@ function BangSanPham() {
                 totalElements: dataTable.data.totalElements,
                 currentPage: dataTable.data.number + 1,
             });
-            console.log('state: ', state);
+            // console.log('state: ', state);
         }
         getDataTable();
     };
@@ -352,7 +373,7 @@ function BangSanPham() {
                                                     {/* <button className="btn btn-outline-danger ml-2">Remove</button> */}
                                                     <button
                                                         className="btn btn-outline-danger ml-2"
-                                                        onClick={() => handleClick(product.id)}
+                                                        onClick={() => notify(product.id)}
                                                     >
                                                         Remove
                                                     </button>

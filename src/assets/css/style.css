@@ -1,0 +1,8 @@
+.tippy-account {
+    background-color: #ffb66e;
+    color: #000000d9;
+}
+.tippy-account :hover {
+    background-color: #ff8458;
+    color: #747d29d9;
+}

@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { setShowCart } from "../../../redux/actions";
 import { getAccount, getAllCartItems, getShowCart } from "../../../redux/selector";
 
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tippy from "@tippyjs/react";
+
+
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
 
@@ -25,6 +30,19 @@ const HeaderAfterLogin = () => {
 
     const handleShowCart = () => {
         set_show_cart(!show_cart);
+    }
+    const renderAccount = () => {
+        return (
+            <div
+                className="dropdown-menu-right shadow animated--grow-in accountAdmin"
+                aria-labelledby="userDropdown"
+            >
+                <a className="tippy-account p-2" href="#">
+                    <FontAwesomeIcon icon={faPlus} className="pr-2" />
+                    Add product
+                </a>
+            </div>
+        );
     };
 
     return (
@@ -34,7 +52,7 @@ const HeaderAfterLogin = () => {
                     <i style={{ position: 'relative' }}
                         className="fa-brands fa-opencart fa-2x ic-cart me-3"
                         aria-hidden="true"
-                        
+
                     >
                         <span
                             style={{
@@ -84,7 +102,18 @@ const HeaderAfterLogin = () => {
 
                     </div>
                 </div>
-                <a className="logged_in_name mx-3" href="#">{account.username}</a> |
+                {/* <a className="logged_in_name mx-3" href="#">{account.username}</a> */}
+                <Tippy
+                    // delay={[0, 700]}
+                    // offset={[15, 8]}
+                    placement="bottom-end"
+                    interactive
+                    content={renderAccount()}
+                    hideOnClick={true}
+                    trigger="click"
+                >
+                    <a className="logged_in_name mx-3" href="#">{account.username}</a>
+                </Tippy>
                 <a id="customer-logout-link" className="new-login-button" rel="nofollow" href="/logout">LOG OUT</a>
             </div>
         </div>

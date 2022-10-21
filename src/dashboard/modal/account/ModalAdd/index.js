@@ -10,6 +10,7 @@ import '../../modal.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+let flag = false;
 function ModalDetailAccount(props) {
     const notify = () =>
         toast.success('Wow so easy!', {
@@ -22,7 +23,6 @@ function ModalDetailAccount(props) {
             progress: undefined,
             theme: 'colored',
         });
-    const dispatch = useDispatch();
     const { account, showAdd, onCloseAddAccount } = props;
     const [stateImg, setStateImg] = useState(false);
     const [state, setState] = useState({
@@ -32,16 +32,7 @@ function ModalDetailAccount(props) {
     const [img, setImg] = useState(
         'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
     );
-    const [accountFrm, setAccountFrm] = useState({
-        id: 0,
-        provinceId: 0,
-        provinceName: '',
-        districtId: 0,
-        districtName: '',
-        wardId: 0,
-        wardName: '',
-        address: '',
-    });
+    const [accountFrm, setAccountFrm] = useState({});
 
     const [location, setLocation] = useState({
         districts: [],
@@ -60,6 +51,19 @@ function ModalDetailAccount(props) {
             console.log(error);
         }
     }, []);
+    useEffect(() => {
+        if (flag) {
+            try {
+                async function postData() {
+                    let createRes =  await AccountService.getAddAccount(accountFrm);
+                    console.log('createRes: ', createRes.data);
+                }
+                postData();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }, [accountFrm]);
 
     const handleProvince = (e) => {
         try {
@@ -128,9 +132,17 @@ function ModalDetailAccount(props) {
         formik.handleReset();
     };
 
+    const handleSubmit = async () => {
+        await AccountService.getAddAccount(accountFrm);
+    };
+
     const formik = useFormik({
         initialValues: {
             id: 0,
+            createdAt: '',
+            createdBy: '',
+            updateAt: '',
+            updateBy: '',
             fullName: '',
             username: '',
             email: '',
@@ -156,20 +168,20 @@ function ModalDetailAccount(props) {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(5, 'tên của bạn ít nhất là 5 kí tự!')
-                .max(30, 'tên của bạn tối đa nhất là 30 kí tự!')
+                .min(8, 'tên của bạn ít nhất là 8 kí tự!')
+                .max(20, 'tên của bạn tối đa nhất là 20 kí tự!')
                 .required('Vui lòng nhập tên vào!'),
             username: yup
                 .string()
-                .min(5, 'tên sản phẩm nhỏ nhất là 5 kí tự!')
-                .max(30, 'tên sản phẩm nhỏ nhất là 30 kí tự!')
+                .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
+                .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
                 .required('Vui lòng nhập tên sản phẩm vào!'),
             email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             password: yup
                 .string()
-                .min(6, 'Mật Khẩu ít nhất là 6 kí tự!')
-                .max(30, 'Mật khẩu tối đa là 30 kí tự!')
+                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .max(20, 'Mật khẩu tối đa là 20 kí tự!')
                 .required('Vui lòng nhập mật khẩu!'),
             repassword: yup
                 .string()
@@ -196,6 +208,7 @@ function ModalDetailAccount(props) {
 
             let roleId = Number(document.querySelector('#role').value);
 
+            flag = true;
             account.avatar = img;
             account.role.id = roleId;
             account.locationregion.provinceId = provinceId;
@@ -204,9 +217,9 @@ function ModalDetailAccount(props) {
             account.locationregion.districtName = currentDistrict;
             account.locationregion.wardId = wardId;
             account.locationregion.wardName = currentWard;
-
+            console.log('add count: ', account);
             handleReset();
-            dispatch(addAccount(account));
+            setAccountFrm(account);
             notify();
         },
     });

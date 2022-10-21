@@ -38,6 +38,7 @@ const ContentAll = () => {
     
     const products = useSelector(getAllProducts);
     const loadData = useSelector(getLoadData);
+    console.log('products: ', products);
 
     
     return (

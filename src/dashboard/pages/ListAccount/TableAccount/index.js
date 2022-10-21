@@ -1,7 +1,6 @@
 import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import AccountService from '../../../services/AccountService';
 import Spiner from '../../../Spiner';
 import ModalDetailAccount from '../../../modal/account/ModalDetail';
@@ -12,7 +11,6 @@ import Swal from 'sweetalert2';
 import '../../pages.css';
 
 function BangTaiKhoan() {
-    const dispatch = useDispatch();
     const [state, setState] = useState({
         loading: false,
         accounts: [],
@@ -64,45 +62,69 @@ function BangTaiKhoan() {
         accountEditId: 0,
         showedit: false,
     });
-    const hanldeCloseEditAccount = () => setShowEdit({...showEdit, showedit: !showEdit.showedit});
+    const hanldeCloseEditAccount = () => setShowEdit(false);
 
     //modal restartPassword
     const [showRestart, setShowRestart] = useState(false);
     const hanldCloseRestartPassword = () => setShowRestart(false);
-    function handleClick(id) {
-        Swal.fire({
-            title: 'Bạn chắc chứ?',
-            type: 'warning',
-            text: 'Bạn không thể hàn tác lại điều này!',
-            footer: '',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Vâng! Tôi muốn Xóa?',
-        }).then((result) => {
-            if (result.value) {
-                async function daleteAcount() {
-                    await AccountService.getDeleteAccount(id);
-                    setReRender(!reRender);
-                }
-                daleteAcount();
-                Swal.fire('Đã xóa!', 'Xóa thành công!', 'success');
-            }
-        });
-    }
+    
+    // function handleClick(id) {
+    //     Swal.fire({
+    //         title: 'Bạn chắc chứ?',
+    //         type: 'warning',
+    //         text: 'Bạn không thể hàn tác lại điều này!',
+    //         footer: '',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Vâng! Tôi muốn Xóa?',
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             async function daleteAcount() {
+    //                 await AccountService.getDeleteAccount(id);
+    //                 setReRender(!reRender);
+    //             }
+    //             daleteAcount();
+    //             Swal.fire('Đã xóa!', 'Xóa thành công!', 'success');
+    //         }
+    //     });
+    // }
+
+    const notify = (id) =>
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        async function daleteAcount() {
+            await AccountService.getDeleteAccount(id);
+            setReRender(!reRender);
+        }
+        daleteAcount();
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
+
+
     useEffect(() => {
         getProductsByPagination(state.currentPage);
     }, [showAdd, showEdit, reRender]);
 
     // data table
     async function getProductsByPagination(currentPage) {
-        console.log('vao day');
-        state.currentPage = currentPage - 1;
+        currentPage = currentPage - 1;
+        console.log('currentPage: ', currentPage);
         let accountData = await AccountService.getDataTableAccount(
-            state.search,
-            state.currentPage,
+            state.search = '',
+            currentPage,
             state.recordPerPage,
         );
+        console.log('accountData.content: ',accountData.content);
         setState({
             ...state,
             accounts: accountData.data.content,
@@ -112,29 +134,29 @@ function BangTaiKhoan() {
             loading: false,
         });
     }
-
-    const showNextPage = () => {
-        let current = state.currentPage;
-        let total = state.totalElements;
-        let record = state.recordPerPage;
-        if (current < Math.ceil(total / record)) {
-            if (state.search !== '') {
-                getProductsByPagination(current + 1);
-            } else {
-                searchBook(current + 1);
-            }
-        }
-    };
-
+    
     const showLastPage = () => {
         let current = state.currentPage;
         let total = state.totalElements;
         let record = state.recordPerPage;
         if (current < Math.ceil(total / record)) {
-            if (!state.search) {
+            if (state.search === '') {
                 getProductsByPagination(Math.ceil(total / record));
             } else {
                 searchBook(Math.ceil(total / record));
+            }
+        }
+    };
+    
+    const showNextPage = () => {
+        let current = state.currentPage;
+        let total = state.totalElements;
+        let record = state.recordPerPage;
+        if (current < Math.ceil(total / record)) {
+            if (state.search === '') {
+                getProductsByPagination(current + 1);
+            } else {
+                searchBook(current + 1);
             }
         }
     };
@@ -176,7 +198,7 @@ function BangTaiKhoan() {
             let dataTable = await AccountService.getDataTableAccount(state.search, currentPage, state.recordPerPage);
             setState({
                 ...state,
-                products: dataTable.data.content,
+                accounts: dataTable.data.content,
                 totalPages: dataTable.data.totalPages,
                 totalElements: dataTable.data.totalElements,
                 currentPage: dataTable.data.number + 1,
@@ -188,6 +210,7 @@ function BangTaiKhoan() {
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
     const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
+    console.log('state: ', state);
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">
@@ -290,7 +313,7 @@ function BangTaiKhoan() {
                                                       </button>
                                                       <button
                                                           className="btn btn-outline-danger ml-2"
-                                                          onClick={() => handleClick(account.id)}
+                                                          onClick={() => notify(account.id)}
                                                       >
                                                           Xóa
                                                       </button>

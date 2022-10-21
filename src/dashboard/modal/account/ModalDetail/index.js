@@ -7,16 +7,20 @@ function ModalDetail(props) {
     Moment.locale('vi');
     const { accountId, showDetail, onCloseDetailAccount } = props;
     const [accountDetail, setAccountDetail] = useState({});
+    console.log('props ModalDetail: ', props);
     useEffect(() => {
-        try {
-            async function getaccountDetail() {
-                let account = await AccountService.getAccountById(accountId);
-                setAccountDetail({ ...accountDetail, ...account.data });
+        if (accountId !== 0 || accountId !== undefined) {
+            try {
+                async function getaccountDetail() {
+                    let account = await AccountService.getAccountById(accountId);
+                    setAccountDetail({ ...accountDetail, ...account.data });
+                }
+                getaccountDetail();
+            } catch (error) {
+                console.log(error);
             }
-            getaccountDetail();
-        } catch (error) {
-            console.log(error);
         }
+        
     }, [showDetail]);
     return (
         <Modal show={showDetail} onHide={onCloseDetailAccount} backdrop="static" keyboard={false} size="xl">

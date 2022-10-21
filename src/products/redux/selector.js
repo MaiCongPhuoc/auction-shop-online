@@ -49,6 +49,7 @@ export const getProductsAction = createSelector(
     (products, type) => {
         if (type === 'Đấu giá') {
             return products.filter((product) => {
+                console.log('selector auction: ', product);
                 return product.action === true;
             });
         }
