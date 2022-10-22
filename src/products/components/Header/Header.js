@@ -16,7 +16,7 @@ const Header = () => {
     
     return (
         <>
-            <div className="full-width header-nav clearfix no-show-webview">
+            <div className="full-width header-nav clearfix no-show-webview" id="navbar">
                 <div className="padd-horizontal_category_nav">
                     <div className="show-for-medium">
                         <div className="main-header-div grid-x">

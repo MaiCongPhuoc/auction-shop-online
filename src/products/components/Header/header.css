@@ -42,3 +42,8 @@
     width: 100px;
     font-size: 15px;
 }
+
+#navbar{
+    position: fixed;
+    top: 0;
+}

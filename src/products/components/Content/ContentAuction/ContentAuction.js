@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getProductsAction, getLoadData } from '../../../redux/selector';
-import { setLoadData, setShowInfoProduct } from '../../../redux/actions';
+import { setLoadData } from '../../../redux/actions';
 import LoadData from './../../Loading/LoadData';
 import { FormatMoney } from './../../../Hooks/Hooks';
-import { setProduct } from './../../../redux/actions';
 import { Link } from 'react-router-dom';
 
 const ContentAuction = () => {
@@ -18,13 +17,9 @@ const ContentAuction = () => {
         }
     }, []);
 
-    const handleShowInfoProduct = (product) => {
-        dispatch(setShowInfoProduct(true));
-        dispatch(setProduct(product));
-    };
+    
     const productsAuction = useSelector(getProductsAction);
 
-    // dispatch(setLoadData(false));
 
     const loadData = useSelector(getLoadData);
     return (
@@ -36,7 +31,6 @@ const ContentAuction = () => {
                     <Link
                         to={`/product/${product.id}`}
                         className="card small-12 medium-6 cell"
-                        // onClick={() => handleShowInfoProduct(product)}
                         style={{ transform: 'none' }}
                         key={product.id}
                     >
