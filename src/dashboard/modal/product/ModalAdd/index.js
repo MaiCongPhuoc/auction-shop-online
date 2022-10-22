@@ -7,25 +7,29 @@ import { toast, ToastContainer } from 'react-toastify';
 import FileService from '../../../services/FileService';
 import ProductMediaService from '../../../services/ProductImageService';
 import '../../modal.css';
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 import ProductService from '../../../services/productService';
+import { useDispatch, useSelector } from 'react-redux';
+import { getShowAddProduct } from '../../../../products/redux/selector';
+import { setShowAddProduct } from '../../../../products/redux/actions'
 // import { withSwal } from 'react-sweetalert2';
 
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
 function ModalAddProduct(props) {
+    const dispatch = useDispatch();
     const notify = () =>
-    toast.success("Đã thêm thành công!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+        toast.success('Đã thêm thành công!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
     const { show, handleClose } = props;
     const [category, setCategory] = useState({
         loading: false,
@@ -50,7 +54,7 @@ function ModalAddProduct(props) {
             id: 0,
         },
         description: '',
-        images: []
+        images: [],
     });
 
     //upload multi image cloudinary
@@ -61,10 +65,10 @@ function ModalAddProduct(props) {
                 setStateImg(true);
                 let uploadResult = await FileService.Upload(e.target.files[i]);
                 listImg.push(uploadResult.data.url);
-                setTimeout(() => {
-                    setStateImg(false);
-                }, 1000 * 2);
             }
+            setTimeout(() => {
+                setStateImg(false);
+            }, 1000 * 2);
             console.log('listImg: ', listImg);
         }
         uploadAvatar();
@@ -88,7 +92,7 @@ function ModalAddProduct(props) {
                 listImg.reverse();
                 async function postData(submitFrm) {
                     setCategory({ ...category, loading: true });
-                    let createRes =  await ProductService.AddProduct(submitFrm);
+                    let createRes = await ProductService.AddProduct(submitFrm);
                     console.log('createRes: ', createRes);
                 }
                 postData(submitFrm);
@@ -99,7 +103,7 @@ function ModalAddProduct(props) {
                 //             id: 0,
                 //             fileUrl: listImg[i],
                 //         };
-                        
+
                 //         await ProductMediaService.AddMedia(img);
                 //     }
                 //     listImg = [];
@@ -113,9 +117,10 @@ function ModalAddProduct(props) {
         }
     }, [submitFrm]);
     // Validate from add
-    const handleReset = () => {
+    const handleCloseAddProduct = () => {
+        dispatch(setShowAddProduct(false));
         document.querySelector('#image').value = '';
-        listImg = [];
+        listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
         formik.handleReset();
     };
 
@@ -134,7 +139,7 @@ function ModalAddProduct(props) {
                 id: 0,
             },
             description: '',
-            images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg']
+            images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
         },
         validationSchema: yup.object({
             title: yup
@@ -165,14 +170,13 @@ function ModalAddProduct(props) {
             product.category.id = Number(document.querySelector('#category').value);
             console.log('product add: ', product);
             setSubmitFrm(product);
-            handleReset();
         },
     });
 
     const { loading, categorys, errorMessage } = category;
-
+    const showAddProduct = useSelector(getShowAddProduct);
     return (
-        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} size="xl">
+        <Modal show={showAddProduct} onHide={handleCloseAddProduct} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
                 <Modal.Title style={{ color: 'black' }}>Add Product</Modal.Title>
             </Modal.Header>
@@ -323,6 +327,18 @@ function ModalAddProduct(props) {
                                         placeholder="Vui lòng chọn file..."
                                         onInput={handleUpload}
                                     />
+                                    <div className='row d-flex justify-content-around'>
+                                        {listImg.map((image, index) => (
+                                            <div className="col-3 imgAdd" key={index} style={{ height: '200px' }}>
+                                                <img
+                                                    src={image}
+                                                    alt=""
+                                                    onClick={() => document.querySelector('#image').click()}
+                                                    className="imgproduct"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                             <div className="row">
@@ -342,7 +358,7 @@ function ModalAddProduct(props) {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type="reset" variant="secondary w-auto" className="" onClick={handleClose}>
+                        <Button type="reset" variant="secondary w-auto" className="" onClick={handleCloseAddProduct}>
                             Close
                         </Button>
                         {stateImg ? (
@@ -350,7 +366,7 @@ function ModalAddProduct(props) {
                                 <span className="spinner-border text-info"></span>
                             </Button>
                         ) : (
-                            <Button type="submit" className="btn btn-primary" >
+                            <Button type="submit" className="btn btn-primary">
                                 Create
                             </Button>
                         )}

@@ -293,7 +293,7 @@ function BangSanPham() {
                             </select>
                             {/* Button trigger modal */}
                             <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
-                                Add
+                                Thêm
                             </Button>
                         </div>
                     </div>
@@ -368,14 +368,14 @@ function BangSanPham() {
                                                             })
                                                         }
                                                     >
-                                                        Edit
+                                                        Sửa
                                                     </button>
                                                     {/* <button className="btn btn-outline-danger ml-2">Remove</button> */}
                                                     <button
                                                         className="btn btn-outline-danger ml-2"
                                                         onClick={() => notify(product.id)}
                                                     >
-                                                        Remove
+                                                        Xóa
                                                     </button>
                                                 </td>
                                             </tr>

@@ -1,18 +1,24 @@
 const initState = {
-    showInfoProduct: false
-}
+    showInfoProduct: false,
+    showAddProduct: false,
+};
 
 const modalReducer = (state = initState, action) => {
     switch (action.type) {
         case 'modals/showInfoProduct':
             return {
                 ...state,
-                showInfoProduct: action.payload
-            }
+                showInfoProduct: action.payload,
+            };
+        case 'modals/showAddProduct':
+            return {
+                ...state,
+                showAddProduct: action.payload,
+            };
 
         default:
-            return state
+            return state;
     }
-}
+};
 
 export default modalReducer;

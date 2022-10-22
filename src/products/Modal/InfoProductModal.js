@@ -81,8 +81,6 @@ const InfoProductModal = () => {
                 </Modal.Footer>
             </Modal>
         </>
-
-
     )
 }
 

@@ -111,3 +111,6 @@ export const productsRemainingCategorySelector = createSelector(
 // Modals
 
 export const getShowInfoProduct = (state) => state.modals.showInfoProduct;
+
+export const getShowAddProduct = (state) => state.modals.showAddProduct;
+
