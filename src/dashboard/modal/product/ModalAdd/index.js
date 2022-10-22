@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProductService from '../../../services/productService';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShowAddProduct } from '../../../../products/redux/selector';
-import { setShowAddProduct } from '../../../../products/redux/actions'
+import { setShowAddProduct } from '../../../../products/redux/actions';
 // import { withSwal } from 'react-sweetalert2';
 
 let flag = false;
@@ -124,6 +124,11 @@ function ModalAddProduct(props) {
         formik.handleReset();
     };
 
+    const handleResetFrom = () => {
+        document.querySelector('#image').value = '';
+        listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
+        formik.handleReset();
+    }
     const formik = useFormik({
         initialValues: {
             action: true,
@@ -139,6 +144,7 @@ function ModalAddProduct(props) {
                 id: 0,
             },
             description: '',
+            countday: '',
             images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
         },
         validationSchema: yup.object({
@@ -170,11 +176,13 @@ function ModalAddProduct(props) {
             product.category.id = Number(document.querySelector('#category').value);
             console.log('product add: ', product);
             setSubmitFrm(product);
+            handleResetFrom();
         },
     });
 
     const { loading, categorys, errorMessage } = category;
     const showAddProduct = useSelector(getShowAddProduct);
+    console.log('radio: ', radio);
     return (
         <Modal show={showAddProduct} onHide={handleCloseAddProduct} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
@@ -221,20 +229,82 @@ function ModalAddProduct(props) {
                                         onChange={formik.handleChange}
                                     />
                                 </div>
-                                <div className="mb-3 col-6">
-                                    <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
-                                        Giá
-                                    </label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        name="price"
-                                        id="addPrice"
-                                        placeholder="Vui lòng nhập giá..."
-                                        value={formik.values.price}
-                                        onChange={formik.handleChange}
-                                    />
-                                </div>
+                                {radio ? (
+                                    <div className="mb-3 col-6">
+                                        <label
+                                            htmlFor="addPrice"
+                                            className="form-label text-dark font-weight-bold ml-2"
+                                        >
+                                            Giá
+                                        </label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            name="price"
+                                            id="addPrice"
+                                            placeholder="Vui lòng nhập giá..."
+                                            value={formik.values.price}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="col-6 d-flex">
+                                        <div className="mb-3 col-6">
+                                            <label
+                                                htmlFor="addPrice"
+                                                className="form-label text-dark font-weight-bold ml-2"
+                                            >
+                                                Giá khởi điểm:
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                name="price"
+                                                id="addPrice"
+                                                placeholder="Vui lòng nhập giá..."
+                                                value={formik.values.price}
+                                                onChange={formik.handleChange}
+                                            />
+                                        </div>
+                                        <div className="mb-3 col-6">
+                                            <label
+                                                htmlFor="addPrice"
+                                                className="form-label text-dark font-weight-bold ml-2"
+                                            >
+                                                Ngày kết thúc:
+                                            </label>
+                                            <select
+                                                className="form-select select select-bg-ori"
+                                                id="countday"
+                                                name="countday"
+                                                value={formik.values.countday}
+                                                onChange={formik.handleChange}
+                                            >
+                                                <option value="1" key="">
+                                                    1
+                                                </option>
+                                                <option value="2" key="">
+                                                    2
+                                                </option>
+                                                <option value="3" key="">
+                                                    3
+                                                </option>
+                                                <option value="4" key="">
+                                                    4
+                                                </option>
+                                                <option value="5" key="">
+                                                    5
+                                                </option>
+                                                <option value="6" key="">
+                                                    6
+                                                </option>
+                                                <option value="7" key="">
+                                                    7
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             <div className="row">
                                 <div className="mb-3 col-4">
@@ -264,7 +334,7 @@ function ModalAddProduct(props) {
                                                 className="form-check-input"
                                                 type="radio"
                                                 name="action"
-                                                checked
+                                                {...radio && 'checked'}
                                                 id="flexRadioDefault1"
                                                 value={true}
                                                 onClick={() => setRadio(true)}
@@ -278,6 +348,7 @@ function ModalAddProduct(props) {
                                                 className="form-check-input"
                                                 type="radio"
                                                 name="action"
+                                                {...radio && 'checked'}
                                                 // onInput={handleChange}
                                                 id="flexRadioDefault2"
                                                 value={false}
@@ -327,7 +398,7 @@ function ModalAddProduct(props) {
                                         placeholder="Vui lòng chọn file..."
                                         onInput={handleUpload}
                                     />
-                                    <div className='row d-flex justify-content-around'>
+                                    <div className="row d-flex justify-content-around">
                                         {listImg.map((image, index) => (
                                             <div className="col-3 imgAdd" key={index} style={{ height: '200px' }}>
                                                 <img
