@@ -1,7 +1,9 @@
 const initState = {
     account: {
         id: 3,
-        username: 'HaleyRollins',
+        username: 'MiloTran',
+        fullName: 'Trần Ngọc Trung',
+        phone: '0326841682',
         role: 3
     }
 }

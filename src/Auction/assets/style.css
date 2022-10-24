@@ -30,6 +30,7 @@
     width: 100% !important;
     height: 310px !important;
 }
+<<<<<<< HEAD
 .slick-a{
     margin-top: 50px !important;
 }
@@ -39,3 +40,9 @@
 .Slick-img{
     width: 20px !important;
 }
+=======
+
+#productAuction{
+    margin-top: 160px;
+}
+>>>>>>> development
