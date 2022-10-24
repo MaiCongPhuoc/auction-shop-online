@@ -34,7 +34,6 @@ const ContentAll = () => {
 
     const products = useSelector(getAllProducts);
     const loadData = useSelector(getLoadData);
-    console.log('products: ', products);
 
     return (
         <div className="lot-cards grid-x grid-margin-x">
@@ -81,11 +80,11 @@ const ContentAll = () => {
                                             <b>Giá ước tính:</b> $15,000
                                         </div>
                                         <div className="stats-group__stat">
-                                            <b>Giá khởi điểm (VNĐ):</b>
-                                            <div className="stat__price">{FormatMoney(product.price)}</div>
+                                            <b>Giá khởi điểm:</b>
+                                            <div className="stat__price">{FormatMoney(product.price)} ₫</div>
                                         </div>
                                         <div className="stats-group__stat">
-                                            <b>Giá hiện tại (VNĐ):</b>
+                                            <b>Giá hiện tại:</b>
                                             <div className="stat__price">4,600</div>
                                         </div>
                                     </div>
@@ -119,9 +118,9 @@ const ContentAll = () => {
                                             <b>Số lượng còn lại:</b> {product.available}
                                         </div>
                                         <div className="stats-group__stat">
-                                            <b>Giá sản phẩm (VNĐ):</b>
+                                            <b>Giá sản phẩm:</b>
                                             <div className="stat__price ItemCard-module__binPriceCentered___3hyVZ">
-                                                {FormatMoney(product.price)}
+                                                {FormatMoney(product.price)} ₫
                                             </div>
                                         </div>
                                         <div className="ItemCard-module__marketPrice___3E7JK">

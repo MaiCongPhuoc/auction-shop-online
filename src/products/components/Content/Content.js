@@ -32,7 +32,6 @@ const Content = () => {
 
     const account = useSelector(getAccount);
 
-    const showCart = useSelector(getShowCart);
 
 
     useEffect(() => {
@@ -55,12 +54,11 @@ const Content = () => {
             }
         };
 
-    }, [showInfoProduct, loginStatus, showCart]);
+    }, [showInfoProduct, loginStatus]);
 
-    // console.log('type: ', type);
     return (
         <>
-            <div className="base-width main-yield">
+            <div className="base-width main-yield" id="client-content">
                 <div className="pages" data-pages-shell="">
                     <div id="homepage-lot">
                         <div className="category-items-wrapper cell medium-12 float-center" id="homepage-lot-list-wrapper">
@@ -69,12 +67,10 @@ const Content = () => {
                                 <div className="sorter-wrapper">
                                     <div>
                                         <div>
-                                            {showCart ? (<CartItem />) : (
-                                                <ContentLotType />
-                                            )}
 
+                                            <ContentLotType />
 
-                                            {showCart ? null :
+                                            {
                                                 searchStatus ? (<ContentResultFilters />) :
                                                     (
                                                         type === 'Đấu giá' ? <ContentAuction /> :

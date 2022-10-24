@@ -7,25 +7,29 @@ import { toast, ToastContainer } from 'react-toastify';
 import FileService from '../../../services/FileService';
 import ProductMediaService from '../../../services/ProductImageService';
 import '../../modal.css';
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 import ProductService from '../../../services/productService';
+import { useDispatch, useSelector } from 'react-redux';
+import { getShowAddProduct } from '../../../../products/redux/selector';
+import { setShowAddProduct } from '../../../../products/redux/actions';
 // import { withSwal } from 'react-sweetalert2';
 
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
 function ModalAddProduct(props) {
+    const dispatch = useDispatch();
     const notify = () =>
-    toast.success("Đã thêm thành công!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+        toast.success('Đã thêm thành công!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
     const { show, handleClose } = props;
     const [category, setCategory] = useState({
         loading: false,
@@ -35,7 +39,7 @@ function ModalAddProduct(props) {
 
     const [stateImg, setStateImg] = useState(false);
 
-    const [radio, setRadio] = useState(true);
+    const [radio, setRadio] = useState(false);
     const [submitFrm, setSubmitFrm] = useState({
         action: true,
         available: 0,
@@ -50,7 +54,7 @@ function ModalAddProduct(props) {
             id: 0,
         },
         description: '',
-        images: []
+        images: [],
     });
 
     //upload multi image cloudinary
@@ -61,10 +65,10 @@ function ModalAddProduct(props) {
                 setStateImg(true);
                 let uploadResult = await FileService.Upload(e.target.files[i]);
                 listImg.push(uploadResult.data.url);
-                setTimeout(() => {
-                    setStateImg(false);
-                }, 1000 * 2);
             }
+            setTimeout(() => {
+                setStateImg(false);
+            }, 1000 * 2);
             console.log('listImg: ', listImg);
         }
         uploadAvatar();
@@ -88,7 +92,7 @@ function ModalAddProduct(props) {
                 listImg.reverse();
                 async function postData(submitFrm) {
                     setCategory({ ...category, loading: true });
-                    let createRes =  await ProductService.AddProduct(submitFrm);
+                    let createRes = await ProductService.AddProduct(submitFrm);
                     console.log('createRes: ', createRes);
                 }
                 postData(submitFrm);
@@ -99,7 +103,7 @@ function ModalAddProduct(props) {
                 //             id: 0,
                 //             fileUrl: listImg[i],
                 //         };
-                        
+
                 //         await ProductMediaService.AddMedia(img);
                 //     }
                 //     listImg = [];
@@ -113,18 +117,24 @@ function ModalAddProduct(props) {
         }
     }, [submitFrm]);
     // Validate from add
-    const handleReset = () => {
+    const handleCloseAddProduct = () => {
+        dispatch(setShowAddProduct(false));
         document.querySelector('#image').value = '';
-        listImg = [];
+        listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
         formik.handleReset();
     };
 
+    const handleResetFrom = () => {
+        document.querySelector('#image').value = '';
+        listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
+        formik.handleReset();
+    };
     const formik = useFormik({
         initialValues: {
-            action: true,
+            action: radio,
             available: 0,
             image: 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg',
-            moderation: false,
+            moderation: true,
             price: 0,
             slug: '',
             sold: 0,
@@ -134,7 +144,8 @@ function ModalAddProduct(props) {
                 id: 0,
             },
             description: '',
-            images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg']
+            countday: '',
+            images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
         },
         validationSchema: yup.object({
             title: yup
@@ -165,14 +176,15 @@ function ModalAddProduct(props) {
             product.category.id = Number(document.querySelector('#category').value);
             console.log('product add: ', product);
             setSubmitFrm(product);
-            handleReset();
+            handleResetFrom();
         },
     });
 
     const { loading, categorys, errorMessage } = category;
-
+    const showAddProduct = useSelector(getShowAddProduct);
+    console.log('radio: ', radio);
     return (
-        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} size="xl">
+        <Modal show={showAddProduct} onHide={handleCloseAddProduct} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
                 <Modal.Title style={{ color: 'black' }}>Add Product</Modal.Title>
             </Modal.Header>
@@ -217,20 +229,82 @@ function ModalAddProduct(props) {
                                         onChange={formik.handleChange}
                                     />
                                 </div>
-                                <div className="mb-3 col-6">
-                                    <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
-                                        Giá
-                                    </label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        name="price"
-                                        id="addPrice"
-                                        placeholder="Vui lòng nhập giá..."
-                                        value={formik.values.price}
-                                        onChange={formik.handleChange}
-                                    />
-                                </div>
+                                {radio ? (
+                                    <div className="col-6 d-flex">
+                                        <div className="mb-3 col-6">
+                                            <label
+                                                htmlFor="addPrice"
+                                                className="form-label text-dark font-weight-bold ml-2"
+                                            >
+                                                Giá khởi điểm:
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                name="price"
+                                                id="addPrice"
+                                                placeholder="Vui lòng nhập giá..."
+                                                value={formik.values.price}
+                                                onChange={formik.handleChange}
+                                            />
+                                        </div>
+                                        <div className="mb-3 col-6">
+                                            <label
+                                                htmlFor="addPrice"
+                                                className="form-label text-dark font-weight-bold ml-2"
+                                            >
+                                                Ngày kết thúc:
+                                            </label>
+                                            <select
+                                                className="form-select select select-bg-ori"
+                                                id="countday"
+                                                name="countday"
+                                                value={formik.values.countday}
+                                                onChange={formik.handleChange}
+                                            >
+                                                <option value="1" key="">
+                                                    1
+                                                </option>
+                                                <option value="2" key="">
+                                                    2
+                                                </option>
+                                                <option value="3" key="">
+                                                    3
+                                                </option>
+                                                <option value="4" key="">
+                                                    4
+                                                </option>
+                                                <option value="5" key="">
+                                                    5
+                                                </option>
+                                                <option value="6" key="">
+                                                    6
+                                                </option>
+                                                <option value="7" key="">
+                                                    7
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="mb-3 col-6">
+                                        <label
+                                            htmlFor="addPrice"
+                                            className="form-label text-dark font-weight-bold ml-2"
+                                        >
+                                            Giá
+                                        </label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            name="price"
+                                            id="addPrice"
+                                            placeholder="Vui lòng nhập giá..."
+                                            value={formik.values.price}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </div>
+                                )}
                             </div>
                             <div className="row">
                                 <div className="mb-3 col-4">
@@ -260,12 +334,12 @@ function ModalAddProduct(props) {
                                                 className="form-check-input"
                                                 type="radio"
                                                 name="action"
-                                                checked
+                                                {...(radio && 'checked')}
                                                 id="flexRadioDefault1"
                                                 value={true}
                                                 onClick={() => setRadio(true)}
                                             />
-                                            Bán
+                                            Đấu giá
                                         </label>
                                     </div>
                                     <div className="form-check">
@@ -274,12 +348,13 @@ function ModalAddProduct(props) {
                                                 className="form-check-input"
                                                 type="radio"
                                                 name="action"
+                                                {...(radio && 'checked')}
                                                 // onInput={handleChange}
                                                 id="flexRadioDefault2"
                                                 value={false}
                                                 onClick={() => setRadio(false)}
                                             />
-                                            Đấu giá
+                                            Bán
                                         </label>
                                     </div>
                                 </div>
@@ -323,6 +398,18 @@ function ModalAddProduct(props) {
                                         placeholder="Vui lòng chọn file..."
                                         onInput={handleUpload}
                                     />
+                                    <div className="row d-flex justify-content-around">
+                                        {listImg.map((image, index) => (
+                                            <div className="col-3 imgAdd" key={index} style={{ height: '200px' }}>
+                                                <img
+                                                    src={image}
+                                                    alt=""
+                                                    onClick={() => document.querySelector('#image').click()}
+                                                    className="imgproduct"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                             <div className="row">
@@ -342,7 +429,7 @@ function ModalAddProduct(props) {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type="reset" variant="secondary w-auto" className="" onClick={handleClose}>
+                        <Button type="reset" variant="secondary w-auto" className="" onClick={handleCloseAddProduct}>
                             Close
                         </Button>
                         {stateImg ? (
@@ -350,7 +437,7 @@ function ModalAddProduct(props) {
                                 <span className="spinner-border text-info"></span>
                             </Button>
                         ) : (
-                            <Button type="submit" className="btn btn-primary" >
+                            <Button type="submit" className="btn btn-primary">
                                 Create
                             </Button>
                         )}

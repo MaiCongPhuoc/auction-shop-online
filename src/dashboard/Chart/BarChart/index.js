@@ -24,7 +24,6 @@ function BarChart() {
         async function getListProduct() {
             let listProduct = await ProductService.getProducts();
             setProducts(listProduct.data);
-            console.log('listProduct.data: ', listProduct.data);
         }
         getListProduct();
     }, []);
@@ -204,7 +203,6 @@ function BarChart() {
             },
         ],
     };
-    
 
     return <Bar options={options} data={data} />;
 }

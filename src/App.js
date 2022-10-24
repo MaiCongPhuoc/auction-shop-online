@@ -14,6 +14,7 @@ import ListProduct from './dashboard/pages/ListProduct';
 import ListAccount from './dashboard/pages/ListAccount';
 import Auction from './Auction';
 import ListCategories from './dashboard/pages/ListCategories/index';
+import ShowCartItem from './products/components/Content/CartItem/index';
 
 function App() {
     return (
@@ -22,10 +23,11 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/list-account" element={<ListAccount />} />
+                    <Route path="/list-product" element={<ListProduct />} />
                     <Route path="/product" element={<Product />} />
                     <Route path="/product/:auctionId" element={<Auction />} />
-                    <Route path="/list-product" element={<ListProduct />} />
-                    <Route path="/list-account" element={<ListAccount />} />
+                    <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
                     <Route path="/dashboard/category" element={<ListCategories />} />
                 </Routes>
             </div>

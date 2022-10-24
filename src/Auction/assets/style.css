@@ -15,11 +15,12 @@
     justify-content: space-around !important;
 } */
 .slick-dots>li {
-    padding: 0 100px;
+    padding: 0 70px;
+    top: 50px !important;
 }
 .auctionImg {
     width: 100% !important;
-    height: 80% !important;
+    height: 310px !important;
 }
 .slick-slider {
     width: 100% !important;
@@ -27,5 +28,18 @@
 }
 .slick-list {
     width: 100% !important;
-    height: 300px !important;
+    height: 310px !important;
+}
+.slick-a{
+    margin-top: 50px !important;
+}
+.Add-to-Watchlis {
+    padding: 10px 0 !important;
+}
+.Slick-img{
+    width: 20px !important;
+}
+
+#productAuction{
+    margin-top: 160px;
 }

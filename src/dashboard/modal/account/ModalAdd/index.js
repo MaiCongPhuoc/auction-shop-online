@@ -4,8 +4,6 @@ import AccountService from '../../../services/AccountService';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import FileService from '../../../services/FileService';
-import { useDispatch } from 'react-redux';
-import { addAccount } from '../../../redux/actions';
 import '../../modal.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

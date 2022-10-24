@@ -28,6 +28,8 @@ export const getAllCartItems = (state) => state.cartItems.cartItems;
 
 export const getShowCart = (state) => state.cartItems.showCart;
 
+export const getShowModalCheckout = (state) => state.cartItems.showCheckout;
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 
@@ -111,3 +113,11 @@ export const productsRemainingCategorySelector = createSelector(
 // Modals
 
 export const getShowInfoProduct = (state) => state.modals.showInfoProduct;
+
+export const getShowAddProduct = (state) => state.modals.showAddProduct;
+
+export const getShowEditProduct = (state) => state.modals.showEditProduct;
+
+export const getShowModerationProduct = (state) => state.modals.showModerationProduct;
+
+

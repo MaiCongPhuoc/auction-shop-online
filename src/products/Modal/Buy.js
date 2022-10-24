@@ -152,7 +152,7 @@ const Buy = ({ product }) => {
                     <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>
                 </div>
             </div>
-            <ToastContainer />
+            <ToastContainer autoClose={1500}/>
         </div>
     );
 }

@@ -1,130 +1,164 @@
 // Account
-export const setAccount = object => {
+export const setAccount = (object) => {
     return {
         type: 'account/setAccount',
-        payload: object
-    }
-}
+        payload: object,
+    };
+};
 
 // Product
-export const setProducts = arr => {
+export const setProducts = (arr) => {
     return {
         type: 'products/setProducts',
-        payload: arr
-    }
-
-}
-export const setProduct = object => {
+        payload: arr,
+    };
+};
+export const setProduct = (object) => {
     return {
         type: 'products/setProduct',
-        payload: object
-    }
-}
-export const setCheckProduct = boolean => {
+        payload: object,
+    };
+};
+export const setCheckProduct = (boolean) => {
     return {
         type: 'products/setCheckProduct',
-        payload: boolean
-    }
-}
+        payload: boolean,
+    };
+};
 
-export const setLoadData = boolean => {
+export const setLoadData = (boolean) => {
     return {
         type: 'products/setLoadData',
-        payload: boolean
-    }
-}
+        payload: boolean,
+    };
+};
+
+export const setIdProduct = (id) => {
+    return {
+        type: 'products/setIdProduct',
+        payload: id,
+    };
+};
 
 // Type
-export const setTypes = arr => {
+export const setTypes = (arr) => {
     return {
         type: 'products/setTypes',
-        payload: arr
-    }
-}
+        payload: arr,
+    };
+};
 
-export const changeType = text => {
+export const changeType = (text) => {
     return {
         type: 'lotTypes/changeType',
-        payload: text
-    }
-}
+        payload: text,
+    };
+};
 
 // Login
-export const loginStatus = boolean => {
+export const loginStatus = (boolean) => {
     return {
         type: 'login/loginStatus',
-        payload: boolean
-    }
-}
+        payload: boolean,
+    };
+};
 
 // Categories
-export const setCategories = arr => {
+export const setCategories = (arr) => {
     return {
         type: 'categories/setCategories',
-        payload: arr
-    }
-}
+        payload: arr,
+    };
+};
 
 // Filters
 export const searchFilterChange = (text) => {
     return {
         type: 'filters/searchFilterChange',
-        payload: text
-    }
-}
+        payload: text,
+    };
+};
 export const setResultsFilterChange = (arr) => {
     return {
         type: 'filters/setResultsFilterChange',
-        payload: arr
-    }
-}
+        payload: arr,
+    };
+};
 export const setSearchingFilters = (boolean) => {
     return {
         type: 'filters/setSearchingFilters',
-        payload: boolean
-    }
-}
+        payload: boolean,
+    };
+};
 
 export const typeFiltersChange = (text) => {
     return {
         type: 'filters/typeFiltersChange',
-        payload: text
-    }
-}
+        payload: text,
+    };
+};
 
 export const categoryFiltersChange = (arr) => {
     return {
         type: 'filters/categoryFiltersChange',
-        payload: arr
-    }
-}
+        payload: arr,
+    };
+};
 
 export const setShowResultNav = (boolean) => {
     return {
         type: 'filters/setShowResultNav',
-        payload: boolean
-    }
-}
+        payload: boolean,
+    };
+};
 
 // Modal
 export const setShowInfoProduct = (boolean) => {
     return {
         type: 'modals/showInfoProduct',
-        payload: boolean
-    }
-}
+        payload: boolean,
+    };
+};
+
+export const setShowAddProduct = (boolean) => {
+    return {
+        type: 'modals/showAddProduct',
+        payload: boolean,
+    };
+};
+
+export const setShowEditProduct = (boolean) => {
+    return {
+        type: 'modals/showEditProduct',
+        payload: boolean,
+    };
+};
+
+export const setShowModerationProduct = (boolean) => {
+    return {
+        type: 'modals/showModerationProduct',
+        payload: boolean,
+    };
+};
 
 // Cart Items
 export const setCartItems = (arr) => {
     return {
         type: 'cartItems/setCartItems',
-        payload: arr
-    }
-}
+        payload: arr,
+    };
+};
 
 export const setShowCart = (boolean) => {
     return {
         type: 'cartItems/setShowCart',
+        payload: boolean,
+    };
+};
+
+export const setShowCartModalCheckout = (boolean) => {
+    return {
+        type: 'cartItems/setShowModalCheckout',
         payload: boolean
     }
 }
