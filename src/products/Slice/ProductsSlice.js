@@ -27,6 +27,11 @@ const productsReducer = (state = initState, action) => {
                 ...state,
                 checkProduct: action.payload
             }
+        case 'products/setIdProduct':
+            return {
+                ...state,
+                checkProduct: action.payload
+            }
 
         default:
             return state

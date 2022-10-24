@@ -134,7 +134,7 @@ function ModalAddProduct(props) {
             action: radio,
             available: 0,
             image: 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg',
-            moderation: false,
+            moderation: true,
             price: 0,
             slug: '',
             sold: 0,

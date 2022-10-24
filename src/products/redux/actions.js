@@ -33,6 +33,13 @@ export const setLoadData = (boolean) => {
     };
 };
 
+export const setIdProduct = (id) => {
+    return {
+        type: 'products/setIdProduct',
+        payload: id,
+    };
+};
+
 // Type
 export const setTypes = (arr) => {
     return {
@@ -116,6 +123,20 @@ export const setShowInfoProduct = (boolean) => {
 export const setShowAddProduct = (boolean) => {
     return {
         type: 'modals/showAddProduct',
+        payload: boolean,
+    };
+};
+
+export const setShowEditProduct = (boolean) => {
+    return {
+        type: 'modals/showEditProduct',
+        payload: boolean,
+    };
+};
+
+export const setShowModerationProduct = (boolean) => {
+    return {
+        type: 'modals/showModerationProduct',
         payload: boolean,
     };
 };

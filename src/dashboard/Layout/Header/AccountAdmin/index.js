@@ -1,23 +1,67 @@
 import Tippy from '@tippyjs/react';
-import { useState } from 'react';
+import moment from 'moment';
+import { useEffect, useRef, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import ProductService from '../../../services/productService';
+import { setShowModerationProduct } from '../../../../products/redux/actions'
+import { getShowModerationProduct } from '../../../../products/redux/selector';
 
 function AccountAdmin() {
+    const dispatch = useDispatch();
+    const count = useRef(0);
+    const product = useRef([]);
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        async function getListProduct() {
+            let listProduct = await ProductService.getProducts();
+            setProducts(listProduct.data);
+            console.log('listProduct.data: ', listProduct.data);
+        }
+        getListProduct();
+    }, []);
+
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].moderation) {
+            count.current += 1;
+            product.current.push(products[i]);
+        }
+    }
+
+    const handleAlert = (id) => {
+        dispatch(setShowModerationProduct(true));
+        // dispatch(setIdProduct(id));
+    };
+
+    const c = useSelector(getShowModerationProduct);
+    console.log(c);
+
+    console.log('count.current: ', count.current);
+    console.log('product.current: ', product.current);
+
     const renderThongBao = () => {
         return (
             <div className="dropdown-list dropdown-menu-right shadow animated--grow-in" id="thongbao">
-                <h6 className="dropdown-header">Alerts Center</h6>
-                <a className="dropdown-item d-flex align-items-center" href="#">
-                    <div className="mr-3">
-                        <div className="icon-circle bg-primary">
-                            <i className="fas fa-file-alt text-white" />
+                <h6 className="dropdown-header">Thông báo</h6>
+                {product.current.map((product) => (
+                    <Button
+                        className="dropdown-item d-flex align-items-center alerts-a"
+                        onClick={() => handleAlert(product.id)}
+                        key={product.id}
+                    >
+                        <div className="mr-3">
+                            <div className="icon-circle bg-primary">
+                                {/* <i className="fas fa-file-alt text-white" /> */}
+                                <img src={product.image} alt="" className="imgAlerts" />
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <div className="small text-gray-500">December 12, 2019</div>
-                        <span className="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
-                <a className="dropdown-item d-flex align-items-center" href="#">
+                        <div>
+                            <div className="small text-gray-500">{moment(product.createdAt).format('DD-MM-yyyy')}</div>
+                            <span className="font-weight-bold">{product.title}</span>
+                        </div>
+                    </Button>
+                ))}
+                {/* <a className="dropdown-item d-flex align-items-center" href="#">
                     <div className="mr-3">
                         <div className="icon-circle bg-success">
                             <i className="fas fa-donate text-white" />
@@ -41,7 +85,7 @@ function AccountAdmin() {
                 </a>
                 <a className="dropdown-item text-center small text-gray-500" href="#">
                     Show All Alerts
-                </a>
+                </a> */}
             </div>
         );
     };
@@ -196,7 +240,7 @@ function AccountAdmin() {
                     >
                         <i className="fas fa-bell fa-fw" />
                         {/* Counter - Alerts */}
-                        <span className="badge badge-danger badge-counter">3+</span>
+                        <span className="badge badge-danger badge-counter">{count.current}</span>
                     </a>
                 </Tippy>
 
@@ -255,6 +299,7 @@ function AccountAdmin() {
                     </a>
                 </Tippy>
             </li>
+            <Button onClick={handleAlert}>click</Button>
         </ul>
     );
 }

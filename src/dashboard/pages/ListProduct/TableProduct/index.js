@@ -47,7 +47,7 @@ function BangSanPham() {
 
     //modal add
     const [showAdd, setShowAdd] = useState(false);
-    const handCloseAdd = () => setShowAdd(false);
+    // const handCloseAdd = () => setShowAdd(false);
 
     //modal edit
     const [showEdit, setShowEdit] = useState({
@@ -292,9 +292,9 @@ function BangSanPham() {
                                 ))}
                             </select>
                             {/* Button trigger modal */}
-                            <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
+                            {/* <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
                                 Thêm
-                            </Button>
+                            </Button> */}
                         </div>
                     </div>
                     <div className="card-body">
@@ -368,7 +368,7 @@ function BangSanPham() {
                                                             })
                                                         }
                                                     >
-                                                        Sửa
+                                                        Sửa đổi
                                                     </button>
                                                     {/* <button className="btn btn-outline-danger ml-2">Remove</button> */}
                                                     <button
@@ -471,7 +471,7 @@ function BangSanPham() {
             <ModalDetailProduct product={product} showdetail={showdetail} productIdDetail={productIdDetail} handleCloseDetail={handleCloseDetail} />
 
             {/*==================== Modal Add ===========================*/}
-            <ModalAddProduct show={showAdd} handleClose={handCloseAdd} />
+            {/* <ModalAddProduct show={showAdd} handleClose={handCloseAdd} /> */}
         </div>
     );
 }

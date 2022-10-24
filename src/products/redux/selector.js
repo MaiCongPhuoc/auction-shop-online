@@ -114,3 +114,8 @@ export const getShowInfoProduct = (state) => state.modals.showInfoProduct;
 
 export const getShowAddProduct = (state) => state.modals.showAddProduct;
 
+export const getShowEditProduct = (state) => state.modals.showEditProduct;
+
+export const getShowModerationProduct = (state) => state.modals.showModerationProduct;
+
+
