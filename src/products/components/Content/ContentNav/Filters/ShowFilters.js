@@ -87,7 +87,6 @@ const ShowFilters = () => {
                                 <Tag color={color}>{category.title}</Tag>
                             </Select.Option>
                         ))}
-
                     </Select>
                 </Col>
             </Row>
