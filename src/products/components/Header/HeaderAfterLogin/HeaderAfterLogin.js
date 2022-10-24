@@ -1,18 +1,9 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { setShowCart, setShowAddProduct } from '../../../redux/actions';
 import { getAccount, getAllCartItems, getShowCart, getShowAddProduct } from '../../../redux/selector';
-=======
 
-import React from "react";
-import { useSelector } from 'react-redux/es/exports';
-import { getAccount, getAllCartItems } from "../../../redux/selector";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Tippy from "@tippyjs/react";
 import { Link } from 'react-router-dom';
->>>>>>> development
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,29 +12,15 @@ import ModalAdd from '../../../../dashboard/modal/product/ModalAdd';
 import { Button } from 'bootstrap';
 
 const HeaderAfterLogin = () => {
+    const dispatch = useDispatch();
     const account = useSelector(getAccount);
 
     const cartItems = useSelector(getAllCartItems);
 
-<<<<<<< HEAD
-    const show = useSelector(getShowCart);
 
-    useEffect(() => {
-        if (show_cart) {
-            dispatch(setShowCart(true));
-        } else {
-            dispatch(setShowCart(false));
-        }
-    }, [show_cart]);
-
-    const handleShowCart = () => {
-        set_show_cart(!show_cart);
-    };
     const handleShowModalAddProduct = () => {
         dispatch(setShowAddProduct(true))
     }
-=======
->>>>>>> development
     const renderAccount = () => {
         return (
             <div className="dropdown-menu-right shadow animated--grow-in accountAdmin" aria-labelledby="userDropdown">
@@ -61,14 +38,8 @@ const HeaderAfterLogin = () => {
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-<<<<<<< HEAD
-                <div onClick={handleShowCart}>
-                    <i
-                        style={{ position: 'relative' }}
-=======
                 <Link to={`/product/cart/${account.id}`} style={{fontSize: '14px'}}>
                     <i style={{ position: 'relative' }}
->>>>>>> development
                         className="fa-brands fa-opencart fa-2x ic-cart me-3"
                         aria-hidden="true"
                     >
@@ -83,15 +54,9 @@ const HeaderAfterLogin = () => {
                                 backgroundColor: 'red',
                                 color: 'white',
                                 fontSize: '12px',
-<<<<<<< HEAD
-                                left: '40px',
-                                bottom: '26px',
-                                padding: '3px',
-=======
                                 left: '30px',
                                 bottom: '15px',
                                 padding: '3px'
->>>>>>> development
                             }}
                         >
                             {cartItems.length}
