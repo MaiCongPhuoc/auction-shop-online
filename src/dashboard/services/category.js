@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { CATEGORY_URL, DATATABLE_CATEGORY_URL, ADD_CATEGORIES, EDIT_CATEGORIES, DELETE_CATEGORIES } from './Commom';
+import {
+    CATEGORY_URL,
+    DATATABLE_CATEGORY_URL,
+    ADD_CATEGORIES,
+    EDIT_CATEGORIES,
+    DELETE_CATEGORIES,
+    CATEGORY_ID,
+} from './Commom';
 
 class CategoryService {
     static getCategory() {
@@ -16,6 +23,9 @@ class CategoryService {
     }
     static deleteCategory(productId) {
         return axios.put(`${DELETE_CATEGORIES}/${productId}`);
+    }
+    static getCategoryById(editCategoryId) {
+        return axios.get(`${CATEGORY_ID}/` + editCategoryId);
     }
 }
 

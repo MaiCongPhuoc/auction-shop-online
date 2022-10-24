@@ -4,10 +4,22 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import CategoryService from '../../../services/Category';
 import '../../modal.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 let flag = false;
 
 function ModalEditCategory(props) {
+    const notify = () =>
+        toast.success('Đã sửa thành công!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
     const { showEdit, categoryEditId, handleCloseEdit } = props;
     const [category, setCategory] = useState({
         loading: false,
@@ -35,29 +47,58 @@ function ModalEditCategory(props) {
         }
     }, [submitFrm]);
 
+    useEffect(() => {
+        try {
+            if (categoryEditId !== 0 || categoryEditId !== undefined) {
+                setCategory({ ...category, loading: true });
+                async function getCate() {
+                    let apicategory = await CategoryService.getCategoryById(categoryEditId);
+                    setCategory({ ...categorys, categorys: category.data, loading: false });
+                    setCategory({ ...apicategory.data });
+                }
+                getCate();
+            }
+        } catch (error) {
+            setCategory({ ...categorys, errorMessage: error.message, loading: false });
+        }
+    }, [showEdit]);
+
+    const handleCloseEditProduct = () => {
+        formik.handleReset();
+        handleCloseEdit();
+    };
+
     const formik = useFormik({
         initialValues: {
-            slug: category.slug,
             title: category.title,
+            slug: category.slug,
         },
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'tên sản phẩm nhỏ nhất là 5 kí tự!')
-                .max(25, 'tên sản phẩm nhỏ nhất là 25 kí tự!')
-                .required('Vui lòng đổi tên sản phẩm vào!'),
-            slug: yup.string().required('Vui lòng sửa lại mô tả!'),
+                .min(5, 'Tên ngắn nhất là 5 kí tự!')
+                .max(25, 'Tên dài nhất là 25 kí tự!')
+                .required('Tên không được để trống!'),
+            // .test(
+            //     'title',
+            //     'Tên đã tồn tại! Vui lòng nhập tên khác!',
+            //     async (value) => (await fetch(`/validate-title/${value}`)).responseText === 'true',
+            // ),
         }),
         onSubmit: (category) => {
+            flag = true;
             setSubmitFrm(category);
+            handleReset();
         },
-        onReset: (category) => {
-            console.log('onReset 2: ', category);
-        },
+        onReset: (category) => {},
     });
+    const handleReset = () => {
+        formik.handleReset();
+        notify();
+    };
 
     return (
-        <Modal show={showEdit} onHide={handleCloseEdit} backdrop="static" keyboard={false} size="lg">
+        <Modal show={showEdit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="lg">
             <Modal.Header closeButton>
                 <Modal.Title style={{ color: 'black' }}>Edit Category</Modal.Title>
             </Modal.Header>

@@ -7,7 +7,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import '../../modal.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 let flag = false;
 
 function ModalAddCategory(props) {
@@ -33,41 +32,21 @@ function ModalAddCategory(props) {
         slug: '',
         title: '',
     });
-
-    // useEffect(() => {
-    //     try {
-    //         setCategory({ ...category, loading: true });
-    //         async function getCate() {
-    //             let category = await CategoryService.getCategory();
-    //             setCategory({ ...categorys, categorys: category.data, loading: false });
-    //         }
-    //         getCate();
-    //     } catch (error) {
-    //         setCategory({ ...categorys, errorMessage: error.message, loading: false });
-    //     }
-    // }, []);
     useEffect(() => {
-        if (flag) {
-            try {
-                async function postData(submitFrm) {
-                    // setCategory({ ...category, loading: true });
-                    let createRes = await CategoryService.addCategory(submitFrm);
-                    console.log('createRes: ', createRes);
-                }
-                postData(submitFrm);
-
-                notify();
-                setCategory({ ...category, loading: false });
-            } catch (error) {
-                console.log(error);
+        try {
+            async function postData() {
+                let createRes = await CategoryService.addCategory(submitFrm);
             }
+            postData(submitFrm);
+            setCategory({ ...category, loading: false });
+        } catch (error) {
+            console.log(error);
         }
     }, [submitFrm]);
-    // Validate from add
     const handleReset = () => {
         formik.handleReset();
+        notify();
     };
-
     const formik = useFormik({
         initialValues: {
             slug: '',
@@ -76,9 +55,23 @@ function ModalAddCategory(props) {
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'tên sản phẩm nhỏ nhất là 5 kí tự!')
-                .max(25, 'tên sản phẩm nhỏ nhất là 25 kí tự!')
-                .required('Bạn phải nhập tên sản phẩm vào!'),
+                .min(5, 'Tên ngắn nhất là 5 kí tự!')
+                .max(25, 'Tên dài nhất là 25 kí tự!')
+                .required('Tên không được để trống!'),
+
+            // .test(
+            //     'title',
+            //     'Tên đã tồn tại! Vui lòng nhập tên khác!',
+            //     async (value) => (await fetch(`/validate-title/${value}`)).responseText === 'true',
+            // ),
+
+            // isEmail: Yup.boolean(),
+            // email: Yup.string().when('isEmail', {
+            //    is: true,
+            //    then: Yup.string()
+            //    .required('Enter Email ID'),
+            //    otherwise: Yup.string(),
+            // }),
         }),
         onSubmit: (product) => {
             setSubmitFrm(product);
@@ -97,7 +90,6 @@ function ModalAddCategory(props) {
                 <span className="spinner-border text-warning"></span>
             ) : (
                 <form multiple="multiple" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
-                    {/* <form> */}
                     <Modal.Body>
                         <div className="frmError">
                             <ul>

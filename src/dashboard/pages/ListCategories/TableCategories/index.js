@@ -53,9 +53,32 @@ function TableCategories() {
             }
         });
 
+    // useEffect(() => {
+    //     try {
+    //         setState({ ...state, loading: true });
+    //         getCategoryByPagination(state.currentPage);
+    //     } catch (error) {
+    //         setState({
+    //             ...state,
+    //             loading: false,
+    //             errorMessage: error.message,
+    //         });
+    //     }
+    // }, [showAdd, showEdit, reRender]);
+
     useEffect(() => {
         try {
             setState({ ...state, loading: true });
+            async function getData() {
+                let category = await CategoryService.getCategory();
+                // console.log('category.data useEffect: ', category.data);
+                setState({
+                    ...state,
+                    categories: category.data,
+                    loading: false,
+                });
+            }
+            getData();
             getCategoryByPagination(state.currentPage);
         } catch (error) {
             setState({
@@ -162,7 +185,6 @@ function TableCategories() {
         getCategoryByPagination(state.currentPage);
     };
 
-    console.log('state new: ', state);
     const { loading, categorys, currentPage, recordPerPage, search, errorMessage, totalPages } = state;
 
     return (
@@ -213,7 +235,6 @@ function TableCategories() {
                                     <tr>
                                         <th className="text-center">#</th>
                                         <th className="text-center">Title</th>
-                                        <th className="text-center">Slug</th>
                                         <th className="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -222,7 +243,6 @@ function TableCategories() {
                                         <tr key={cate.id}>
                                             <td className="text-center">{cate.id}</td>
                                             <td className="text-center">{cate.title}</td>
-                                            <td className="text-center">{cate.slug}</td>
                                             <td className="text-center">
                                                 <button
                                                     className="btn btn-outline-secondary"
@@ -236,12 +256,12 @@ function TableCategories() {
                                                 >
                                                     <i className="fa-solid fa-pen-to-square" title="Edit"></i>
                                                 </button>
-                                                <button
+                                                {/* <button
                                                     className="btn btn-outline-danger ml-2"
                                                     onClick={() => notify(cate.id)}
                                                 >
                                                     <i className="fa-solid fa-trash danger" title="Delete"></i>
-                                                </button>
+                                                </button> */}
                                             </td>
                                         </tr>
                                     ))}

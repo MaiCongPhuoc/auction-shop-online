@@ -346,7 +346,9 @@ function BangSanPham() {
                                                 <td className="text-end">
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
                                                 </td>
-                                                <td>{product.category.title}</td>
+                                                <td>
+                                                    {product.category.deleted === true ? null : product.category.title}
+                                                </td>
                                                 <td>{product.action ? 'Đấu giá' : 'Bán'}</td>
                                                 <td className="text-end">{product.available}</td>
                                                 <td className="text-end">
