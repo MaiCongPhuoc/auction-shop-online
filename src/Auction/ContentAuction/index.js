@@ -44,7 +44,11 @@ function ContentAuctionDetail() {
     console.log('AuctionProduct: ', AuctionProduct);
     let max_visibility = imageProductAuctions.length;
     return (
+<<<<<<< HEAD
         <div className="container">
+=======
+        <div className="pages" id='productAuction'>
+>>>>>>> development
             <link
                 rel="stylesheet"
                 media="screen"

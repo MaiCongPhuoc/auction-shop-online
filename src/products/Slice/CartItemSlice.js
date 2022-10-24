@@ -1,5 +1,6 @@
 const initState = {
     showCart: false,
+    showCheckout: false,
     cartItems: [],
 }
 
@@ -14,6 +15,11 @@ const cartItemsReducer = (state = initState, action) => {
             return {
                 ...state,
                 showCart: action.payload
+            }
+        case 'cartItems/setShowModalCheckout':
+            return {
+                ...state,
+                showCheckout: action.payload
             }
         
         default:

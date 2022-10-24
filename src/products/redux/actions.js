@@ -152,6 +152,19 @@ export const setCartItems = (arr) => {
 export const setShowCart = (boolean) => {
     return {
         type: 'cartItems/setShowCart',
+<<<<<<< HEAD
         payload: boolean,
     };
 };
+=======
+        payload: boolean
+    }
+}
+
+export const setShowCartModalCheckout = (boolean) => {
+    return {
+        type: 'cartItems/setShowModalCheckout',
+        payload: boolean
+    }
+}
+>>>>>>> development
