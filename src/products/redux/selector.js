@@ -28,6 +28,8 @@ export const getAllCartItems = (state) => state.cartItems.cartItems;
 
 export const getShowCart = (state) => state.cartItems.showCart;
 
+export const getShowModalCheckout = (state) => state.cartItems.showCheckout;
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 

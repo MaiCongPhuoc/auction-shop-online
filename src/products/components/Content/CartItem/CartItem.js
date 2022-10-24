@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FormatMoney } from "../../../Hooks/Hooks";
 import { getAccount } from "../../../redux/selector";
 import CartItemService from './../../../service/CartItem/CartItemService';
-import { setCartItems } from './../../../redux/actions';
+import { setCartItems, setShowCartModalCheckout } from './../../../redux/actions';
 import { ToastContainer, toast } from 'react-toastify';
 import LoadData from "../../Loading/LoadData";
 import ValidationQuantity from "../../../utils/ValidationQuantity";
+import Checkout from './../../../Modal/Checkout';
 
 const CartItem = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,8 @@ const CartItem = () => {
     const [loadDataCart, setLoadDataCart] = useState(false);
 
     const [loadQuantity, setLoadQuantity] = useState(false);
+
+    const [disable, setDisable] = useState(false);
 
     const [checkQuantity, setCheckQuantity] = useState(true);
 
@@ -48,12 +51,7 @@ const CartItem = () => {
             setLoadQuantity(true);
             async function reducerQuantity() {
                 setIdCartItem(cartItem.id);
-                await CartItemService.getReduceCartItem(cartItem.id)
-                    .then(res => { 
-                        console.log(res);
-                    }).catch(err => {
-                        console.log(err);
-                    });
+                await CartItemService.getReduceCartItem(cartItem.id);
                 const allCartItems = await CartItemService.getCartItems(account.id);
                 setListCartItems(allCartItems.data);
                 setLoadQuantity(false);
@@ -86,7 +84,7 @@ const CartItem = () => {
             async function removeCartItems() {
                 const newCartItems = await CartItemService.getRemoveCartItems(account.id, items);
                 setListCartItems(newCartItems.data);
-                toast.warning(`Đã xóa ${choiceItems.length} sản phẩm ra khỏi giỏ hàng`)
+                toast.error(`Đã xóa ${choiceItems.length} sản phẩm ra khỏi giỏ hàng`)
                 setChoiceItems([]);
                 setLoadDataCart(false);
             }
@@ -111,8 +109,10 @@ const CartItem = () => {
     const handleChoiceByDbClick = (cartItem) => {
         if (document.querySelector(`#choice_${cartItem.id}`).hasAttribute('checked')) {
             document.querySelector(`#choice_${cartItem.id}`).removeAttribute('checked');
+            setDisable(false);
         } else {
             document.querySelector(`#choice_${cartItem.id}`).setAttribute('checked', '');
+            setDisable(true);
         }
         setChoiceItems(prev => {
             if (choiceItems.includes(cartItem)) {
@@ -123,8 +123,12 @@ const CartItem = () => {
         });
     };
 
-    const handleBuyCartItem = (choiceItems) => {
-        console.log(choiceItems);
+    const handleBuyCartItem = () => {
+        if (choiceItems.length > 0) {
+            dispatch(setShowCartModalCheckout(true));
+        } else {
+            toast.warning("Hãy chọn sản phẩm cần mua");
+        }
     };
 
     choiceItems.forEach(element => {
@@ -136,7 +140,7 @@ const CartItem = () => {
         <div>
             <div id="show-list-cart-item">
 
-                <div className="container">
+                <div className="container text-center">
                     <div className="row col-12 my-1" style={{ height: '50px' }}>
                         <span className="fw-bold col-1" style={{ color: '#367289' }}>Giỏ hàng</span>
                         <span className="text-center col-5" id="image-item"> Sản phẩm</span>
@@ -146,7 +150,7 @@ const CartItem = () => {
                     </div>
                     {loadDataCart ? <LoadData /> :
                         listCartItems.map(cartItem => (
-                            <div title="Nhấn 2 lần để chọn" className="row col-12 cart-item" key={cartItem.id} onDoubleClick={() => handleChoiceByDbClick(cartItem)}>
+                            <div title="Nhấn hai lần để chọn" className="row col-12 cart-item" key={cartItem.id} onDoubleClick={() => handleChoiceByDbClick(cartItem)}>
                                 <span style={{
                                     display: 'flex',
                                     alignItems: 'center'
@@ -181,7 +185,7 @@ const CartItem = () => {
                                             height: '38px',
                                             lineHeight: '30px',
                                             cursor: 'pointer',
-                                            marginLeft: 'auto'
+                                            marginLeft: 'auto',
                                         }}>
                                         -
                                     </div>
@@ -190,7 +194,8 @@ const CartItem = () => {
                                             width: '50px',
                                             margin: '0',
                                             border: 'none',
-                                            textAlign: 'center'
+                                            textAlign: 'center',
+                                            borderRadius: '20px'
                                         }}
                                         type="text"
                                         value={cartItem.quantity}
@@ -205,7 +210,7 @@ const CartItem = () => {
                                             height: '38px',
                                             lineHeight: '30px',
                                             cursor: 'pointer',
-                                            marginRight: 'auto'
+                                            marginRight: 'auto',
                                         }}>+
                                     </div>
                                     {checkQuantity ? null : <ValidationQuantity message={"Số lượng không thể nhỏ hơn 1"} />}
@@ -224,24 +229,26 @@ const CartItem = () => {
                         width: '100vw'
                     }}
                 >
-                    <div style={{ display: 'flex', alignItems: 'center', height: '100px' }}>
+                    <div  style={{ display: 'flex', alignItems: 'center', height: '100px' }}>
                         <button
-                            className="btn btn-outline-danger"
+                            className="btn btn-outline-danger col-4"
                             style={{ marginLeft: '90px', height: '50px' }}
                             onClick={() => handleRemoveCartItems(choiceItems)}
                         >
                             <i className="fa-solid fa-trash-can-arrow-up me-2"></i>
                             Xóa ({choiceItems.length} sản phẩm)
                         </button>
-                        <div style={{
-                            marginLeft: '40vw',
-                            lineHeight: '100px'
-                        }}
+                        <div
+                            className="col-4"
+                            style={{
+                                marginLeft: '50vw',
+                                lineHeight: '100px'
+                            }}
                         >
                             Tổng tiền ({choiceItems.length} sản phẩm): <b style={{ color: 'red' }}>{FormatMoney(totalAmount)} ₫</b>
                         </div>
                         <button
-                            className="btn btn-primary ms-5"
+                            className="btn btn-primary ms-5 col-4"
                             onClick={() => handleBuyCartItem(choiceItems)}
                         >
                             Mua hàng
@@ -252,6 +259,7 @@ const CartItem = () => {
             <template id="product-box" />
             <template id="buy-box" />
             <ToastContainer autoClose={1000} />
+            <Checkout items={choiceItems} />
         </div >
     );
 }

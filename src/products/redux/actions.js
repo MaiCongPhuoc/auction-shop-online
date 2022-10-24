@@ -128,3 +128,10 @@ export const setShowCart = (boolean) => {
         payload: boolean
     }
 }
+
+export const setShowCartModalCheckout = (boolean) => {
+    return {
+        type: 'cartItems/setShowModalCheckout',
+        payload: boolean
+    }
+}

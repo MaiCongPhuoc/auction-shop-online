@@ -32,7 +32,7 @@ function ContentAuctionDetail() {
         },
     };
     return (
-        <div className="pages" data-pages-shell>
+        <div className="pages" id='productAuction'>
             <link
                 rel="stylesheet"
                 media="screen"
