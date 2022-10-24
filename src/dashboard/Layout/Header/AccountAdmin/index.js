@@ -1,23 +1,69 @@
 import Tippy from '@tippyjs/react';
-import { useState } from 'react';
+import moment from 'moment';
+import { useEffect, useRef, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import ProductService from '../../../services/productService';
+import ModalModeration from '../ModalModeration';
 
+let count = 0;
 function AccountAdmin() {
+    const [showModalModeration, setShowModerationProduct] = useState({
+        products: [],
+        idProduct: 0,
+        showModal: false,
+    });
+    const handleCloseModeration = () => setShowModerationProduct({
+        ...showModalModeration, 
+        showModal: false
+    });
+    const { products, idProduct, showModal } = showModalModeration;
+    const [rerender, setRerender] = useState(false);
+    useEffect(() => {
+        async function getListProduct() {
+            let listProduct = await ProductService.getProductsModeration();
+            setShowModerationProduct({ ...showModalModeration, products: listProduct.data });
+            console.log('listProduct.data: ', listProduct.data);
+        }
+        getListProduct();
+    }, [showModal]);
+
+    const handleAlert = (id) => {
+        // dispatch(setShowModerationProduct(true));
+        // dispatch(setIdProduct(id));
+    };
+
+    // console.log('count.current: ', count.current);
+
+    // count = products.length;
     const renderThongBao = () => {
         return (
             <div className="dropdown-list dropdown-menu-right shadow animated--grow-in" id="thongbao">
-                <h6 className="dropdown-header">Alerts Center</h6>
-                <a className="dropdown-item d-flex align-items-center" href="#">
-                    <div className="mr-3">
-                        <div className="icon-circle bg-primary">
-                            <i className="fas fa-file-alt text-white" />
+                <h6 className="dropdown-header">Thông báo</h6>
+                {products.map((product) => (
+                    <Button
+                        className="dropdown-item d-flex align-items-center alerts-a"
+                        onClick={() =>
+                            setShowModerationProduct({
+                                ...showModalModeration,
+                                showModal: true,
+                                idProduct: product.id,
+                            })
+                        }
+                        key={product.id}
+                    >
+                        <div className="mr-3">
+                            <div className="icon-circle bg-primary">
+                                {/* <i className="fas fa-file-alt text-white" /> */}
+                                <img src={product.image} alt="" className="imgAlerts" />
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <div className="small text-gray-500">December 12, 2019</div>
-                        <span className="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
-                <a className="dropdown-item d-flex align-items-center" href="#">
+                        <div>
+                            <div className="small text-gray-500">{moment(product.createdAt).format('DD-MM-yyyy')}</div>
+                            <span className="font-weight-bold">{product.title}</span>
+                        </div>
+                    </Button>
+                ))}
+                {/* <a className="dropdown-item d-flex align-items-center" href="#">
                     <div className="mr-3">
                         <div className="icon-circle bg-success">
                             <i className="fas fa-donate text-white" />
@@ -41,7 +87,7 @@ function AccountAdmin() {
                 </a>
                 <a className="dropdown-item text-center small text-gray-500" href="#">
                     Show All Alerts
-                </a>
+                </a> */}
             </div>
         );
     };
@@ -196,7 +242,7 @@ function AccountAdmin() {
                     >
                         <i className="fas fa-bell fa-fw" />
                         {/* Counter - Alerts */}
-                        <span className="badge badge-danger badge-counter">3+</span>
+                        <span className="badge badge-danger badge-counter">{products.length}</span>
                     </a>
                 </Tippy>
 
@@ -255,6 +301,7 @@ function AccountAdmin() {
                     </a>
                 </Tippy>
             </li>
+            <ModalModeration showModal={showModal} idProduct={idProduct} handleCloseModeration={handleCloseModeration} />
         </ul>
     );
 }

@@ -1,4 +1,6 @@
 export const PRODUCT_URL = 'http://localhost:8080/api/products';
+export const PRODUCTMODERATION_URL = 'http://localhost:8080/api/products/moderation';
+export const PRODUCTMODERATIONBYID_URL = 'http://localhost:8080/api/products/moderation';
 export const ADDPRODUCT_URL = 'http://localhost:8080/api/products/create';
 export const EDITPRODUCT_URL = 'http://localhost:8080/api/products/edit';
 export const PRODUCTBYID_URL = 'http://localhost:8080/api/products';

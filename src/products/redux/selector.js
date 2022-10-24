@@ -18,6 +18,8 @@ export const getProduct = (state) => state.products.product;
 
 export const getCheckProduct = (state) => state.products.checkProduct;
 
+export const getIdProduct = (state) => state.products.idProduct;
+
 // categories
 export const getAllCategories = (state) => state.categories.categories;
 
@@ -113,3 +115,11 @@ export const productsRemainingCategorySelector = createSelector(
 // Modals
 
 export const getShowInfoProduct = (state) => state.modals.showInfoProduct;
+
+export const getShowAddProduct = (state) => state.modals.showAddProduct;
+
+export const getShowEditProduct = (state) => state.modals.showEditProduct;
+
+export const getShowModerationProduct = (state) => state.modals.showModerationProduct;
+
+

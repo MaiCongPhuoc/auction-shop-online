@@ -47,7 +47,7 @@ function BangSanPham() {
 
     //modal add
     const [showAdd, setShowAdd] = useState(false);
-    const handCloseAdd = () => setShowAdd(false);
+    // const handCloseAdd = () => setShowAdd(false);
 
     //modal edit
     const [showEdit, setShowEdit] = useState({
@@ -56,7 +56,7 @@ function BangSanPham() {
     });
     const { productEditId, showedit } = showEdit;
     const handleCloseEdit = () => setShowEdit(false);
-    
+
     // function handleClick(id) {
     //     Swal.fire({
     //         title: 'Are you sure?',
@@ -81,24 +81,24 @@ function BangSanPham() {
     // }
 
     const notify = (id) =>
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        async function deleteProduct(id) {
-            await ProductService.DeleteProduct(id);
-            setReRender(!reRender);
-        }
-        deleteProduct(id);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      }
-    });
+        Swal.fire({
+            title: 'Bạn chắc không?',
+            text: 'Bạn sẽ không hoàn tác lại!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vâng! Tôi xóa nó',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                async function deleteProduct(id) {
+                    await ProductService.DeleteProduct(id);
+                    setReRender(!reRender);
+                }
+                deleteProduct(id);
+                Swal.fire('Đã kiểm!', 'Bạn đã xóa sản phẩm này.', 'Thành cống');
+            }
+        });
 
     useEffect(() => {
         try {
@@ -292,9 +292,9 @@ function BangSanPham() {
                                 ))}
                             </select>
                             {/* Button trigger modal */}
-                            <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
-                                Add
-                            </Button>
+                            {/* <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
+                                Thêm
+                            </Button> */}
                         </div>
                     </div>
                     <div className="card-body">
@@ -368,14 +368,14 @@ function BangSanPham() {
                                                             })
                                                         }
                                                     >
-                                                        Edit
+                                                        Sửa đổi
                                                     </button>
                                                     {/* <button className="btn btn-outline-danger ml-2">Remove</button> */}
                                                     <button
                                                         className="btn btn-outline-danger ml-2"
                                                         onClick={() => notify(product.id)}
                                                     >
-                                                        Remove
+                                                        Xóa
                                                     </button>
                                                 </td>
                                             </tr>
@@ -468,10 +468,15 @@ function BangSanPham() {
             <ModalEditProduct productEditId={productEditId} showEdit={showedit} handleCloseEdit={handleCloseEdit} />
 
             {/* =================== Modal detail products ===================== */}
-            <ModalDetailProduct product={product} showdetail={showdetail} productIdDetail={productIdDetail} handleCloseDetail={handleCloseDetail} />
+            <ModalDetailProduct
+                product={product}
+                showdetail={showdetail}
+                productIdDetail={productIdDetail}
+                handleCloseDetail={handleCloseDetail}
+            />
 
             {/*==================== Modal Add ===========================*/}
-            <ModalAddProduct show={showAdd} handleClose={handCloseAdd} />
+            {/* <ModalAddProduct show={showAdd} handleClose={handCloseAdd} /> */}
         </div>
     );
 }
