@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 import { ALL_CATEGORIES } from './../API';
 
-class CategoriesService{
-    static getAllCategories(){
+class CategoriesService {
+    static getAllCategories() {
         return axios.get(ALL_CATEGORIES);
     }
 }

@@ -27,7 +27,8 @@ function DanhSachSanPham() {
                         </nav>
                         {/* End of Topbar */}
                         {/* Begin Page Content */}
-                        <BangSanPham />{/* bo phan trang */}
+                        <BangSanPham />
+                        {/* bo phan trang */}
                         {/* <ProductsComponent /> */}
                     </div>
                     {/* <Footer /> */}

@@ -1,5 +1,5 @@
 const initState = {
-    loadCartItem: false,
+    showCart: false,
     cartItems: [],
 }
 
@@ -9,6 +9,11 @@ const cartItemsReducer = (state = initState, action) => {
             return {
                 ...state,
                 cartItems: action.payload
+            }
+        case 'cartItems/setShowCart':
+            return {
+                ...state,
+                showCart: action.payload
             }
         
         default:

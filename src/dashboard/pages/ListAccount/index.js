@@ -1,7 +1,6 @@
-import Footer from "../../Layout/Footer";
-import AccountAdmin from "../../Layout/Header/AccountAdmin";
-import Search from "../../Layout/Header/Search";
-import Sidebar from "../../Layout/Sidebar";
+import AccountAdmin from '../../Layout/Header/AccountAdmin';
+import Search from '../../Layout/Header/Search';
+import Sidebar from '../../Layout/Sidebar';
 import BangTaiKhoan from './TableAccount';
 
 function DanhSachTaiKhoan() {
@@ -66,7 +65,6 @@ function DanhSachTaiKhoan() {
                 </div>
             </div>
         </>
-        
     );
 }
 

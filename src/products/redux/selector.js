@@ -26,6 +26,8 @@ export const getLoadData = (state) => state.products.loadData;
 // cart items
 export const getAllCartItems = (state) => state.cartItems.cartItems;
 
+export const getShowCart = (state) => state.cartItems.showCart;
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 
@@ -47,6 +49,7 @@ export const getProductsAction = createSelector(
     (products, type) => {
         if (type === 'Đấu giá') {
             return products.filter((product) => {
+                console.log('selector auction: ', product);
                 return product.action === true;
             });
         }

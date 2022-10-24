@@ -5,7 +5,7 @@ const HeaderEnd = () => {
     return (
         <div className="main-nav-div">
             <ul className="navigation">
-                <li className="left"><a className="home" href="/">Trang chủ</a></li>
+                <li className="left"><a className="home" href="/product">Trang chủ</a></li>
                 <li className="left">
                     <a className="nav-explore drop-category">Cửa hàng<span className="watch-circle my-cb-circle my-cb-count hidden">0</span></a>
                 </li>

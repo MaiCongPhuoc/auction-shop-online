@@ -12,17 +12,21 @@ import './assets/css/sb-admin-2.min.css';
 import Product from './products/Product';
 import ListProduct from './dashboard/pages/ListProduct';
 import ListAccount from './dashboard/pages/ListAccount';
+import Auction from './Auction';
+import ListCategories from './dashboard/pages/ListCategories/index';
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path='/' element={<Dashboard />} />
-                    <Route path='/dashboard' element={<Dashboard />} />
-                    <Route path='/product' element={<Product />} />
-                    <Route path='/list-product' element={<ListProduct />} />
-                    <Route path='/list-account' element={<ListAccount />} />
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/product" element={<Product />} />
+                    <Route path="/product/:auctionId" element={<Auction />} />
+                    <Route path="/list-product" element={<ListProduct />} />
+                    <Route path="/list-account" element={<ListAccount />} />
+                    <Route path="/dashboard/category" element={<ListCategories />} />
                 </Routes>
             </div>
         </Router>

@@ -56,7 +56,7 @@ function BangSanPham() {
     });
     const { productEditId, showedit } = showEdit;
     const handleCloseEdit = () => setShowEdit(false);
-    
+
     // function handleClick(id) {
     //     Swal.fire({
     //         title: 'Are you sure?',
@@ -81,24 +81,24 @@ function BangSanPham() {
     // }
 
     const notify = (id) =>
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        async function deleteProduct(id) {
-            await ProductService.DeleteProduct(id);
-            setReRender(!reRender);
-        }
-        deleteProduct(id);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      }
-    });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                async function deleteProduct(id) {
+                    await ProductService.DeleteProduct(id);
+                    setReRender(!reRender);
+                }
+                deleteProduct(id);
+                Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            }
+        });
 
     useEffect(() => {
         try {

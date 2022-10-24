@@ -10,24 +10,19 @@ const CartItem = () => {
     const account = useSelector(getAccount);
 
 
-    const [cartItems, setCartItems] = useState([]);
+    const [listCartItems, setListCartItems] = useState([]);
 
     const [quantity, setQuantity] = useState(0);
 
+    let totalAmount = 0;
 
-    const [totalAmount, setTotalAmount] = useState(0);
-
-    let amount = 0;
+    const [choiceItems, setChoiceItems] = useState([]);
 
     useEffect(() => {
         try {
             async function getCartItems() {
                 const allCartItems = await CartItemService.getCartItems(account.id);
-                setCartItems(allCartItems.data);
-                for (let i = 0; i < cartItems.length; i++) {
-                    amount += cartItems[i].amountTransaction;
-                }
-                setTotalAmount(amount);
+                setListCartItems(allCartItems.data);
             }
             getCartItems();
 
@@ -61,15 +56,49 @@ const CartItem = () => {
 
     const handleRemoveCartItem = (cartItem) => {
         try {
-            
+            async function removeCartItem() {
+                const newCartItems = await CartItemService.getRemoveCartItem(cartItem.id);
+                setListCartItems(newCartItems.data);
+            }
+            removeCartItem();
         } catch (error) {
             console.log(error);
         }
     };
 
+    const handleRemoveCartItems = (items) => {
+        try {
+            async function removeCartItems() {
+                const newCartItems = await CartItemService.getRemoveCartItems(account.id, items);
+                setListCartItems(newCartItems.data);
+                setChoiceItems([]);
+            }
+            removeCartItems();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleChoice = (cartItem) => {
+        setChoiceItems(prev => {
+            if (choiceItems.includes(cartItem)) {
+                return choiceItems.filter(item => item !== cartItem);
+            } else {
+                return [...prev, cartItem];
+            };
+        });
+
+    };
+
+    choiceItems.forEach(element => {
+        totalAmount = totalAmount + element.amountTransaction;
+    });
+
+    dispatch(setCartItems(listCartItems));
     return (
         <div>
             <div id="show-list-cart-item">
+                <div>Giỏ hàng</div>
                 <div className="container">
                     <div className="row col-12 my-5">
                         <span className="text-center col-4" id="image-item"> Sản phẩm</span>
@@ -78,13 +107,16 @@ const CartItem = () => {
                         <span className="text-center col-2" id="quantity-item">Thành tiền (VNĐ)</span>
                         <span className="text-center col-2" id="total-item">Thao tác</span>
                     </div>
-                    {cartItems.map(cartItem => (
+                    {listCartItems.map(cartItem => (
                         <div className="row col-12" key={cartItem.id}>
                             <span style={{
                                 display: 'flex',
                                 alignItems: 'center'
                             }}
                                 className="col-4">
+                                <div className="me-2">
+                                    <input type="checkbox" onChange={() => handleChoice(cartItem)} />
+                                </div>
                                 <div>
                                     <img style={{
                                         padding: '5px',
@@ -95,6 +127,7 @@ const CartItem = () => {
                                 <div className="text-start mx-2">
                                     <div>{cartItem.product.title}</div>
                                     <div style={{ fontSize: 'smaller', color: 'blue' }}>{cartItem.product.description}</div>
+                                    <div style={{ fontSize: 'small', color: 'blue' }}>Sản phẩm: {cartItem.product.action ? 'Đấu giá' : 'Cửa hàng'}</div>
                                     <div style={{ fontSize: 'small', color: 'red' }}>Còn lại <b>{cartItem.product.available}</b></div>
                                 </div>
                             </span>
@@ -116,8 +149,7 @@ const CartItem = () => {
                                 <input style={{ width: '50px', margin: '0', border: 'none', textAlign: 'center' }}
                                     type="text"
                                     value={cartItem.quantity}
-                                    // onChange={handleOnChangeQuantity}
-                                    readOnly
+                                    disabled
                                 />
                                 <div className="change-quantity"
                                     onClick={() => handleIncreasingQuantity(cartItem)}
@@ -136,14 +168,39 @@ const CartItem = () => {
                             </span>
                         </div>
                     ))}
-                    <h6>
-                        <div style={{ marginLeft: '50vw' }}>Tổng tiền: {FormatMoney(totalAmount)} VNĐ</div>
-                    </h6>
+                    <footer
+                        style={{
+                            position: 'fixed',
+                            bottom: '0',
+                            left: '0',
+                            backgroundColor: 'white',
+                            boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)',
+                            display: 'flex',
+                            width: '100vw'
+                        }}
+                    >
+                        <div style={{ display: 'flex', alignItems: 'center', height: '100px' }}>
+                            <button
+                                className="btn btn-outline-danger"
+                                style={{marginLeft: '90px', height: '50px'}}
+                                onClick={() => handleRemoveCartItems(choiceItems)}
+                            >
+                                Xóa ({choiceItems.length} sản phẩm)
+                            </button>
+                            <div style={{
+                                marginLeft: '50vw',
+                                lineHeight: '100px'
+                            }}
+                            >
+                                Tổng tiền ({choiceItems.length} sản phẩm): <b style={{ color: 'red' }}>{FormatMoney(totalAmount)} VNĐ</b>
+                            </div>
+                        </div>
+                    </footer>
                 </div>
             </div>
             <template id="product-box" />
             <template id="buy-box" />
-        </div>
+        </div >
     );
 }
 

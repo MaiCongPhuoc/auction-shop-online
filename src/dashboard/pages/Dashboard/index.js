@@ -7,13 +7,11 @@ import AccountAdmin from '../../Layout/Header/AccountAdmin';
 import TurnoverYear from './ChartDashboard/TurnoverYear';
 import TurnoverMonth from './ChartDashboard/TurnoverMonth';
 import OverviewDashboard from './OverviewDashboard';
-import Footer from '../../Layout/Footer';
-import './OverviewDashboard/dashboard.css'
+import './OverviewDashboard/dashboard.css';
 // import '../../../assets/js/chart-area-demo';
 // import '../../../assets/js/chart-pie-demo';
 
 function Dashboard() {
-    
     return (
         <>
             <div id="wrapper">
