@@ -18,6 +18,8 @@ export const getProduct = (state) => state.products.product;
 
 export const getCheckProduct = (state) => state.products.checkProduct;
 
+export const getIdProduct = (state) => state.products.idProduct;
+
 // categories
 export const getAllCategories = (state) => state.categories.categories;
 

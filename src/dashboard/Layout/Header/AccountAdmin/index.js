@@ -2,51 +2,53 @@ import Tippy from '@tippyjs/react';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import ProductService from '../../../services/productService';
-import { setShowModerationProduct } from '../../../../products/redux/actions'
-import { getShowModerationProduct } from '../../../../products/redux/selector';
+import ModalModeration from '../ModalModeration';
 
+let count = 0;
 function AccountAdmin() {
-    const dispatch = useDispatch();
-    const count = useRef(0);
-    const product = useRef([]);
-    const [products, setProducts] = useState([]);
+    const [showModalModeration, setShowModerationProduct] = useState({
+        products: [],
+        idProduct: 0,
+        showModal: false,
+    });
+    const handleCloseModeration = () => setShowModerationProduct({
+        ...showModalModeration, 
+        showModal: false
+    });
+    const { products, idProduct, showModal } = showModalModeration;
+    const [rerender, setRerender] = useState(false);
     useEffect(() => {
         async function getListProduct() {
-            let listProduct = await ProductService.getProducts();
-            setProducts(listProduct.data);
+            let listProduct = await ProductService.getProductsModeration();
+            setShowModerationProduct({ ...showModalModeration, products: listProduct.data });
             console.log('listProduct.data: ', listProduct.data);
         }
         getListProduct();
-    }, []);
-
-    for (let i = 0; i < products.length; i++) {
-        if (products[i].moderation) {
-            count.current += 1;
-            product.current.push(products[i]);
-        }
-    }
+    }, [showModal]);
 
     const handleAlert = (id) => {
-        dispatch(setShowModerationProduct(true));
+        // dispatch(setShowModerationProduct(true));
         // dispatch(setIdProduct(id));
     };
 
-    const c = useSelector(getShowModerationProduct);
-    console.log(c);
+    // console.log('count.current: ', count.current);
 
-    console.log('count.current: ', count.current);
-    console.log('product.current: ', product.current);
-
+    // count = products.length;
     const renderThongBao = () => {
         return (
             <div className="dropdown-list dropdown-menu-right shadow animated--grow-in" id="thongbao">
                 <h6 className="dropdown-header">Thông báo</h6>
-                {product.current.map((product) => (
+                {products.map((product) => (
                     <Button
                         className="dropdown-item d-flex align-items-center alerts-a"
-                        onClick={() => handleAlert(product.id)}
+                        onClick={() =>
+                            setShowModerationProduct({
+                                ...showModalModeration,
+                                showModal: true,
+                                idProduct: product.id,
+                            })
+                        }
                         key={product.id}
                     >
                         <div className="mr-3">
@@ -240,7 +242,7 @@ function AccountAdmin() {
                     >
                         <i className="fas fa-bell fa-fw" />
                         {/* Counter - Alerts */}
-                        <span className="badge badge-danger badge-counter">{count.current}</span>
+                        <span className="badge badge-danger badge-counter">{products.length}</span>
                     </a>
                 </Tippy>
 
@@ -299,7 +301,7 @@ function AccountAdmin() {
                     </a>
                 </Tippy>
             </li>
-            <Button onClick={handleAlert}>click</Button>
+            <ModalModeration showModal={showModal} idProduct={idProduct} handleCloseModeration={handleCloseModeration} />
         </ul>
     );
 }
