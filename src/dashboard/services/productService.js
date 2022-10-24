@@ -4,6 +4,8 @@ import {
     DATATABLEPRODUCT_URL,
     EDITPRODUCT_URL,
     PRODUCTBYID_URL,
+    PRODUCTMODERATIONBYID_URL,
+    PRODUCTMODERATION_URL,
     PRODUCT_URL,
     REMOVEPRODUCT_URL,
 } from './Commom';
@@ -11,6 +13,9 @@ import {
 class ProductService {
     static getProducts() {
         return axios.get(PRODUCT_URL);
+    }
+    static getProductsModeration() {
+        return axios.get(PRODUCTMODERATION_URL);
     }
     static getDataTableProduct(search, currentPage, recordPerPage) {
         return axios.get(`${DATATABLEPRODUCT_URL}${search}?page=${currentPage}&size=${recordPerPage}`);
@@ -20,6 +25,9 @@ class ProductService {
     }
     static EditProduct(editProduct, editProductId) {
         return axios.put(`${EDITPRODUCT_URL}/${editProductId}`, editProduct);
+    }
+    static ModerationProduct(editProductId) {
+        return axios.put(`${PRODUCTMODERATIONBYID_URL}/${editProductId}`);
     }
     static ProductById(editProductId) {
         return axios.get(`${PRODUCTBYID_URL}/` + editProductId);

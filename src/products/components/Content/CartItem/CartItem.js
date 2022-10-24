@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { StyledEngineProvider } from "@mui/material/styles";
 import { useSelector, useDispatch } from 'react-redux';
 import { FormatMoney } from "../../../Hooks/Hooks";
 import { getAccount } from "../../../redux/selector";
@@ -219,7 +220,7 @@ const CartItem = () => {
                             </div>
                         ))}
                 </div>
-                <footer
+                <footer className="col-12"
                     style={{
                         bottom: '0',
                         left: '0',
@@ -229,37 +230,44 @@ const CartItem = () => {
                         width: '100vw'
                     }}
                 >
-                    <div  style={{ display: 'flex', alignItems: 'center', height: '100px' }}>
-                        <button
-                            className="btn btn-outline-danger col-4"
-                            style={{ marginLeft: '90px', height: '50px' }}
-                            onClick={() => handleRemoveCartItems(choiceItems)}
-                        >
-                            <i className="fa-solid fa-trash-can-arrow-up me-2"></i>
-                            Xóa ({choiceItems.length} sản phẩm)
-                        </button>
-                        <div
-                            className="col-4"
-                            style={{
-                                marginLeft: '50vw',
-                                lineHeight: '100px'
-                            }}
-                        >
-                            Tổng tiền ({choiceItems.length} sản phẩm): <b style={{ color: 'red' }}>{FormatMoney(totalAmount)} ₫</b>
+                    <div className="col-12" style={{ display: 'flex', alignItems: 'center', height: '100px' }}>
+                        <div className="col-3">
+                            <button
+                                className="btn btn-outline-danger"
+                                style={{ height: '50px' }}
+                                onClick={() => handleRemoveCartItems(choiceItems)}
+                            >
+                                <i className="fa-solid fa-trash-can-arrow-up me-2"></i>
+                                Xóa ({choiceItems.length} sản phẩm)
+                            </button>
                         </div>
-                        <button
-                            className="btn btn-primary ms-5 col-4"
-                            onClick={() => handleBuyCartItem(choiceItems)}
-                        >
-                            Mua hàng
-                        </button>
+                        <div className="col-6 text-end">
+                            <div
+                                style={{
+                                    // marginLeft: '50vw',
+                                    lineHeight: '100px'
+                                }}
+                            >
+                                Tổng tiền ({choiceItems.length} sản phẩm): <b style={{ color: 'red' }}>{FormatMoney(totalAmount)} ₫</b>
+                            </div>
+                        </div>
+                        <div className="col-3 text-center">
+                            <button
+                                className="btn btn-primary ms-5 col-4"
+                                onClick={() => handleBuyCartItem(choiceItems)}
+                            >
+                                Mua hàng
+                            </button>
+                        </div>
                     </div>
                 </footer>
             </div>
             <template id="product-box" />
             <template id="buy-box" />
             <ToastContainer autoClose={1000} />
-            <Checkout items={choiceItems} />
+            <StyledEngineProvider injectFirst>
+                <Checkout items={choiceItems} />
+            </StyledEngineProvider>
         </div >
     );
 }

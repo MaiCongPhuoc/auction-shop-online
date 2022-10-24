@@ -82,13 +82,13 @@ function BangSanPham() {
 
     const notify = (id) =>
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Bạn chắc không?',
+            text: 'Bạn sẽ không hoàn tác lại!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Vâng! Tôi xóa nó',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function deleteProduct(id) {
@@ -96,7 +96,7 @@ function BangSanPham() {
                     setReRender(!reRender);
                 }
                 deleteProduct(id);
-                Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                Swal.fire('Đã kiểm!', 'Bạn đã xóa sản phẩm này.', 'Thành cống');
             }
         });
 

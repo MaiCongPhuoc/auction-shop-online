@@ -2,16 +2,16 @@ import '../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 import '../../../assets/css/sb-admin-2.min.css';
 
 import Sidebar from '../../Layout/Sidebar';
-import Search from '../../Layout/Header/Search';
 import AccountAdmin from '../../Layout/Header/AccountAdmin';
 import TurnoverYear from './ChartDashboard/TurnoverYear';
 import TurnoverMonth from './ChartDashboard/TurnoverMonth';
 import OverviewDashboard from './OverviewDashboard';
 import './OverviewDashboard/dashboard.css';
-// import '../../../assets/js/chart-area-demo';
-// import '../../../assets/js/chart-pie-demo';
+import { useSelector } from 'react-redux';
+import { getShowModerationProduct } from '../../../products/redux/selector';
 
 function Dashboard() {
+    const showModerationProduct = useSelector(getShowModerationProduct);
     return (
         <>
             <div id="wrapper">

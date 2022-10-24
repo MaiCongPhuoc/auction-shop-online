@@ -14,3 +14,8 @@ export const REDUCE_CART_ITEM = ALL_CART_ITEM + '/reduce';
 export const INCREASING_CART_ITEM = ALL_CART_ITEM + '/increasing';
 export const REMOVE_CART_ITEM = ALL_CART_ITEM + '/remove';
 export const REMOVE_CART_ITEMS = ALL_CART_ITEM + '/remove-list';
+
+// Location Region
+export const ALL_PROVINCE_URL = 'https://vapi.vnappmob.com/api/province';
+export const ALL_DISTRICT_URL = ALL_PROVINCE_URL + '/district';
+export const ALL_WARD_URL = ALL_PROVINCE_URL + '/ward';

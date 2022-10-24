@@ -11,7 +11,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Slider from 'react-slick';
 import ProductService from '../../dashboard/services/productService';
 import ProductMediaService from '../../dashboard/services/ProductImageService';
 import LoadData from '../../products/components/Loading/LoadData';

@@ -153,7 +153,39 @@
     font-size: small;
 }
 
-.fullNameRecipient{
+.labelRecipient{
     font-size: smaller !important;
     font-weight: 600;
+    cursor: pointer;
+}
+
+.row-info-recipient {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Check out */
+.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-width: 2px;
+    border-left: 1px solid #1976d2;
+    border-right: 1px solid #1976d2;
+    border-top: 0;
+    border-bottom: 1px solid #1976d2;
+}
+
+.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+    height: 50px;
+}
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+    border-top: 0;
+}
+
+#province-simple-select-label {
+    font-size: smaller !important;
+}
+
+.info-input{
+    width: 30%;
 }

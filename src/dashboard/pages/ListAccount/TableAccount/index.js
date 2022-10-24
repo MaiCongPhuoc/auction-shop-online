@@ -92,13 +92,13 @@ function BangTaiKhoan() {
 
     const notify = (id) =>
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Bạn chắc chứ',
+            text: 'Bạn sẽ không hoàn tác lại nó!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Vâng, Tôi xóa nó!',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function daleteAcount() {
@@ -106,10 +106,9 @@ function BangTaiKhoan() {
                     setReRender(!reRender);
                 }
                 daleteAcount();
-                Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                Swal.fire('Đã xóa!', 'Bạn đã xóa người dùng này.', 'thành công');
             }
         });
-
     useEffect(() => {
         getProductsByPagination(state.currentPage);
     }, [showAdd, showEdit, reRender]);
