@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAccount, getShowModalCheckout } from "../redux/selector";
 import { setShowCartModalCheckout } from './../redux/actions';
 import { FormatMoney } from './../Hooks/Hooks';
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem, Box, TextField } from "@mui/material";
 import LocationService from './../service/LocationService/LocationService';
 
 const Checkout = ({ items }) => {
@@ -20,22 +20,22 @@ const Checkout = ({ items }) => {
             email: '',
             locationRegion: {
                 id: 0,
-                provinceId: '',
-                provinceName: '',
-                districtId: '',
-                districtName: '',
-                wardId: '',
-                wardName: '',
-                address: ''
+                provinceId: null,
+                provinceName: null,
+                districtId: null,
+                districtName: null,
+                wardId: null,
+                wardName: null,
+                address: null
             },
             description: ''
         },
         provinces: [],
         districts: [],
         wards: [],
-        province_id: '',
-        district_id: '',
-        ward_id: '',
+        province_id: null,
+        district_id: null,
+        ward_id: null,
         errorMessage: ''
     });
 
@@ -45,9 +45,8 @@ const Checkout = ({ items }) => {
         try {
             async function getLocationRegion() {
                 let provinceRes = await LocationService.getProvinces();
-                let districtRes = await LocationService.getDistricts(account.locationRegion.provinceId);
-                let wardRes = await LocationService.getWards(account.locationRegion.districtId);
-
+                let districtRes = await LocationService.getDistricts(state.orders.locationRegion.provinceId ?? account.locationRegion.provinceId);
+                let wardRes = await LocationService.getWards(state.orders.locationRegion.districtId ?? account.locationRegion.districtId);
                 setState({
                     ...state,
                     orders: {
@@ -56,14 +55,14 @@ const Checkout = ({ items }) => {
                         phone: account.phone,
                         email: account.email,
                         locationRegion: {
-                            id: 3,
-                            provinceId: '45',
-                            provinceName: 'Tỉnh Quảng Trị',
-                            districtId: '468',
-                            districtName: 'Huyện Cam Lộ',
-                            wardId: '19597',
-                            wardName: 'Thị trấn Cam Lộ',
-                            address: 'Voluptas fugit dolo'
+                            // id: state.orders.locationRegion.provinceId ?? account.locationRegion.id,
+                            provinceId: state.orders.locationRegion.provinceId ?? account.locationRegion.provinceId,
+                            provinceName: state.orders.locationRegion.provinceName ?? account.locationRegion.provinceName,
+                            districtId: state.orders.locationRegion.districtId ?? account.locationRegion.districtId,
+                            districtName: state.orders.locationRegion.districtName ?? account.locationRegion.districtName,
+                            wardId: state.orders.locationRegion.wardId ?? account.locationRegion.wardId,
+                            wardName: state.orders.locationRegion.wardName ?? account.locationRegion.wardName,
+                            address: state.orders.locationRegion.address ?? account.locationRegion.address
                         },
                     },
                     provinces: provinceRes.data.results,
@@ -76,7 +75,7 @@ const Checkout = ({ items }) => {
         } catch (error) {
             console.log(error);
         }
-    }, []);
+    }, [state.province_id, state.district_id]);
 
 
     const handleClose = () => {
@@ -88,6 +87,7 @@ const Checkout = ({ items }) => {
         setState({
             ...state,
             orders: {
+                ...state.orders,
                 [e.target.name]: e.target.value
             }
         })
@@ -97,33 +97,61 @@ const Checkout = ({ items }) => {
         if (e.target.name === "provinceId") {
             state.provinces.forEach(province => {
                 if (province.province_id === e.target.value) {
-                    setState({
-                        ...state,
-                        orders: {
-                            ...state.orders,
-                            locationRegion: {
-                                ...state.orders.locationRegion,
-                                [e.target.name]: e.target.value,
-                                provinceName: province.province_name
-                            }
+                    try {
+                        async function getDistrict() {
+                            let districtRes = await LocationService.getDistricts(e.target.value);
+                            let wardRes = await LocationService.getWards(districtRes.data.results[0].district_id);
+
+                            setState({
+                                ...state,
+                                orders: {
+                                    ...state.orders,
+                                    locationRegion: {
+                                        ...state.orders.locationRegion,
+                                        [e.target.name]: e.target.value,
+                                        provinceName: province.province_name,
+                                        districtId: districtRes.data.results[0].district_id,
+                                        districtName: districtRes.data.results[0].district_name,
+                                        wardId: wardRes.data.results[0].ward_id,
+                                        wardName: wardRes.data.results[0].ward_name
+                                    }
+                                },
+                                province_id: e.target.value,
+                                district_id: districtRes.data.results[0].district_id
+                            });
                         }
-                    })
+                        getDistrict();
+                    } catch (error) {
+                        console.log(error);
+                    }
                 }
             });
         } else if (e.target.name === "districtId") {
             state.districts.forEach(district => {
                 if (district.district_id === e.target.value) {
-                    setState({
-                        ...state,
-                        orders: {
-                            ...state.orders,
-                            locationRegion: {
-                                ...state.orders.locationRegion,
-                                [e.target.name]: e.target.value,
-                                districtName: district.district_name
-                            }
-                        }
-                    })
+                    try {
+                        async function getWards() {
+                            let wardRes = await LocationService.getWards(e.target.value);
+
+                            setState({
+                                ...state,
+                                orders: {
+                                    ...state.orders,
+                                    locationRegion: {
+                                        ...state.orders.locationRegion,
+                                        [e.target.name]: e.target.value,
+                                        districtName: district.district_name,
+                                        wardId: wardRes.data.results[0].ward_id,
+                                        wardName: wardRes.data.results[0].ward_name
+                                    }
+                                },
+                                district_id: e.target.value
+                            });
+                        };
+                        getWards();
+                    } catch (error) {
+                        console.log(error);
+                    }
                 }
             });
         } else if (e.target.name === "wardId") {
@@ -142,10 +170,22 @@ const Checkout = ({ items }) => {
                     })
                 }
             });
+        } else {
+            setState({
+                ...state,
+                orders: {
+                    ...state.orders,
+                    locationRegion: {
+                        ...state.orders.locationRegion,
+                        [e.target.name]: e.target.value
+                    }
+                }
+            })
         }
     };
 
-    console.log(state.orders.locationRegion);
+    console.log('order', state.orders);
+
     return (
         <>
             <Modal
@@ -241,8 +281,22 @@ const Checkout = ({ items }) => {
                                             </FormControl>
                                         </div>
                                         <div className="col-3" style={{ padding: '0' }}>
-                                            <label htmlFor="emailRecipient" className="col-4 labelRecipient">Địa chỉ cụ thể: </label>
-                                            <input type="text" className="form-control col-8" id="emailRecipient" style={{ margin: '0', borderRadius: '5px' }} value={account.locationRegion.address} />
+                                            <Box
+                                                component="form"
+                                                sx={{
+                                                    '& > :not(style)': { m: 1, width: '25ch' },
+                                                }}
+                                                noValidate
+                                                autoComplete="on"
+                                            >
+                                                <TextField
+                                                    onChange={handleOnChangeSelect}
+                                                    value={state.orders.locationRegion.address}
+                                                    name="address"
+                                                    id="outlined-basic" label="Địa chỉ ..."
+                                                    variant="outlined"
+                                                />
+                                            </Box>
                                         </div>
                                     </div>
                                 </div>
