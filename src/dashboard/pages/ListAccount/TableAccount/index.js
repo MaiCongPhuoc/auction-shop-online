@@ -207,7 +207,7 @@ function BangTaiKhoan() {
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
     const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
-    console.log('account: ', account);
+    console.log('account: ', account, accountId);
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">
