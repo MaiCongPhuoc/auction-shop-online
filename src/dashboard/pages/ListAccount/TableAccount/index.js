@@ -109,6 +109,7 @@ function BangTaiKhoan() {
                 Swal.fire('Đã xóa!', 'Bạn đã xóa người dùng này.', 'thành công');
             }
         });
+
     useEffect(() => {
         getProductsByPagination(state.currentPage);
     }, [showAdd, showEdit, reRender]);
@@ -116,13 +117,12 @@ function BangTaiKhoan() {
     // data table
     async function getProductsByPagination(currentPage) {
         currentPage = currentPage - 1;
-        console.log('currentPage: ', currentPage);
         let accountData = await AccountService.getDataTableAccount(
             (state.search = ''),
             currentPage,
             state.recordPerPage,
         );
-        console.log('accountData.content: ', accountData.content);
+
         setState({
             ...state,
             accounts: accountData.data.content,
@@ -132,6 +132,7 @@ function BangTaiKhoan() {
             loading: false,
         });
     }
+
     const showLastPage = () => {
         let current = state.currentPage;
         let total = state.totalElements;
@@ -172,7 +173,6 @@ function BangTaiKhoan() {
     const showPrevPage = () => {
         let prevPage = 1;
         let curent = state.currentPage;
-        // console.log('curent showPrevPage: ', curent);
         if (curent > prevPage) {
             if (state.search === '') {
                 getProductsByPagination(curent - curent + 1);
@@ -207,7 +207,7 @@ function BangTaiKhoan() {
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
     const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
-    console.log('state: ', state);
+    console.log('account: ', account);
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">

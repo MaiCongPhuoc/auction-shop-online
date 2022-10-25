@@ -168,17 +168,31 @@
 /* Check out */
 .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
     border-width: 2px;
-    border-left: 1px solid #1976d2;
-    border-right: 1px solid #1976d2;
+    border-left: 0;
+    border-right: 0;
     border-top: 0;
     border-bottom: 1px solid #1976d2;
 }
 
-.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root, .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
     height: 50px;
 }
 
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root input, .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root input:focus{
+    border: none !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    margin: 0;
+}
+
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root input:focus{
+    box-shadow: none;
+    transition: none;
+}
+
 .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+    border-left: 0;
+    border-right: 0;
     border-top: 0;
 }
 
@@ -188,4 +202,29 @@
 
 .info-input{
     width: 30%;
+}
+
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+    margin: 0 !important;
+}
+
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root label{
+    font-size: 18px !important;
+    color: #787878;
+    font-weight: bold;
+}
+
+#province-simple-select-label, #district-simple-select-label, #ward-simple-select-label {
+    font-weight: bold;
+    font-size: large !important;
+}
+
+.css-yjsfm1 span{
+    font-weight: bold;
+    font-size: large !important;
+}
+
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper{
+    /* top: 213px !important;
+    left: 400px !important; */
 }
