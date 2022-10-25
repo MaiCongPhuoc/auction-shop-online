@@ -29,5 +29,5 @@ export const WARD_URL = 'https://vapi.vnappmob.com/api/province/ward';
 export const ADD_CATEGORIES = CATEGORY_URL + '/create';
 export const EDIT_CATEGORIES = CATEGORY_URL + '/edit';
 export const DELETE_CATEGORIES = CATEGORY_URL + '/delete-soft';
-export const DATATABLE_CATEGORY_URL = CATEGORY_URL + '/g';
+export const DATATABLE_CATEGORY_URL = CATEGORY_URL + '/g/';
 export const CATEGORY_ID = 'http://localhost:8080/api/categories';

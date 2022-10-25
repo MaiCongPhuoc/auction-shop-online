@@ -31,7 +31,8 @@ function TableCategories() {
         showedit: false,
     });
     const { categoryEditId, showedit } = showEdit;
-    const handleCloseEdit = () => setShowEdit(false);
+    const handleCloseEdit = () => setShowEdit({ ...showEdit, showedit: false });
+    // const handleCloseEdit = () => setShowEdit(false);
 
     const notify = (id) =>
         Swal.fire({
@@ -74,7 +75,7 @@ function TableCategories() {
                 // console.log('category.data useEffect: ', category.data);
                 setState({
                     ...state,
-                    categories: category.data,
+                    categorys: category.data,
                     loading: false,
                 });
             }
@@ -327,7 +328,7 @@ function TableCategories() {
                     </div>
                 </div>
             )}
-            <ModalEditCategory categoryEditId={categoryEditId} showEdit={showedit} handleCloseEdit={handleCloseEdit} />
+            <ModalEditCategory categoryEditId={categoryEditId} showedit={showedit} handleCloseEdit={handleCloseEdit} />
             <ModalAddCategory show={showAdd} handleClose={handCloseAdd} />
         </div>
     );

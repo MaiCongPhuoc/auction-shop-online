@@ -9,7 +9,7 @@ import { toast, ToastContainer } from 'react-toastify';
 let flag = false;
 
 function ModalEditCategory(props) {
-    const notify = () =>
+    const notify1 = () =>
         toast.success('Đã sửa thành công!', {
             position: 'top-right',
             autoClose: 5000,
@@ -20,26 +20,28 @@ function ModalEditCategory(props) {
             progress: undefined,
             theme: 'colored',
         });
-    const { showEdit, categoryEditId, handleCloseEdit } = props;
+    const { showedit, categoryEditId, handleCloseEdit } = props;
+    console.log('props: ', props);
     const [category, setCategory] = useState({
         loading: false,
-        categorys: [],
+        categorys: {},
         errorMessage: '',
     });
     const { loading, categorys, errorMessage } = category;
     const [submitFrm, setSubmitFrm] = useState({
-        slug: '',
         title: '',
+        slug: '',
     });
 
     useEffect(() => {
         if (flag) {
             try {
-                async function postData(submitFrm) {
+                async function postData() {
                     setCategory({ ...category, loading: true });
                     await CategoryService.editCategory(submitFrm, categoryEditId);
                 }
-                postData(submitFrm);
+
+                postData();
                 setCategory({ ...category, loading: false });
             } catch (error) {
                 console.log(error);
@@ -53,15 +55,15 @@ function ModalEditCategory(props) {
                 setCategory({ ...category, loading: true });
                 async function getCate() {
                     let apicategory = await CategoryService.getCategoryById(categoryEditId);
-                    setCategory({ ...categorys, categorys: category.data, loading: false });
-                    setCategory({ ...apicategory.data });
+                    setCategory({ ...category, categorys: apicategory.data, loading: false });
+                    console.log('category: ', apicategory.data);
                 }
                 getCate();
             }
         } catch (error) {
-            setCategory({ ...categorys, errorMessage: error.message, loading: false });
+            setCategory({ ...category, errorMessage: error.message, loading: false });
         }
-    }, [showEdit]);
+    }, [showedit]);
 
     const handleCloseEditProduct = () => {
         formik.handleReset();
@@ -70,8 +72,8 @@ function ModalEditCategory(props) {
 
     const formik = useFormik({
         initialValues: {
-            title: category.title,
-            slug: category.slug,
+            title: categorys.title,
+            slug: categorys.slug,
         },
         validationSchema: yup.object({
             title: yup
@@ -88,21 +90,17 @@ function ModalEditCategory(props) {
         onSubmit: (category) => {
             flag = true;
             setSubmitFrm(category);
-            handleReset();
+            // handleReset();
+            notify1();
         },
-        onReset: (category) => {},
     });
-    const handleReset = () => {
-        formik.handleReset();
-        notify();
-    };
 
     return (
-        <Modal show={showEdit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="lg">
+        <Modal show={showedit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="lg">
             <Modal.Header closeButton>
                 <Modal.Title style={{ color: 'black' }}>Edit Category</Modal.Title>
             </Modal.Header>
-            <form multiple="multiple" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
+            <form multiple="multiple" onSubmit={formik.handleSubmit}>
                 <Modal.Body>
                     <div className="frmError">
                         <ul>
@@ -123,7 +121,7 @@ function ModalEditCategory(props) {
                                     name="title"
                                     id="addTitle"
                                     placeholder="Vui lòng nhập tên sản phẩm..."
-                                    value={formik.values.title || category.title}
+                                    value={formik.values.title || categorys.title}
                                     onChange={formik.handleChange}
                                 />
                             </div>
@@ -137,6 +135,7 @@ function ModalEditCategory(props) {
                     <Button type="submit" className="btn btn-primary">
                         Save
                     </Button>
+                    <ToastContainer />
                 </Modal.Footer>
             </form>
         </Modal>
