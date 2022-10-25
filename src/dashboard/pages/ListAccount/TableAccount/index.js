@@ -67,7 +67,7 @@ function BangTaiKhoan() {
     //modal restartPassword
     const [showRestart, setShowRestart] = useState(false);
     const hanldCloseRestartPassword = () => setShowRestart(false);
-    
+
     // function handleClick(id) {
     //     Swal.fire({
     //         title: 'Bạn chắc chứ?',
@@ -91,25 +91,24 @@ function BangTaiKhoan() {
     // }
 
     const notify = (id) =>
-    Swal.fire({
-      title: "Bạn chắc chứ",
-      text: "Bạn sẽ không hoàn tác lại nó!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Vâng, Tôi xóa nó!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        async function daleteAcount() {
-            await AccountService.getDeleteAccount(id);
-            setReRender(!reRender);
-        }
-        daleteAcount();
-        Swal.fire("Đã xóa!", "Bạn đã xóa người dùng này.", "thành công");
-      }
-    });
-
+        Swal.fire({
+            title: 'Bạn chắc chứ',
+            text: 'Bạn sẽ không hoàn tác lại nó!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vâng, Tôi xóa nó!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                async function daleteAcount() {
+                    await AccountService.getDeleteAccount(id);
+                    setReRender(!reRender);
+                }
+                daleteAcount();
+                Swal.fire('Đã xóa!', 'Bạn đã xóa người dùng này.', 'thành công');
+            }
+        });
 
     useEffect(() => {
         getProductsByPagination(state.currentPage);
@@ -118,13 +117,11 @@ function BangTaiKhoan() {
     // data table
     async function getProductsByPagination(currentPage) {
         currentPage = currentPage - 1;
-        console.log('currentPage: ', currentPage);
         let accountData = await AccountService.getDataTableAccount(
-            state.search = '',
+            (state.search = ''),
             currentPage,
             state.recordPerPage,
         );
-        console.log('accountData.content: ',accountData.content);
         setState({
             ...state,
             accounts: accountData.data.content,
@@ -134,7 +131,7 @@ function BangTaiKhoan() {
             loading: false,
         });
     }
-    
+
     const showLastPage = () => {
         let current = state.currentPage;
         let total = state.totalElements;
@@ -147,7 +144,7 @@ function BangTaiKhoan() {
             }
         }
     };
-    
+
     const showNextPage = () => {
         let current = state.currentPage;
         let total = state.totalElements;
@@ -175,7 +172,6 @@ function BangTaiKhoan() {
     const showPrevPage = () => {
         let prevPage = 1;
         let curent = state.currentPage;
-        // console.log('curent showPrevPage: ', curent);
         if (curent > prevPage) {
             if (state.search === '') {
                 getProductsByPagination(curent - curent + 1);
@@ -191,7 +187,7 @@ function BangTaiKhoan() {
             [e.target.name]: e.target.value,
         });
     };
-    
+
     const searchBook = (currentPage) => {
         currentPage = currentPage - 1;
         async function getDataTable() {
@@ -206,11 +202,11 @@ function BangTaiKhoan() {
         }
         getDataTable();
     };
-    
+
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
     const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
-    console.log('state: ', state);
+    console.log('account: ', account);
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">
@@ -227,9 +223,7 @@ function BangTaiKhoan() {
                             onChange={searchBox}
                         />
                         <div className="input-group-append">
-                            <button className="btn btn-primary" type="button" name="search"
-                             onClick={searchBook}
-                             >
+                            <button className="btn btn-primary" type="button" name="search" onClick={searchBook}>
                                 <i className="fas fa-search fa-sm" />
                             </button>
                         </div>
