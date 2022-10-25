@@ -21,3 +21,8 @@ export const REMOVE_CART_ITEMS = ALL_CART_ITEM + '/remove-list';
 export const ALL_PROVINCE_URL = 'https://vapi.vnappmob.com/api/province';
 export const ALL_DISTRICT_URL = ALL_PROVINCE_URL + '/district';
 export const ALL_WARD_URL = ALL_PROVINCE_URL + '/ward';
+
+// Order
+export const ALL_ORDERS = 'http://localhost:8080/api/orders';
+export const CHECKOUT_ORDER = ALL_ORDERS + '/checkout';
+

@@ -6,6 +6,7 @@ import { setShowCartModalCheckout } from './../redux/actions';
 import { FormatMoney } from './../Hooks/Hooks';
 import { FormControl, InputLabel, Select, MenuItem, Box, TextField } from "@mui/material";
 import LocationService from './../service/LocationService/LocationService';
+import OrderService from './../service/Order/OrderService';
 
 const Checkout = ({ items }) => {
 
@@ -184,7 +185,21 @@ const Checkout = ({ items }) => {
         }
     };
 
+    const handleOrder = (accountId, order) => {
+
+        try {
+            async function checkoutOrder() {
+                let orderDetailList = await OrderService.createCheckoutOrder(accountId, order);
+                console.log(orderDetailList.data);
+            }
+            checkoutOrder();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     console.log('order', state.orders);
+    console.log('items', items);
 
     return (
         <>
@@ -206,16 +221,16 @@ const Checkout = ({ items }) => {
                                 <div className="row mx-2 my-2">
                                     <b>Thông tin người nhận</b>
                                 </div>
-                                <div className="row ms-1" style={{ backgroundColor: '#fff', boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }}>
+                                <div className="row ms-1" style={{ height: '300px', backgroundColor: '#fff', borderRadius: '10px', boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }}>
                                     <div className="row-info-recipient">
-                                        <label htmlFor="fullNameRecipient" className="col-4 labelRecipient">Họ và tên: </label>
-                                        <label htmlFor="phoneRecipient" className="col-4 labelRecipient">Số điện thoại: </label>
-                                        <label htmlFor="emailRecipient" className="col-4 labelRecipient">Email: </label>
+                                        <label htmlFor="fullNameRecipient" className="col-4 labelRecipient">Họ và tên </label>
+                                        <label htmlFor="phoneRecipient" className="col-4 labelRecipient">Số điện thoại </label>
+                                        <label htmlFor="emailRecipient" className="col-4 labelRecipient">Email </label>
                                     </div>
-                                    <div className="row-info-recipient" style={{ justifyContent: 'space-around' }}>
-                                        <input onChange={handleInputValue} type="text" name="fullName" className="info-input form-control col-4" id="fullNameRecipient" style={{ margin: '0', borderRadius: '5px' }} value={state.orders.fullName} />
-                                        <input onChange={handleInputValue} type="tel" name="phone" className="info-input form-control col-4" id="phoneRecipient" style={{ margin: '0', borderRadius: '5px' }} value={state.orders.phone} />
-                                        <input onChange={handleInputValue} type="email" name="email" className="info-input form-control col-4" id="emailRecipient" style={{ margin: '0', borderRadius: '5px' }} value={state.orders.email} />
+                                    <div className="row-info-recipient" style={{ justifyContent: 'space-around', margin: '0' }}>
+                                        <input onChange={handleInputValue} type="text" name="fullName" className="info-input form-control col-4" id="fullNameRecipient" value={state.orders.fullName} />
+                                        <input onChange={handleInputValue} type="tel" name="phone" className="info-input form-control col-4" id="phoneRecipient" value={state.orders.phone} />
+                                        <input onChange={handleInputValue} type="email" name="email" className="info-input form-control col-4" id="emailRecipient" value={state.orders.email} />
                                     </div>
 
                                     <div className="row-info-recipient mt-4" style={{ justifyContent: 'space-around' }}>
@@ -299,7 +314,43 @@ const Checkout = ({ items }) => {
                                             </Box>
                                         </div>
                                     </div>
+                                    <div className="row-info-recipient" style={{ justifyContent: 'space-around' }}>
+                                        <Box
+                                            component="form"
+                                            sx={{
+                                                '& > :not(style)': { m: 1, width: '50ch' },
+                                            }}
+                                            noValidate
+                                            autoComplete="on"
+                                        >
+                                            <TextField
+                                                onChange={handleInputValue}
+                                                placeholder="Lưu ý cho người gửi..."
+                                                value={state.orders.description}
+                                                name="description"
+                                                id="outlined-basic" label="Lời nhắn"
+                                                variant="outlined"
+                                            />
+                                        </Box>
+                                    </div>
                                 </div>
+                            </Col>
+                        </Row>
+                        <Row style={{ margin: '20px 0px', height: '60px', display: 'flex', alignItems: 'center' }}>
+                            <Col xs={12} md={2} className='text-end'>
+                                <Button style={{ width: 100, boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }} variant="secondary" onClick={handleClose}>
+                                    Quay lại
+                                </Button>
+                            </Col>
+                            <Col xs={12} md={2}>
+                                <Button style={{ width: 150 }} variant="outline-danger" onClick={handleClose}>
+                                    Hủy đơn hàng
+                                </Button>
+                            </Col>
+                            <Col xs={12} md={8} className='text-end'>
+                                <Button style={{ width: 100 }} variant="primary" onClick={() => handleOrder(account.id, state.orders)}>
+                                    Đặt hàng
+                                </Button>
                             </Col>
                         </Row>
                         <Row>
@@ -307,7 +358,7 @@ const Checkout = ({ items }) => {
                                 <div className="items-checkout row mx-2 my-2">
                                     <b>Danh sách sản phẩm</b>
                                 </div>
-                                <div className="row mt-2" style={{ display: 'flex', alignItems: 'center', height: '80px', backgroundColor: '#fff', boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }}>
+                                <div className="row mt-2" style={{ borderRadius: '5px', display: 'flex', alignItems: 'center', height: '70px', backgroundColor: '#fff', boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }}>
                                     <div className="item-info text-center col-7">Sản phẩm</div>
 
 
@@ -317,7 +368,7 @@ const Checkout = ({ items }) => {
                                     <div className="item-info text-center col-3">Thành tiền</div>
                                 </div>
                                 {items.map((item => (
-                                    <div className="row items-checkout-info my-2" key={item.id}>
+                                    <div className="row items-checkout-info my-1" key={item.id}>
 
                                         <div className="col-7" style={{ display: 'flex', alignItems: 'center' }}>
                                             <div className="col-3">
@@ -343,10 +394,8 @@ const Checkout = ({ items }) => {
                         </Row>
                     </Container>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button style={{ width: 100 }} variant="secondary" onClick={handleClose}>
-                        Đóng
-                    </Button>
+                <Modal.Footer style={{ borderTop: '0' }}>
+
                 </Modal.Footer>
             </Modal>
         </>
