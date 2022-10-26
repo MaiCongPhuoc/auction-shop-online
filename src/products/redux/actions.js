@@ -174,3 +174,11 @@ export const setShowCartModalCheckout = (boolean) => {
         payload: boolean,
     };
 };
+
+// Order
+export const setCheckPayment = (boolean) => {
+    return {
+        type: 'orders/setCheckPayment',
+        payload: boolean,
+    };
+};

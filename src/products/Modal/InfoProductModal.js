@@ -5,7 +5,7 @@ import { setShowInfoProduct, setCheckProduct } from './../redux/actions';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import ProductService from "../service/Product/ProductService";
 import { Carousel } from './../Hooks/Hooks';
-import Buy from "./Buy";
+import BuyComponent from "./BuyComponent";
 
 const InfoProductModal = () => {
     const dispatch = useDispatch();
@@ -69,7 +69,7 @@ const InfoProductModal = () => {
 
                             </Col>
                             <Col xs={12} md={4}>
-                                <Buy product={product} />
+                                <BuyComponent product={product} />
                             </Col>
                         </Row>
                     </Container>

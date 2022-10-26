@@ -1,6 +1,6 @@
 import Tippy from '@tippyjs/react';
 import moment from 'moment';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import ProductService from '../../../services/productService';
 import ModalModeration from '../ModalModeration';
@@ -17,7 +17,6 @@ function AccountAdmin() {
         showModal: false
     });
     const { products, idProduct, showModal } = showModalModeration;
-    const [rerender, setRerender] = useState(false);
     useEffect(() => {
         async function getListProduct() {
             let listProduct = await ProductService.getProductsModeration();
@@ -27,14 +26,6 @@ function AccountAdmin() {
         getListProduct();
     }, [showModal]);
 
-    const handleAlert = (id) => {
-        // dispatch(setShowModerationProduct(true));
-        // dispatch(setIdProduct(id));
-    };
-
-    // console.log('count.current: ', count.current);
-
-    // count = products.length;
     const renderThongBao = () => {
         return (
             <div className="dropdown-list dropdown-menu-right shadow animated--grow-in" id="thongbao">

@@ -33,6 +33,9 @@ export const getShowCart = (state) => state.cartItems.showCart;
 
 export const getShowModalCheckout = (state) => state.cartItems.showCheckout;
 
+// Order
+export const getCheckPayment = (state) => state.orders.checkPayment;
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 

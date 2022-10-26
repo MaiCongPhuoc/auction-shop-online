@@ -14,6 +14,7 @@ import ListProduct from './dashboard/pages/ListProduct';
 import ListAccount from './dashboard/pages/ListAccount';
 import Auction from './Auction';
 import ListCategories from './dashboard/pages/ListCategories/index';
+import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
 import Login from './login/Login';
@@ -33,6 +34,8 @@ function App() {
                     <Route path="/dashboard/category" element={<ListCategories />} />
                     <Route path="/registration" element={<Register />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/bid/:auctionId" element={<ListBidAuction />} />
+                    <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
                 </Routes>
             </div>
         </Router>

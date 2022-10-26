@@ -29,7 +29,7 @@ const ContentAuction = () => {
             ) : (
                 productsAuction.map((product) => (
                     <Link
-                        to={`/product/${product.id}`}
+                        to={`/auction/${product.id}`}
                         className="card small-12 medium-6 cell"
                         style={{ transform: 'none' }}
                         key={product.id}
