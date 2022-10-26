@@ -267,3 +267,15 @@
 .css-xn6ruc input {
 height: 50px;
 }
+
+.row-payment span{
+    font-size: smaller;
+}
+
+.row-payment span:first-child{
+    font-weight: bold;
+}
+
+.info-payment-amount div {
+    font-size: smaller;
+}

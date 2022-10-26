@@ -26,3 +26,6 @@ export const ALL_WARD_URL = ALL_PROVINCE_URL + '/ward';
 export const ALL_ORDERS = 'http://localhost:8080/api/orders';
 export const CHECKOUT_ORDER = ALL_ORDERS + '/checkout';
 
+// Orders Detail
+export const ALL_ORDERS_DETAIL = 'http://localhost:8080/api/orders-detail';
+export const CREATE_ORDER_DETAIL = ALL_ORDERS_DETAIL + '/create';
