@@ -13,6 +13,7 @@ import Product from './products/Product';
 import ListProduct from './dashboard/pages/ListProduct';
 import ListAccount from './dashboard/pages/ListAccount';
 import Auction from './Auction';
+import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
                     <Route path='/list-account' element={<ListAccount />} />
                     <Route path='/list-product' element={<ListProduct />} />
                     <Route path='/product' element={<Product />} />
-                    <Route path='/product/:auctionId' element={<Auction />} />
+                    <Route path='/auction/:auctionId' element={<Auction />} />
+                    <Route path='/bid/:auctionId' element={<ListBidAuction />} />
                     <Route path='/product/cart/:auctionId' element={<ShowCartItem />} />
                 </Routes>
             </div>

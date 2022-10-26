@@ -25,3 +25,9 @@ export const CATEGORY_URL = 'http://localhost:8080/api/categories';
 export const PROVINCE_URL = 'https://vapi.vnappmob.com/api/province/';
 export const DISTRICT_URL = 'https://vapi.vnappmob.com/api/province/district';
 export const WARD_URL = 'https://vapi.vnappmob.com/api/province/ward';
+
+export const MODERATION_BY_PRODUCT_ID_URL = 'http://localhost:8080/api/auctions/auction';
+
+
+export const BID_URL = 'http://localhost:8080/api/bids/create';
+export const LISTBID_URL = 'http://localhost:8080/api/bids/auction';

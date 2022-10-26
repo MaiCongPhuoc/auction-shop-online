@@ -62,15 +62,16 @@ function ModalDetailProduct(props) {
                     console.log('moderation.data: ', moderation.data);
                 }
                 getModeration();
-                Swal.fire('Đã kiểm duyệt!', 'Bạn đã kiểm duyệt sản phẩm này.', 'thành công');
-                handleCloseModeration();
+                Swal.fire('Đã kiểm duyệt!', 'Bạn đã kiểm duyệt sản phẩm này.', 'thành công').then(() =>
+                    handleCloseModeration(),
+                );
             }
         });
 
     return (
         <Modal show={showModal} onHide={handleCloseModeration} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title>Detail Product</Modal.Title>
+                <Modal.Title>Thông báo</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {product === [] ? (
@@ -114,7 +115,7 @@ function ModalDetailProduct(props) {
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Đấu Giá / Bán</h5>
-                                <p className="col-sm-8">{product.action ? 'Bán' : 'Đấu Giá'}</p>
+                                <p className="col-sm-8">{product.action ? 'Đấu Giá' : 'Bán'}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Số Lượng Còn Lại</h5>
