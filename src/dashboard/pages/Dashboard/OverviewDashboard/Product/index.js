@@ -6,7 +6,7 @@ function SanPham(props) {
                 <div className="card-body">
                     <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
-                            <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Số lượng sản phẩm</div>
+                            <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Tổng số lượng sản phẩm</div>
                             <div className="row no-gutters align-items-center justify-content-center">
                                 <div className="col-auto">
                                     <div className="h5 ml-3 mb-0 mr-3 font-weight-bold text-gray-800">{props.totalProduct}</div>
