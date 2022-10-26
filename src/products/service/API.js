@@ -25,6 +25,7 @@ export const ALL_WARD_URL = ALL_PROVINCE_URL + '/ward';
 // Order
 export const ALL_ORDERS = 'http://localhost:8080/api/orders';
 export const CHECKOUT_ORDER = ALL_ORDERS + '/checkout';
+export const REMOVE_ORDER = ALL_ORDERS + '/remove-order';
 
 // Orders Detail
 export const ALL_ORDERS_DETAIL = 'http://localhost:8080/api/orders-detail';

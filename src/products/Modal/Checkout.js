@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccount, getShowModalCheckout } from "../redux/selector";
-import { setShowCartModalCheckout } from './../redux/actions';
+import { getAccount, getCheckPayment, getShowModalCheckout } from "../redux/selector";
+import { setCheckPayment, setShowCartModalCheckout } from './../redux/actions';
 import { FormatMoney } from './../Hooks/Hooks';
 import { FormControl, InputLabel, Select, MenuItem, Box, TextField } from "@mui/material";
 import LocationService from './../service/LocationService/LocationService';
@@ -22,7 +22,8 @@ const Checkout = ({ items }) => {
 
     const account = useSelector(getAccount);
 
-    const [checkPayment, setCheckPayment] = useState(false);
+    const checkPayment = useSelector(getCheckPayment);
+    console.log("checkPayment", checkPayment);
 
     const [loadSaveOrder, setLoadSaveOrder] = useState(false);
 
@@ -95,7 +96,7 @@ const Checkout = ({ items }) => {
 
     const handleClose = () => {
         dispatch(setShowCartModalCheckout(false));
-        setCheckPayment(false);
+        dispatch(setCheckPayment(false));
     };
     const showModalCheckout = useSelector(getShowModalCheckout);
 
@@ -207,7 +208,7 @@ const Checkout = ({ items }) => {
                 await OrderService.createCheckoutOrder(accountId, order)
                     .then((resp) => {
                         setNewOrder(resp.data);
-                        setCheckPayment(true);
+                        dispatch(setCheckPayment(true));
                         setLoadSaveOrder(false);
                     })
                     .catch((error) => {

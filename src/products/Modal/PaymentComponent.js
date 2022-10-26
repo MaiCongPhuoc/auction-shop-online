@@ -4,19 +4,24 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import { FormatMoney } from './../Hooks/Hooks';
 import OrdersDetailService from './../service/OrdersDetail/OrderDetail';
+import OrderService from './../service/Order/OrderService';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCheckPayment } from '../redux/actions';
+import { setShowCartModalCheckout } from './../redux/actions';
+import CartItemService from './../service/CartItem/CartItemService';
+import { getAccount } from '../redux/selector';
 
 const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
+    const dispatch = useDispatch();
+    const account = useSelector(getAccount);
     const [transportFee, getTransportFee] = useState(0);
 
     const [state, setState] = useState({
-        payment: "Thanh toán khi nhận tiền",
-        methods: ["Thanh toán khi nhận tiền", "Thanh toán online"],
+        payment: "Thanh toán khi nhận hàng",
+        methods: ["Thanh toán khi nhận hàng", "Thanh toán online"],
         estimateAmount: amount,
         totalAmount: amount + transportFee
     });
-
-    console.log('estimateAmount', state.estimateAmount);
-    console.log('amount', amount);
 
     const handleChangeMethod = (e) => {
         setState({
@@ -28,8 +33,8 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
     const handleCreateOrderDetail = (items) => {
         try {
             async function createOrdersDetail() {
-                let results = await OrdersDetailService.createOrdersDetail(newOrder.id, items);
-                console.log('results', results.data);
+                await OrdersDetailService.createOrdersDetail(newOrder.id, items);
+                await CartItemService.getRemoveCartItems(account.id, items);
             }   
             createOrdersDetail();
         } catch (error) {
@@ -38,7 +43,16 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
     };
 
     const handleRemoveOrder = (order) => {
-        console.log(order);
+        try {
+            async function removeOrders() {
+                let results = await OrderService.removeOrder(order.id);
+                dispatch(setShowCartModalCheckout(false));
+                dispatch(setCheckPayment(false));
+            }   
+            removeOrders();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
