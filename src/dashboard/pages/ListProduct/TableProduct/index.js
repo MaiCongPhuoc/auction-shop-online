@@ -218,7 +218,6 @@ function BangSanPham() {
     };
 
     const searchBook = (currentPage) => {
-        // console.log('currentPage: ', currentPage);
         if (document.querySelector('#search').value === '') {
             document.querySelector('#select').value = '-1';
         }

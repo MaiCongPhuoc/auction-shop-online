@@ -62,6 +62,18 @@ export const loginStatus = (boolean) => {
         payload: boolean,
     };
 };
+export const setShowSignupInfo = (boolean) => {
+    return {
+        type: 'login/setShowSignupInfo',
+        payload: boolean,
+    };
+};
+export const setShowLocation = (boolean) => {
+    return {
+        type: 'login/setShowLocation',
+        payload: boolean,
+    };
+};
 
 // Categories
 export const setCategories = (arr) => {
@@ -159,6 +171,6 @@ export const setShowCart = (boolean) => {
 export const setShowCartModalCheckout = (boolean) => {
     return {
         type: 'cartItems/setShowModalCheckout',
-        payload: boolean
-    }
-}
+        payload: boolean,
+    };
+};

@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect';
 //login
 export const getLoginStatus = (state) => state.login.login;
+export const getShowSignupInfo = (state) => state.login.showSignupInfo;
+export const getShowLocation = (state) => state.login.showLocation;
 
 // account
 export const getAccount = (state) => state.account.account;
-
 
 // types
 export const getType = (state) => state.types.type;
@@ -45,35 +46,25 @@ export const getCategoriesFiltersChange = (state) => state.filters.categories;
 
 export const getShowResultNav = (state) => state.filters.showResultNav;
 
-
-
-export const getProductsAction = createSelector(
-    getAllProducts,
-    getType,
-    (products, type) => {
-        if (type === 'Đấu giá') {
-            return products.filter((product) => {
-                console.log('selector auction: ', product);
-                return product.action === true;
-            });
-        }
-        if (type === 'Cửa hàng') {
-            return products.filter((product) => {
-                return product.action === false;
-            });
-        }
-    }
-);
-
-
-export const productsRemainingSelector = createSelector(
-    getAllProducts,
-    searchTextSelector,
-    (products, searchText) => {
+export const getProductsAction = createSelector(getAllProducts, getType, (products, type) => {
+    if (type === 'Đấu giá') {
         return products.filter((product) => {
-            return product.title.toLowerCase().includes(searchText.trim().toLowerCase());
+            console.log('selector auction: ', product);
+            return product.action === true;
         });
+    }
+    if (type === 'Cửa hàng') {
+        return products.filter((product) => {
+            return product.action === false;
+        });
+    }
+});
+
+export const productsRemainingSelector = createSelector(getAllProducts, searchTextSelector, (products, searchText) => {
+    return products.filter((product) => {
+        return product.title.toLowerCase().includes(searchText.trim().toLowerCase());
     });
+});
 
 export const productsRemainingTypeSelector = createSelector(
     productsRemainingSelector,
@@ -81,22 +72,19 @@ export const productsRemainingTypeSelector = createSelector(
     (products, typeChange) => {
         if (typeChange === 'Tất cả') {
             return products;
-        }
-        else if (typeChange === 'Đấu giá') {
+        } else if (typeChange === 'Đấu giá') {
             return products.filter((product) => {
                 return product.action === true;
             });
-        }
-        else if (typeChange === 'Cửa hàng') {
+        } else if (typeChange === 'Cửa hàng') {
             return products.filter((product) => {
                 return product.action === false;
             });
-        }
-        else {
+        } else {
             return products;
         }
-    }
-)
+    },
+);
 
 export const productsRemainingCategorySelector = createSelector(
     productsRemainingTypeSelector,
@@ -104,14 +92,14 @@ export const productsRemainingCategorySelector = createSelector(
     (products, categories) => {
         if (categories.length <= 0) {
             return products;
-        }
-        else {
+        } else {
             return products.filter((product) => {
                 return categories.includes(product.category.title);
             });
         }
-    });
-    
+    },
+);
+
 // Modals
 
 export const getShowInfoProduct = (state) => state.modals.showInfoProduct;
@@ -121,5 +109,3 @@ export const getShowAddProduct = (state) => state.modals.showAddProduct;
 export const getShowEditProduct = (state) => state.modals.showEditProduct;
 
 export const getShowModerationProduct = (state) => state.modals.showModerationProduct;
-
-

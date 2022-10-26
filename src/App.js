@@ -15,6 +15,8 @@ import ListAccount from './dashboard/pages/ListAccount';
 import Auction from './Auction';
 import ListCategories from './dashboard/pages/ListCategories/index';
 import ShowCartItem from './products/components/Content/CartItem/index';
+import Register from './singup/Register';
+import Login from './login/Login';
 
 function App() {
     return (
@@ -29,6 +31,8 @@ function App() {
                     <Route path="/product/:auctionId" element={<Auction />} />
                     <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
                     <Route path="/dashboard/category" element={<ListCategories />} />
+                    <Route path="/registration" element={<Register />} />
+                    <Route path="/login" element={<Login />} />
                 </Routes>
             </div>
         </Router>

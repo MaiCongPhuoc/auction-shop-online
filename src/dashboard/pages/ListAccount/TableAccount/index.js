@@ -19,31 +19,9 @@ function BangTaiKhoan() {
         search: '',
         errorMessage: '',
         totalPages: 0,
+        roles: [],
     });
     const [reRender, setReRender] = useState(false);
-
-    // ========================= API Account ===========================
-
-    // useEffect(() => {
-    //     try {
-    //         setState({ ...state, loading: true });
-    //         async function getData() {
-    //             let accountRes = await AccountService.getAccount();
-    //             setState({
-    //                 ...state,
-    //                 accounts: accountRes.data,
-    //                 loading: false,
-    //             });
-    //         }
-    //         getData();
-    //     } catch (error) {
-    //         setState({
-    //             ...state,
-    //             loading: false,
-    //             errorMessage: error.message,
-    //         });
-    //     }
-    // }, []);
 
     //modal detail
     const [showDetail, setShowDetail] = useState({
@@ -68,28 +46,6 @@ function BangTaiKhoan() {
     const [showRestart, setShowRestart] = useState(false);
     const hanldCloseRestartPassword = () => setShowRestart(false);
 
-    // function handleClick(id) {
-    //     Swal.fire({
-    //         title: 'Bạn chắc chứ?',
-    //         type: 'warning',
-    //         text: 'Bạn không thể hàn tác lại điều này!',
-    //         footer: '',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Vâng! Tôi muốn Xóa?',
-    //     }).then((result) => {
-    //         if (result.value) {
-    //             async function daleteAcount() {
-    //                 await AccountService.getDeleteAccount(id);
-    //                 setReRender(!reRender);
-    //             }
-    //             daleteAcount();
-    //             Swal.fire('Đã xóa!', 'Xóa thành công!', 'success');
-    //         }
-    //     });
-    // }
-
     const notify = (id) =>
         Swal.fire({
             title: 'Bạn chắc chứ',
@@ -111,24 +67,43 @@ function BangTaiKhoan() {
         });
 
     useEffect(() => {
-        getProductsByPagination(state.currentPage);
+        try {
+            setState({ ...state, loading: true });
+            async function getData() {
+                let role = await AccountService.getRoles();
+                setState({
+                    ...state,
+                    roles: role.data,
+                    loading: false,
+                });
+            }
+            getData();
+            getProductsByPagination(state.currentPage);
+        } catch (error) {
+            setState({
+                ...state,
+                loading: false,
+                errorMessage: error.message,
+            });
+        }
     }, [showAdd, showEdit, reRender]);
 
     // data table
     async function getProductsByPagination(currentPage) {
-        currentPage = currentPage - 1;
+        state.currentPage = currentPage - 1;
         let accountData = await AccountService.getDataTableAccount(
-            (state.search = ''),
-            currentPage,
+            state.search,
+            state.currentPage,
             state.recordPerPage,
         );
-
+        let role = await AccountService.getRoles();
         setState({
             ...state,
             accounts: accountData.data.content,
             totalPages: accountData.data.totalPages,
             totalElements: accountData.data.totalElements,
             currentPage: accountData.data.number + 1,
+            roles: role.data,
             loading: false,
         });
     }
@@ -190,7 +165,12 @@ function BangTaiKhoan() {
     };
 
     const searchBook = (currentPage) => {
+        if (document.querySelector('#search').value === '') {
+            document.querySelector('#select').value = '-1';
+        }
         currentPage = currentPage - 1;
+        console.log('currentPage: ', currentPage);
+
         async function getDataTable() {
             let dataTable = await AccountService.getDataTableAccount(state.search, currentPage, state.recordPerPage);
             setState({
@@ -206,8 +186,7 @@ function BangTaiKhoan() {
 
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
-    const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
-    console.log('account: ', account, accountId);
+    const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, roles } = state;
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">
@@ -220,7 +199,7 @@ function BangTaiKhoan() {
                             name="search"
                             size="50"
                             className="form-control bg-light small"
-                            placeholder="Tìm kiếm sản phẩm..."
+                            placeholder="Tìm kiếm tên..."
                             onChange={searchBox}
                         />
                         <div className="input-group-append">
@@ -237,7 +216,23 @@ function BangTaiKhoan() {
                 <div className="shadow mb-4 cur-div" style={{ cursor: 'auto !important' }}>
                     <div className="card-header py-3 d-flex justify-content-between">
                         <h6 className="m-0 font-weight-bold text-primary">Danh sách tài khoản</h6>
-                        <div>
+                        <div className="d-flex align-items-center w-50">
+                            <p className="w-100 mb-0">Lọc theo Role:</p>
+                            <select
+                                className="form-select mr-3 select-bg-ori"
+                                id="select"
+                                name="search"
+                                onChange={searchBox}
+                            >
+                                <option value={-1} key={-1} disabled selected>
+                                    Chọn
+                                </option>
+                                {roles.map((role) => (
+                                    <option value={role.code} key={role.id}>
+                                        {role.code}
+                                    </option>
+                                ))}
+                            </select>
                             {/* Button trigger modal */}
                             <button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
                                 Add
@@ -289,9 +284,9 @@ function BangTaiKhoan() {
                                                   <td>{account.email}</td>
                                                   <td className="text-end">{account.phone}</td>
                                                   <td>{account.role.code}</td>
-                                                  <td>{account.locationregion.provinceName}</td>
-                                                  <td>{account.locationregion.districtName}</td>
-                                                  <td>{account.locationregion.wardName}</td>
+                                                  <td>{account.locationRegion.provinceName}</td>
+                                                  <td>{account.locationRegion.districtName}</td>
+                                                  <td>{account.locationRegion.wardName}</td>
                                                   <td className="text-center">
                                                       <button
                                                           className="btn btn-outline-secondary"
