@@ -58,7 +58,7 @@ const Content = () => {
 
     return (
         <>
-            <div className="base-width main-yield" id="client-content">
+            <div className="base-width main-yield" id="client-content" style={{maxWidth: '96%'}}>
                 <div className="pages" data-pages-shell="">
                     <div id="homepage-lot">
                         <div className="category-items-wrapper cell medium-12 float-center" id="homepage-lot-list-wrapper">

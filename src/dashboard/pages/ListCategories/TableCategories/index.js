@@ -6,8 +6,8 @@ import Swal from 'sweetalert2';
 import '../../pages.css';
 
 import CategoryService from '../../../services/Category';
-import ModalEditCategory from '../../../modal/category/ModalEdit/index';
-import ModalAddCategory from '../../../modal/category/ModalAdd/index';
+import ModalEditCategory from '../../../modal/category/ModalEdit';
+import ModalAddCategory from '../../../modal/category/ModalAdd';
 
 function TableCategories() {
     Moment.locale('vi');

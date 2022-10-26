@@ -33,7 +33,7 @@ function App() {
                     <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
                     <Route path="/dashboard/category" element={<ListCategories />} />
                     <Route path="/registration" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/logout" element={<Login />} />
                     <Route path="/bid/:auctionId" element={<ListBidAuction />} />
                     <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
                 </Routes>
