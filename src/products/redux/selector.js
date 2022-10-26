@@ -32,6 +32,8 @@ export const getShowCart = (state) => state.cartItems.showCart;
 
 export const getShowModalCheckout = (state) => state.cartItems.showCheckout;
 
+export const getReloadCartItem = (state) => state.cartItems.reloadCartItem;
+
 // Order
 export const getCheckPayment = (state) => state.orders.checkPayment;
 

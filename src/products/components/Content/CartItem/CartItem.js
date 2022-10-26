@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { useSelector, useDispatch } from 'react-redux';
 import { FormatMoney } from "../../../Hooks/Hooks";
-import { getAccount } from "../../../redux/selector";
+import { getAccount, getReloadCartItem } from "../../../redux/selector";
 import CartItemService from './../../../service/CartItem/CartItemService';
 import { setCartItems, setShowCartModalCheckout } from './../../../redux/actions';
 import { ToastContainer, toast } from 'react-toastify';
@@ -26,7 +26,8 @@ const CartItem = () => {
 
     const [listCartItems, setListCartItems] = useState([]);
 
-
+    const reloadCartItem = useSelector(getReloadCartItem);
+    console.log("reload", reloadCartItem);
 
     let totalAmount = 0;
 
@@ -39,13 +40,14 @@ const CartItem = () => {
                 const allCartItems = await CartItemService.getCartItems(account.id);
                 setListCartItems(allCartItems.data);
                 setLoadDataCart(false);
+                setChoiceItems([]);
             }
             getCartItems();
 
         } catch (error) {
             console.log(error);
         }
-    }, []);
+    }, [reloadCartItem]);
 
     const handleReduceQuantity = (cartItem) => {
         try {
