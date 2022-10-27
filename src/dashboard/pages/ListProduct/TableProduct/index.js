@@ -246,34 +246,16 @@ function BangSanPham() {
 
     return (
         <div className="container-fluid">
-            <div className="d-flex justify-content-between">
-                <h1 className="h3 mb-2 text-gray-800">Danh sách sản phẩm</h1>
-                <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div className="input-group">
-                        <input
-                            type="text"
-                            id="search"
-                            name="search"
-                            size="50"
-                            className="form-control bg-light small"
-                            placeholder="Tìm kiếm sản phẩm..."
-                            onChange={searchBox}
-                        />
-                        <div className="input-group-append">
-                            <button className="btn btn-primary" type="button" name="search" onClick={searchBook}>
-                                <i className="fas fa-search fa-sm" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div className="d-flex justify-content-between"></div>
             {loading ? (
                 <Spiner />
             ) : (
                 <div className="shadow mb-4 cur-div">
-                    <div className="card-header py-3 d-flex justify-content-between">
-                        <h6 className="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
-                        <div className="d-flex align-items-center w-50">
+                    <div className="card-header d-flex justify-content-between">
+                        <h5 className="font-weight-bold text-primary" style={{ marginTop: '18px' }}>
+                            Danh sách sản phẩm
+                        </h5>
+                        <div className="d-flex align-items-center w-75">
                             <p className="w-100 mb-0">Lọc theo thể loại:</p>
                             <select
                                 className="form-select mr-3 select-bg-ori"
@@ -290,9 +272,34 @@ function BangSanPham() {
                                     </option>
                                 ))}
                             </select>
+                            <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                <div className="input-group">
+                                    <input
+                                        style={{ marginTop: '18px' }}
+                                        type="text"
+                                        id="search"
+                                        name="search"
+                                        size="75"
+                                        className="form-control bg-light small"
+                                        placeholder="Tìm kiếm sản phẩm..."
+                                        onChange={searchBox}
+                                    />
+                                    <div className="input-group-append">
+                                        <button
+                                            style={{ marginTop: '18px' }}
+                                            className="btn btn-primary ml-1"
+                                            type="button"
+                                            name="search"
+                                            onClick={searchBook}
+                                        >
+                                            <i className="fas fa-search fa-sm" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             {/* Button trigger modal */}
                             {/* <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
-                                Thêm
+                                Tạo
                             </Button> */}
                         </div>
                     </div>
@@ -301,15 +308,15 @@ function BangSanPham() {
                             <table className="table table-hover" id="dataTable" width="100%" cellSpacing={0}>
                                 <thead>
                                     <tr>
-                                        <th>Ảnh</th>
-                                        <th>Tên SP</th>
-                                        <th>Người tạo</th>
-                                        <th className="text-center">Ngày tạo</th>
-                                        <th>Thể loại</th>
-                                        <th>Bán/đấu giá</th>
-                                        <th>Số lượng</th>
-                                        <th>Giá (đ)</th>
-                                        <th className="text-center">Action</th>
+                                        <th className="text-center">Ảnh</th>
+                                        <th className="text-center">Tên sản phẩm</th>
+                                        {/* <th>Người tạo</th>
+                                        <th className="text-center">Ngày tạo</th> */}
+                                        <th className="text-center">Thể loại</th>
+                                        <th className="text-center">Bán/Đấu giá</th>
+                                        <th className="text-center">Số lượng</th>
+                                        <th className="text-center">Giá (đ)</th>
+                                        <th className="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -341,10 +348,10 @@ function BangSanPham() {
                                                 <td>
                                                     <strong>{product.title}</strong>
                                                 </td>
-                                                <td className="text-center">{product.createdBy}</td>
+                                                {/* <td className="text-center">{product.createdBy}</td>
                                                 <td className="text-end">
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
-                                                </td>
+                                                </td> */}
                                                 <td>
                                                     {product.category.deleted === true ? null : product.category.title}
                                                 </td>
@@ -355,7 +362,6 @@ function BangSanPham() {
                                                         value={product.price}
                                                         displayType={'text'}
                                                         thousandSeparator={true}
-                                                        suffix={' đ'}
                                                     />
                                                 </td>
                                                 <td className="text-center">
@@ -369,14 +375,15 @@ function BangSanPham() {
                                                             })
                                                         }
                                                     >
-                                                        Sửa đổi
+                                                        {' '}
+                                                        <i className="fa-solid fa-pen-to-square" title="Cập nhật"></i>
                                                     </button>
-                                                    {/* <button className="btn btn-outline-danger ml-2">Remove</button> */}
                                                     <button
                                                         className="btn btn-outline-danger ml-2"
                                                         onClick={() => notify(product.id)}
                                                     >
-                                                        Xóa
+                                                        {' '}
+                                                        <i className="fa-solid fa-trash danger" title="Xóa"></i>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -385,22 +392,20 @@ function BangSanPham() {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Ảnh</th>
-                                        <th>Tên SP</th>
-                                        <th>Người tạo</th>
-                                        <th>Ngày tạo</th>
-                                        <th>Thể loại</th>
-                                        <th>Bán/đấu giá</th>
-                                        <th>Số lượng</th>
-                                        <th className="text-start">Tổng: </th>
-                                        <th className="text-end pr-4">
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <td className="text-end">Tổng: </td>
+                                        <td className="text-end pr-4">
                                             <NumericFormat
                                                 value={tongtien}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
                                                 suffix={' đ'}
                                             />
-                                        </th>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -411,7 +416,7 @@ function BangSanPham() {
                                     color: '#0275d8',
                                 }}
                             >
-                                Trang {currentPage} Trên tổng số {totalPages}
+                                Trang: {currentPage} / {totalPages}
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
@@ -424,7 +429,7 @@ function BangSanPham() {
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showPrevPage}
                                             >
-                                                Trang đầu tiên
+                                                <i class="fa-solid fa-backward-fast"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -434,7 +439,8 @@ function BangSanPham() {
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showFirstPage}
                                             >
-                                                Lùi
+                                                {' '}
+                                                <i class="fa-solid fa-backward-step"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -444,7 +450,7 @@ function BangSanPham() {
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showNextPage}
                                             >
-                                                Tiếp
+                                                <i class="fa-solid fa-forward-step"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -454,7 +460,7 @@ function BangSanPham() {
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showLastPage}
                                             >
-                                                Trang cuối cùng
+                                                <i class="fa-solid fa-forward-fast"></i>
                                             </a>
                                         </li>
                                     </ul>

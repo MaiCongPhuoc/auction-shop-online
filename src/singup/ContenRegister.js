@@ -9,8 +9,8 @@ import { useState } from 'react';
 const ContenRegister = () => {
     return (
         <>
-            <div className="base-width main-yield" id="client-content">
-                <div className="pages" data-pages-shell>
+            <div className="base-width main-yield">
+                <div className="register">
                     <div data-react-class="onboarder/OnBoarderRouter" data-react-props>
                         <div className="OnBoarder-module__wrapper___3_Izy onboarder">
                             <div className="sorter-wrapper col-6">

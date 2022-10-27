@@ -248,7 +248,10 @@ function AccountAdmin() {
                         aria-expanded="false"
                     >
                         <span className="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                        <img className="img-profile rounded-circle" src="img/undraw_profile.svg" />
+                        <img
+                            className="img-profile rounded-circle"
+                            src="./../../../../../assets/images/people/daugia.jpg"
+                        />
                     </a>
                 </Tippy>
                 {/* Dropdown - User Information */}

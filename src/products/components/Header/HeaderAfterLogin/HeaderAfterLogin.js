@@ -17,10 +17,9 @@ const HeaderAfterLogin = () => {
 
     const cartItems = useSelector(getAllCartItems);
 
-
     const handleShowModalAddProduct = () => {
-        dispatch(setShowAddProduct(true))
-    }
+        dispatch(setShowAddProduct(true));
+    };
     const renderAccount = () => {
         return (
             <div className="dropdown-menu-right shadow animated--grow-in accountAdmin" aria-labelledby="userDropdown">
@@ -28,7 +27,7 @@ const HeaderAfterLogin = () => {
                     <FontAwesomeIcon icon={faPlus} className="pr-2" />
                     Add product
                 </a> */}
-                <a type="button" className="btn btn-outline-primary" onClick={handleShowModalAddProduct}>
+                <a type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
                     Thêm sản phẩm
                 </a>
             </div>
@@ -38,8 +37,9 @@ const HeaderAfterLogin = () => {
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <Link to={`/product/cart/${account.id}`} style={{fontSize: '14px'}}>
-                    <i style={{ position: 'relative' }}
+                <Link to={`/product/cart/${account.id}`} style={{ fontSize: '14px' }}>
+                    <i
+                        style={{ position: 'relative' }}
                         className="fa-brands fa-opencart fa-2x ic-cart me-3"
                         aria-hidden="true"
                     >
@@ -56,7 +56,7 @@ const HeaderAfterLogin = () => {
                                 fontSize: '12px',
                                 left: '30px',
                                 bottom: '15px',
-                                padding: '3px'
+                                padding: '3px',
                             }}
                         >
                             {cartItems.length}
@@ -109,8 +109,8 @@ const HeaderAfterLogin = () => {
                         </a>
                     </Tippy>
                 </span>
-                <a id="customer-logout-link" className="new-login-button" rel="nofollow" href="/logout">
-                    LOG OUT
+                <a id="customer-logout-link" className="new-login-button" rel="nofollow" href="/login">
+                    ĐĂNG XUẤT
                 </a>
             </div>
             <ModalAdd />

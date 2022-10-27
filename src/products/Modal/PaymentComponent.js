@@ -6,15 +6,16 @@ import { FormatMoney } from './../Hooks/Hooks';
 import OrdersDetailService from './../service/OrdersDetail/OrderDetail';
 import OrderService from './../service/Order/OrderService';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCheckPayment } from '../redux/actions';
+import { setCheckPayment, setReloadCartItem } from '../redux/actions';
 import { setShowCartModalCheckout } from './../redux/actions';
 import CartItemService from './../service/CartItem/CartItemService';
-import { getAccount } from '../redux/selector';
+import { getAccount, getReloadCartItem } from '../redux/selector';
 
 const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
     const [transportFee, getTransportFee] = useState(0);
+    const reloadCartItem = useSelector(getReloadCartItem);
 
     const [state, setState] = useState({
         payment: "Thanh toán khi nhận hàng",
@@ -34,7 +35,11 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
         try {
             async function createOrdersDetail() {
                 await OrdersDetailService.createOrdersDetail(newOrder.id, items);
-                await CartItemService.getRemoveCartItems(account.id, items);
+                let cartItemList = await CartItemService.getRemoveCartItems(account.id, items);
+                console.log("cartItemList", cartItemList);
+                dispatch(setShowCartModalCheckout(false));
+                dispatch(setReloadCartItem(!reloadCartItem));
+                toast.success('Đã hoàn tất đặt hàng!');
             }   
             createOrdersDetail();
         } catch (error) {
@@ -135,6 +140,7 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
                     </Button>
                 </Col>
             </Row>
+            <ToastContainer />
         </>
     );
 }

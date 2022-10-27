@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import Dashboard from './dashboard/pages/Dashboard';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './assets/bootstrap-5.2.0-dist/css/bootstrap.min.css';
@@ -18,24 +18,48 @@ import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
 import Login from './login/Login';
+import TheShop from './products/components/Content/ProductDetail/TheShop/index';
 
 function App() {
+    const [isLogin, setIsLogin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        let loginUser = localStorage.getItem('loginUser');
+        if (loginUser) {
+            setIsLogin(true);
+            let userLoggedin = JSON.parse(loginUser);
+            if (userLoggedin.isAdmin === true) {
+                setIsAdmin(true);
+            }
+        }
+    }, []);
     return (
         <Router>
             <div className="App">
                 <Routes>
+                    {/*1. Dashboard */}
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/list-account" element={<ListAccount />} />
                     <Route path="/list-product" element={<ListProduct />} />
-                    <Route path="/product" element={<Product />} />
-                    <Route path="/auction/:auctionId" element={<Auction />} />
-                    <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
                     <Route path="/dashboard/category" element={<ListCategories />} />
+
+                    {/*2. Client */}
+                    {/* - Login */}
                     <Route path="/registration" element={<Register />} />
                     <Route path="/logout" element={<Login />} />
+
+                    {/* - Product */}
+                    <Route path="/product" element={<Product />} />
+                    {/* -- Auction */}
                     <Route path="/bid/:auctionId" element={<ListBidAuction />} />
-                    <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
+                    <Route path="/auction/:auctionId" element={<Auction />} />
+                    <Route path="/bid/:auctionId" element={<ListBidAuction />} />
+                    {/* -- The shop */}
+                    <Route path="/product/the-shop/:slug" element={<TheShop />} />
+                    {/* -- Cart */}
+                    <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
                 </Routes>
             </div>
         </Router>

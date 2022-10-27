@@ -7,12 +7,12 @@ function SanPham(props) {
                     <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Số lượng sản phẩm
+                                <a href="/list-product">Số lượng sản phẩm</a>
                             </div>
                             <div className="row no-gutters align-items-center justify-content-center">
                                 <div className="col-auto">
                                     <div className="h5 ml-3 mb-0 mr-3 font-weight-bold text-gray-800">
-                                        {props.totalProduct}
+                                        <a href="/list-product">{props.totalProduct}</a>
                                     </div>
                                 </div>
                                 {/* <div className="col">
@@ -29,9 +29,11 @@ function SanPham(props) {
                                 </div> */}
                             </div>
                         </div>
-                        {/* <div className="col-auto">
-                            <i className="fas fa-clipboard-list fa-2x text-gray-300" />
-                        </div> */}
+                        <div className="col-auto">
+                            <a href="/list-product">
+                                <i className="fas fa-clipboard-list fa-2x text-black-300" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

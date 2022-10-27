@@ -175,6 +175,14 @@ export const setShowCartModalCheckout = (boolean) => {
     };
 };
 
+export const setReloadCartItem = (boolean) => {
+    return {
+        type: 'cartItems/setReloadCartItem',
+        payload: boolean
+    }
+}
+
+
 // Order
 export const setCheckPayment = (boolean) => {
     return {

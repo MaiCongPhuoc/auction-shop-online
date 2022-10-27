@@ -1,5 +1,6 @@
 // Products
 export const ALL_PRODUCTS = 'http://localhost:8080/api/products';
+export const GET_PRODUCTS_BY_SLUG = ALL_PRODUCTS + '/find-by-slug';
 
 // Product Media
 export const ALL_MEDIA_PRODUCT = 'http://localhost:8080/api/productmedia';
@@ -28,3 +29,6 @@ export const REMOVE_ORDER = ALL_ORDERS + '/remove-order';
 // Orders Detail
 export const ALL_ORDERS_DETAIL = 'http://localhost:8080/api/orders-detail';
 export const CREATE_ORDER_DETAIL = ALL_ORDERS_DETAIL + '/create';
+
+// Login
+export const ACCOUNT_LOGIN_URL = 'http://localhost:8080/api/auth/login';

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { FormatMoney, isNumber } from '../Hooks/Hooks';
-import { getAccount } from '../redux/selector';
-import CartItemService from '../service/CartItem/CartItemService';
-import ValidationQuantity from '../utils/ValidationQuantity';
+import { getAccount } from '../../../../redux/selector';
+import { FormatMoney, isNumber } from './../../../../Hooks/Hooks';
+import CartItemService from './../../../../service/CartItem/CartItemService';
+import ValidationQuantity from '../../../../utils/ValidationQuantity';
 
-const Buy = ({ product }) => {
+const BuyComponent = ({ product }) => {
+    console.log('product',product);
 
     const [checkQuantity, setCheckQuantity] = useState(true);
     const [errorMess, setErrorMess] = useState('');
@@ -76,7 +77,7 @@ const Buy = ({ product }) => {
     };
 
     return (
-        <div className="buy-tool">
+        <div className="buy-tool" style={{width: '22%', margin: '50px auto'}}>
             <div className="bb-rows-wrapper">
                 <div className="bb-row bb-current-buy">
                     <div className="bb-row title-buy text-center">
@@ -85,12 +86,22 @@ const Buy = ({ product }) => {
                     </div>
                     <div className="bb-item my-3" style={{ paddingLeft: '15px' }}>
                         <div className="current-bidder">
-                            <div className="bb-title is-label">
-                                <span className="current-bid bid-box-label">Giá của sản phẩm (VNĐ):</span>
+                            <div className="bb-title is-label text-start">
+                                <span className="current-bid bid-box-label">Giá của sản phẩm:</span>
                             </div>
-                            <div className="bb-content my-2">
-                                <div className="bin-price bin-price-centered fw-bold">
-                                    <span>{FormatMoney(newTotalPrice)}</span>
+                            <div className="bb-content my-2 text-end">
+                                <div className="bin-price fw-bold me-5">
+                                    <span>{FormatMoney(product.price)} ₫</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="current-bidder">
+                            <div className="bb-title is-label text-start">
+                                <span className="current-bid bid-box-label">Giá tạm tính:</span>
+                            </div>
+                            <div className="bb-content my-2 text-end">
+                                <div className="bin-price fw-bold me-5">
+                                    <span>{FormatMoney(newTotalPrice)} ₫</span>
                                 </div>
                             </div>
                         </div>
@@ -135,10 +146,10 @@ const Buy = ({ product }) => {
                         </div>
                     </div>
                 </div>
-                <div className="bidding-actions mt-4">
+                <div className="mt-4">
                     <div className="watchlist-action">
                         <div className="watcher-btn text-center">
-                            <a className="watch-button" href="#">
+                            <a className="watch-button" href="#" style={{border: 'none !important'}}>
                                 <div className="relative-wrapper watch-wrapper btn">
                                     <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
                                         <i className="fa-regular fa-heart"></i>
@@ -157,4 +168,4 @@ const Buy = ({ product }) => {
     );
 }
 
-export default Buy;
+export default BuyComponent;
