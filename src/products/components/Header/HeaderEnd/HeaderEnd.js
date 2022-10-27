@@ -8,22 +8,22 @@ const HeaderEnd = () => {
                     </a>
                 </li>
                 <li className="left">
-                    <a className="nav-explore drop-category">
+                    <a className="nav-explore drop-category" href="/product">
                         Cửa hàng<span className="watch-circle my-cb-circle my-cb-count hidden">0</span>
                     </a>
                 </li>
                 <li className="left">
-                    <a className="btn-bin" href="/theme/buy-now/lots">
+                    <a className="btn-bin" href="/product">
                         Đấu giá
                     </a>
                 </li>
                 <li className="left">
-                    <a className="contact" href="/contact_us">
+                    <a className="contact" href="#">
                         Liên hệ
                     </a>
                 </li>
                 <li className="left">
-                    <a className="contact" href="/partners">
+                    <a className="contact" href="#">
                         Hợp tác cùng chúng tôi
                     </a>
                 </li>

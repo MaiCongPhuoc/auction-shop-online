@@ -10,6 +10,7 @@
     max-width: 1000px;
     margin: 0 auto;
     position: relative;
+    top: 130px;
 }
 
 #homepage-lot {
@@ -429,13 +430,13 @@ td {
     flex-basis: 50%;
 }
 .OnBoarder-module__progress___31t6K {
-    background: var(--color-secondary);
+    /* background: var(--color-secondary); */
     border-radius: 20px;
     color: var(--color-white-base);
     margin-bottom: 30px;
     margin-top: 13px;
     padding-top: 41px;
-    padding-bottom: 45px;
+    padding-bottom: 65px;
     text-align: center;
 }
 .OnBoarder-module__progressionSteps___3uURC {
@@ -617,7 +618,7 @@ label {
     text-align: center;
 }
 .SignUp-module__facebook___1F1vX a {
-    background: #2f62f0;
+    background: #3a67e4;
 }
 
 .Button-module__hasIcon___1ugWt {
