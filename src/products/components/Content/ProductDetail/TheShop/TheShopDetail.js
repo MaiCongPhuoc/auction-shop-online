@@ -1,13 +1,3 @@
-import {
-    faCheck,
-    faCircleInfo,
-    faClock,
-    faDollar,
-    faDotCircle,
-    faHeart,
-    faPlus,
-    faTag,
-} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -15,8 +5,6 @@ import ProductService from './../../../../service/Product/ProductService';
 import LoadData from '../../../Loading/LoadData';
 import { Carousel } from '../../../../Hooks/Hooks';
 import BuyComponent from './BuyComponent';
-import { getProduct } from '../../../../redux/selector';
-import { useSelector } from 'react-redux/es/exports';
 
 function TheShopDetail() {
     const productSlug = useParams();
