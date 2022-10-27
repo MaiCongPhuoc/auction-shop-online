@@ -23,7 +23,6 @@ const Checkout = ({ items }) => {
     const account = useSelector(getAccount);
 
     const checkPayment = useSelector(getCheckPayment);
-    console.log("checkPayment", checkPayment);
 
     const [loadSaveOrder, setLoadSaveOrder] = useState(false);
 
@@ -231,7 +230,6 @@ const Checkout = ({ items }) => {
             console.log(error);
         }
     };
-    console.log(state.orders.locationRegion);
     return (
         <>
             <Modal

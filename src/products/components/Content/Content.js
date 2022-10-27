@@ -10,9 +10,7 @@ import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getAccount, getCheckProduct, getType, getAllCartItems, getShowCart } from "../../redux/selector";
 import { getSearchingFilters, getShowInfoProduct, getLoginStatus } from './../../redux/selector';
 import ContentResultFilters from "./ContentResultFilters/ContentResultFilters";
-import InfoProductModal from "../../Modal/InfoProductModal";
 import { setCartItems, setCheckProduct, setShowCart } from './../../redux/actions';
-import CartItem from "./CartItem/CartItem";
 import CartItemService from './../../service/CartItem/CartItemService';
 
 
@@ -24,8 +22,6 @@ const Content = () => {
 
     const searchStatus = useSelector(getSearchingFilters);
 
-    const checkProduct = useSelector(getCheckProduct);
-
     const showInfoProduct = useSelector(getShowInfoProduct);
 
     const loginStatus = useSelector(getLoginStatus);
@@ -35,12 +31,6 @@ const Content = () => {
 
 
     useEffect(() => {
-        if (showInfoProduct) {
-            dispatch(setCheckProduct(true));
-
-        } else {
-            dispatch(setCheckProduct(false));
-        };
 
         if (loginStatus) {
             try {
@@ -77,12 +67,7 @@ const Content = () => {
                                                             (type === 'Cửa hàng') ? <ContentTheShop /> :
                                                                 <ContentAll />)
                                             }
-
-                                            {
-                                                checkProduct ? <InfoProductModal /> : null
-                                            }
-
-
+                                            
                                         </div>
                                     </div>
                                 </div>

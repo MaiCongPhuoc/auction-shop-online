@@ -18,24 +18,37 @@ import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
 import Login from './login/Login';
+import TheShopDetail from './products/components/Content/ProductDetail/TheShop/TheShopDetail';
+import TheShop from './products/components/Content/ProductDetail/TheShop/index';
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/list-account" element={<ListAccount />} />
-                    <Route path="/list-product" element={<ListProduct />} />
-                    <Route path="/product" element={<Product />} />
-                    <Route path="/auction/:auctionId" element={<Auction />} />
-                    <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
+                    {/*1. Dashboard */}
+                    <Route path='/' element={<Dashboard />} />
+                    <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='/list-account' element={<ListAccount />} />
+                    <Route path='/list-product' element={<ListProduct />} />
                     <Route path="/dashboard/category" element={<ListCategories />} />
+                    
+                    
+                    {/*2. Client */}
+                    {/* - Login */}
                     <Route path="/registration" element={<Register />} />
                     <Route path="/logout" element={<Login />} />
+
+                    {/* - Product */}
+                    <Route path='/product' element={<Product />} />
+                    {/* -- Auction */}
                     <Route path="/bid/:auctionId" element={<ListBidAuction />} />
-                    <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
+                    <Route path='/auction/:auctionId' element={<Auction />} />
+                    <Route path='/bid/:auctionId' element={<ListBidAuction />} />
+                    {/* -- The shop */}
+                    <Route path='/product/the-shop/:slug' element={<TheShop />} />
+                    {/* -- Cart */}
+                    <Route path='/product/cart/:accountId' element={<ShowCartItem />} />
                 </Routes>
             </div>
         </Router>
