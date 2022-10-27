@@ -48,7 +48,7 @@ function App() {
                     {/*2. Client */}
                     {/* - Login */}
                     <Route path="/registration" element={<Register />} />
-                    <Route path="/logout" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
 
                     {/* - Product */}
                     <Route path="/product" element={<Product />} />
