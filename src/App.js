@@ -15,20 +15,27 @@ import ListAccount from './dashboard/pages/ListAccount';
 import Auction from './Auction';
 import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
+import TheShopDetail from './products/components/Content/ProductDetail/TheShop/TheShopDetail';
+import TheShop from './products/components/Content/ProductDetail/TheShop/index';
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <Routes>
+                    {/*1. Dashboard */}
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/list-account' element={<ListAccount />} />
                     <Route path='/list-product' element={<ListProduct />} />
+                    {/*2. Client */}
                     <Route path='/product' element={<Product />} />
+                    {/* - Auction */}
                     <Route path='/auction/:auctionId' element={<Auction />} />
                     <Route path='/bid/:auctionId' element={<ListBidAuction />} />
                     <Route path='/product/cart/:auctionId' element={<ShowCartItem />} />
+                    {/* - The shop */}
+                    <Route path='/product/the-shop/:slug' element={<TheShop />} />
                 </Routes>
             </div>
         </Router>
