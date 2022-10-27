@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAllProducts, getLoadData } from '../../../redux/selector';
 import { setCategories, setProducts, setLoadData, setShowInfoProduct, setProduct } from '../../../redux/actions';
 import { FormatMoney } from './../../../Hooks/Hooks';
+import { Link } from 'react-router-dom';
 
 const ContentAll = () => {
     const dispatch = useDispatch();
@@ -37,18 +38,13 @@ const ContentAll = () => {
 
     return (
         <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? (
-                <LoadData />
-            ) : (
-                products.map((product) => (
-                    <a
-                        key={product.id}
-                        className="card small-12 medium-6 cell"
-                        style={{ transform: 'none' }}
-                        onClick={() => handleShowInfoProduct(product)}
+            {loadData ? <LoadData /> : (
+                products.map(product => (
+                    <div key={product.id} className="card small-12 medium-6 cell" style={{ transform: 'none' }} 
+                    onClick={() => handleShowInfoProduct(product)}
                     >
                         {product.action ? (
-                            <>
+                            <Link to={`/auction/${product.id}`} style={{color: '#333'}}>
                                 <figure className="card__image">
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
                                     <div className="add-to-watchlist">
@@ -92,9 +88,9 @@ const ContentAll = () => {
                                         <span className="tertiary-container__optional-group" />
                                     </div>
                                 </div>
-                            </>
+                            </Link>
                         ) : (
-                            <>
+                            <Link to={`/product/the-shop/${product.slug}`} style={{color: '#333'}}>
                                 <figure className="card__image">
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
                                     <div className="add-to-watchlist">
@@ -132,11 +128,12 @@ const ContentAll = () => {
                                         <span className="tertiary-container__optional-group" />
                                     </div>
                                 </div>
-                            </>
+                            </Link>
                         )}
-                    </a>
+                    </div>
                 ))
             )}
+
         </div>
     );
 };

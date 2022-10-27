@@ -10,9 +10,7 @@ import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getAccount, getCheckProduct, getType, getAllCartItems, getShowCart } from '../../redux/selector';
 import { getSearchingFilters, getShowInfoProduct, getLoginStatus } from './../../redux/selector';
 import ContentResultFilters from './ContentResultFilters/ContentResultFilters';
-import InfoProductModal from '../../Modal/InfoProductModal';
 import { setCartItems, setCheckProduct, setShowCart } from './../../redux/actions';
-import CartItem from './CartItem/CartItem';
 import CartItemService from './../../service/CartItem/CartItemService';
 
 const Content = () => {
@@ -21,8 +19,6 @@ const Content = () => {
     const type = useSelector(getType);
 
     const searchStatus = useSelector(getSearchingFilters);
-
-    const checkProduct = useSelector(getCheckProduct);
 
     const showInfoProduct = useSelector(getShowInfoProduct);
 
@@ -65,7 +61,6 @@ const Content = () => {
                                     <div>
                                         <div>
                                             <ContentLotType />
-
                                             {searchStatus ? (
                                                 <ContentResultFilters />
                                             ) : type === 'Đấu giá' ? (
@@ -75,8 +70,6 @@ const Content = () => {
                                             ) : (
                                                 <ContentAll />
                                             )}
-
-                                            {checkProduct ? <InfoProductModal /> : null}
                                         </div>
                                     </div>
                                 </div>
