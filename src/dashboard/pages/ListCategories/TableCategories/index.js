@@ -36,13 +36,13 @@ function TableCategories() {
 
     const notify = (id) =>
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Bạn có chắc không?',
+            text: 'Bạn sẽ không thể hoàn lại thao tác này!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Vâng, Tôi xóa nó!',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function deleteCategory(id) {
@@ -50,7 +50,7 @@ function TableCategories() {
                     setReRender(!reRender);
                 }
                 deleteCategory(id);
-                Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                Swal.fire('Đã xóa Thành công!', 'Sản phẩm của bạn đã bị xóa!', 'success');
             }
         });
 
@@ -191,9 +191,7 @@ function TableCategories() {
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between">
-                <h4>
-                    <i className="fa-solid fa-shirt"></i> List Categories
-                </h4>
+                <h2>DANH SÁCH THỂ LOẠI</h2>
                 <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search"></div>
             </div>
             {loading ? (
@@ -208,7 +206,7 @@ function TableCategories() {
                                 name="search"
                                 size="50"
                                 className="form-control bg-light small"
-                                placeholder="Enter ..."
+                                placeholder="Tìm kiếm theo tên"
                                 onChange={searchBox}
                             />
                             <div className="input-group-append">
@@ -222,10 +220,10 @@ function TableCategories() {
                                 </button>
                             </div>
                         </div>
-                        <div className="col-7"></div>
+                        <div className="col-3"></div>
                         <div className="d-flex align-items-center w-50">
                             <button type="button" className="btn btn-outline-success" onClick={() => setShowAdd(true)}>
-                                <i className="fa-solid fa-plus me-2" title="Create"></i>Create
+                                <i className="fa-solid fa-plus me-2" title="Tạo"></i>Tạo danh mục
                             </button>
                         </div>
                     </div>
@@ -235,8 +233,8 @@ function TableCategories() {
                                 <thead>
                                     <tr>
                                         <th className="text-center">#</th>
-                                        <th className="text-center">Title</th>
-                                        <th className="text-center">Action</th>
+                                        <th className="text-center">Tên</th>
+                                        <th className="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -255,7 +253,7 @@ function TableCategories() {
                                                         })
                                                     }
                                                 >
-                                                    <i className="fa-solid fa-pen-to-square" title="Edit"></i>
+                                                    <i className="fa-solid fa-pen-to-square" title="Cập nhật"></i>
                                                 </button>
                                                 {/* <button
                                                     className="btn btn-outline-danger ml-2"
@@ -275,7 +273,7 @@ function TableCategories() {
                                     color: '#0275d8',
                                 }}
                             >
-                                Page {currentPage} of {totalPages}
+                                Trang: {currentPage} / {totalPages}
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
@@ -288,7 +286,7 @@ function TableCategories() {
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showPrevPage}
                                             >
-                                                <i class="fa-solid fa-backward-fast"></i> Pre
+                                                <i class="fa-solid fa-backward-fast"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -298,7 +296,7 @@ function TableCategories() {
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showFirstPage}
                                             >
-                                                <i class="fa-solid fa-backward-step"></i> First
+                                                <i class="fa-solid fa-backward-step"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -308,7 +306,7 @@ function TableCategories() {
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showNextPage}
                                             >
-                                                <i class="fa-solid fa-forward-step"></i> Next
+                                                <i class="fa-solid fa-forward-step"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -318,7 +316,7 @@ function TableCategories() {
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showLastPage}
                                             >
-                                                <i class="fa-solid fa-forward-fast"></i> Last
+                                                <i class="fa-solid fa-forward-fast"></i>
                                             </a>
                                         </li>
                                     </ul>

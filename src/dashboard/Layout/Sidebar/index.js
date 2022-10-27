@@ -4,7 +4,6 @@ import SidebarPage from './SidebarPage';
 import SidebarUtilities from './SidebarUtilelties';
 
 function Sidebar() {
-
     return (
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             {/* Sidebar - Brand */}
@@ -13,22 +12,22 @@ function Sidebar() {
                     <i className="fas fa-laugh-wink" />
                 </div>
                 <div className="sidebar-brand-text mx-3">
-                    SB Admin <sup>2</sup>
+                    HPTP BID<sup></sup>
                 </div>
             </Link>
             {/* Divider */}
             <hr className="sidebar-divider my-0" />
             {/* Nav Item - Dashboard */}
             <li className="nav-item active">
-                <Link className="nav-link" to='/'>
-                    <i className="fas fa-fw fa-tachometer-alt" />
-                    <span>Dashboard</span>
+                <Link className="nav-link" to="/">
+                    <i class="fa-solid fa-people-roof"></i>
+                    <span>TRANG QUẢN LÝ</span>
                 </Link>
             </li>
             {/* Divider */}
             <hr className="sidebar-divider" />
             {/* Heading */}
-            <div className="sidebar-heading">Interface</div>
+            <div className="sidebar-heading">Quản lý</div>
 
             {/* Nav Item - Pages Collapse Menu */}
             <SidebarComponent />
@@ -36,15 +35,15 @@ function Sidebar() {
             {/* Nav Item - Utilities Collapse Menu */}
             <SidebarUtilities />
             {/* Divider */}
-            
+
             <hr className="sidebar-divider" />
             {/* Heading */}
-            <div className="sidebar-heading">Addons</div>
+            {/* <div className="sidebar-heading">Addons</div> */}
 
             {/* Nav Item - Pages Collapse Menu */}
-            <SidebarPage />
+            {/* <SidebarPage /> */}
             {/* Nav Item - Charts */}
-            
+
             {/* <li className="nav-item">
                 <a className="nav-link" href="charts.html">
                     <i className="fas fa-fw fa-chart-area" />

@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import Dashboard from './dashboard/pages/Dashboard';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './assets/bootstrap-5.2.0-dist/css/bootstrap.min.css';
@@ -18,8 +18,22 @@ import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
 import Login from './login/Login';
+import Deny from './DenyPage/Deny';
 
 function App() {
+    const [isLogin, setIsLogin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        let loginUser = localStorage.getItem('loginUser');
+        if (loginUser) {
+            setIsLogin(true);
+            let userLoggedin = JSON.parse(loginUser);
+            if (userLoggedin.isAdmin === true) {
+                setIsAdmin(true);
+            }
+        }
+    }, []);
     return (
         <Router>
             <div className="App">

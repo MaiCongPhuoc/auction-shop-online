@@ -5,11 +5,18 @@ function TaiKhoan(props) {
                 <div className="card-body">
                     <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
-                            <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">Tài Khoản</div>
-                            <div className="h5 mb-0 ml-1 font-weight-bold text-gray-800">{props.totalAccount}</div>
+                            <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                <a href="/list-account">Tài Khoản</a>
+                            </div>
+                            <div className="h5 mb-0 ml-1 font-weight-bold text-gray-800">
+                                <a href="/list-account">{props.totalAccount}</a>
+                            </div>
                         </div>
                         <div className="col-auto">
-                            <i className="fas fa-comments fa-2x text-gray-300" />
+                            <a href="/list-account">
+                                {' '}
+                                <i className="fa-solid fa-users-viewfinder fa-2x text-gray-300" />
+                            </a>
                         </div>
                     </div>
                 </div>

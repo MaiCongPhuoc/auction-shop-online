@@ -1,19 +1,18 @@
-import React from "react";
-import HeaderAction from "./HeaderAction/HeaderAction";
-import HeaderEnd from "./HeaderEnd/HeaderEnd";
-import HeaderLogo from "./HeaderLogo/HeaderLogo";
+import React from 'react';
+import HeaderAction from './HeaderAction/HeaderAction';
+import HeaderEnd from './HeaderEnd/HeaderEnd';
+import HeaderLogo from './HeaderLogo/HeaderLogo';
 import HeaderSearch from './HeardSearch/HeaderSearch';
-import './../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import './../../../../node_modules/bootstrap/dist/js/bootstrap.js'
+import './../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './../../../../node_modules/bootstrap/dist/js/bootstrap.js';
 import HeaderAfterLogin from './HeaderAfterLogin/HeaderAfterLogin';
 import './header.css';
 import { useSelector } from 'react-redux/es/exports';
 import { getLoginStatus } from './../../redux/selector';
 
 const Header = () => {
-
     const login = useSelector(getLoginStatus);
-    
+
     return (
         <>
             <div className="full-width header-nav clearfix no-show-webview" id="navbar">
@@ -23,14 +22,13 @@ const Header = () => {
                             <HeaderSearch />
                             <HeaderLogo />
                             {login ? <HeaderAfterLogin /> : <HeaderAction />}
-                            
                         </div>
-                            <HeaderEnd />                                              
+                        <HeaderEnd />
                     </div>
                 </div>
             </div>
         </>
-    )
+    );
 };
 
 export default Header;

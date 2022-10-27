@@ -1,8 +1,8 @@
 import CircleChart from '../../../../Chart/CircleChart';
-import '../../OverviewDashboard/dashboard.css'
+import '../../OverviewDashboard/dashboard.css';
 function DoanhThu() {
     return (
-        <div className="col-xl-4 col-lg-5">
+        <div className="col-xl-5 col-lg-5">
             <div className="card shadow mb-4">
                 {/* Card Header - Dropdown */}
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between right-chart">
@@ -28,7 +28,7 @@ function DoanhThu() {
                 </div>
                 {/* Card Body */}
                 <div className="card-body right-chart">
-                        <CircleChart />
+                    <CircleChart />
                 </div>
             </div>
         </div>

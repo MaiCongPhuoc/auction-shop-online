@@ -189,37 +189,19 @@ function BangTaiKhoan() {
     const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, roles } = state;
     return (
         <div className="container-fluid">
-            <div className="d-flex justify-content-between">
-                <h1 className="h3 mb-2 text-gray-800">Danh sách tài khoản</h1>
-                <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div className="input-group">
-                        <input
-                            type="text"
-                            id="search"
-                            name="search"
-                            size="50"
-                            className="form-control bg-light small"
-                            placeholder="Tìm kiếm tên..."
-                            onChange={searchBox}
-                        />
-                        <div className="input-group-append">
-                            <button className="btn btn-primary" type="button" name="search" onClick={searchBook}>
-                                <i className="fas fa-search fa-sm" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div className="d-flex justify-content-between"></div>
             {loading ? (
                 <Spiner />
             ) : (
                 <div className="shadow mb-4 cur-div" style={{ cursor: 'auto !important' }}>
-                    <div className="card-header py-3 d-flex justify-content-between">
-                        <h6 className="m-0 font-weight-bold text-primary">Danh sách tài khoản</h6>
-                        <div className="d-flex align-items-center w-50">
-                            <p className="w-100 mb-0">Lọc theo Role:</p>
+                    <div className="card-header d-flex justify-content-between">
+                        <h5 className="font-weight-bold text-primary" style={{ marginTop: '18px' }}>
+                            Danh sách tài khoản
+                        </h5>
+                        <div className="d-flex align-items-center w-75">
+                            {/* <p>Lọc: </p> */}
                             <select
-                                className="form-select mr-3 select-bg-ori"
+                                className="form-select select-bg-ori mr-6"
                                 id="select"
                                 name="search"
                                 onChange={searchBox}
@@ -233,9 +215,39 @@ function BangTaiKhoan() {
                                     </option>
                                 ))}
                             </select>
+                            <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                <div className="input-group mr-5">
+                                    <input
+                                        style={{ marginTop: '18px' }}
+                                        type="text"
+                                        id="search"
+                                        name="search"
+                                        size="50"
+                                        className="form-control bg-light small"
+                                        placeholder="Tìm kiếm tên..."
+                                        onChange={searchBox}
+                                    />
+                                    <div className="input-group-append">
+                                        <button
+                                            style={{ marginTop: '18px' }}
+                                            className="btn btn-primary ml-1"
+                                            type="button"
+                                            name="search"
+                                            onClick={searchBook}
+                                        >
+                                            <i className="fas fa-search fa-sm" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             {/* Button trigger modal */}
-                            <button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
-                                Add
+                            <button
+                                type="button"
+                                className="btn btn-outline-success"
+                                style={{ width: '150px', height: '40px' }}
+                                onClick={() => setShowAdd(true)}
+                            >
+                                <i className="fa-solid fa-plus" title="Tạo mới"></i> Tạo
                             </button>
                         </div>
                     </div>
@@ -244,15 +256,15 @@ function BangTaiKhoan() {
                             <table className="table table-hover" id="dataTable" width="100%" cellSpacing={0}>
                                 <thead>
                                     <tr>
-                                        <th>Avatar</th>
-                                        <th>Tên đầy đủ</th>
-                                        <th>Email</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Quyền</th>
-                                        <th>Tỉnh/Thành Phố</th>
-                                        <th>Quận/Huyện</th>
-                                        <th>Thôn/ Xã</th>
-                                        <th className="text-center">Action</th>
+                                        <th className="text-center">Avatar</th>
+                                        <th className="text-center">Tên đầy đủ</th>
+                                        {/* <th className="text-center">Email</th> */}
+                                        {/* <th className="text-center">Số điện thoại</th> */}
+                                        <th className="text-center">Quyền</th>
+                                        <th className="text-center">Tỉnh/Thành Phố</th>
+                                        <th className="text-center">Quận/Huyện</th>
+                                        <th className="text-center">Thị trấn/Xã</th>
+                                        <th className="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -281,8 +293,8 @@ function BangTaiKhoan() {
                                                   <td>
                                                       <strong>{account.fullName}</strong>
                                                   </td>
-                                                  <td>{account.email}</td>
-                                                  <td className="text-end">{account.phone}</td>
+                                                  {/* <td>{account.email}</td> */}
+                                                  {/* <td className="text-end">{account.phone}</td> */}
                                                   <td>{account.role.code}</td>
                                                   <td>{account.locationRegion.provinceName}</td>
                                                   <td>{account.locationRegion.districtName}</td>
@@ -299,38 +311,25 @@ function BangTaiKhoan() {
                                                               })
                                                           }
                                                       >
-                                                          Sửa
+                                                          <i className="fa-solid fa-pen-to-square" title="Cập nhật"></i>
                                                       </button>
                                                       <button
                                                           className="btn btn-outline-danger ml-2"
                                                           onClick={() => notify(account.id)}
                                                       >
-                                                          Xóa
+                                                          <i className="fa-solid fa-trash danger" title="Xóa"></i>
                                                       </button>
                                                       <button
                                                           className="btn btn-outline-info ml-2"
                                                           data-bs-toggle="modal"
                                                           data-bs-target="#btnDoiMK"
                                                       >
-                                                          Đổi MK
+                                                          <i class="fa-solid fa-key" title="Đổi mật khẩu"></i>
                                                       </button>
                                                   </td>
                                               </tr>
                                           ))}
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Avatar</th>
-                                        <th>Tên đầy đủ</th>
-                                        <th>Email</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Quyền</th>
-                                        <th>Tỉnh/Thành Phố</th>
-                                        <th>Quận/Huyện</th>
-                                        <th>Thôn/ Xã</th>
-                                        <th className="text-center">Action</th>
-                                    </tr>
-                                </tfoot>
                             </table>
                             <div
                                 style={{
@@ -339,7 +338,7 @@ function BangTaiKhoan() {
                                     color: '#0275d8',
                                 }}
                             >
-                                Trang {currentPage} Trên tổng số {totalPages}
+                                Trang: {currentPage} / {totalPages}
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
@@ -352,7 +351,7 @@ function BangTaiKhoan() {
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showPrevPage}
                                             >
-                                                Trang đầu tiên
+                                                <i class="fa-solid fa-backward-fast"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -362,7 +361,7 @@ function BangTaiKhoan() {
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showFirstPage}
                                             >
-                                                Lùi
+                                                <i class="fa-solid fa-backward-step"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -372,7 +371,7 @@ function BangTaiKhoan() {
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showNextPage}
                                             >
-                                                Tiếp
+                                                <i class="fa-solid fa-forward-step"></i>
                                             </a>
                                         </li>
                                         <li class="page-item">
@@ -382,7 +381,7 @@ function BangTaiKhoan() {
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showLastPage}
                                             >
-                                                Trang cuối cùng
+                                                <i class="fa-solid fa-forward-fast"></i>
                                             </a>
                                         </li>
                                     </ul>

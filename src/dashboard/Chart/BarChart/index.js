@@ -87,7 +87,7 @@ function BarChart() {
             },
             title: {
                 display: true,
-                text: 'Chart.js Bar Chart',
+                // text: 'Chart.js Bar Chart',
             },
         },
     };
