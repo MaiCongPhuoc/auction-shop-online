@@ -18,8 +18,6 @@ import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
 import Login from './login/Login';
-import Deny from './DenyPage/Deny';
-import TheShopDetail from './products/components/Content/ProductDetail/TheShop/TheShopDetail';
 import TheShop from './products/components/Content/ProductDetail/TheShop/index';
 
 function App() {
