@@ -21,7 +21,8 @@ import { Carousel } from '../../products/Hooks/Hooks';
 import ComponentAuction from '../ComponentAuction';
 
 function ContentAuctionDetail() {
-    const auctionId = useParams();
+    const {auctionId} = useParams();
+    console.log('auctionId content: ', auctionId);
     const [AuctionProduct, setAuctionProduct] = useState({
         Product: {},
         imageProductAuctions: [],
@@ -32,9 +33,9 @@ function ContentAuctionDetail() {
         try {
             setAuctionProduct({ ...AuctionProduct, loading: true });
             async function getproduct() {
-                let productAuction = await ProductService.ProductById(auctionId.auctionId);
+                let productAuction = await ProductService.ProductById(auctionId);
                 let productImageAuction = await ProductMediaService.getListMedia(productAuction.data.id);
-                let AuctionAPI = await AuctionService.getAuctionById(auctionId.auctionId);
+                let AuctionAPI = await AuctionService.getAuctionById(auctionId);
                 setAuctionProduct({
                     ...AuctionProduct,
                     Product: productAuction.data,
@@ -382,7 +383,6 @@ function ContentAuctionDetail() {
                                             <hr style={{ borderWidth: '1px' }} />
                                             <div className="new-terms-wrapper">
                                                 <div className="new-term-item">
-                                                    <div className="new-terms-title-mobile">Dates</div>
                                                     <div className="new-terms-detail">
                                                         <div className="new-terms-title">Dates</div>
                                                         <div className="new-terms-content">

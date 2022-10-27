@@ -29,7 +29,7 @@ function App() {
                     <Route path="/list-account" element={<ListAccount />} />
                     <Route path="/list-product" element={<ListProduct />} />
                     <Route path="/product" element={<Product />} />
-                    <Route path="/product/:auctionId" element={<Auction />} />
+                    <Route path="/auction/:auctionId" element={<Auction />} />
                     <Route path="/product/cart/:auctionId" element={<ShowCartItem />} />
                     <Route path="/dashboard/category" element={<ListCategories />} />
                     <Route path="/registration" element={<Register />} />

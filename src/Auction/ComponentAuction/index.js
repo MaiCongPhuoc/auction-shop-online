@@ -1,12 +1,4 @@
-import {
-    faCheck,
-    faCircleInfo,
-    faClock,
-    faDollar,
-    faHeart,
-    faTag,
-    faTextWidth,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleInfo, faClock, faDollar, faHeart, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import Moment from 'moment';
@@ -14,13 +6,12 @@ import { NumericFormat } from 'react-number-format';
 import { isNumber } from '../../products/Hooks/Hooks';
 import ValidationQuantity from '../../products/utils/ValidationQuantity';
 import BidService from '../../dashboard/services/BidService';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import AuctionService from '../../dashboard/services/AuctionService';
 
 function ComponentAuction(props) {
     Moment.locale('vi');
     const { auction } = props;
-    // console.log('props: ', props);
     const product = { ...auction.product };
     const account = { ...auction.account };
     const [timeAuction, setTimeAuction] = useState([]);
@@ -31,15 +22,15 @@ function ComponentAuction(props) {
     const [state, setState] = useState({ bids: [], auction: {} });
     const [rerender, setRerender] = useState(false);
 
+    const { auctionId } = useParams();
     const [bid, setBid] = useState({
         id: 0,
         email: account.email,
-        bidPrice: 1000000,
-        account: {
-            id: account.id,
-        },
+        bidPrice: 0,
+        account: { id: account.id },
         auction: { id: auction.id },
         deleted: false,
+        estimatePrice: 0,
     });
 
     setTimeout(() => {
@@ -58,34 +49,34 @@ function ComponentAuction(props) {
             return;
         }
 
-        if (Price < currentPrice + 49999) {
-            setCheckPrice(false);
-            setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại 50.000 đ`);
-            return;
+        if (state.bids.length !== 0) {
+            if (Price < state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12) {
+                setCheckPrice(false);
+                setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12% đ`);
+                return;
+            }
         }
 
         setCheckPrice(true);
     }, [Price]);
 
     useEffect(() => {
-        if(rerender) {
-            async function createBid() {
-                // console.log('subBid: ', subBid);
-                await BidService.postCreateBid(bid);
-            }
-            createBid();
-            setRerender(false)
-        }
         async function getListBid() {
-            let AuctionAPI = await AuctionService.getAuctionById(product.id);
+            if (rerender) {
+                await BidService.postCreateBid(bid);
+                console.log('2');
+            }
+            let AuctionAPI = await AuctionService.getAuctionById(auctionId);
             let listBid = await BidService.getBidByAuctionId(auction.id);
-            setState({...state, bids: listBid.data, auction: AuctionAPI.data});
+            setState({ ...state, bids: listBid.data, auction: AuctionAPI.data });
+            console.log('1');
         }
         getListBid();
+        setRerender(false);
     }, [rerender]);
 
     const handleMinAuction = () => {
-        let priceAuction = (currentPrice + currentPrice * 0.12).toFixed();
+        let priceAuction = (state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed();
         setPrice(priceAuction);
     };
 
@@ -95,13 +86,13 @@ function ComponentAuction(props) {
             setErrorMess('Giá phải là một số nguyên');
             return;
         }
-        if (Price < currentPrice + 49999) {
+        if (Price < (state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12).toFixed()) {
             setCheckPrice(false);
-            setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại 50.000 đ`);
+            setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12% đ`);
             return;
         }
-        let subBid = { ...bid, bidPrice: bidPrice };
-        setBid({...subBid});
+        let subBid = { ...bid, bidPrice: bidPrice, estimatePrice: state.bids[0].estimatePrice };
+        setBid({ ...subBid });
         setRerender(true);
         setPrice(0);
     };
@@ -179,7 +170,7 @@ function ComponentAuction(props) {
                                                     }}
                                                 >
                                                     <NumericFormat
-                                                        value={state.auction.currentPrice}
+                                                        value={state.bids.length === 0 ? '' : state.bids[0].bidPrice}
                                                         displayType={'text'}
                                                         thousandSeparator={true}
                                                         suffix={' đ'}
@@ -192,7 +183,11 @@ function ComponentAuction(props) {
                                                     className="bid-link exp-1"
                                                     style={{ lineHeight: 1, paddingTop: 0 }}
                                                 >
-                                                    <Link to={`/bid/${auction.id}`} className="bid-box-bid-count" href="#">
+                                                    <Link
+                                                        to={`/bid/${auction.id}`}
+                                                        className="bid-box-bid-count"
+                                                        href="#"
+                                                    >
                                                         {state.bids.length} Giá thầu
                                                     </Link>
                                                 </div>
@@ -252,7 +247,7 @@ function ComponentAuction(props) {
                                 <div className="bb-content">
                                     <div className="est-val">
                                         <NumericFormat
-                                            value={(state.auction.currentPrice * 1.14 + 200000).toFixed()}
+                                            value={state.bids.length === 0 ? '' : state.bids[0].estimatePrice}
                                             displayType={'text'}
                                             thousandSeparator={true}
                                             suffix={' đ'}
@@ -288,7 +283,7 @@ function ComponentAuction(props) {
                                                     value={Price}
                                                     className="bid-input-field big-numbers exp-1"
                                                     name="bid"
-                                                    placeholder="2,500 or more"
+                                                    placeholder="Vui lòng nhập giá thầu..."
                                                 />
                                             </div>
                                             <div className="bid-min-btn cell small-4">
@@ -443,10 +438,10 @@ function ComponentAuction(props) {
                     </div>
                 </div>
                 <div className="bidding-actions">
-                    <div className="watching">
+                    {/* <div className="watching">
                         <b>41</b>
                         <span>people watching</span>
-                    </div>
+                    </div> */}
                     <div id="your-impact">
                         <div className="center-me">
                             <div className="your-impact-msg" />
@@ -467,7 +462,7 @@ function ComponentAuction(props) {
                         </a>
                         {/* </div> */}
                     </div>
-                    <div className="social-network-action">
+                    {/* <div className="social-network-action">
                         <div id="share-this-lot">
                             <ul id="social-shares">
                                 <li className="twitter-share">
@@ -497,8 +492,7 @@ function ComponentAuction(props) {
                                 </li>
                             </ul>
                         </div>
-                        {/* <hr /> */}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
