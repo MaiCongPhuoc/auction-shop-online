@@ -94,21 +94,21 @@ const HeaderAfterLogin = () => {
                     </div>
                 </div>
                 {/* <a className="logged_in_name mx-3" href="#">{account.username}</a> */}
-                <span>
-                    <Tippy
-                        // delay={[0, 700]}
-                        // offset={[15, 8]}
-                        placement="bottom-end"
-                        interactive
-                        content={renderAccount()}
-                        hideOnClick={true}
-                        trigger="click"
-                    >
+                <Tippy
+                    // delay={[0, 700]}
+                    // offset={[15, 8]}
+                    placement="bottom-end"
+                    interactive
+                    content={renderAccount()}
+                    hideOnClick={true}
+                    trigger="click"
+                >
+                    <span>
                         <a className="logged_in_name mx-3" href="#">
                             {account.username}
                         </a>
-                    </Tippy>
-                </span>
+                    </span>
+                </Tippy>
                 <a id="customer-logout-link" className="new-login-button" rel="nofollow" href="/login">
                     ĐĂNG XUẤT
                 </a>

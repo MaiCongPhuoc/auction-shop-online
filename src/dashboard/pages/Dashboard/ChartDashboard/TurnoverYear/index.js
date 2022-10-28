@@ -2,7 +2,7 @@ import BarChart from '../../../../Chart/BarChart';
 
 function TongQuanThuNhap() {
     return (
-        <div className="col-xl-7 col-lg-7">
+        <div className="col-xl-12 col-lg-12">
             <div className="card shadow mb-4">
                 {/* Card Header - Dropdown */}
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between right-chart">

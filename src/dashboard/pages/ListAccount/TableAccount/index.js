@@ -9,6 +9,7 @@ import ModalEditAccount from '../../../modal/account/ModalEdit';
 import ModalRestartPassword from '../../../modal/account/ModalRestartPassWord';
 import Swal from 'sweetalert2';
 import '../../pages.css';
+import Tippy from '@tippyjs/react';
 
 function BangTaiKhoan() {
     const [state, setState] = useState({
@@ -90,6 +91,7 @@ function BangTaiKhoan() {
 
     // data table
     async function getProductsByPagination(currentPage) {
+        console.log('currentPage: ', currentPage);
         state.currentPage = currentPage - 1;
         let accountData = await AccountService.getDataTableAccount(
             state.search,
@@ -163,13 +165,25 @@ function BangTaiKhoan() {
             [e.target.name]: e.target.value,
         });
     };
+    const handleReset = () => {
+        async function getDataTable() {
+            let dataTable = await AccountService.getDataTableAccount('', 0, 5);
+            setState({
+                ...state,
+                accounts: dataTable.data.content,
+                totalPages: dataTable.data.totalPages,
+                totalElements: dataTable.data.totalElements,
+                currentPage: dataTable.data.number + 1,
+            });
+        }
+        getDataTable();
+    };
 
     const searchBook = (currentPage) => {
         if (document.querySelector('#search').value === '') {
             document.querySelector('#select').value = '-1';
         }
         currentPage = currentPage - 1;
-        console.log('currentPage: ', currentPage);
 
         async function getDataTable() {
             let dataTable = await AccountService.getDataTableAccount(state.search, currentPage, state.recordPerPage);
@@ -201,7 +215,7 @@ function BangTaiKhoan() {
                         <div className="d-flex align-items-center w-75">
                             {/* <p>Lọc: </p> */}
                             <select
-                                className="form-select select-bg-ori mr-6"
+                                className="form-select select-bg-ori col-4 mr-6"
                                 id="select"
                                 name="search"
                                 onChange={searchBox}
@@ -236,6 +250,15 @@ function BangTaiKhoan() {
                                             onClick={searchBook}
                                         >
                                             <i className="fas fa-search fa-sm" />
+                                        </button>
+                                        <button
+                                            style={{ marginTop: '18px' }}
+                                            className="btn btn-info ml-1"
+                                            type="button"
+                                            name="search"
+                                            onClick={handleReset}
+                                        >
+                                            reset search
                                         </button>
                                     </div>
                                 </div>
@@ -300,32 +323,56 @@ function BangTaiKhoan() {
                                                   <td>{account.locationRegion.districtName}</td>
                                                   <td>{account.locationRegion.wardName}</td>
                                                   <td className="text-center">
-                                                      <button
-                                                          className="btn btn-outline-secondary"
-                                                          data-bs-toggle="modal"
-                                                          data-bs-target="#btnEditAccount"
-                                                          onClick={() =>
-                                                              setShowEdit({
-                                                                  accountEditId: account.id,
-                                                                  showedit: true,
-                                                              })
-                                                          }
+                                                      <Tippy
+                                                          delay={[0, 0]}
+                                                          // offset={[15, 8]}
+                                                          placement="top"
+                                                          content="Cập nhật"
                                                       >
-                                                          <i className="fa-solid fa-pen-to-square" title="Cập nhật"></i>
-                                                      </button>
-                                                      <button
-                                                          className="btn btn-outline-danger ml-2"
-                                                          onClick={() => notify(account.id)}
+                                                          <button
+                                                              className="btn btn-outline-secondary"
+                                                              data-bs-toggle="modal"
+                                                              data-bs-target="#btnEditAccount"
+                                                              onClick={() =>
+                                                                  setShowEdit({
+                                                                      accountEditId: account.id,
+                                                                      showedit: true,
+                                                                  })
+                                                              }
+                                                          >
+                                                              <i
+                                                                  className="fa-solid fa-pen-to-square"
+                                                                  title="Cập nhật"
+                                                              ></i>
+                                                          </button>
+                                                      </Tippy>
+                                                      <Tippy
+                                                          delay={[0, 0]}
+                                                          // offset={[15, 8]}
+                                                          placement="top"
+                                                          content="Xóa"
                                                       >
-                                                          <i className="fa-solid fa-trash danger" title="Xóa"></i>
-                                                      </button>
-                                                      <button
-                                                          className="btn btn-outline-info ml-2"
-                                                          data-bs-toggle="modal"
-                                                          data-bs-target="#btnDoiMK"
+                                                          <button
+                                                              className="btn btn-outline-danger ml-2"
+                                                              onClick={() => notify(account.id)}
+                                                          >
+                                                              <i className="fa-solid fa-trash danger" title="Xóa"></i>
+                                                          </button>
+                                                      </Tippy>
+                                                      <Tippy
+                                                          delay={[0, 0]}
+                                                          // offset={[15, 8]}
+                                                          placement="top"
+                                                          content="Đổi mật khẩu"
                                                       >
-                                                          <i class="fa-solid fa-key" title="Đổi mật khẩu"></i>
-                                                      </button>
+                                                          <button
+                                                              className="btn btn-outline-info ml-2"
+                                                              data-bs-toggle="modal"
+                                                              data-bs-target="#btnDoiMK"
+                                                          >
+                                                              <i class="fa-solid fa-key" title="Đổi mật khẩu"></i>
+                                                          </button>
+                                                      </Tippy>
                                                   </td>
                                               </tr>
                                           ))}
