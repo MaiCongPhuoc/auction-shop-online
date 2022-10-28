@@ -27,9 +27,21 @@ const HeaderAfterLogin = () => {
                     <FontAwesomeIcon icon={faPlus} className="pr-2" />
                     Add product
                 </a> */}
-                <a type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
-                    Thêm sản phẩm
+                <a title="Thêm mới" type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
+                    <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Thêm sản phẩm
                 </a>
+                <br />
+                <br />
+                <Link className="nav-link" to="/dashboard">
+                    <i
+                        title="Trang quản lý"
+                        class="fa-solid fa-people-roof me-2"
+                        style={{ backgroundColor: 'orange' }}
+                    ></i>
+                    <a title="Trang quản lý" type="button" style={{ backgroundColor: 'orange' }}>
+                        Trang quản lý
+                    </a>
+                </Link>
             </div>
         );
     };
@@ -94,21 +106,21 @@ const HeaderAfterLogin = () => {
                     </div>
                 </div>
                 {/* <a className="logged_in_name mx-3" href="#">{account.username}</a> */}
-                <span>
-                    <Tippy
-                        // delay={[0, 700]}
-                        // offset={[15, 8]}
-                        placement="bottom-end"
-                        interactive
-                        content={renderAccount()}
-                        hideOnClick={true}
-                        trigger="click"
-                    >
+                <Tippy
+                    // delay={[0, 700]}
+                    // offset={[15, 8]}
+                    placement="bottom-end"
+                    interactive
+                    content={renderAccount()}
+                    hideOnClick={true}
+                    trigger="click"
+                >
+                    <span>
                         <a className="logged_in_name mx-3" href="#">
                             {account.username}
                         </a>
-                    </Tippy>
-                </span>
+                    </span>
+                </Tippy>
                 <a id="customer-logout-link" className="new-login-button" rel="nofollow" href="/login">
                     ĐĂNG XUẤT
                 </a>

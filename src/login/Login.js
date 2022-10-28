@@ -11,13 +11,13 @@ import './asset/css/application-2ecd1175.css';
 import { Provider } from 'react-redux';
 import store from '../products/redux/store';
 import Header from '../products/components/Header/Header';
-import ContenLogin from './ContenLogin';
+import ContentLogin from './ContentLogin';
 
 const Login = () => {
     return (
         <Provider store={store}>
             <Header className="product-client" />
-            <ContenLogin className="product-client" />
+            <ContentLogin className="product-client" />
         </Provider>
     );
 };

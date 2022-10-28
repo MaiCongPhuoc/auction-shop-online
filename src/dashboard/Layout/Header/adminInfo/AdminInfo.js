@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAccount } from '../../../../products/redux/selector';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function AdminInfo() {
     const dispatch = useDispatch();
@@ -17,10 +19,7 @@ function AdminInfo() {
         <>
             <div className="d-flex align-items-center me-3">
                 <div className="adminInfoGroup">
-                    <span className="ms-2 fw-bold">
-                        {/* ADMIN */}
-                        {account.username}
-                    </span>
+                    <span className="ms-2 fw-bold">{account.username}</span>
                     <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-black-400" />
                     <div className="adminInfo-dropdown">
                         <ul>
@@ -29,7 +28,6 @@ function AdminInfo() {
                                     <Link to="#">Hồ sơ</Link>
                                 </button>
                             </li>
-
                             <button
                                 onClick={function () {
                                     Swal.fire({
@@ -41,13 +39,11 @@ function AdminInfo() {
                                         denyButtonText: `Đăng xuất`,
                                     }).then((result) => {
                                         if (result.isDenied) {
-                                            Swal.fire(
-                                                'Đăng xuất thành công!',
-                                                'Hãy tiếp tục đăng nhập để sử dụng dịch vụ!',
-                                                'success',
-                                            );
-                                            logout();
-                                            navigate('/login');
+                                            toast.success(`Đăng xuất thành công!`);
+                                            setTimeout(() => {
+                                                navigate('/login');
+                                                logout();
+                                            }, 2000);
                                         }
                                     });
                                 }}
@@ -57,6 +53,7 @@ function AdminInfo() {
                         </ul>
                     </div>
                 </div>
+                <ToastContainer autoClose={1500} />
             </div>
         </>
     );

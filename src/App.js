@@ -19,7 +19,7 @@ import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
 import Login from './login/Login';
 import TheShop from './products/components/Content/ProductDetail/TheShop/index';
-
+import Deny from './DenyPage/Deny';
 function App() {
     const [isLogin, setIsLogin] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -39,8 +39,8 @@ function App() {
             <div className="App">
                 <Routes>
                     {/*1. Dashboard */}
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/" element={<Product />} />
+                    <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <Deny />} />
                     <Route path="/list-account" element={<ListAccount />} />
                     <Route path="/list-product" element={<ListProduct />} />
                     <Route path="/dashboard/category" element={<ListCategories />} />
