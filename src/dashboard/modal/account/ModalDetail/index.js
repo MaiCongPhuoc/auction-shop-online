@@ -7,7 +7,6 @@ function ModalDetail(props) {
     Moment.locale('vi');
     const { accountId, showDetail, onCloseDetailAccount } = props;
     const [accountDetail, setAccountDetail] = useState({});
-    console.log('props ModalDetail: ', props);
     useEffect(() => {
         if (accountId !== 0 || accountId !== undefined) {
             try {

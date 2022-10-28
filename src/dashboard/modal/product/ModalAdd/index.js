@@ -147,7 +147,7 @@ function ModalAddProduct(props) {
                 id: 0,
             },
             description: '',
-            countday: '',
+            countday: '0',
             images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
         },
         validationSchema: yup.object({
@@ -293,8 +293,8 @@ function ModalAddProduct(props) {
                                                 className="form-select select select-bg-ori"
                                                 id="countday"
                                                 name="countday"
-                                                // value={formik.values.countday}
-                                                // onChange={formik.handleChange}
+                                                value={formik.values.countday}
+                                                onChange={formik.handleChange}
                                             >
                                                 <option value="1" key="1">
                                                     1

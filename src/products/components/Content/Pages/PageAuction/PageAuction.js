@@ -1,31 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getProductsAction, getLoadData } from '../../../redux/selector';
-import { setLoadData } from '../../../redux/actions';
-import LoadData from './../../Loading/LoadData';
-import { FormatMoney } from './../../../Hooks/Hooks';
+import { getProductsAction, getLoadData } from '../../../../redux/selector';
+import { setLoadData } from '../../../../redux/actions';
+import LoadData from './../../../Loading/LoadData';
+import { FormatMoney } from './../../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
-import { getProductsAuction } from './../../../redux/selector';
+import ProductService from './../../../../service/Product/ProductService';
 
-const ContentAuction = () => {
-    const dispatch = useDispatch();
+const PageAuction = () => {
+    const [productsAuction, setProductsAuction] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         try {
-            dispatch(setLoadData(false));
+            setLoading(true);
+            async function getAuctionProducts() {
+                let dataRes = await ProductService.getAllProductAuctions();
+                setProductsAuction(dataRes.data);
+                setLoading(false);
+            }
+            getAuctionProducts();
         } catch (error) {
             console.log(error);
         }
     }, []);
 
+
     
-    const productsAuction = useSelector(getProductsAuction);
+    // const productsAuction = useSelector(getProductsAction);
 
 
-    const loadData = useSelector(getLoadData);
     return (
-        <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? (
+        <div className="lot-cards grid-x grid-margin-x" style={{marginTop: '150px'}}>
+            {loading ? (
                 <LoadData />
             ) : (
                 productsAuction.map((product) => (
@@ -84,4 +91,4 @@ const ContentAuction = () => {
     );
 };
 
-export default ContentAuction;
+export default PageAuction;

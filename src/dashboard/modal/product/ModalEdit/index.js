@@ -160,7 +160,7 @@ function ModalEditProduct(props) {
             product.image = listImg[0];
             product.images = listImg;
             product.category.id = Number(document.querySelector('#category').value);
-            product.countday = document.querySelector('#countday').value;
+            // product.countday = document.querySelector('#countday').value;
             console.log('product: ', product);
             setSubmitFrm(product);
             handleReset();

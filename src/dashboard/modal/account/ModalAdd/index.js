@@ -152,7 +152,7 @@ function ModalDetailAccount(props) {
             role: {
                 id: 0,
             },
-            locationregion: {
+            locationRegion: {
                 id: 0,
                 provinceId: 0,
                 provinceName: '',
@@ -186,10 +186,10 @@ function ModalDetailAccount(props) {
                 .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
                 .required('Vui lòng nhập lại mật khẩu!'),
             role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyển hạn!') }),
-            locationregion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
-            locationregion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
-            locationregion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
-            locationregion: yup.object().shape({ address: yup.string().required('Vui lòng Nhập địa chỉ!') }),
+            locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
+            locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
+            locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
+            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng Nhập địa chỉ!') }),
         }),
         onSubmit: (account) => {
             let provinceId = document.querySelector('#province').value;
@@ -209,12 +209,12 @@ function ModalDetailAccount(props) {
             flag = true;
             account.avatar = img;
             account.role.id = roleId;
-            account.locationregion.provinceId = provinceId;
-            account.locationregion.provinceName = currentProvince;
-            account.locationregion.districtId = districtId;
-            account.locationregion.districtName = currentDistrict;
-            account.locationregion.wardId = wardId;
-            account.locationregion.wardName = currentWard;
+            account.locationRegion.provinceId = provinceId;
+            account.locationRegion.provinceName = currentProvince;
+            account.locationRegion.districtId = districtId;
+            account.locationRegion.districtName = currentDistrict;
+            account.locationRegion.wardId = wardId;
+            account.locationRegion.wardName = currentWard;
             console.log('add count: ', account);
             handleReset();
             setAccountFrm(account);
@@ -261,6 +261,9 @@ function ModalDetailAccount(props) {
                             )}
                             {formik.errors.address && formik.errors.address && (
                                 <li className="error">{formik.errors.address}</li>
+                            )}
+                            {formik.errors.username && formik.errors.username && (
+                                <li className="error">{formik.errors.username}</li>
                             )}
                         </ul>
                     </div>
@@ -384,8 +387,8 @@ function ModalDetailAccount(props) {
                                 <select
                                     className="form-select select select-bg-ori"
                                     id="province"
-                                    name="locationregion.provinceId"
-                                    value={formik.values.locationregion.provinceId}
+                                    name="locationRegion.provinceId"
+                                    value={formik.values.locationRegion.provinceId}
                                     onChange={formik.handleChange}
                                     onInput={handleProvince}
                                 >
@@ -412,7 +415,7 @@ function ModalDetailAccount(props) {
                                 <select
                                     className="form-select select select-bg-ori"
                                     id="district"
-                                    name="locationregion.districtId"
+                                    name="locationRegion.districtId"
                                     value={formik.values.districtId}
                                     onChange={formik.handleChange}
                                     onInput={handleDistrict}
@@ -438,8 +441,8 @@ function ModalDetailAccount(props) {
                                 <select
                                     className="form-select select"
                                     id="ward"
-                                    name="locationregion.wardId select-bg-ori"
-                                    value={formik.values.locationregion.wardId}
+                                    name="locationRegion.wardId select-bg-ori"
+                                    value={formik.values.locationRegion.wardId}
                                     onChange={formik.handleChange}
                                     onInput={handleWard}
                                 >
@@ -482,9 +485,9 @@ function ModalDetailAccount(props) {
                                     type="text"
                                     className="form-control"
                                     id="address"
-                                    name="locationregion.address"
+                                    name="locationRegion.address"
                                     placeholder="Vui lòng nhập địa chỉ..."
-                                    value={formik.values.locationregion.address}
+                                    value={formik.values.locationRegion.address}
                                     onChange={formik.handleChange}
                                 />
                             </div>

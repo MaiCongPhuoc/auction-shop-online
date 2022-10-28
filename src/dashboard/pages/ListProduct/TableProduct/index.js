@@ -17,6 +17,7 @@ import '../../pages.css';
 import Pagination from '@mui/material/Pagination';
 import ProductsComponent from './ProductsComponent';
 import CategoryService from '../../../services/Category';
+import Tippy from '@tippyjs/react';
 
 function BangSanPham() {
     Moment.locale('vi');
@@ -365,26 +366,43 @@ function BangSanPham() {
                                                     />
                                                 </td>
                                                 <td className="text-center">
-                                                    <button
-                                                        className="btn btn-outline-secondary"
-                                                        onClick={() =>
-                                                            setShowEdit({
-                                                                ...showEdit,
-                                                                productEditId: product.id,
-                                                                showedit: true,
-                                                            })
-                                                        }
+                                                    <Tippy
+                                                        delay={[20, 20]}
+                                                        // offset={[15, 8]}
+                                                        placement="top"
+                                                        content="Cập nhật"
                                                     >
-                                                        {' '}
-                                                        <i className="fa-solid fa-pen-to-square" title="Cập nhật"></i>
-                                                    </button>
-                                                    <button
-                                                        className="btn btn-outline-danger ml-2"
-                                                        onClick={() => notify(product.id)}
+                                                        <button
+                                                            className="btn btn-outline-secondary"
+                                                            onClick={() =>
+                                                                setShowEdit({
+                                                                    ...showEdit,
+                                                                    productEditId: product.id,
+                                                                    showedit: true,
+                                                                })
+                                                            }
+                                                        >
+                                                            {' '}
+                                                            <i
+                                                                className="fa-solid fa-pen-to-square"
+                                                                title="Cập nhật"
+                                                            ></i>
+                                                        </button>
+                                                    </Tippy>
+                                                    <Tippy
+                                                        delay={[0, 0]}
+                                                        // offset={[15, 8]}
+                                                        placement="top"
+                                                        content="Xóa"
                                                     >
-                                                        {' '}
-                                                        <i className="fa-solid fa-trash danger" title="Xóa"></i>
-                                                    </button>
+                                                        <button
+                                                            className="btn btn-outline-danger ml-2"
+                                                            onClick={() => notify(product.id)}
+                                                        >
+                                                            {' '}
+                                                            <i className="fa-solid fa-trash danger" title="Xóa"></i>
+                                                        </button>
+                                                    </Tippy>
                                                 </td>
                                             </tr>
                                         );

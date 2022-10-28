@@ -20,6 +20,9 @@ import Register from './singup/Register';
 import Login from './login/Login';
 import TheShop from './products/components/Content/ProductDetail/TheShop/index';
 import Deny from './DenyPage/Deny';
+import ShowPageAuction from './products/components/Content/Pages/PageAuction/index';
+import ShowPageTheShop from './products/components/Content/Pages/PageTheShop/index';
+
 function App() {
     const [isLogin, setIsLogin] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -53,11 +56,14 @@ function App() {
                     {/* - Product */}
                     <Route path="/product" element={<Product />} />
                     {/* -- Auction */}
+                    <Route path="/product/auction" element={<ShowPageAuction />} />
                     <Route path="/bid/:auctionId" element={<ListBidAuction />} />
                     <Route path="/auction/:auctionId" element={<Auction />} />
                     <Route path="/bid/:auctionId" element={<ListBidAuction />} />
                     {/* -- The shop */}
                     <Route path="/product/the-shop/:slug" element={<TheShop />} />
+                    <Route path="/product/the-shop" element={<ShowPageTheShop />} />
+
                     {/* -- Cart */}
                     <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
                 </Routes>

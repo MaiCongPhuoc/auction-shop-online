@@ -59,8 +59,7 @@ function ModalEditProduct(props) {
         if (flag) {
             try {
                 async function postData(accountFrm) {
-                    let createRes =  await AccountService.getEditAccount(accountFrm, accountEditId);
-                    console.log('createRes: ', createRes.data);
+                    await AccountService.getEditAccount(accountFrm, accountEditId);
                 }
                 postData(accountFrm);
             } catch (error) {
@@ -154,15 +153,15 @@ function ModalEditProduct(props) {
             role: {
                 id: 0,
             },
-            locationregion: {
-                id: accountById.locationregionId,
-                provinceId: accountById.locationregionProvinceId,
-                provinceName: accountById.locationregionProvinceName,
-                districtId: accountById.locationregionDistrictId,
-                districtName: accountById.locationregionDistrictName,
-                wardId: accountById.locationregionWardId,
-                wardName: accountById.locationregionWardName,
-                address: accountById.locationregionAddress,
+            locationRegion: {
+                id: accountById.locationRegionId,
+                provinceId: accountById.locationRegionProvinceId,
+                provinceName: accountById.locationRegionProvinceName,
+                districtId: accountById.locationRegionDistrictId,
+                districtName: accountById.locationRegionDistrictName,
+                wardId: accountById.locationRegionWardId,
+                wardName: accountById.locationRegionWardName,
+                address: accountById.locationRegionAddress,
             },
         },
         validationSchema: yup.object({
@@ -188,10 +187,10 @@ function ModalEditProduct(props) {
                 .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
                 .required('Vui lòng nhập lại mật khẩu!'),
             role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyển hạn!') }),
-            locationregion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
-            locationregion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
-            locationregion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
-            locationregion: yup.object().shape({ address: yup.string().required('Vui lòng Nhập địa chỉ!') }),
+            locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
+            locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
+            locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
+            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng Nhập địa chỉ!') }),
         }),
         onSubmit: (account) => {
             let provinceId = document.querySelector('#province').value;
@@ -212,13 +211,13 @@ function ModalEditProduct(props) {
             account.avatar = img;
             account.role.id = roleId;
             account.blocked = accountById.blocked;
-            account.locationregion.id = accountById.locationregion.id;
-            account.locationregion.provinceId = provinceId;
-            account.locationregion.provinceName = currentProvince;
-            account.locationregion.districtId = districtId;
-            account.locationregion.districtName = currentDistrict;
-            account.locationregion.wardId = wardId;
-            account.locationregion.wardName = currentWard;
+            account.locationRegion.id = accountById.locationRegion.id;
+            account.locationRegion.provinceId = provinceId;
+            account.locationRegion.provinceName = currentProvince;
+            account.locationRegion.districtId = districtId;
+            account.locationRegion.districtName = currentDistrict;
+            account.locationRegion.wardId = wardId;
+            account.locationRegion.wardName = currentWard;
             console.log('account: ', account);
             setAccountFrm({...account});
             handleReset();
@@ -389,8 +388,8 @@ function ModalEditProduct(props) {
                                 <select
                                     className="form-select select select-bg-ori"
                                     id="province"
-                                    name="locationregion.provinceId"
-                                    value={formik.values.locationregion.provinceId}
+                                    name="locationRegion.provinceId"
+                                    value={formik.values.locationRegion.provinceId}
                                     onChange={formik.handleChange}
                                     onInput={handleProvince}
                                 >
@@ -417,8 +416,8 @@ function ModalEditProduct(props) {
                                 <select
                                     className="form-select select select-bg-ori"
                                     id="district"
-                                    name="locationregion.districtId"
-                                    value={formik.values.districtId}
+                                    name="locationRegion.districtId"
+                                    value={formik.values.locationRegion.districtId}
                                     onChange={formik.handleChange}
                                     onInput={handleDistrict}
                                 >
@@ -443,8 +442,8 @@ function ModalEditProduct(props) {
                                 <select
                                     className="form-select select select-bg-ori"
                                     id="ward"
-                                    name="locationregion.wardId"
-                                    value={formik.values.locationregion.wardId}
+                                    name="locationRegion.wardId"
+                                    value={formik.values.locationRegion.wardId}
                                     onChange={formik.handleChange}
                                     onInput={handleWard}
                                 >
@@ -487,9 +486,9 @@ function ModalEditProduct(props) {
                                     type="text"
                                     className="form-control"
                                     id="address"
-                                    name="locationregion.address"
+                                    name="locationRegion.address"
                                     placeholder="Vui lòng nhập địa chỉ..."
-                                    value={formik.values.locationregion.address || accountById.locationregionAddress}
+                                    value={formik.values.locationRegion.address}
                                     onChange={formik.handleChange}
                                 />
                             </div>
