@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { getAccount } from '../../../../redux/selector';
+import { getAccount, getReloadCartItem } from '../../../../redux/selector';
 import { FormatMoney, isNumber } from './../../../../Hooks/Hooks';
 import CartItemService from './../../../../service/CartItem/CartItemService';
 import ValidationQuantity from '../../../../utils/ValidationQuantity';
+import { setReloadCartItem } from '../../../../redux/actions';
 
 const BuyComponent = ({ product }) => {
-    console.log('product',product);
+    const dispatch = useDispatch();
 
+    const reloadCartItem = useSelector(getReloadCartItem);
     const [checkQuantity, setCheckQuantity] = useState(true);
     const [errorMess, setErrorMess] = useState('');
 
@@ -61,12 +63,13 @@ const BuyComponent = ({ product }) => {
     const handleAddCartItem = () => {
         try {
             if (!checkQuantity) {
-                setErrorMess('Hãy chọn số lượng cần mua hợp lệ');
+                setErrorMess('Hãy chọn số lượng hợp lệ');
                 return;
             }
             async function postData() {
                 let result = await CartItemService.addCartItem(account.id, cartItem);
                 if (result.data) {
+                    dispatch(setReloadCartItem(!reloadCartItem))
                     toast.success(`Đã thêm ${product.title} vào giỏ hàng của bạn`);
                 }
             }
@@ -134,9 +137,9 @@ const BuyComponent = ({ product }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="ms-1" style={{ marginTop: '37px', float: 'right' }}>
+                                    <div className="ms-1" style={{ marginTop: '46px', float: 'right' }}>
                                         <span className="current-bid bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>&nbsp;</span>
-                                        <a className="btn btn-primary me-4" onClick={handleAddCartItem}>Thêm vào giỏ hàng</a>
+                                        <a className="btn btn-primary me-4" onClick={handleAddCartItem}>Mua ngay</a>
                                     </div>
                                     {checkQuantity ? null: <ValidationQuantity message={errorMess} />}
                                 </div>
@@ -163,7 +166,7 @@ const BuyComponent = ({ product }) => {
                     <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>
                 </div>
             </div>
-            <ToastContainer autoClose={1500}/>
+            <ToastContainer autoClose={1000}/>
         </div>
     );
 }

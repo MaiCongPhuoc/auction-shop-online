@@ -54,7 +54,6 @@ export const getShowResultNav = (state) => state.filters.showResultNav;
 export const getProductsAction = createSelector(getAllProducts, getType, (products, type) => {
     if (type === 'Đấu giá') {
         return products.filter((product) => {
-            console.log('selector auction: ', product);
             return product.action === true;
         });
     }
@@ -63,6 +62,17 @@ export const getProductsAction = createSelector(getAllProducts, getType, (produc
             return product.action === false;
         });
     }
+});
+
+export const getProductsAuction = createSelector(getAllProducts, getType, (products, type) => {
+    return products.filter((product) => {
+        return product.action === true;
+    });
+});
+export const getProductsTheShop = createSelector(getAllProducts, getType, (products, type) => {
+    return products.filter((product) => {
+        return product.action === false;
+    });
 });
 
 export const productsRemainingSelector = createSelector(getAllProducts, searchTextSelector, (products, searchText) => {

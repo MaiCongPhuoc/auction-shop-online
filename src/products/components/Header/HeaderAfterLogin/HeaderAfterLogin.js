@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { setShowCart, setShowAddProduct } from '../../../redux/actions';
-import { getAccount, getAllCartItems, getShowCart, getShowAddProduct } from '../../../redux/selector';
+import { getAccount, getAllCartItems, getShowAddProduct, getReloadCartItem } from '../../../redux/selector';
 
 import { Link } from 'react-router-dom';
 
@@ -10,12 +10,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react';
 import ModalAdd from '../../../../dashboard/modal/product/ModalAdd';
 import { Button } from 'bootstrap';
+import CartItemService from '../../../service/CartItem/CartItemService';
 
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
 
-    const cartItems = useSelector(getAllCartItems);
+    // const cartItems = useSelector(getAllCartItems);
+
+    const [cartItems, setListCartItems] = useState([]);
+
+    const reloadCartItem = useSelector(getReloadCartItem);
+
+    useEffect(() => {
+        try {
+            async function getCartItems() {
+                const allCartItems = await CartItemService.getCartItems(account.id);
+                setListCartItems(allCartItems.data);
+            }
+            getCartItems();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }, [reloadCartItem]);
 
     const handleShowModalAddProduct = () => {
         dispatch(setShowAddProduct(true));

@@ -1,6 +1,8 @@
 // Products
 export const ALL_PRODUCTS = 'http://localhost:8080/api/products';
 export const GET_PRODUCTS_BY_SLUG = ALL_PRODUCTS + '/find-by-slug';
+export const GET_PRODUCTS_AUCTIONS = ALL_PRODUCTS + '/auctions';
+export const GET_PRODUCTS_THE_SHOPS = ALL_PRODUCTS + '/the-shops';
 
 // Product Media
 export const ALL_MEDIA_PRODUCT = 'http://localhost:8080/api/productmedia';
