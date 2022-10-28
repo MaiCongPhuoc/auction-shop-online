@@ -16,7 +16,6 @@ function TheShopDetail() {
 
     });
 
-
     useEffect(() => {
         try {
             console.log("aaa");

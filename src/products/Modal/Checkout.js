@@ -369,12 +369,12 @@ const Checkout = ({ items }) => {
                                     </Row>
                                     <Row style={{ margin: '20px 0px', height: '60px', display: 'flex', alignItems: 'center' }}>
                                         <Col xs={12} md={2} className='text-end'>
-                                            <Button style={{ width: 100, boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }} variant="secondary" onClick={handleClose}>
+                                            <Button style={{borderRadius: '5px', width: 100, boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }} variant="secondary" onClick={handleClose}>
                                                 Quay lại
                                             </Button>
                                         </Col>
                                         <Col xs={12} md={10} className='text-end'>
-                                            <Button style={{ width: 120 }} variant="primary" onClick={() => handleOrder(account.id, state.orders)}>
+                                            <Button style={{borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleOrder(account.id, state.orders)}>
                                                 Đặt hàng
                                             </Button>
                                         </Col>

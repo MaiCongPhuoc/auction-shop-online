@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom';
+
 const HeaderEnd = () => {
+   
     return (
         <div className="main-nav-div">
             <ul className="navigation">
@@ -8,14 +11,14 @@ const HeaderEnd = () => {
                     </a>
                 </li>
                 <li className="left">
-                    <a className="nav-explore drop-category" href="/product">
+                    <Link to={'/product/the-shop'} className="nav-explore drop-category">
                         Cửa hàng<span className="watch-circle my-cb-circle my-cb-count hidden">0</span>
-                    </a>
+                    </Link>
                 </li>
                 <li className="left">
-                    <a className="btn-bin" href="/product">
+                    <Link className="btn-bin" to="/product/auction">
                         Đấu giá
-                    </a>
+                    </Link>
                 </li>
                 <li className="left">
                     <a className="contact" href="#">
