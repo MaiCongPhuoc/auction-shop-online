@@ -12,7 +12,6 @@ function TheShop() {
     return (
         <Provider store={store}>
             <Header className="product-client" />
-            {/* <Content className="product-client" /> */}
             <TheShopDetail />
         </Provider>
     );

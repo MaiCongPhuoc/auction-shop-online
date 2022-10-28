@@ -1,41 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getLoadData, getProductsAction } from "../../../redux/selector";
-import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
-import LoadData from './../../Loading/LoadData';
-import { FormatMoney } from './../../../Hooks/Hooks';
-import { setProduct } from './../../../redux/actions';
+import { getLoadData } from '../../../../redux/selector';
+import { setLoadData } from '../../../../redux/actions';
+import LoadData from '../../../Loading/LoadData';
+import { FormatMoney } from '../../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
+import ProductService from '../../../../service/Product/ProductService';
 
-const ContentTheShop = () => {
-    const dispatch = useDispatch();
+const PageTheShop = () => {
+    const [productsTheShop, setProductsTheShop] = useState([]);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         try {
-            dispatch(setLoadData(false));
-
+            setLoading(true);
+            async function getTheShopProducts() {
+                let dataRes = await ProductService.getAllProductTheShops();
+                setProductsTheShop(dataRes.data);
+                setLoading(false);
+                console.log(dataRes.data);
+            }
+            getTheShopProducts();
         } catch (error) {
             console.log(error);
         }
     }, []);
 
-    const handleShowInfoProduct = (product) => {
-        dispatch(setShowInfoProduct(true));
-        dispatch(setProduct(product));
-    };
 
-    const productsAuction = useSelector(getProductsAction);
 
-    // dispatch(setLoadData(false));
-
-    const loadData = useSelector(getLoadData);
+    // const productsAuction = useSelector(getProductsAction);
 
 
     return (
-        <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? <LoadData /> :
-                productsAuction.map(product => (
-                    <div className="card small-12 medium-6 cell" onClick={() => handleShowInfoProduct(product)} style={{ transform: 'none' }} key={product.id}>
-                        <Link to={`/product/the-shop/${product.slug}`} style={{color: '#333'}}>
+        <div className="lot-cards grid-x grid-margin-x" style={{ marginTop: '150px' }}>
+            {loading ? (
+                <LoadData />
+            ) : (
+                productsTheShop.map((product) => (
+                    <div className="card small-12 medium-6 cell" style={{ transform: 'none' }} key={product.id}>
+                        <Link to={`/product/the-shop/${product.slug}`} style={{ color: '#333' }}>
                             <figure className="card__image"><img src={product.image} alt="" style={{ transform: 'none' }} />
                                 <div className="add-to-watchlist">
                                     <span className="ico-circle" ico_action="fav">
@@ -76,12 +78,10 @@ const ContentTheShop = () => {
                             </div>
                         </Link>
                     </div>
-
-                ))}
-
-
+                ))
+            )}
         </div>
     );
-}
+};
 
-export default ContentTheShop;
+export default PageTheShop;

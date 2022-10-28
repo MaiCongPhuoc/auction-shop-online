@@ -17,6 +17,8 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
     const [transportFee, getTransportFee] = useState(0);
     const reloadCartItem = useSelector(getReloadCartItem);
 
+    const [waitPayment, setWaitPayment] = useState(false);
+
     const [state, setState] = useState({
         payment: "Thanh toán khi nhận hàng",
         methods: ["Thanh toán khi nhận hàng", "Thanh toán online"],
@@ -33,14 +35,15 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
 
     const handleCreateOrderDetail = (items) => {
         try {
+            setWaitPayment(true);
             async function createOrdersDetail() {
                 await OrdersDetailService.createOrdersDetail(newOrder.id, items);
                 let cartItemList = await CartItemService.getRemoveCartItems(account.id, items);
-                console.log("cartItemList", cartItemList);
+                setWaitPayment(false);
                 dispatch(setShowCartModalCheckout(false));
                 dispatch(setReloadCartItem(!reloadCartItem));
                 toast.success('Đã hoàn tất đặt hàng!');
-            }   
+            }
             createOrdersDetail();
         } catch (error) {
             console.log(error);
@@ -53,7 +56,7 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
                 let results = await OrderService.removeOrder(order.id);
                 dispatch(setShowCartModalCheckout(false));
                 dispatch(setCheckPayment(false));
-            }   
+            }
             removeOrders();
         } catch (error) {
             console.log(error);
@@ -130,14 +133,20 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
             </Row>
             <Row style={{ margin: '20px 0px', height: '60px', display: 'flex', alignItems: 'center' }}>
                 <Col xs={12} md={10} className='text-end'>
-                    <Button style={{ width: 150 }} variant="outline-danger" onClick={() => handleRemoveOrder(newOrder)}>
+                    <Button style={{borderRadius: '5px', width: 150 }} variant="outline-danger" onClick={() => handleRemoveOrder(newOrder)}>
                         Hủy đơn hàng
                     </Button>
                 </Col>
                 <Col xs={12} md={2} className='text-center'>
-                    <Button style={{ width: 120 }} variant="primary" onClick={() => handleCreateOrderDetail(items)}>
-                        Thanh toán
-                    </Button>
+                    {waitPayment ?
+                        <button class="btn btn-primary" style={{borderRadius: '5px', width: '170px'}} type="button" disabled>
+                            <span class="spinner-border spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            Đang thực hiện...
+                        </button> :
+                        <Button style={{borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleCreateOrderDetail(items)}>
+                            Thanh toán
+                        </Button>
+                    }
                 </Col>
             </Row>
             <ToastContainer />
