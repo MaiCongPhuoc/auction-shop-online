@@ -37,7 +37,7 @@ const CartItem = () => {
         try {
             setLoadDataCart(true);
             async function getCartItems() {
-                const allCartItems = await CartItemService.getCartItems(account.id);
+                const allCartItems = await CartItemService.getCartItems(account.email);
                 if (allCartItems.data.length > 0) {
                     setListCartItems(allCartItems.data);
                     setLoadDataCart(false);

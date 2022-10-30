@@ -3,6 +3,7 @@ const initState = {
     showCheckout: false,
     reloadCartItem: false,
     cartItems: [],
+    cart: {}
 }
 
 const cartItemsReducer = (state = initState, action) => {
@@ -11,6 +12,11 @@ const cartItemsReducer = (state = initState, action) => {
             return {
                 ...state,
                 cartItems: action.payload
+            }
+        case 'cartItems/setCart':
+            return {
+                ...state,
+                cart: action.payload
             }
         case 'cartItems/setShowCart':
             return {

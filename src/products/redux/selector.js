@@ -29,6 +29,8 @@ export const getLoadData = (state) => state.products.loadData;
 // cart items
 export const getAllCartItems = (state) => state.cartItems.cartItems;
 
+export const getCart = (state) => state.cartItems.cart;
+
 export const getShowCart = (state) => state.cartItems.showCart;
 
 export const getShowModalCheckout = (state) => state.cartItems.showCheckout;

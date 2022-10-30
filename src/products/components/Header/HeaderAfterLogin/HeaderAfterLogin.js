@@ -25,7 +25,7 @@ const HeaderAfterLogin = () => {
     useEffect(() => {
         try {
             async function getCartItems() {
-                const allCartItems = await CartItemService.getCartItems(account.id);
+                const allCartItems = await CartItemService.getCartItems(account.email);
                 setListCartItems(allCartItems.data);
             }
             getCartItems();
@@ -67,7 +67,7 @@ const HeaderAfterLogin = () => {
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <Link to={`/product/cart/${account.id}`} style={{ fontSize: '14px' }}>
+                <Link to={`/product/cart/${account.email}`} style={{ fontSize: '14px' }}>
                     <i
                         style={{ position: 'relative' }}
                         className="fa-brands fa-opencart fa-2x ic-cart me-3"

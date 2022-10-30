@@ -160,6 +160,12 @@ export const setCartItems = (arr) => {
         payload: arr,
     };
 };
+export const setCart = (object) => {
+    return {
+        type: 'cartItems/setCart',
+        payload: object,
+    };
+};
 
 export const setShowCart = (boolean) => {
     return {

@@ -43,7 +43,7 @@ function App() {
                 <Routes>
                     {/*1. Dashboard */}
                     <Route path="/" element={<Product />} />
-                    <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <Deny />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/list-account" element={<ListAccount />} />
                     <Route path="/list-product" element={<ListProduct />} />
                     <Route path="/dashboard/category" element={<ListCategories />} />
