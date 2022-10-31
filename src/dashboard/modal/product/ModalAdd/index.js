@@ -18,6 +18,7 @@ let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
 function ModalAddProduct(props) {
+    console.log('here');
     const dispatch = useDispatch();
     const notify = () =>
         toast.success('Đã thêm thành công!', {
@@ -160,10 +161,9 @@ function ModalAddProduct(props) {
                 .min(10000, 'Vui lòng nhập giá trên 10000 VNĐ!')
                 .max(999900000, 'Vui lòng nhập giá dưới 999900000 VNĐ!')
                 .required('Vui lòng nhập giá!'),
-            estimatePrice: yup
-                .number('Vui lòng nhập số!'),
-                // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
-                // .max(999900000, 'Vui lòng nhập giá ước tính dưới 999900000 VNĐ!'),
+            estimatePrice: yup.number('Vui lòng nhập số!'),
+            // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
+            // .max(999900000, 'Vui lòng nhập giá ước tính dưới 999900000 VNĐ!'),
             // .required('Vui lòng nhập giá ước tính!'),
             available: yup
                 .number('Vui lòng nhập số!')

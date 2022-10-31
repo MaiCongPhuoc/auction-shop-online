@@ -19,8 +19,10 @@ import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
 import Login from './login/Login';
 import TheShop from './products/components/Content/ProductDetail/TheShop/index';
+import Deny from './DenyPage/Deny';
 import ShowPageAuction from './products/components/Content/Pages/PageAuction/index';
 import ShowPageTheShop from './products/components/Content/Pages/PageTheShop/index';
+import UserInfor from './UserInfo/UserInfor';
 
 function App() {
     const [isLogin, setIsLogin] = useState(false);
@@ -50,7 +52,9 @@ function App() {
                     {/*2. Client */}
                     {/* - Login */}
                     <Route path="/registration" element={<Register />} />
-                    <Route path="/logout" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
+                    {/* <Route path="/userInfo" element={<UserInfor />} /> */}
+                    <Route path="/userInfo" element={<UserInfor />} />
 
                     {/* - Product */}
                     <Route path="/product" element={<Product />} />

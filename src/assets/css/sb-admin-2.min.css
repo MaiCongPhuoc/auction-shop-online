@@ -10320,13 +10320,13 @@ label {
     font-size: 18px !important;
 }
 .frmError {
-    background-color: #ffd8d8;
+    background-color: #0d6efd;
 }
 .error {
     color: red;
     font-size: 13px;
-    list-style-type: circle;
-    font-weight: 500;
+    list-style-type: none;
+    font-weight: bold;
     padding-top: 5px;
 }
 .select {
