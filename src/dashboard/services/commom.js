@@ -35,3 +35,6 @@ export const BID_URL = 'http://localhost:8080/api/bids/create';
 export const LISTBID_URL = 'http://localhost:8080/api/bids/auction';
 
 export const BARCHART_URL = 'http://localhost:8080/api/orders-detail/chart';
+
+export const REGISTER_URL = 'http://localhost:8080/api/auth/register';
+export const LOGIN_URL = 'http://localhost:8080/api/auth/login';

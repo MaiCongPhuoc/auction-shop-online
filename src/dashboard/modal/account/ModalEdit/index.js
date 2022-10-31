@@ -37,7 +37,7 @@ function ModalEditProduct(props) {
     });
 
     useEffect(() => {
-        if (accountEditId !== 0 || accountEditId !== undefined) {
+        if (accountEditId !== 0 && accountEditId !== undefined) {
             try {
                 async function getAddAccount() {
                     let role = await AccountService.getRoles();

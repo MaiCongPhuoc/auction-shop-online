@@ -21,7 +21,6 @@ const HeaderAfterLogin = () => {
     const logout = () => {
         localStorage.removeItem('loginUser');
     };
-    // const cartItems = useSelector(getAllCartItems);
 
     const [cartItems, setListCartItems] = useState([]);
 

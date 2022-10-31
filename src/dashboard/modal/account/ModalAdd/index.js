@@ -168,12 +168,12 @@ function ModalDetailAccount(props) {
                 .string()
                 .min(8, 'tên của bạn ít nhất là 8 kí tự!')
                 .max(20, 'tên của bạn tối đa nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên vào!'),
+                .required('Vui lòng nhập tên đầy đủ vào!'),
             username: yup
                 .string()
                 .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
                 .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên sản phẩm vào!'),
+                .required('Vui lòng nhập tên đăng nhập vào!'),
             email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             password: yup

@@ -6,20 +6,21 @@ import AccountService from '../../../services/AccountService';
 function ModalDetail(props) {
     Moment.locale('vi');
     const { accountId, showDetail, onCloseDetailAccount } = props;
+    console.log('props: ', accountId);
     const [accountDetail, setAccountDetail] = useState({});
     useEffect(() => {
-        if (accountId !== 0 || accountId !== undefined) {
+        if (accountId !== 0 && accountId !== undefined) {
             try {
                 async function getaccountDetail() {
                     let account = await AccountService.getAccountById(accountId);
                     setAccountDetail({ ...accountDetail, ...account.data });
+                    console.log('vao day');
                 }
                 getaccountDetail();
             } catch (error) {
                 console.log(error);
             }
         }
-        
     }, [showDetail]);
     return (
         <Modal show={showDetail} onHide={onCloseDetailAccount} backdrop="static" keyboard={false} size="xl">
@@ -50,7 +51,7 @@ function ModalDetail(props) {
                                 <p className="col-sm-9">{accountDetail.createdBy}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Ngày Sửa Đổi Gần Nhất</h5>
+                                <h5 className="col-sm-3">Ngày Sửa Đổi Gần Nhất:</h5>
                                 <p className="col-sm-9">
                                     {Moment(accountDetail.updateAt).format('DD-MM-yyyy hh:mm:ss')}
                                 </p>
@@ -81,19 +82,19 @@ function ModalDetail(props) {
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-3">Tỉnh / thành phố:</h5>
-                                <p className="col-sm-9">{accountDetail.locationregion.provinceName}</p>
+                                <p className="col-sm-9">{accountDetail.locationRegion.provinceName}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-3">Quận / huyện:</h5>
-                                <p className="col-sm-9">{accountDetail.locationregion.districtName}</p>
+                                <p className="col-sm-9">{accountDetail.locationRegion.districtName}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-3">Thôn / xã:</h5>
-                                <p className="col-sm-9">{accountDetail.locationregion.wardName}</p>
+                                <p className="col-sm-9">{accountDetail.locationRegion.wardName}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-3">Địa chỉ:</h5>
-                                <p className="col-sm-9">{accountDetail.locationregion.address}</p>
+                                <p className="col-sm-9">{accountDetail.locationRegion.address}</p>
                             </div>
                         </div>
                     </div>

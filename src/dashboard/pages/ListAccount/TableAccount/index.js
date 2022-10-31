@@ -212,8 +212,7 @@ function BangTaiKhoan() {
             ) : (
                 <div className="shadow mb-4 cur-div" style={{ cursor: 'auto !important' }}>
                     <div
-                        className="card-header d-flex justify-content-betweeimport { toast } from 'react-toastify';
-n"
+                        className="card-header d-flex justify-content-between"
                     >
                         <h5 className="font-weight-bold text-primary" style={{ marginTop: '18px' }}>
                             Danh sách tài khoản
