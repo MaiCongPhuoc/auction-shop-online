@@ -143,8 +143,8 @@ const BuyComponent = ({ product }) => {
                                     </div>
                                     {loading ? (
                                         <div className="me-1" style={{ width: '150px' ,marginTop: '46px', float: 'right' }}>
-                                            <button class="btn btn-primary" style={{borderRadius: '5px'}} type="button" disabled>
-                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            <button className="btn btn-primary" style={{borderRadius: '5px'}} type="button" disabled>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                 Đang mua...
                                             </button>
                                         </div>

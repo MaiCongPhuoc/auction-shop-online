@@ -8,12 +8,19 @@ import ValidationQuantity from '../../products/utils/ValidationQuantity';
 import BidService from '../../dashboard/services/BidService';
 import { Link, useParams } from 'react-router-dom';
 import AuctionService from '../../dashboard/services/AuctionService';
+import { useSelector } from 'react-redux';
+import { getAccount } from '../../products/redux/selector';
+import { toast, ToastContainer } from 'react-toastify';
 
 function ComponentAuction(props) {
     Moment.locale('vi');
     const { auction } = props;
+
     const product = { ...auction.product };
-    const account = { ...auction.account };
+    // const account = { ...auction.account };
+
+    const account = useSelector(getAccount);
+
     const [timeAuction, setTimeAuction] = useState([]);
     const [Price, setPrice] = useState(0);
     const currentPrice = auction.currentPrice;
@@ -21,6 +28,7 @@ function ComponentAuction(props) {
     const [errorMess, setErrorMess] = useState('');
     const [state, setState] = useState({ bids: [], auction: {} });
     const [rerender, setRerender] = useState(false);
+    const [closeAction, setCloseAction] = useState(false);
 
     const { auctionId } = useParams();
     const [bid, setBid] = useState({
@@ -33,14 +41,29 @@ function ComponentAuction(props) {
         estimatePrice: 0,
     });
 
+    let diffTime = Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf());
+    // const [diffTime, setDiffTime] = useState(Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf()));
+    let days = diffTime / (24 * 60 * 60 * 1000);
+    let hours = (days % 1) * 24;
+    let minutes = (hours % 1) * 60;
+    let secs = (minutes % 1) * 60;
     setTimeout(() => {
-        let diffTime = Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf());
-        let days = diffTime / (24 * 60 * 60 * 1000);
-        let hours = (days % 1) * 24;
-        let minutes = (hours % 1) * 60;
-        let secs = (minutes % 1) * 60;
-        setTimeAuction([Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]);
+        if (
+            Math.floor(days) == 0 &&
+            Math.floor(hours) == 0 &&
+            Math.floor(minutes) == 0 &&
+            Math.floor(secs) == 0
+        ) {
+            setCloseAction(true);
+            // setDiffTime(0);
+        } else {
+            setTimeAuction([
+                Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)
+                // Math.floor(0), Math.floor(0), Math.floor(0), Math.floor(0)
+            ]);
+        }
     }, 1000);
+
 
     useEffect(() => {
         if (!isNumber(Price)) {
@@ -63,13 +86,15 @@ function ComponentAuction(props) {
     useEffect(() => {
         async function getListBid() {
             if (rerender) {
-                await BidService.postCreateBid(bid);
-                console.log('2');
+                BidService.postCreateBid(bid).then((res) => {
+                    toast.success("Đặt giá thành công")
+                }).catch((res) => {
+                    toast.warn(res.response.data.exceptionMessage)
+                });
             }
             let AuctionAPI = await AuctionService.getAuctionById(auctionId);
             let listBid = await BidService.getBidByAuctionId(auction.id);
             setState({ ...state, bids: listBid.data, auction: AuctionAPI.data });
-            console.log('1');
         }
         getListBid();
         setRerender(false);
@@ -96,7 +121,6 @@ function ComponentAuction(props) {
         setRerender(true);
         setPrice(0);
     };
-    console.log('state: ', state);
     return (
         <div className="medium-5 medium-large-4 cell right-col">
             <div className="bidding-tool">
@@ -105,8 +129,12 @@ function ComponentAuction(props) {
                 <div className="bidding-box-nav">
                     <div className="close-btn">Close</div>
                 </div>
-                <div className="bidding-box exp-1 " lot-id={2522828} needs-float="true">
-                    <div className="bb-panel-header warning">Closing Soon</div>
+                <div className="bidding-box exp-1 ">
+                    {closeAction ? (
+                        <div className="bb-panel-header warning">Closing Soon</div>
+                    ) : (
+                        <div className="bb-panel-header success bg-success" style={{color: '#fff'}}>Going on</div>
+                    )}
                     <div className="bb-row bb-time exp-1 warning">
                         <div className="bb-icon">
                             <FontAwesomeIcon icon={faClock} />
@@ -118,14 +146,20 @@ function ComponentAuction(props) {
                             <div className="bb-content">
                                 <div className="bb-counter bid-closing-soon">
                                     <div className="closeness-wrapper exp-1">
-                                        <span>
-                                            {timeAuction[0]}d : {timeAuction[1]}h : {timeAuction[2]}m : {timeAuction[3]}
-                                            s
-                                        </span>
+                                        {closeAction ? (
+                                            <span>
+                                                Phiên đấu giá đã kết thúc
+                                            </span>
+                                        ) : (
+                                            <span>
+                                                {timeAuction[0]}d : {timeAuction[1]}h : {timeAuction[2]}m : {timeAuction[3]}
+                                                s
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="bb-datetime exp-1">
-                                    <p>Ngày kết thúc:</p>
+                                    <p>Thời gian kết thúc:</p>
                                     <span className="time-left-close-date">
                                         {Moment(state.auction.auctionEndTime).format('DD-MM-YYYY HH:MM:SS')}
                                     </span>
@@ -148,7 +182,6 @@ function ComponentAuction(props) {
                                             data-allow-html="true"
                                             data-position="left"
                                             data-tooltip2
-                                            title
                                             data-title="<div class='title-block'><b>About Current Bid</b></div> <div class='text-block'>The “Current Bid” is the current winning bid placed by an auction participant.</div> <div class='text-block'>If the auction closes at this price, this bid amount does not reflect additional taxes, shipping, or buyer’s premium. Please see the Conditions of Sale for details.</div>"
                                         >
                                             GIÁ HIỆN TẠI: <FontAwesomeIcon icon={faCircleInfo} />
@@ -264,7 +297,7 @@ function ComponentAuction(props) {
                                     style={{ margin: 0 }}
                                     id="new_bid"
                                     acceptCharset="UTF-8"
-                                    // method="post"
+                                // method="post"
                                 >
                                     <div className="bid-wrapper">
                                         <div className="bid-box grid-x" id="bid-box">
@@ -318,7 +351,7 @@ function ComponentAuction(props) {
                                             type="button"
                                             onClick={handleBid}
                                         >
-                                            ĐẤU THẦU
+                                            ĐẤU GÍA
                                         </button>
                                     </div>
                                     <div className="bid-pending-icon">
@@ -495,6 +528,7 @@ function ComponentAuction(props) {
                     </div> */}
                 </div>
             </div>
+            <ToastContainer autoClose={1500}/>
         </div>
     );
 }

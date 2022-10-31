@@ -48,18 +48,6 @@ const HeaderAfterLogin = () => {
                 <a title="Thêm mới" type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
                     <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Thêm sản phẩm
                 </a>
-                <br />
-                <br />
-                <Link className="nav-link" to="/dashboard">
-                    <i
-                        title="Trang quản lý"
-                        class="fa-solid fa-people-roof me-2"
-                        style={{ backgroundColor: 'orange' }}
-                    ></i>
-                    <a title="Trang quản lý" type="button" style={{ backgroundColor: 'orange' }}>
-                        Trang quản lý
-                    </a>
-                </Link>
             </div>
         );
     };

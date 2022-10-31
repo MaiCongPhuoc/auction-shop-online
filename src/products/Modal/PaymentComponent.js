@@ -38,7 +38,7 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
             setWaitPayment(true);
             async function createOrdersDetail() {
                 await OrdersDetailService.createOrdersDetail(newOrder.id, items);
-                let cartItemList = await CartItemService.getRemoveCartItems(account.id, items);
+                let cartItemList = await CartItemService.getRemoveCartItems(account.email, items);
                 setWaitPayment(false);
                 dispatch(setShowCartModalCheckout(false));
                 dispatch(setReloadCartItem(!reloadCartItem));

@@ -48,7 +48,7 @@ export const Carousel = ({ children, maxVisibility }) => {
                     '--offset': (active - i) / maxVisibility,
                     '--direction': Math.sign(active - i),
                     '--abs-offset': Math.abs(active - i) / maxVisibility,
-                    'pointer-events': active === i ? 'auto' : 'none',
+                    'pointerEvents': active === i ? 'auto' : 'none',
                     'opacity': Math.abs(active - i) >= maxVisibility ? '0' : '1',
                     'display': Math.abs(active - i) > maxVisibility ? 'none' : 'block',
                 }}>

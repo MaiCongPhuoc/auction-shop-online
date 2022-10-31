@@ -10,6 +10,8 @@ function ListBidAuction() {
     const { auctionId } = useParams();
     const [timeAuction, setTimeAuction] = useState([]);
     const [bids, setBids] = useState([]);
+    const [closeAction, setCloseAction] = useState(false);
+
     useEffect(() => {
         async function getListBid() {
             let bid = await BidService.getBidByAuctionId(auctionId);
@@ -17,16 +19,37 @@ function ListBidAuction() {
         }
         getListBid();
     }, []);
-    setTimeout(() => {
-        let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
-        let days = diffTime / (24 * 60 * 60 * 1000);
-        let hours = (days % 1) * 24;
-        let minutes = (hours % 1) * 60;
-        let secs = (minutes % 1) * 60;
-        setTimeAuction([Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]);
-    }, 1000);
 
-    console.log('bids: ', bids);
+    let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
+    let days = diffTime / (24 * 60 * 60 * 1000);
+    let hours = (days % 1) * 24;
+    let minutes = (hours % 1) * 60;
+    let secs = (minutes % 1) * 60;
+    setTimeout(() => {
+        if (
+            Math.floor(days) == 0 &&
+            Math.floor(hours) == 0 &&
+            Math.floor(minutes) == 0 &&
+            Math.floor(secs) == 0
+        ) {
+            setCloseAction(true);
+            // setDiffTime(0);
+        } else {
+            setTimeAuction([
+                Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)
+                // Math.floor(0), Math.floor(0), Math.floor(0), Math.floor(0)
+            ]);
+        }
+    }, 1000);
+    // setTimeout(() => {
+    //     let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
+    //     let days = diffTime / (24 * 60 * 60 * 1000);
+    //     let hours = (days % 1) * 24;
+    //     let minutes = (hours % 1) * 60;
+    //     let secs = (minutes % 1) * 60;
+    //     setTimeAuction([Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]);
+    // }, 1000);
+
     // let diffTime = new Date();
     return (
         <>
@@ -57,11 +80,11 @@ function ListBidAuction() {
                                             <b>Giá lớn nhất:</b>
                                         </div>
                                         <div className="summary-text">{bids.length === 0 ? '' : <NumericFormat
-                                                value={bids[0].bidPrice}
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                suffix={' đ'}
-                                            />}
+                                            value={bids[0].bidPrice}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            suffix={' đ'}
+                                        />}
                                         </div>
                                     </div>
                                     <div className="summary-block cell small-3">
@@ -74,10 +97,16 @@ function ListBidAuction() {
                                         <div className="summary-title">
                                             <b>Thời gian còn lại</b>
                                         </div>
-                                        <div className="summary-text">
-                                            {timeAuction[0]}d : {timeAuction[1]}h : {timeAuction[2]}m : {timeAuction[3]}
-                                            s
-                                        </div>
+                                        {closeAction ? (
+                                            <div className="summary-text">
+                                                Phiên đấu giá đã kết thúc
+                                            </div>
+                                        ) : (
+                                            <div className="summary-text">
+                                                {timeAuction[0]}d : {timeAuction[1]}h : {timeAuction[2]}m : {timeAuction[3]}
+                                                s
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>

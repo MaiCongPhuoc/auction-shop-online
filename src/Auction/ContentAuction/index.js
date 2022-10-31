@@ -49,8 +49,7 @@ function ContentAuctionDetail() {
     }, []);
 
     const { Product, imageProductAuctions, loading, auction } = AuctionProduct;
-    // console.log('AuctionProduct: ', AuctionProduct);
-    // console.log('auctionId: ', auctionId);
+   
     let max_visibility = imageProductAuctions.length;
     return (
         <div className="pages" id="productAuction">
