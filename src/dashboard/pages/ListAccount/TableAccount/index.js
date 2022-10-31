@@ -212,7 +212,7 @@ function BangTaiKhoan() {
             ) : (
                 <div className="shadow mb-4 cur-div" style={{ cursor: 'auto !important' }}>
                     <div
-                        className="card-header d-flex justify-content-betweeimport { toast } from 'react-toastify';
+                        className="card-header d-flex justify-content-between;
 n"
                     >
                         <h5 className="font-weight-bold text-primary" style={{ marginTop: '18px' }}>
@@ -375,6 +375,12 @@ n"
                                                               className="btn btn-outline-info ml-2"
                                                               data-bs-toggle="modal"
                                                               data-bs-target="#btnDoiMK"
+                                                              onClick={() =>
+                                                                setShowRestart({
+                                                                      accountEditId: account.id,
+                                                                      showRestart: true,
+                                                                  })
+                                                              }
                                                           >
                                                               <i class="fa-solid fa-key" title="Đổi mật khẩu"></i>
                                                           </button>

@@ -53,7 +53,6 @@ function App() {
                     {/* - Login */}
                     <Route path="/registration" element={<Register />} />
                     <Route path="/login" element={<Login />} />
-                    {/* <Route path="/userInfo" element={<UserInfor />} /> */}
                     <Route path="/userInfo" element={<UserInfor />} />
 
                     {/* - Product */}

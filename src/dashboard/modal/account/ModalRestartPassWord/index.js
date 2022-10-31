@@ -5,7 +5,7 @@ function ModalRestartPassword(props) {
     return (
         <Modal show={showRestart} onHide={onCloseRestarPassword} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title>Add Product</Modal.Title>
+                <Modal.Title>Đổi mật khẩu</Modal.Title>
             </Modal.Header>
             <form>
                 <Modal.Body>

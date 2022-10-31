@@ -10,14 +10,14 @@ export default function Google() {
     const [loginStatus, setLoginStatus] = useState(false);
 
     const responseGoogle = (response) => {
-        console.log(response);
+        // console.log(response);
         setName(response.profileObj.name);
         setEmail(response.profileObj.email);
         setUrl(response.profileObj.imageUrl);
         setLoginStatus(true);
     };
     const logout = () => {
-        console.log('logout');
+        // console.log('logout');
         setLoginStatus(false);
     };
     return (

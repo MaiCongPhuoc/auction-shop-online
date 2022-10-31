@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import GoogleAndFacebook from './GoogleAndFacebook';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './asset/css/content.css';
 import './asset/css/login.css';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import Google from './Google';
 
 const ContentLogin = () => {
     const dispatch = useDispatch();
@@ -110,6 +111,18 @@ const ContentLogin = () => {
             }),
         );
     };
+    const forgetPass = async (e) => {
+        const { value: email } = await Swal.fire({
+            title: 'Lấy Lại Mật Khẩu',
+            input: 'email',
+            inputLabel: 'Nhập địa chỉ email để lấy lại mật khẩu',
+            inputPlaceholder: 'email@gmail.com',
+        });
+
+        if (email) {
+            Swal.fire(`Mã xác nhận đã gửi đến địa chỉ email: ${email}`);
+        }
+    };
     return (
         <div>
             <form>
@@ -151,6 +164,7 @@ const ContentLogin = () => {
                                                     />
                                                     <p>{formErrors.password}</p>
                                                 </div>
+
                                                 {/* <div className="row col-12">
                                                 <div className="google col-6">
                                                     <Google />
@@ -164,12 +178,10 @@ const ContentLogin = () => {
                                                 </button>
                                                 <br />
                                                 <br />
-                                                <GoogleAndFacebook />
+                                                <Google />
+                                                {/* <GoogleAndFacebook /> */}
                                                 <div className="loginFooter">
-                                                    {/* <button className="forgetPass" onClick={forgetPass}>
-                                                Quên Mật Khẩu?
-                                            </button> */}
-                                                    <button className="forgetPass">Quên Mật Khẩu?</button>
+                                                    <button className="">Quên Mật Khẩu?</button>
                                                 </div>
                                             </form>
                                         </div>
