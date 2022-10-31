@@ -10,9 +10,18 @@
     max-width: 1000px;
     margin: 0 auto;
     position: relative;
-    top: 130px;
+    top: 140px;
 }
-
+.base-width-reg {
+    background-color: #8db1f5 !important;
+    margin: 0 auto;
+    position: relative;
+    top: 140px;
+}
+.alo {
+    position: relative;
+    top: 140px;
+}
 #homepage-lot {
     width: 100%;
     display: block;

@@ -61,7 +61,7 @@ function ModalEditProduct(props) {
     };
     useEffect(() => {
         try {
-            if (productEditId !== 0 || productEditId !== undefined) {
+            if (productEditId !== 0 && productEditId !== undefined) {
                 setCategory({ ...category, loading: true });
                 async function getCate() {
                     let category = await CategoryService.getCategory();

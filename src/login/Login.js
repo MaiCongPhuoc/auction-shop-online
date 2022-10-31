@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import store from '../products/redux/store';
 import Header from '../products/components/Header/Header';
 import ContentLogin from './ContentLogin';
+import UserInfo from './../UserInfo/UserInfo';
 
 const Login = () => {
     return (

@@ -64,10 +64,6 @@
     width: 150px;
     font-weight: bold;
 }
-.loginBtn:hover {
-    background-color: #bcbb68 !important;
-    border: 3px solid #d5aa6aa9 !important;
-}
 
 .forgetPass {
     background-color: #c4cdf5;
