@@ -43,8 +43,9 @@
 }
 
 .new-login-button {
-    width: 100px;
+    width: 130px !important;
     font-size: 15px;
+    margin-bottom: 8px;
 }
 
 #navbar {

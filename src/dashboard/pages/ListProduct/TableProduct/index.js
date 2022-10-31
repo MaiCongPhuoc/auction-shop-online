@@ -18,6 +18,8 @@ import Pagination from '@mui/material/Pagination';
 import ProductsComponent from './ProductsComponent';
 import CategoryService from '../../../services/Category';
 import Tippy from '@tippyjs/react';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 function BangSanPham() {
     Moment.locale('vi');
@@ -97,7 +99,8 @@ function BangSanPham() {
                     setReRender(!reRender);
                 }
                 deleteProduct(id);
-                Swal.fire('Đã kiểm!', 'Bạn đã xóa sản phẩm này.', 'Thành cống');
+                // Swal.fire('</br> Đã kiểm!', 'Bạn đã xóa sản phẩm này');
+                toast.success(`Đã xóa thành công!`);
             }
         });
 
@@ -499,6 +502,7 @@ function BangSanPham() {
                 productIdDetail={productIdDetail}
                 handleCloseDetail={handleCloseDetail}
             />
+            <ToastContainer autoClose={1500} />
 
             {/*==================== Modal Add ===========================*/}
             {/* <ModalAddProduct show={showAdd} handleClose={handCloseAdd} /> */}

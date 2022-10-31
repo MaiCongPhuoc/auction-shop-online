@@ -15,6 +15,7 @@ const ContentLogin = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [formErrors, setFormErrors] = useState({});
+    const [errMess, setErrMess] = useState('');
     const [isSubmit, setIsSubmit] = useState(false);
     const [user, setUserDetails] = useState({
         email: '',
@@ -33,12 +34,12 @@ const ContentLogin = () => {
         const error = {};
         const regex = /^[^\s+@]+@[^\s@]+\.[^\s@]{2,}$/i;
         if (!values.email) {
-            error.email = 'Email is required';
+            error.email = 'Email không được để trống!';
         } else if (!regex.test(values.email)) {
-            error.email = 'Please enter a valid email address';
+            error.email = 'Vui lòng nhập một địa chỉ email hợp lý!';
         }
         if (!values.password) {
-            error.password = 'Password is required';
+            error.password = 'Mật khẩu không được để trống!';
         }
         return error;
     };
@@ -53,6 +54,7 @@ const ContentLogin = () => {
                 .post('http://localhost:8080/api/auth/login', user)
                 .then((res) => {
                     axios.get('http://localhost:8080/api/accounts/getAccountEmail/' + res.data.name).then((res) => {
+                        saveCurrentUser(res.data.name);
                         if (res.data.role.id === 2) {
                             dispatch(loginStatus(true));
                             setUserState(res.data.user);
@@ -82,6 +84,32 @@ const ContentLogin = () => {
                 });
         }
     }, [formErrors]);
+
+    const saveCurrentUser = async (u) => {
+        localStorage.setItem(
+            'loginUser',
+            JSON.stringify({
+                username: u.username,
+                fullName: u.fullName,
+                email: u.email,
+                phone: u.phone,
+                password: u.password,
+                avatar: u.avatar,
+                role: u.role,
+                // locationRegion: u.locationRegion,
+                locationRegion: {
+                    id: u.locationRegion.id,
+                    provinceId: u.locationRegion.provinceId,
+                    provinceName: u.locationRegion.provinceName,
+                    districtId: u.locationRegion.districtId,
+                    districtName: u.locationRegion.districtName,
+                    wardId: u.locationRegion.wardId,
+                    wardName: u.locationRegion.wardName,
+                    address: u.locationRegion.address,
+                },
+            }),
+        );
+    };
     return (
         <div>
             <form>
@@ -95,7 +123,7 @@ const ContentLogin = () => {
                                             <div className="loginNav">
                                                 <h1>Đăng nhập tài khoản của bạn để trải nghiệm!</h1>
                                             </div>
-                                            {/* <span className="d-block mt-3 text-danger fw-bold">{errMess}</span> */}
+                                            <span className="d-block mt-3 text-danger fw-bold">{errMess}</span>
                                             <span className="d-block mt-3 text-danger fw-bold"></span>
 
                                             {/* <form onSubmit={loginHandler} readOnly> */}
@@ -117,7 +145,7 @@ const ContentLogin = () => {
                                                         type="password"
                                                         name="password"
                                                         id="password"
-                                                        placeholder="Password"
+                                                        placeholder="Mật khẩu"
                                                         onChange={changeHandler}
                                                         value={user.password}
                                                     />

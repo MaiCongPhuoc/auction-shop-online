@@ -3,19 +3,24 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { setShowCart, setShowAddProduct } from '../../../redux/actions';
 import { getAccount, getAllCartItems, getShowAddProduct, getReloadCartItem } from '../../../redux/selector';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react';
 import ModalAdd from '../../../../dashboard/modal/product/ModalAdd';
-import { Button } from 'bootstrap';
 import CartItemService from '../../../service/CartItem/CartItemService';
+import { Swal } from 'sweetalert2';
+import { ToastContainer } from 'react-toastify';
+import AdminInfo from './../../../../dashboard/Layout/Header/adminInfo/AdminInfo';
 
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
-
+    const navigate = useNavigate();
+    const logout = () => {
+        localStorage.removeItem('loginUser');
+    };
     // const cartItems = useSelector(getAllCartItems);
 
     const [cartItems, setListCartItems] = useState([]);
@@ -29,7 +34,6 @@ const HeaderAfterLogin = () => {
                 setListCartItems(allCartItems.data);
             }
             getCartItems();
-
         } catch (error) {
             console.log(error);
         }
@@ -38,6 +42,7 @@ const HeaderAfterLogin = () => {
     const handleShowModalAddProduct = () => {
         dispatch(setShowAddProduct(true));
     };
+
     const renderAccount = () => {
         return (
             <div className="dropdown-menu-right shadow animated--grow-in accountAdmin" aria-labelledby="userDropdown">
@@ -46,7 +51,7 @@ const HeaderAfterLogin = () => {
                     Add product
                 </a> */}
                 <a title="Thêm mới" type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
-                    <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Thêm sản phẩm
+                    <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Tạo sản phẩm
                 </a>
                 <br />
                 <br />
@@ -56,9 +61,33 @@ const HeaderAfterLogin = () => {
                         class="fa-solid fa-people-roof me-2"
                         style={{ backgroundColor: 'orange' }}
                     ></i>
-                    <a title="Trang quản lý" type="button" style={{ backgroundColor: 'orange' }}>
+                    <button
+                        title="Trang quản lý"
+                        type="button"
+                        style={{ backgroundColor: 'orange' }}
+                        onClick={function () {
+                            alert('okk');
+                            // Swal.fire({
+                            //     icon: 'warning',
+                            //     title: '<br/> Bạn có chắc đăng xuất không?',
+                            //     showDenyButton: true,
+                            //     showCancelButton: true,
+                            //     showConfirmButton: false,
+                            //     denyButtonText: `Đăng xuất`,
+                            // }).then((result) => {
+                            //     if (result.isDenied) {
+                            //         // toast.success(`Đăng xuất thành công!`);
+                            //         // setTimeout(() => {
+                            //         //     navigate('/login');
+                            //         //     logout();
+                            //         // }, 2000);
+                            //         console.log('result.isDenied: ', result.isDenied);
+                            //     }
+                            // });
+                        }}
+                    >
                         Trang quản lý
-                    </a>
+                    </button>
                 </Link>
             </div>
         );
@@ -120,30 +149,24 @@ const HeaderAfterLogin = () => {
                                     1
                                 </span>
                             </i>
+                            <Tippy
+                                placement="bottom-end"
+                                interactive
+                                content={renderAccount()}
+                                hideOnClick={true}
+                                trigger="click"
+                            >
+                                <button className="logged_in_name mx-3" href="#">
+                                    THAO TÁC THÊM
+                                </button>
+                            </Tippy>
                         </div>
                     </div>
                 </div>
-                {/* <a className="logged_in_name mx-3" href="#">{account.username}</a> */}
-                <Tippy
-                    // delay={[0, 700]}
-                    // offset={[15, 8]}
-                    placement="bottom-end"
-                    interactive
-                    content={renderAccount()}
-                    hideOnClick={true}
-                    trigger="click"
-                >
-                    <span>
-                        <a className="logged_in_name mx-3" href="#">
-                            {account.username}
-                        </a>
-                    </span>
-                </Tippy>
-                <a id="customer-logout-link" className="new-login-button" rel="nofollow" href="/login">
-                    ĐĂNG XUẤT
-                </a>
             </div>
+            <AdminInfo />
             <ModalAdd />
+            <ToastContainer autoClose={1500} />
         </div>
     );
 };

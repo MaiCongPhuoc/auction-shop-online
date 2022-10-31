@@ -25,7 +25,7 @@ function AdminInfo() {
                         <ul>
                             <li>
                                 <button>
-                                    <Link to="#">Hồ sơ</Link>
+                                    <Link to="/userInfo">Hồ sơ</Link>
                                 </button>
                             </li>
                             <button
