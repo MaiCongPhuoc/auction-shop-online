@@ -21,7 +21,6 @@ const HeaderAfterLogin = () => {
     const logout = () => {
         localStorage.removeItem('loginUser');
     };
-    // const cartItems = useSelector(getAllCartItems);
 
     const [cartItems, setListCartItems] = useState([]);
 
@@ -30,7 +29,7 @@ const HeaderAfterLogin = () => {
     useEffect(() => {
         try {
             async function getCartItems() {
-                const allCartItems = await CartItemService.getCartItems(account.id);
+                const allCartItems = await CartItemService.getCartItems(account.email);
                 setListCartItems(allCartItems.data);
             }
             getCartItems();
@@ -53,42 +52,6 @@ const HeaderAfterLogin = () => {
                 <a title="Thêm mới" type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
                     <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Tạo sản phẩm
                 </a>
-                <br />
-                <br />
-                <Link className="nav-link" to="/dashboard">
-                    <i
-                        title="Trang quản lý"
-                        class="fa-solid fa-people-roof me-2"
-                        style={{ backgroundColor: 'orange' }}
-                    ></i>
-                    <button
-                        title="Trang quản lý"
-                        type="button"
-                        style={{ backgroundColor: 'orange' }}
-                        onClick={function () {
-                            alert('okk');
-                            // Swal.fire({
-                            //     icon: 'warning',
-                            //     title: '<br/> Bạn có chắc đăng xuất không?',
-                            //     showDenyButton: true,
-                            //     showCancelButton: true,
-                            //     showConfirmButton: false,
-                            //     denyButtonText: `Đăng xuất`,
-                            // }).then((result) => {
-                            //     if (result.isDenied) {
-                            //         // toast.success(`Đăng xuất thành công!`);
-                            //         // setTimeout(() => {
-                            //         //     navigate('/login');
-                            //         //     logout();
-                            //         // }, 2000);
-                            //         console.log('result.isDenied: ', result.isDenied);
-                            //     }
-                            // });
-                        }}
-                    >
-                        Trang quản lý
-                    </button>
-                </Link>
             </div>
         );
     };
@@ -96,7 +59,7 @@ const HeaderAfterLogin = () => {
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <Link to={`/product/cart/${account.id}`} style={{ fontSize: '14px' }}>
+                <Link to={`/product/cart/${account.email}`} style={{ fontSize: '14px' }}>
                     <i
                         style={{ position: 'relative' }}
                         className="fa-brands fa-opencart fa-2x ic-cart me-3"

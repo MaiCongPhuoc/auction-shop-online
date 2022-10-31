@@ -1,82 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import ProductService from '../../services/productService';
+import ChartService from '../../services/ChartService';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-let month1 = 0;
-let month2 = 0;
-let month3 = 0;
-let month4 = 0;
-let month5 = 0;
-let month6 = 0;
-let month7 = 0;
-let month8 = 0;
-let month9 = 0;
-let month10 = 0;
-let month11 = 0;
-let month12 = 0;
 function BarChart() {
-    const month = new Date();
-    const [products, setProducts] = useState([]);
+    // const month = new Date();
+    let buyChart = []
+    let auctionChart = []
+    const [chart, setChart] = useState([]);
     useEffect(() => {
         async function getListProduct() {
-            let listProduct = await ProductService.getProducts();
-            setProducts(listProduct.data);
+            let listChart = await ChartService.getListChart(2022);
+            setChart(listChart.data);
         }
         getListProduct();
     }, []);
 
-    for (let i = 0; i < products.length; i++) {
-        if (month.getMonth(products[i].createdAt) === 0) {
-            console.log('2022-1: ', month.getMonth(products[i].createdAt));
-            month1 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 1) {
-            console.log('2022-2: ', month.getMonth(products[i].createdAt));
-            month2 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 2) {
-            console.log('2022-3: ', month.getMonth(products[i].createdAt));
-            month3 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 3) {
-            console.log('2022-4: ', month.getMonth(products[i].createdAt));
-            month4 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 4) {
-            console.log('2022-5: ', month.getMonth(products[i].createdAt));
-            month5 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 5) {
-            console.log('2022-6: ', month.getMonth(products[i].createdAt));
-            month6 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 6) {
-            console.log('2022-7: ', month.getMonth(products[i].createdAt));
-            month7 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 7) {
-            console.log('2022-8: ', month.getMonth(products[i].createdAt));
-            month8 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 8) {
-            console.log('2022-9: ', month.getMonth(products[i].createdAt));
-            month9 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 9) {
-            console.log('2022-10: ', month.getMonth(products[i].createdAt));
-            month10 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 10) {
-            console.log('2022-11: ', month.getMonth(products[i].createdAt));
-            month11 += products[i].sold * products[i].price;
-        }
-        if (month.getMonth(products[i].createdAt) === 11) {
-            console.log('2022-12: ', month.getMonth(products[i].createdAt));
-            month12 += products[i].sold * products[i].price;
-        }
+    for (let i = 0; i < chart.length; i++) {
+        buyChart.push(chart[i].buy);        
+    }
+    for (let i = 0; i < chart.length; i++) {
+        auctionChart.push(chart[i].auction);        
     }
 
     const options = {
@@ -111,32 +57,7 @@ function BarChart() {
             {
                 label: 'Bán ra',
                 data: [
-                    month1,
-                    month2,
-                    month3,
-                    month4,
-                    month5,
-                    month6,
-                    month7,
-                    month8,
-                    month9,
-                    month10,
-                    month11,
-                    month12,
-                ],
-                data: [
-                    month1,
-                    month2,
-                    month3,
-                    month4,
-                    month5,
-                    month6,
-                    month7,
-                    month8,
-                    month9,
-                    month10,
-                    month11,
-                    month12,
+                    ...buyChart
                 ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -170,7 +91,7 @@ function BarChart() {
             },
             {
                 label: 'Đấu giá',
-                data: [15, 21, 6, 2, 5, 1, 5, 8, 13, 10, 16, 13],
+                data: [...auctionChart],
                 backgroundColor: [
                     'rgba(250, 102, 133, 0.4)',
                     'rgba(51, 165, 238, 0.4)',

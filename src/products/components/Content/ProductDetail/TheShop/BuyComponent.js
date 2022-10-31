@@ -5,7 +5,7 @@ import { getAccount, getReloadCartItem } from '../../../../redux/selector';
 import { FormatMoney, isNumber } from './../../../../Hooks/Hooks';
 import CartItemService from './../../../../service/CartItem/CartItemService';
 import ValidationQuantity from '../../../../utils/ValidationQuantity';
-import { setReloadCartItem } from '../../../../redux/actions';
+import { setCart, setReloadCartItem } from '../../../../redux/actions';
 
 const BuyComponent = ({ product }) => {
     const dispatch = useDispatch();
@@ -13,6 +13,7 @@ const BuyComponent = ({ product }) => {
     const reloadCartItem = useSelector(getReloadCartItem);
     const [checkQuantity, setCheckQuantity] = useState(true);
     const [errorMess, setErrorMess] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const account = useSelector(getAccount);
 
@@ -21,7 +22,6 @@ const BuyComponent = ({ product }) => {
     const [newTotalPrice, setNewTotalPrice] = useState(product.price);
 
     const [quantity, setQuantity] = useState(1);
-
 
     useEffect(() => {
         if (!isNumber(quantity)) {
@@ -41,9 +41,8 @@ const BuyComponent = ({ product }) => {
     }, [quantity]);
 
     const cartItem = {
-        product: {
-            id: product.id
-        },
+        product: product
+        ,
         title: product.title,
         quantity: quantity
     };
@@ -66,12 +65,17 @@ const BuyComponent = ({ product }) => {
                 setErrorMess('Hãy chọn số lượng hợp lệ');
                 return;
             }
+            setLoading(true);
             async function postData() {
-                let result = await CartItemService.addCartItem(account.id, cartItem);
-                if (result.data) {
-                    dispatch(setReloadCartItem(!reloadCartItem))
+                await CartItemService.addCartItem(account.id, cartItem).then((res) => {
+                    console.log("cartitem", res.data);
+                    dispatch(setCart(res.data.cart.id))
+                    dispatch(setReloadCartItem(!reloadCartItem));
+                    setLoading(false);
                     toast.success(`Đã thêm ${product.title} vào giỏ hàng của bạn`);
-                }
+                }).catch((res) => {
+                    console.log('err', res);
+                });
             }
             postData();
         } catch (error) {
@@ -80,7 +84,7 @@ const BuyComponent = ({ product }) => {
     };
 
     return (
-        <div className="buy-tool" style={{width: '22%', margin: '50px auto'}}>
+        <div className="buy-tool" style={{ width: '22%', margin: '50px auto' }}>
             <div className="bb-rows-wrapper">
                 <div className="bb-row bb-current-buy">
                     <div className="bb-row title-buy text-center">
@@ -137,11 +141,20 @@ const BuyComponent = ({ product }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="ms-1" style={{ marginTop: '46px', float: 'right' }}>
-                                        <span className="current-bid bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>&nbsp;</span>
-                                        <a className="btn btn-primary me-4" onClick={handleAddCartItem}>Mua ngay</a>
-                                    </div>
-                                    {checkQuantity ? null: <ValidationQuantity message={errorMess} />}
+                                    {loading ? (
+                                        <div className="me-1" style={{ width: '150px' ,marginTop: '46px', float: 'right' }}>
+                                            <button className="btn btn-primary" style={{borderRadius: '5px'}} type="button" disabled>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                Đang mua...
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="ms-1" style={{width: '150px' ,marginTop: '46px', float: 'right' }}>
+                                            <span className="current-bid bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>&nbsp;</span>
+                                            <a className="btn btn-primary me-4" onClick={handleAddCartItem}>Mua ngay</a>
+                                        </div>
+                                    )}
+                                    {checkQuantity ? null : <ValidationQuantity message={errorMess} />}
                                 </div>
                             </form>
                             <div className="bin-qty text-center mt-3">
@@ -152,7 +165,7 @@ const BuyComponent = ({ product }) => {
                 <div className="mt-4">
                     <div className="watchlist-action">
                         <div className="watcher-btn text-center">
-                            <a className="watch-button" href="#" style={{border: 'none !important'}}>
+                            <a className="watch-button" href="#" style={{ border: 'none !important' }}>
                                 <div className="relative-wrapper watch-wrapper btn">
                                     <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
                                         <i className="fa-regular fa-heart"></i>
@@ -166,7 +179,7 @@ const BuyComponent = ({ product }) => {
                     <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>
                 </div>
             </div>
-            <ToastContainer autoClose={1000}/>
+            <ToastContainer autoClose={1000} />
         </div>
     );
 }

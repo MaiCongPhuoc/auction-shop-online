@@ -10,8 +10,12 @@ export const ALL_MEDIA_PRODUCT = 'http://localhost:8080/api/productmedia';
 // Category
 export const ALL_CATEGORIES = 'http://localhost:8080/api/categories';
 
+// Cart
+export const GET_CART_BY_ACCOUNT_ID = 'http://localhost:8080/api/cart-items';
+
 // Cart-item
 export const ALL_CART_ITEM = 'http://localhost:8080/api/cart-items';
+export const ALL_CART_ITEM_BY_CART_ID = ALL_CART_ITEM + '/get-by-cart-id';
 export const ADD_CART_ITEM = ALL_CART_ITEM + '/create';
 export const REDUCE_CART_ITEM = ALL_CART_ITEM + '/reduce';
 export const INCREASING_CART_ITEM = ALL_CART_ITEM + '/increasing';

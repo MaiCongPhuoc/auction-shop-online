@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Provider } from 'react-redux';
 import store from '../products/redux/store';
 import Header from '../products/components/Header/Header';
-import UserInfo from './UserInfo';
+import UserInfo from './UserInfo.js';
 import HeaderSearch from './../products/components/Header/HeardSearch/HeaderSearch';
 import HeaderLogo from './../products/components/Header/HeaderLogo/HeaderLogo';
 import HeaderEnd from './../products/components/Header/HeaderEnd/HeaderEnd';

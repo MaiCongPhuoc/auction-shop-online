@@ -10,7 +10,7 @@ import '../../modal.css';
 import 'react-toastify/dist/ReactToastify.css';
 import ProductService from '../../../services/productService';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShowAddProduct } from '../../../../products/redux/selector';
+import { getAccount, getShowAddProduct } from '../../../../products/redux/selector';
 import { setShowAddProduct } from '../../../../products/redux/actions';
 // import { withSwal } from 'react-sweetalert2';
 
@@ -18,7 +18,7 @@ let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
 function ModalAddProduct(props) {
-    console.log('here');
+    const account = useSelector(getAccount);
     const dispatch = useDispatch();
     const notify = () =>
         toast.success('Đã thêm thành công!', {
@@ -149,6 +149,7 @@ function ModalAddProduct(props) {
             description: '',
             countday: '0',
             images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
+            createdBy: '',
         },
         validationSchema: yup.object({
             title: yup
@@ -165,32 +166,45 @@ function ModalAddProduct(props) {
             // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
             // .max(999900000, 'Vui lòng nhập giá ước tính dưới 999900000 VNĐ!'),
             // .required('Vui lòng nhập giá ước tính!'),
-            available: yup
-                .number('Vui lòng nhập số!')
-                .min(10, 'Số lượng nhỏ nhất là 10!')
-                .max(200, 'Số lượng lớn nhất là 200!')
-                .required('Vui lòng nhập số lượng!'),
+            available: radio ? null :
+                yup
+                    .number('Vui lòng nhập số!')
+                    .min(1, 'Số lượng nhỏ nhất là 1!')
+                    .max(200, 'Số lượng lớn nhất là 200!')
+                    .required('Vui lòng nhập số lượng!'),
             action: yup.string(),
             image: yup.mixed(),
             description: yup.string(),
         }),
         onSubmit: (product) => {
-            product.action = radio;
-            listImg.reverse();
-            product.image = listImg[0];
-            product.images = listImg;
-            flag = true;
-            product.category.id = Number(document.querySelector('#category').value);
-            // product.estimatePrice = document.querySelector('#countday').value;
-            console.log('product add: ', product);
-            setSubmitFrm(product);
-            handleResetFrom();
+            product.createdBy = account.username;
+            if (radio) {
+                product.action = radio;
+                product.available = 1;
+                listImg.reverse();
+                product.image = listImg[0];
+                product.images = listImg;
+                flag = true;
+                product.category.id = Number(document.querySelector('#category').value);
+                // product.estimatePrice = document.querySelector('#countday').value;
+                setSubmitFrm(product);
+                handleResetFrom();
+            } else {
+                product.action = radio;
+                listImg.reverse();
+                product.image = listImg[0];
+                product.images = listImg;
+                flag = true;
+                product.category.id = Number(document.querySelector('#category').value);
+                // product.estimatePrice = document.querySelector('#countday').value;
+                setSubmitFrm(product);
+                handleResetFrom();
+            }
         },
     });
 
     const { loading, categorys, errorMessage } = category;
     const showAddProduct = useSelector(getShowAddProduct);
-    console.log('radio: ', radio);
     return (
         <Modal show={showAddProduct} onHide={handleCloseAddProduct} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
@@ -361,23 +375,37 @@ function ModalAddProduct(props) {
                             )}
                             {/* </div> */}
                             <div className="row">
-                                <div className="mb-3 col-4">
-                                    <label
-                                        htmlFor="addAvailable"
-                                        className="form-label text-dark font-weight-bold ml-2"
-                                    >
-                                        Số Lượng
-                                    </label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        value={formik.values.available}
-                                        onChange={formik.handleChange}
-                                        name="available"
-                                        id="addAvailable"
-                                        placeholder="Vui lòng nhập số lượng..."
-                                    />
-                                </div>
+                                {radio ? (
+                                    <div className="mb-3 col-4">
+                                        <input
+                                            type="hidden"
+                                            className="form-control"
+                                            value={5}
+                                            onChange={formik.handleChange}
+                                            name="available"
+                                            id="addAvailable"
+                                            placeholder="Vui lòng nhập số lượng..."
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="mb-3 col-4">
+                                        <label
+                                            htmlFor="addAvailable"
+                                            className="form-label text-dark font-weight-bold ml-2"
+                                        >
+                                            Số Lượng
+                                        </label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={formik.values.available}
+                                            onChange={formik.handleChange}
+                                            name="available"
+                                            id="addAvailable"
+                                            placeholder="Vui lòng nhập số lượng..."
+                                        />
+                                    </div>
+                                )}
                                 <div className="form-check form-switch mb-3 col-4">
                                     <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
                                         Bày bán/Đấu giá
@@ -495,7 +523,7 @@ function ModalAddProduct(props) {
                                 Create
                             </Button>
                         )}
-                        <ToastContainer />
+                        <ToastContainer autoClose={1500}/>
                     </Modal.Footer>
                 </form>
             )}

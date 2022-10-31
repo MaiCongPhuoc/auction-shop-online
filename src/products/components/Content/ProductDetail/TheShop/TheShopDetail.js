@@ -432,7 +432,7 @@ function TheShopDetail() {
                                         data-view="more-lots-button"
                                         style={{ display: 'none' }}
                                     >
-                                        <a className="more-items animated pulse" rel="next" href>
+                                        <a className="more-items animated pulse" rel="next">
                                             <span className="loading-appended-items">
                                                 <i className="icon-spin icon-spinner">&nbsp;</i>
                                             </span>

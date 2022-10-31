@@ -6,6 +6,7 @@ import {
     INCREASING_CART_ITEM,
     REMOVE_CART_ITEM,
     REMOVE_CART_ITEMS,
+    ALL_CART_ITEM_BY_CART_ID
 } from './../API.js';
 
 class CartItemService {
@@ -13,8 +14,12 @@ class CartItemService {
         return axios.post(`${ADD_CART_ITEM}/${accountId}`, cartItem);
     }
 
-    static getCartItems(accountId) {
-        return axios.get(`${ALL_CART_ITEM}/${accountId}`);
+    static getCartItems(email) {
+        return axios.get(`${ALL_CART_ITEM}/${email}`);
+    }
+
+    static getCartItemsByCart(cartId) {
+        return axios.get(`${ALL_CART_ITEM_BY_CART_ID}/${cartId}`);
     }
 
     static getReduceCartItem(cartItemId) {

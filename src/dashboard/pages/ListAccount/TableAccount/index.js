@@ -211,10 +211,7 @@ function BangTaiKhoan() {
                 <Spiner />
             ) : (
                 <div className="shadow mb-4 cur-div" style={{ cursor: 'auto !important' }}>
-                    <div
-                        className="card-header d-flex justify-content-between;
-n"
-                    >
+                    <div className="card-header d-flex justify-content-between">
                         <h5 className="font-weight-bold text-primary" style={{ marginTop: '18px' }}>
                             Danh sách tài khoản
                         </h5>
@@ -376,7 +373,7 @@ n"
                                                               data-bs-toggle="modal"
                                                               data-bs-target="#btnDoiMK"
                                                               onClick={() =>
-                                                                setShowRestart({
+                                                                  setShowRestart({
                                                                       accountEditId: account.id,
                                                                       showRestart: true,
                                                                   })

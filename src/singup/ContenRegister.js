@@ -14,91 +14,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { loginStatus, setShowSignupInfo } from './../products/redux/actions';
+import AuthService from '../dashboard/services/AuthService';
+
 let flag = false;
 const ContenRegister = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
-
-    const [user, setUserDetails] = useState({
-        username: '',
-        fullName: '',
-        phone: '',
-        email: '',
-        avatar: '',
-        locationRegion: {
-            id: 0,
-            provinceId: null,
-            provinceName: null,
-            districtId: null,
-            districtName: null,
-            wardId: null,
-            wardName: null,
-            address: null,
-        },
-        password: '',
-        repassword: '',
-    });
-    const validateForm = (values) => {
-        const error = {};
-        const regex = /^[^\s+@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.username) {
-            error.username = 'Tên đăng nhập không được để trống!';
-        }
-        // if (!values.locationRegion.address) {
-        //     error.locationRegion.address = 'Địa chỉ không được để trống!';
-        // }
-        if (!values.fullName) {
-            error.fullName = 'Tên đầy đủ không được để trống!';
-        }
-        if (!values.email) {
-            error.email = 'Email không được để trống!';
-        } else if (!regex.test(values.email)) {
-            error.email = 'Nhập đúng định dạng Email!';
-        }
-        if (!values.password) {
-            error.password = 'Mật khẩu không được để trống!';
-        } else if (values.password.length < 7) {
-            error.password = 'Mật khẩu phải nhiều hơn 7 ký tự!';
-        } else if (values.password.length > 15) {
-            error.password = 'Mật khẩu không được vượt quá 15 ký tự!';
-        }
-        if (!values.cpassword) {
-            error.cpassword = 'Xác nhận mật khẩu là bắt buộc!';
-        } else if (values.cpassword !== values.password) {
-            error.cpassword = 'Xác nhận mật khẩu và mật khẩu phải giống nhau!';
-        }
-        return error;
-    };
-    const changeHandler = (e) => {
-        const { name, value } = e.target;
-        setUserDetails({
-            ...user,
-            [name]: value,
-        });
-    };
-    const signupHandler = (e) => {
-        e.preventDefault();
-        setFormErrors(validateForm(user));
-        setIsSubmit(true);
-    };
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            axios.post('http://localhost:8080/api/auth/register', user).then((res) => {
-                if (res.data) {
-                    console.log('user: ', user);
-                    dispatch(setShowSignupInfo(true));
-                    toast.success(`Đăng ký thành công!`);
-                    setTimeout(() => {
-                        navigate('/login', { replace: true });
-                    }, 2000);
-                } else {
-                }
-            });
-        }
-    }, [formErrors]);
-
     const [stateImg, setStateImg] = useState(false);
     const [img, setImg] = useState(
         'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
@@ -112,6 +33,16 @@ const ContenRegister = () => {
         districts: [],
         wards: [],
     });
+
+    useEffect(() => {
+        if (flag) {
+            async function register() {
+                await AuthService.postRegister(accountFrm);
+            }
+            register();
+        }
+    }, [accountFrm]);
+
     const { provinces } = state;
     const { districts, wards } = location;
     useEffect(() => {
@@ -125,19 +56,6 @@ const ContenRegister = () => {
             console.log(error);
         }
     }, []);
-    // useEffect(() => {
-    //     if (flag) {
-    //         try {
-    //             async function postData() {
-    //                 // let createRes = await axios.post('http://localhost:8080/api/auth/register')(accountFrm);
-    //                 // console.log('createRes: ', createRes.data);
-    //             }
-    //             postData();
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    // }, [accountFrm]);
 
     const handleProvince = (e) => {
         try {
@@ -200,8 +118,8 @@ const ContenRegister = () => {
     };
     const handleReset = () => {
         document.querySelector('#image').value = '';
-        handleReset();
-        // formik.handleReset();
+        // handleReset();
+        formik.handleReset();
     };
 
     const formik = useFormik({
@@ -215,7 +133,9 @@ const ContenRegister = () => {
             phone: '',
             blocked: 0,
             avatar: 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
-
+            role: {
+                id: 2,
+            },
             locationRegion: {
                 id: 0,
                 provinceId: 0,
@@ -230,13 +150,13 @@ const ContenRegister = () => {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(8, 'tên của bạn ít nhất là 8 kí tự!')
-                .max(20, 'tên của bạn tối đa nhất là 20 kí tự!')
+                .min(8, 'Tên của bạn ít nhất là 8 kí tự!')
+                .max(20, 'Tên của bạn tối đa nhất là 20 kí tự!')
                 .required('Vui lòng nhập tên vào!'),
             username: yup
                 .string()
-                .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
-                .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
+                .min(8, 'Tên sản phẩm nhỏ nhất là 8 kí tự!')
+                .max(20, 'Tên sản phẩm nhỏ nhất là 20 kí tự!')
                 .required('Vui lòng nhập tên sản phẩm vào!'),
             email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
@@ -276,8 +196,9 @@ const ContenRegister = () => {
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
             console.log('add count: ', account);
-            handleReset();
+            flag = true;
             setAccountFrm(account);
+            handleReset();
             notify();
         },
     });
@@ -297,14 +218,6 @@ const ContenRegister = () => {
         <>
             <form className="alo" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <div className="base-width-reg main-yield" style={{ maxWidth: '96%' }}>
-                    {/* <div className="sorter-wrapper col-6">
-                    <AccountInfo />
-                </div>
-                <div className="sorter-wrapper col-6">
-                    <AccountSingupPhone />
-                    <AccountSingupInfo />
-                    <AccountLocation />
-                </div> */}
                     <h3 style={{ color: 'yellow' }}>ĐĂNG KÝ THÔNG TIN TÀI KHOẢN</h3>
                     <hr />
                     <div className="modal-body">
@@ -325,15 +238,20 @@ const ContenRegister = () => {
                                 {formik.errors.phone && formik.errors.phone && (
                                     <li className="error">{formik.errors.phone}</li>
                                 )}
-                                {formik.errors.districtName && formik.errors.districtName && (
-                                    <li className="error">{formik.errors.districtName}</li>
+
+                                {formik.errors.locationRegionDistrictId && formik.errors.locationRegionDistrictId && (
+                                    <li className="error">{formik.errors.locationRegionDistrictId}</li>
                                 )}
-                                {formik.errors.wardName && formik.errors.wardName && (
-                                    <li className="error">{formik.errors.wardName}</li>
+                                {formik.errors.locationRegionWardId && formik.errors.locationRegionWardId && (
+                                    <li className="error">{formik.errors.locationRegionWardId}</li>
                                 )}
-                                {formik.errors.address && formik.errors.address && (
-                                    <li className="error">{formik.errors.address}</li>
+                                {formik.errors.locationRegionProvinceId && formik.errors.locationRegionProvinceId && (
+                                    <li className="error">{formik.errors.locationRegionProvinceId}</li>
                                 )}
+                                {formik.errors.locationRegionAddress && formik.errors.locationRegionAddress && (
+                                    <li className="error">{formik.errors.locationRegionAddress}</li>
+                                )}
+
                                 {formik.errors.username && formik.errors.username && (
                                     <li className="error">{formik.errors.username}</li>
                                 )}
@@ -344,7 +262,7 @@ const ContenRegister = () => {
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
                                     Tên đăng nhập:
                                 </label>
-                                <p style={{ color: 'red' }}>{formErrors.username}</p>
+                                {/* <p style={{ color: 'red' }}>{formErrors.username}</p> */}
                                 <input
                                     type="text"
                                     className="form-control"
@@ -359,7 +277,7 @@ const ContenRegister = () => {
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
                                     Tên đầy đủ:
                                 </label>
-                                <p style={{ color: 'red' }}>{formErrors.fullName}</p>
+                                {/* <p style={{ color: 'red' }}>{formErrors.fullName}</p> */}
                                 <input
                                     type="text"
                                     className="form-control"
@@ -374,7 +292,7 @@ const ContenRegister = () => {
                                 <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
                                     Email:
                                 </label>
-                                <p style={{ color: 'red' }}>{formErrors.email}</p>
+                                {/* <p style={{ color: 'red' }}>{formErrors.email}</p> */}
                                 <input
                                     type="Email"
                                     className="form-control"
@@ -391,7 +309,7 @@ const ContenRegister = () => {
                                 <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
                                     Mật khẩu:
                                 </label>
-                                <p style={{ color: 'red' }}>{formErrors.password}</p>
+                                {/* <p style={{ color: 'red' }}>{formErrors.password}</p> */}
                                 <input
                                     type="password"
                                     className="form-control"
@@ -406,7 +324,7 @@ const ContenRegister = () => {
                                 <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
                                     Nhập lại mật khẩu:
                                 </label>
-                                <p style={{ color: 'red' }}>{formErrors.cpassword}</p>
+                                {/* <p style={{ color: 'red' }}>{formErrors.cpassword}</p> */}
                                 <input
                                     type="password"
                                     className="form-control"
@@ -421,11 +339,11 @@ const ContenRegister = () => {
                                 <label htmlFor="addAvailable" className="form-label text-dark font-weight-bold ml-2">
                                     Số điện thoại:
                                 </label>
-                                <p style={{ color: 'red' }}>{formErrors.phone}</p>
+                                {/* <p style={{ color: 'red' }}>{formErrors.phone}</p> */}
                                 <input
                                     type="tel"
                                     className="form-control"
-                                    id="address"
+                                    id="phone"
                                     name="phone"
                                     placeholder="Vui lòng nhập số điện thoại..."
                                     value={formik.values.phone}
@@ -443,8 +361,8 @@ const ContenRegister = () => {
                                     id="province"
                                     name="locationRegion.provinceId"
                                     onInput={handleProvince}
-                                    onChange={changeHandler}
-                                    value={user.locationRegion.provinceId}
+                                    // value={formik.values.locationRegion.provinceId}
+                                    // onChange={formik.handleChange}
                                 >
                                     {provinces && (
                                         <option value={-1} key={-1} selected disabled>
@@ -466,9 +384,9 @@ const ContenRegister = () => {
                                     className="form-select select select-bg-ori"
                                     id="district"
                                     name="locationRegion.districtId"
+                                    // value={formik.values.locationRegion.districtId}
+                                    // onChange={formik.handleChange}
                                     onInput={handleDistrict}
-                                    onChange={changeHandler}
-                                    value={user.locationRegion.districtId}
                                 >
                                     {districts ? (
                                         ''
@@ -492,9 +410,9 @@ const ContenRegister = () => {
                                     className="form-select select select-bg-ori"
                                     id="ward"
                                     name="locationRegion.wardId "
+                                    // value={formik.values.locationRegion.wardId}
+                                    // onChange={formik.handleChange}
                                     onInput={handleWard}
-                                    onChange={changeHandler}
-                                    value={user.locationRegion.wardId}
                                 >
                                     {wards ? (
                                         ''
@@ -538,12 +456,12 @@ const ContenRegister = () => {
                                     id="address"
                                     name="locationRegion.address"
                                     placeholder="Vui lòng nhập địa chỉ..."
-                                    onChange={changeHandler}
-                                    value={user.locationRegion.address}
+                                    value={formik.values.address}
+                                    onChange={formik.handleChange}
                                 />
                             </div>
                         </div>
-                        <button className="signinBtn btn btn-primary" onClick={signupHandler}>
+                        <button type="submit" className="signinBtn btn btn-primary">
                             ĐĂNG KÝ
                         </button>
                     </div>
