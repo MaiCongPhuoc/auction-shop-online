@@ -24,7 +24,9 @@ const CartItem = () => {
 
     const [disableLoadQuantity, setDisableLoadQuantity] = useState(false);
 
-    const [checkQuantity, setCheckQuantity] = useState(true);
+    const [checkQuantity, setCheckQuantity] = useState(false);
+
+    const [choiceAll, setChoiceAll] = useState(false);
 
     const [idCartItem, setIdCartItem] = useState(0);
 
@@ -165,6 +167,10 @@ const CartItem = () => {
                 return [...prev, cartItem];
             };
         });
+    };
+
+    const handleChoiceAll = () => {
+        setChoiceItems(listCartItems);
     };
 
     const handleBuyCartItem = () => {
@@ -314,7 +320,7 @@ const CartItem = () => {
                                 }}
                             >
                                 <div className="col-12" style={{ display: 'flex', alignItems: 'center', height: '100px' }}>
-                                    <span className="col-1" style={{ color: '#367289', display: 'flex', justifyContent: 'flex-end' }}>
+                                    <span onClick={handleChoiceAll} className="col-1" style={{ color: '#367289', display: 'flex', justifyContent: 'flex-end' }}>
                                         <label class="container-check-cart col-3">
                                             <input type="checkbox" id="choice_all" />
                                             <span class="checkmark"></span>
