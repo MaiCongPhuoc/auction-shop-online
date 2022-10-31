@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fontsource/roboto": "^4.5.8",
@@ -23,25 +22,7 @@
     "antd": "^4.23.5",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "chart.js": "^2.9.4",
-    "classnames": "^2.3.1",
-    "jquery": "^3.6.1",
-    "jquery.easing": "^1.4.1",
-    "normalize.css": "^8.0.1",
-    "react": "^18.1.0",
-    "react-collapsed": "^3.4.0",
-    "react-dom": "^18.1.0",
-    "react-responsive": "^9.0.0",
-    "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
-    "startbootstrap-sb-admin-2": "^4.1.4",
-    "web-vitals": "^2.1.4"
-=======
-=======
     "chart.js": "^3.9.1",
->>>>>>> development
     "classnames": "^2.3.1",
     "faker": "^6.6.6",
     "formik": "^2.2.9",
@@ -75,7 +56,6 @@
     "sweetalert2-react-content": "^5.0.3",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
->>>>>>> development
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^4.1.0",
