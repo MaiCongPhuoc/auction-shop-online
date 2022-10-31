@@ -1,7 +1,7 @@
 import '../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
-import '../../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../../../assets/css/sb-admin-2.min.css';
 
+<<<<<<< HEAD
 import '../../../../node_modules/jquery/dist/jquery.min.js';
 import '../../../../node_modules/jquery.easing/jquery.easing.min.js';
 // import '../../../../node_modules/startbootstrap-sb-admin-2/js/sb-admin-2';
@@ -11,9 +11,11 @@ import Sidebar from './Sidebar';
 import Search from './Header/Search';
 import AccountAdmin from './Header/AccountAdmin';
 =======
+=======
+>>>>>>> development
 import Sidebar from '../../Layout/Sidebar';
-import Search from '../../Layout/Header/Search';
 import AccountAdmin from '../../Layout/Header/AccountAdmin';
+<<<<<<< HEAD
 import TongQuanThuNhap from './BieuDo/DoanhThuNam';
 import DoanhThu from './BieuDo/DoanhThuThang';
 import TongQuanDashboard from './TongQuanDashboard';
@@ -21,9 +23,17 @@ import Footer from '../../Layout/Footer';
 >>>>>>> development
 // import '../../../assets/js/chart-area-demo';
 // import '../../../assets/js/chart-pie-demo';
+=======
+import TurnoverYear from './ChartDashboard/TurnoverYear';
+import TurnoverMonth from './ChartDashboard/TurnoverMonth';
+import OverviewDashboard from './OverviewDashboard';
+import './OverviewDashboard/dashboard.css';
+import { useSelector } from 'react-redux';
+import { getShowModerationProduct } from '../../../products/redux/selector';
+>>>>>>> development
 
 function Dashboard() {
-    
+    const showModerationProduct = useSelector(getShowModerationProduct);
     return (
 <<<<<<< HEAD
         <div>
@@ -44,22 +54,20 @@ function Dashboard() {
                             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                                 <i className="fa fa-bars" />
                             </button>
-                            {/* Topbar Search */}
-                            <Search />
-                            {/* Topbar Navbar */}
+                            {/* <Search /> */}
                             <AccountAdmin />
                         </nav>
-                        {/* End of Topbar */}
-                        {/* Begin Page Content */}
                         <div className="container-fluid">
-                            {/* Page Heading */}
                             <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
+                                <h1 className="h3 mb-0 text-gray-800" style={{ fontWeight: 'bold' }}>
+                                    Auctions Shop Online
+                                </h1>
                                 <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                    <i className="fas fa-download fa-sm text-white-50" /> Generate Report
+                                    <i className="fas fa-download fa-sm text-white-50" /> File
                                 </a>
                             </div>
                             {/* Content Row */}
+<<<<<<< HEAD
 <<<<<<< HEAD
                             <div className="row">
                                 {/* Earnings (Monthly) Card Example */}
@@ -460,10 +468,18 @@ function Dashboard() {
                                 {/* Pie Chart */}
                                 <DoanhThu />
 >>>>>>> development
+=======
+                            <OverviewDashboard />
+                            {/* Content Row */}
+
+                            <div className="row dashboard">
+                                <TurnoverYear />
+                                {/* <TurnoverMonth /> */}
+>>>>>>> development
                             </div>
                         </div>
-                        {/* /.container-fluid */}
                     </div>
+<<<<<<< HEAD
                     {/* End of Main Content */}
                     {/* Footer */}
 <<<<<<< HEAD
@@ -478,15 +494,14 @@ function Dashboard() {
                     <Footer />
 >>>>>>> development
                     {/* End of Footer */}
+=======
+                    {/* <Footer /> */}
+>>>>>>> development
                 </div>
-                {/* End of Content Wrapper */}
             </div>
-            {/* End of Page Wrapper */}
-            {/* Scroll to Top Button*/}
             <a className="scroll-to-top rounded" href="#page-top">
                 <i className="fas fa-angle-up" />
             </a>
-            {/* Logout Modal*/}
             <div
                 className="modal fade"
                 id="logoutModal"

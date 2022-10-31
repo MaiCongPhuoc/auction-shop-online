@@ -1,52 +1,137 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { setShowCart, setShowAddProduct } from '../../../redux/actions';
+import { getAccount, getAllCartItems, getShowAddProduct, getReloadCartItem } from '../../../redux/selector';
 
-import React from "react";
+import { Link, useNavigate } from 'react-router-dom';
+
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Tippy from '@tippyjs/react';
+import ModalAdd from '../../../../dashboard/modal/product/ModalAdd';
+import CartItemService from '../../../service/CartItem/CartItemService';
+import { Swal } from 'sweetalert2';
+import { ToastContainer } from 'react-toastify';
+import AdminInfo from './../../../../dashboard/Layout/Header/adminInfo/AdminInfo';
 
 const HeaderAfterLogin = () => {
+    const dispatch = useDispatch();
+    const account = useSelector(getAccount);
+    const navigate = useNavigate();
+    const logout = () => {
+        localStorage.removeItem('loginUser');
+    };
+
+    const [cartItems, setListCartItems] = useState([]);
+
+    const reloadCartItem = useSelector(getReloadCartItem);
+
+    useEffect(() => {
+        try {
+            async function getCartItems() {
+                const allCartItems = await CartItemService.getCartItems(account.email);
+                setListCartItems(allCartItems.data);
+            }
+            getCartItems();
+        } catch (error) {
+            console.log(error);
+        }
+    }, [reloadCartItem]);
+
+    const handleShowModalAddProduct = () => {
+        dispatch(setShowAddProduct(true));
+    };
+
+    const renderAccount = () => {
+        return (
+            <div className="dropdown-menu-right shadow animated--grow-in accountAdmin" aria-labelledby="userDropdown">
+                {/* <a className="tippy-account p-2" href="#">
+                    <FontAwesomeIcon icon={faPlus} className="pr-2" />
+                    Add product
+                </a> */}
+                <a title="Thêm mới" type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
+                    <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Tạo sản phẩm
+                </a>
+            </div>
+        );
+    };
+    const showAddProduct = useSelector(getShowAddProduct);
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <div className="">
-                    <i className="fa-brands fa-opencart fa-2x ic-cart me-3" aria-hidden="true" />
-                </div>
+                <Link to={`/product/cart/${account.email}`} style={{ fontSize: '14px' }}>
+                    <i
+                        style={{ position: 'relative' }}
+                        className="fa-brands fa-opencart fa-2x ic-cart me-3"
+                        aria-hidden="true"
+                    >
+                        <span
+                            style={{
+                                textAlign: 'center',
+                                position: 'absolute',
+                                border: '0.5px solid white',
+                                width: 'auto',
+                                height: '20px',
+                                borderRadius: '10px',
+                                backgroundColor: 'red',
+                                color: 'white',
+                                fontSize: '12px',
+                                left: '30px',
+                                bottom: '15px',
+                                padding: '3px',
+                            }}
+                        >
+                            {cartItems.length}
+                        </span>
+                    </i>
+                </Link>
                 <div className="widget-notif-wrapper">
                     <div>
-
                         <div className="ic-notif-num">
-                            <i className="fa-regular fa-bell fa-2x ic-notif " aria-hidden="true" />
-                        </div>
-                        <div className="widget-posts-fb-wrapper hidden">
-                            <div className="post-fb-inner-wrapper">
-                                <div className="content-wrapper">
-                                    <div className="widget-tabs">
-                                        <div className="w11 w-tab show active">Updates</div>
-                                        <div className="w11 w-tab">Feedback</div>
-                                        <div className="w11 w-tab">Messages</div>
-                                    </div><div className="widget-posts-wrapper">
-                                        <div className="post-item list-view ">
-                                            <div className="post-header">
-                                                <div className="post-label">
-                                                    <i className="fal fa-comment-alt-smile" aria-hidden="true" style={{ color: 'rgb(43, 156, 214)' }} />Welcome</div>
-                                                <div className="post-time read">2 years ago</div>
-                                            </div>
-                                            <div>
-                                                <span className="post-title">Welcome to Charitybuzz! - </span>
-                                                <span className="post-description">Check out these tips to enhance your bidding experience</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="widget-footer shown">
-                                    <a href="/posts">View All Updates</a>
-                                </div>
-                            </div>
+                            <i
+                                style={{ position: 'relative' }}
+                                className="fa-regular fa-bell fa-2x ic-notif "
+                                aria-hidden="true"
+                            >
+                                <span
+                                    style={{
+                                        textAlign: 'center',
+                                        position: 'absolute',
+                                        border: '0.5px solid white',
+                                        width: 'auto',
+                                        height: '20px',
+                                        borderRadius: '10px',
+                                        backgroundColor: 'red',
+                                        color: 'white',
+                                        fontSize: '12px',
+                                        left: '15px',
+                                        bottom: '15px',
+                                        padding: '3px',
+                                    }}
+                                >
+                                    1
+                                </span>
+                            </i>
+                            <Tippy
+                                placement="bottom-end"
+                                interactive
+                                content={renderAccount()}
+                                hideOnClick={true}
+                                trigger="click"
+                            >
+                                <button className="logged_in_name mx-3" href="#">
+                                    THAO TÁC THÊM
+                                </button>
+                            </Tippy>
                         </div>
                     </div>
                 </div>
-                <a className="logged_in_name" href="#">Trần Trung</a> |
-                <a style={{width: '120px'}} id="customer-logout-link" className="new-login-button" rel="nofollow" href="/logout">LOG OUT</a>
             </div>
+            <AdminInfo />
+            <ModalAdd />
+            <ToastContainer autoClose={1500} />
         </div>
-    )
-}
+    );
+};
 
 export default HeaderAfterLogin;

@@ -5,6 +5,7 @@ import { FormatMoney } from './../../../Hooks/Hooks';
 import NotFound from './../../Loading/NotFound';
 import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
 import Searching from './../../Loading/Searching';
+import { Link } from 'react-router-dom';
 
 
 const ContentResultFilters = () => {
@@ -29,9 +30,9 @@ const ContentResultFilters = () => {
         }
     }, []);
 
-    const handleShowInfoProduct = () => {
-        dispatch(setShowInfoProduct(true));
-    };
+    // const handleShowInfoProduct = () => {
+    //     dispatch(setShowInfoProduct(true));
+    // };
 
     const loadData = useSelector(getLoadData);
 
@@ -39,9 +40,11 @@ const ContentResultFilters = () => {
         <div className="lot-cards grid-x grid-margin-x">
             {loadData ? <Searching /> : (checkData ? (
                 products.map(product => (
-                    <a key={product.id} className="card small-12 medium-6 cell" onClick={handleShowInfoProduct} style={{ transform: 'none' }}>
+                    <a key={product.id} className="card small-12 medium-6 cell"
+                        // onClick={handleShowInfoProduct} 
+                        style={{ transform: 'none' }}>
                         {product.action ? (
-                            <>
+                            <Link to={`/auction/${product.id}`} style={{color: '#333'}}>
                                 <figure className="card__image">
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
                                     <div className="add-to-watchlist">
@@ -78,9 +81,9 @@ const ContentResultFilters = () => {
                                         <span className="tertiary-container__optional-group" />
                                     </div>
                                 </div>
-                            </>
+                            </Link>
                         ) : (
-                            <>
+                            <Link to={`/product/the-shop/${product.slug}`} style={{color: '#333'}}>
                                 <figure className="card__image">
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
                                     <div className="add-to-watchlist">
@@ -98,15 +101,16 @@ const ContentResultFilters = () => {
 
                                     </div>
                                     <h3 className="card__title">
-                                        <span>Iphone 10</span>
+                                        <span>{product.title}</span>
                                     </h3>
                                     <div className="card__stats-group">
                                         <div className="stats-group__stat">
                                             <b>Số lượng còn lại:</b> {product.available}
                                         </div>
                                         <div className="stats-group__stat">
-                                            <b>Giá sản phẩm (VNĐ):</b>
-                                            <div className="stat__price ItemCard-module__binPriceCentered___3hyVZ">{FormatMoney(product.price)}
+                                            <b>Giá sản phẩm:</b>
+                                            <div className="stat__price ItemCard-module__binPriceCentered___3hyVZ">
+                                                {FormatMoney(product.price)} ₫
                                             </div>
                                         </div>
                                         <div className="ItemCard-module__marketPrice___3E7JK">
@@ -119,7 +123,7 @@ const ContentResultFilters = () => {
                                         <span className="tertiary-container__optional-group" />
                                     </div>
                                 </div>
-                            </>
+                            </Link>
                         )}
                     </a>
                 ))

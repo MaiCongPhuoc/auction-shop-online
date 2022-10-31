@@ -8,7 +8,9 @@ function SidebarComponent() {
             <a className="nav-link collapsed" href="#" {...getToggleProps()}>
                 <i className="fas fa-fw fa-cog" />
                 <span>Components</span>
-                <i className='iconSidebar'>{isExpanded ? <FontAwesomeIcon icon={faAngleDown} /> : <FontAwesomeIcon icon={faAngleRight} />}</i>
+                <i className="iconSidebar">
+                    {isExpanded ? <FontAwesomeIcon icon={faAngleDown} /> : <FontAwesomeIcon icon={faAngleRight} />}
+                </i>
             </a>
             <div id="collapseTwo" className="collapse" {...getCollapseProps()}>
                 <div className="bg-white py-2 collapse-inner rounded">

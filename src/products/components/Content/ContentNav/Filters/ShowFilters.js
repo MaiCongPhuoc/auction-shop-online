@@ -45,7 +45,7 @@ const ShowFilters = () => {
     return (
         <div id="mySidenav" className="sidenav">
             <a href="#" className="closebtn">
-                <i className="fa-regular fa-circle-xmark" onClick={handleCloseFilters}></i>
+                <i style={{fontSize: 'inherit'}} className="fa-regular fa-circle-xmark" onClick={handleCloseFilters}></i>
             </a>
 
             <Row justify='center' style={{ margin: 30 }}>
@@ -87,7 +87,6 @@ const ShowFilters = () => {
                                 <Tag color={color}>{category.title}</Tag>
                             </Select.Option>
                         ))}
-
                     </Select>
                 </Col>
             </Row>

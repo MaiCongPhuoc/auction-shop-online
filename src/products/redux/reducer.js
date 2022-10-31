@@ -4,6 +4,9 @@ import loginReducer from './../Slice/LoginSlice';
 import categoriesReducer from './../Slice/CategorySlice';
 import filtersReducer from './../Slice/FiltersSlice';
 import modalReducer from './../Slice/ModalSlice';
+import accountReducer from './../Slice/AccountSlice';
+import cartItemsReducer from '../Slice/CartItemSlice';
+import orderReducer from '../Slice/OrderSlice';
 
 const rootReducer = (state = {}, action) => {
     return {
@@ -12,8 +15,12 @@ const rootReducer = (state = {}, action) => {
         login: loginReducer(state.login, action),
         categories: categoriesReducer(state.categories, action),
         filters: filtersReducer(state.filters, action),
-        modals: modalReducer(state.modals, action)
+        modals: modalReducer(state.modals, action),
+        account: accountReducer(state.account, action),
+        cartItems: cartItemsReducer(state.cartItems, action),
+        orders: orderReducer(state.orders, action)
     }   
 }
 
 export default rootReducer;
+

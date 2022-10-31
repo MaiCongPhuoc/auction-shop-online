@@ -3,17 +3,18 @@ import { Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import ProductService from '../../../services/productService';
-import CategoryService from '../../../services/category';
-import ProductMediaService from '../../../services/productImageService';
+import CategoryService from '../../../services/Category';
+import ProductMediaService from '../../../services/ProductImageService';
+import FileService from '../../../services/FileService';
+import '../../modal.css';
 
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
 function ModalEditProduct(props) {
     const { showEdit, productEditId, handleCloseEdit } = props;
-    console.log('productEditId: ', productEditId);
-    console.log('showEdit: ', showEdit);
-    const [radio, setRadio] = useState(true);
+    // console.log('showEdit: ', showEdit);
+    const [radio, setRadio] = useState(false);
     const [stateImg, setStateImg] = useState(false);
     const [category, setCategory] = useState({
         loading: false,
@@ -35,44 +36,91 @@ function ModalEditProduct(props) {
             id: 0,
         },
         description: '',
+        images: [],
     });
     const [product, setProduct] = useState({});
     const handleUpload = (e) => {
         listImg.shift();
         async function uploadAvatar(productEditId) {
-            let images = await ProductMediaService.getListMedia(productEditId)
-            console.log('images.data: ', images.data);
-            // for (let i = 0; i < e.target.files.length; i++) {
-            //     setStateImg(true);
-            //     let uploadResult = await FileService.Upload(e.target.files[i]);
-            //     listImg.push(uploadResult.data.url);
-            //     console.log(listImg);
-            //     setStateImg(false);
-            // }
+            setStateImg(true);
+            let images = await ProductMediaService.getListMedia(productEditId);
+            for (let i = 0; i < images.data.length; i++) {
+                await FileService.destroy(images.data[i].fileUrl);
+                await ProductMediaService.DeleteMedia(images.data[i].id);
+            }
+            for (let i = 0; i < e.target.files.length; i++) {
+                let uploadResult = await FileService.Upload(e.target.files[i]);
+                listImg.push(uploadResult.data.url);
+            }
+            setTimeout(() => {
+                setStateImg(false);
+            }, 1000 * 2);
+            console.log('listImg: ', listImg);
         }
         uploadAvatar(productEditId);
     };
     useEffect(() => {
         try {
-            setCategory({ ...category, loading: true });
-            async function getCate() {
-                let category = await CategoryService.getCategory();
-                let apiProduct = await ProductService.ProductById(productEditId);
-                console.log('product api: ', apiProduct.data);
-                setCategory({ ...categorys, categorys: category.data, loading: false });
-                setProduct({...apiProduct.data})
+            if (productEditId !== 0 && productEditId !== undefined) {
+                setCategory({ ...category, loading: true });
+                async function getCate() {
+                    let category = await CategoryService.getCategory();
+                    let apiProduct = await ProductService.ProductById(productEditId);
+                    console.log('product api: ', apiProduct.data);
+                    setCategory({ ...categorys, categorys: category.data, loading: false });
+                    setProduct({ ...apiProduct.data });
+                }
+                getCate();
             }
-            getCate();
         } catch (error) {
             setCategory({ ...categorys, errorMessage: error.message, loading: false });
         }
     }, [showEdit]);
+    useEffect(() => {
+        if (flag) {
+            try {
+                async function postData(submitFrm) {
+                    setCategory({ ...category, loading: true });
+                    await ProductService.EditProduct(submitFrm, productEditId);
+                }
+                postData(submitFrm);
+                // async function saveAvatar() {
+                //     for (let i = 0; i < listImg.length; i++) {
+                //         let img = {
+                //             id: 0,
+                //             fileUrl: listImg[i],
+                //         };
+                //         await ProductMediaService.AddMedia(img);
+                //     }
+                //     listImg = [];
+                // }
+                // saveAvatar();
+                setCategory({ ...category, loading: false });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }, [submitFrm]);
+    const handleCloseEditProduct = () => {
+        document.querySelector('#image').value = '';
+        listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
+        formik.handleReset();
+        handleCloseEdit();
+    };
+
+    const handleReset = () => {
+        document.querySelector('#image').value = '';
+        listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
+        formik.handleReset();
+
+    };
+
     const formik = useFormik({
         initialValues: {
             action: product.action,
             available: product.available,
-            image: product.image,
-            moderation: product.moderation,
+            image: 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg',
+            moderation: 0,
             price: product.price,
             slug: product.slug,
             sold: product.sold,
@@ -82,6 +130,8 @@ function ModalEditProduct(props) {
                 id: product.categoryId,
             },
             description: product.description,
+            countday: product.countday,
+            images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
         },
         validationSchema: yup.object({
             title: yup
@@ -101,21 +151,28 @@ function ModalEditProduct(props) {
                 .required('Vui lòng đổi  số lượng!'),
             action: yup.string(),
             image: yup.mixed(),
-            description: yup.string(),
+            description: yup.string().required('Vui lòng sửa lại mô tả!'),
         }),
         onSubmit: (product) => {
             product.action = radio;
             flag = true;
+            listImg.reverse();
+            product.image = listImg[0];
+            product.images = listImg;
             product.category.id = Number(document.querySelector('#category').value);
+            // product.countday = document.querySelector('#countday').value;
+            console.log('product: ', product);
             setSubmitFrm(product);
+            handleReset();
         },
         onReset: (product) => {
             console.log('onReset 2: ', product);
         },
     });
+    console.log('product: ', product);
 
     return (
-        <Modal show={showEdit} onHide={handleCloseEdit} backdrop="static" keyboard={false} size="xl">
+        <Modal show={showEdit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
                 <Modal.Title style={{ color: 'black' }}>Add Product</Modal.Title>
             </Modal.Header>
@@ -142,39 +199,145 @@ function ModalEditProduct(props) {
                             {formik.errors.image && formik.touched.image && (
                                 <li className="error">{formik.errors.image}</li>
                             )}
+                            {formik.errors.description && formik.touched.description && (
+                                <li className="error">{formik.errors.description}</li>
+                            )}
                         </ul>
                     </div>
                     <div className="modal-body">
-                        <div className="row">
-                            <div className="mb-3 col-6">
-                                <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
-                                    Tên sản phẩm
-                                </label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    name="title"
-                                    id="addTitle"
-                                    placeholder="Vui lòng nhập tên sản phẩm..."
-                                    value={formik.values.title || product.title}
-                                    onChange={formik.handleChange}
-                                />
-                            </div>
-                            <div className="mb-3 col-6">
-                                <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
-                                    Giá
-                                </label>
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    name="price"
-                                    id="addPrice"
-                                    placeholder="Vui lòng nhập giá..."
-                                    value={formik.values.price || product.price}
-                                    onChange={formik.handleChange}
-                                />
-                            </div>
-                        </div>
+                    {radio ? (
+                                    <div className="row">
+                                        <div className="col-6 d-flex">
+                                            <div className="col-6">
+                                                <label
+                                                    htmlFor="addTitle"
+                                                    className="form-label text-dark font-weight-bold ml-2"
+                                                >
+                                                    Tên sản phẩm
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="title"
+                                                    id="addTitle"
+                                                    placeholder="Vui lòng nhập tên sản phẩm..."
+                                                    value={formik.values.title}
+                                                    onChange={formik.handleChange}
+                                                />
+                                            </div>
+                                            <div className="col-6">
+                                                <label
+                                                    htmlFor="addPrice"
+                                                    className="form-label text-dark font-weight-bold ml-2"
+                                                >
+                                                    Giá khởi điểm:
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    name="price"
+                                                    id="addPrice"
+                                                    placeholder="Vui lòng nhập giá..."
+                                                    value={formik.values.price}
+                                                    onChange={formik.handleChange}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-6 d-flex">
+                                            <div className="col-6">
+                                                <label
+                                                    htmlFor="addTitle"
+                                                    className="form-label text-dark font-weight-bold ml-2"
+                                                >
+                                                    Giá ước tính:
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    name="estimatePrice"
+                                                    id="addTitle"
+                                                    placeholder="Vui lòng nhập giá ước tính..."
+                                                    value={formik.values.estimatePrice}
+                                                    onChange={formik.handleChange}
+                                                />
+                                            </div>
+                                            <div className="mb-3 col-6">
+                                                <label
+                                                    htmlFor="addPrice"
+                                                    className="form-label text-dark font-weight-bold ml-2"
+                                                >
+                                                    Ngày kết thúc:
+                                                </label>
+                                                <select
+                                                    className="form-select select select-bg-ori"
+                                                    id="countday"
+                                                    name="countday"
+                                                    value={formik.values.countday}
+                                                    onChange={formik.handleChange}
+                                                >
+                                                    <option value="1" key="">
+                                                        1
+                                                    </option>
+                                                    <option value="2" key="">
+                                                        2
+                                                    </option>
+                                                    <option value="3" key="">
+                                                        3
+                                                    </option>
+                                                    <option value="4" key="">
+                                                        4
+                                                    </option>
+                                                    <option value="5" key="">
+                                                        5
+                                                    </option>
+                                                    <option value="6" key="">
+                                                        6
+                                                    </option>
+                                                    <option value="7" key="">
+                                                        7
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <label
+                                                htmlFor="addTitle"
+                                                className="form-label text-dark font-weight-bold ml-2"
+                                            >
+                                                Tên sản phẩm
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                name="title"
+                                                id="addTitle"
+                                                placeholder="Vui lòng nhập tên sản phẩm..."
+                                                value={formik.values.title}
+                                                onChange={formik.handleChange}
+                                            />
+                                        </div>
+                                        <div className="col-6">
+                                            <label
+                                                htmlFor="addPrice"
+                                                className="form-label text-dark font-weight-bold ml-2"
+                                            >
+                                                Giá
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                name="price"
+                                                id="addPrice"
+                                                placeholder="Vui lòng nhập giá..."
+                                                value={formik.values.price}
+                                                onChange={formik.handleChange}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                         <div className="row">
                             <div className="mb-3 col-4">
                                 <label htmlFor="addAvailable" className="form-label text-dark font-weight-bold ml-2">
@@ -200,12 +363,12 @@ function ModalEditProduct(props) {
                                             className="form-check-input"
                                             type="radio"
                                             name="action"
-                                            checked
+                                            {...(radio && 'checked')}
                                             id="flexRadioDefault1"
                                             value={true}
                                             onClick={() => setRadio(true)}
                                         />
-                                        Bán
+                                        Đấu giá
                                     </label>
                                 </div>
                                 <div className="form-check">
@@ -214,12 +377,13 @@ function ModalEditProduct(props) {
                                             className="form-check-input"
                                             type="radio"
                                             name="action"
+                                            {...(radio && 'checked')}
                                             // onInput={handleChange}
                                             id="flexRadioDefault2"
                                             value={false}
                                             onClick={() => setRadio(false)}
                                         />
-                                        Đấu giá
+                                        Bán
                                     </label>
                                 </div>
                             </div>
@@ -228,7 +392,7 @@ function ModalEditProduct(props) {
                                     Thể loại
                                 </label>
                                 <select
-                                    className="form-select select"
+                                    className="form-select select select-bg-ori"
                                     id="category"
                                     name="category.id"
                                     value={formik.values.category.id || product.categoryId}
@@ -260,6 +424,18 @@ function ModalEditProduct(props) {
                                     placeholder="Vui lòng chọn file..."
                                     onInput={handleUpload}
                                 />
+                                <div className="row d-flex justify-content-around">
+                                    {listImg.map((image, index) => (
+                                        <div className="col-3 imgAdd" key={index} style={{ height: '200px' }}>
+                                            <img
+                                                src={image}
+                                                alt=""
+                                                onClick={() => document.querySelector('#image').click()}
+                                                className="imgproduct"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                         <div className="row">
@@ -271,6 +447,7 @@ function ModalEditProduct(props) {
                                     className="form-control"
                                     id="description"
                                     rows="3"
+                                    name="description"
                                     value={formik.values.description || product.description}
                                     onChange={formik.handleChange}
                                 ></textarea>
@@ -279,7 +456,7 @@ function ModalEditProduct(props) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button type="reset" variant="secondary" onClick={handleCloseEdit}>
+                    <Button type="reset" variant="secondary w-auto" onClick={handleCloseEditProduct}>
                         Close
                     </Button>
                     {stateImg ? (
