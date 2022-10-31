@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import GoogleAndFacebook from './GoogleAndFacebook';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import Swal from 'sweetalert2';
 import './asset/css/content.css';
 import './asset/css/login.css';
@@ -10,120 +12,105 @@ import { useDispatch } from 'react-redux';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import AuthService from '../dashboard/services/AuthService';
 
+let flag = false;
 const ContentLogin = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
-    const [user, setUserDetails] = useState({
+    const [user, setUser] = useState({
         email: '',
         password: '',
     });
-    const [userstate, setUserState] = useState({});
 
-    const changeHandler = (e) => {
-        const { name, value } = e.target;
-        setUserDetails({
-            ...user,
-            [name]: value,
-        });
-    };
-    const validateForm = (values) => {
-        const error = {};
-        const regex = /^[^\s+@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.email) {
-            error.email = 'Email is required';
-        } else if (!regex.test(values.email)) {
-            error.email = 'Please enter a valid email address';
-        }
-        if (!values.password) {
-            error.password = 'Password is required';
-        }
-        return error;
-    };
-    const loginHandler = (e) => {
-        e.preventDefault();
-        setFormErrors(validateForm(user));
-        setIsSubmit(true);
-    };
     useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            axios
-                .post('http://localhost:8080/api/auth/login', user)
-                .then((res) => {
-                    axios.get('http://localhost:8080/api/accounts/getAccountEmail/' + res.data.name).then((res) => {
-                        if (res.data.role.id === 2) {
-                            dispatch(loginStatus(true));
-                            setUserState(res.data.user);
-                            dispatch(setAccount(res.data));
-                            toast.success(`Đăng nhập thành công!`);
-                            setTimeout(() => {
-                                navigate('/product', { replace: true });
-                            }, 2000);
-                        }
-                        if (res.data.role.id === 1) {
-                            setUserState(res.data.user);
-                            dispatch(loginStatus(true));
-                            dispatch(setAccount(res.data));
-                            toast.success(`Đăng nhập thành công!`);
-                            setTimeout(() => {
-                                navigate('/dashboard', { replace: true });
-                            }, 2000);
-                        }
-                    });
-                })
-                .catch((res) => {
-                    dispatch(loginStatus(false));
-                    toast.warning(res.response.data.exceptionMessage);
-                    setTimeout(() => {
-                        navigate('/login', { replace: true });
-                    }, 2000);
-                });
+        if (flag) {
+            try {
+                async function login() {
+                    let userLogin = await AuthService.postLogin(user);
+                    setUser(userLogin.data);
+                    console.log('userLogin.data: ', userLogin.data.roles[0].authority);
+                    dispatch(loginStatus(true));
+                    dispatch(setAccount(userLogin.data));
+                    toast.success(`Đăng nhập thành công!`);
+                    // navigate('/dashboard', { replace: true });
+                }
+                login();
+                flag = false;
+                console.log('user: ', user);
+            } catch (error) {}
         }
-    }, [formErrors]);
+    }, [user]);
+
+    const handleReset = () => {
+        formik.handleReset();
+    };
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: yup.object({
+            email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
+            password: yup
+                .string()
+                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .max(20, 'Mật khẩu tối đa là 20 kí tự!')
+                .required('Vui lòng nhập mật khẩu!'),
+        }),
+        onSubmit: (account) => {
+            flag = true;
+            setUser(account);
+            console.log('add count: ', account);
+            handleReset();
+        },
+    });
     return (
-        <div>
-            <form>
-                <div className="base-width main-yield">
-                    <div className="login" data-pages-shell>
-                        <div data-react-class="onboarder/OnBoarderRouter" data-react-props>
-                            <div className="OnBoarder-module__wrapper___3_Izy onboarder">
-                                <div className="col-12">
-                                    <div id="loginWrapper">
-                                        <div id="loginForm">
-                                            <div className="loginNav">
-                                                <h1>Đăng nhập tài khoản của bạn để trải nghiệm!</h1>
-                                            </div>
-                                            {/* <span className="d-block mt-3 text-danger fw-bold">{errMess}</span> */}
-                                            <span className="d-block mt-3 text-danger fw-bold"></span>
+        <div className="base-width main-yield">
+            <div className="login" data-pages-shell>
+                <div data-react-class="onboarder/OnBoarderRouter" data-react-props>
+                    <div className="OnBoarder-module__wrapper___3_Izy onboarder">
+                        <div className="col-12">
+                            <div id="loginWrapper">
+                                <div id="loginForm">
+                                    <div className="loginNav">
+                                        <h1>Đăng nhập tài khoản của bạn để trải nghiệm!</h1>
+                                    </div>
 
-                                            {/* <form onSubmit={loginHandler} readOnly> */}
-                                            <form>
-                                                <div className="inputGroup">
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        id="email"
-                                                        placeholder="Email"
-                                                        onChange={changeHandler}
-                                                        value={user.email}
-                                                    />
-                                                    <p>{formErrors.email}</p>
-                                                </div>
-
-                                                <div className="inputGroup">
-                                                    <input
-                                                        type="password"
-                                                        name="password"
-                                                        id="password"
-                                                        placeholder="Password"
-                                                        onChange={changeHandler}
-                                                        value={user.password}
-                                                    />
-                                                    <p>{formErrors.password}</p>
-                                                </div>
-                                                {/* <div className="row col-12">
+                                    {/* <form onSubmit={loginHandler} readOnly> */}
+                                    <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
+                                        <div className="frmError">
+                                            <ul>
+                                                {formik.errors.email && formik.errors.email && (
+                                                    <li className="error">{formik.errors.email}</li>
+                                                )}
+                                                {formik.errors.password && formik.errors.password && (
+                                                    <li className="error">{formik.errors.password}</li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="inputGroup">
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                id="email"
+                                                placeholder="Nhập email..."
+                                                value={formik.values.email}
+                                                onChange={formik.handleChange}
+                                            />
+                                        </div>
+                                        <div className="inputGroup">
+                                            <input
+                                                type="password"
+                                                name="password"
+                                                id="password"
+                                                placeholder="Nhập mật khẩu..."
+                                                value={formik.values.password}
+                                                onChange={formik.handleChange}
+                                            />
+                                        </div>
+                                        {/* <div className="row col-12">
                                                 <div className="google col-6">
                                                     <Google />
                                                 </div>
@@ -131,27 +118,25 @@ const ContentLogin = () => {
                                                     <Facebook />
                                                 </div>
                                             </div> */}
-                                                <button className="loginBtn" onClick={loginHandler}>
-                                                    Đăng Nhập
-                                                </button>
-                                                <br />
-                                                <br />
-                                                <GoogleAndFacebook />
-                                                <div className="loginFooter">
-                                                    {/* <button className="forgetPass" onClick={forgetPass}>
+                                        <button type="submit" className="loginBtn">
+                                            Đăng Nhập
+                                        </button>
+                                        <br />
+                                        <br />
+                                        <GoogleAndFacebook />
+                                        <div className="loginFooter">
+                                            {/* <button className="forgetPass" onClick={forgetPass}>
                                                 Quên Mật Khẩu?
                                             </button> */}
-                                                    <button className="forgetPass">Quên Mật Khẩu?</button>
-                                                </div>
-                                            </form>
+                                            <button className="forgetPass">Quên Mật Khẩu?</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
             <ToastContainer autoClose={1500} />
         </div>
     );

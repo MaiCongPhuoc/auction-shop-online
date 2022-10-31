@@ -10,6 +10,8 @@ import ModalRestartPassword from '../../../modal/account/ModalRestartPassWord';
 import Swal from 'sweetalert2';
 import '../../pages.css';
 import Tippy from '@tippyjs/react';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 function BangTaiKhoan() {
     const [state, setState] = useState({
@@ -49,13 +51,13 @@ function BangTaiKhoan() {
 
     const notify = (id) =>
         Swal.fire({
-            title: 'Bạn chắc chứ',
-            text: 'Bạn sẽ không hoàn tác lại nó!',
+            title: 'Bạn chắc không?',
+            text: 'Bạn sẽ không hoàn tác lại!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Vâng, Tôi xóa nó!',
+            confirmButtonText: 'Vâng! Tôi xóa nó',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function daleteAcount() {
@@ -63,7 +65,8 @@ function BangTaiKhoan() {
                     setReRender(!reRender);
                 }
                 daleteAcount();
-                Swal.fire('Đã xóa!', 'Bạn đã xóa người dùng này.', 'thành công');
+                Swal.fire('</br> Đã xóa!', 'Bạn đã xóa người dùng này.', 'Thành công!');
+                // toast.success(`Đã xóa thành công!`);
             }
         });
 
@@ -208,7 +211,9 @@ function BangTaiKhoan() {
                 <Spiner />
             ) : (
                 <div className="shadow mb-4 cur-div" style={{ cursor: 'auto !important' }}>
-                    <div className="card-header d-flex justify-content-between">
+                    <div
+                        className="card-header d-flex justify-content-between"
+                    >
                         <h5 className="font-weight-bold text-primary" style={{ marginTop: '18px' }}>
                             Danh sách tài khoản
                         </h5>
@@ -436,6 +441,7 @@ function BangTaiKhoan() {
                             </div>
                         </div>
                     </div>
+                    <ToastContainer autoClose={1500} />
                 </div>
             )}
 
@@ -451,7 +457,6 @@ function BangTaiKhoan() {
 
             {/* ====================== Modal RestartPassword ======================== */}
             <ModalRestartPassword showRestart={showRestart} onCloseRestarPassword={hanldCloseRestartPassword} />
-
             {/* ======================= Modal detail ======================= */}
             <ModalDetailAccount
                 showDetail={showdetail}
