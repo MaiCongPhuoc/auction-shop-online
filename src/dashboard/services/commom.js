@@ -33,3 +33,5 @@ export const CATEGORY_ID = 'http://localhost:8080/api/categories';
 export const MODERATION_BY_PRODUCT_ID_URL = 'http://localhost:8080/api/auctions/auction';
 export const BID_URL = 'http://localhost:8080/api/bids/create';
 export const LISTBID_URL = 'http://localhost:8080/api/bids/auction';
+
+export const BARCHART_URL = 'http://localhost:8080/api/orders-detail/chart';
