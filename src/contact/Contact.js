@@ -4,7 +4,7 @@ import store from '../products/redux/store';
 import Header from '../products/components/Header/Header';
 import Penguin from '../PenGuin/Penguin';
 import './asset/css/contact.css';
-import Footer from '../products/components/Footer/Footer';
+import Footer from '../products/components/Footer/Footer.js';
 const Contact = () => {
     return (
         <Provider store={store}>
