@@ -16,9 +16,7 @@ function SidebarUtilities() {
             </a>
             <div id="collapseUtilities" className="collapse" {...getCollapseProps()}>
                 <div className="bg-white py-2 collapse-inner rounded">
-                    <Link to="/list-account">
-                        <i class="fa-solid fa-file"></i> Danh sách
-                    </Link>
+                    <Link to="/list-account">Danh sách</Link>
                 </div>
             </div>
         </li>

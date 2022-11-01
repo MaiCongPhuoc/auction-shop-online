@@ -7,10 +7,12 @@ import 'slick-carousel/slick/slick-theme.css';
 
 function ModalDetailProduct(props) {
     const { product, showdetail, handleCloseDetail, productIdDetail } = props;
-    const [imageProduct, setImageProduct] = useState([{
-        id: 0,
-        fileUrl: '',
-    }]);
+    const [imageProduct, setImageProduct] = useState([
+        {
+            id: 0,
+            fileUrl: '',
+        },
+    ]);
     const settings = {
         dots: true,
         infinite: true,
@@ -51,7 +53,7 @@ function ModalDetailProduct(props) {
 
                     <div className="col-md-7 ml-5">
                         <div className="row">
-                            <h5 className="col-sm-4">Title:</h5>
+                            <h5 className="col-sm-4">Tên sản phẩm:</h5>
                             <p className="col-sm-8">{product.title}</p>
                         </div>
                         <div className="row">
@@ -103,7 +105,7 @@ function ModalDetailProduct(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleCloseDetail}>
-                    Close
+                    Đóng
                 </Button>
             </Modal.Footer>
         </Modal>

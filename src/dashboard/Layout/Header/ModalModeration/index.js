@@ -62,7 +62,7 @@ function ModalDetailProduct(props) {
                     console.log('moderation.data: ', moderation.data);
                 }
                 getModeration();
-                Swal.fire('Đã kiểm duyệt!', 'Bạn đã kiểm duyệt sản phẩm này.', 'thành công').then(() =>
+                Swal.fire('<br/> Đã kiểm duyệt!', 'Bạn đã kiểm duyệt sản phẩm này.', 'Thành công!').then(() =>
                     handleCloseModeration(),
                 );
             }

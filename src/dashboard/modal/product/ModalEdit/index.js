@@ -112,7 +112,6 @@ function ModalEditProduct(props) {
         document.querySelector('#image').value = '';
         listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
         formik.handleReset();
-
     };
 
     const formik = useFormik({
@@ -174,7 +173,7 @@ function ModalEditProduct(props) {
     return (
         <Modal show={showEdit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Add Product</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Cập nhật sản phẩm</Modal.Title>
             </Modal.Header>
             {/* {loading ? (
                 <span className="spinner-border text-warning"></span>
@@ -205,139 +204,133 @@ function ModalEditProduct(props) {
                         </ul>
                     </div>
                     <div className="modal-body">
-                    {radio ? (
-                                    <div className="row">
-                                        <div className="col-6 d-flex">
-                                            <div className="col-6">
-                                                <label
-                                                    htmlFor="addTitle"
-                                                    className="form-label text-dark font-weight-bold ml-2"
-                                                >
-                                                    Tên sản phẩm
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="title"
-                                                    id="addTitle"
-                                                    placeholder="Vui lòng nhập tên sản phẩm..."
-                                                    value={formik.values.title}
-                                                    onChange={formik.handleChange}
-                                                />
-                                            </div>
-                                            <div className="col-6">
-                                                <label
-                                                    htmlFor="addPrice"
-                                                    className="form-label text-dark font-weight-bold ml-2"
-                                                >
-                                                    Giá khởi điểm:
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    className="form-control"
-                                                    name="price"
-                                                    id="addPrice"
-                                                    placeholder="Vui lòng nhập giá..."
-                                                    value={formik.values.price}
-                                                    onChange={formik.handleChange}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col-6 d-flex">
-                                            <div className="col-6">
-                                                <label
-                                                    htmlFor="addTitle"
-                                                    className="form-label text-dark font-weight-bold ml-2"
-                                                >
-                                                    Giá ước tính:
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    className="form-control"
-                                                    name="estimatePrice"
-                                                    id="addTitle"
-                                                    placeholder="Vui lòng nhập giá ước tính..."
-                                                    value={formik.values.estimatePrice}
-                                                    onChange={formik.handleChange}
-                                                />
-                                            </div>
-                                            <div className="mb-3 col-6">
-                                                <label
-                                                    htmlFor="addPrice"
-                                                    className="form-label text-dark font-weight-bold ml-2"
-                                                >
-                                                    Ngày kết thúc:
-                                                </label>
-                                                <select
-                                                    className="form-select select select-bg-ori"
-                                                    id="countday"
-                                                    name="countday"
-                                                    value={formik.values.countday}
-                                                    onChange={formik.handleChange}
-                                                >
-                                                    <option value="1" key="">
-                                                        1
-                                                    </option>
-                                                    <option value="2" key="">
-                                                        2
-                                                    </option>
-                                                    <option value="3" key="">
-                                                        3
-                                                    </option>
-                                                    <option value="4" key="">
-                                                        4
-                                                    </option>
-                                                    <option value="5" key="">
-                                                        5
-                                                    </option>
-                                                    <option value="6" key="">
-                                                        6
-                                                    </option>
-                                                    <option value="7" key="">
-                                                        7
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
+                        {radio ? (
+                            <div className="row">
+                                <div className="col-6 d-flex">
+                                    <div className="col-6">
+                                        <label
+                                            htmlFor="addTitle"
+                                            className="form-label text-dark font-weight-bold ml-2"
+                                        >
+                                            Tên sản phẩm
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="title"
+                                            id="addTitle"
+                                            placeholder="Vui lòng nhập tên sản phẩm..."
+                                            value={formik.values.title}
+                                            onChange={formik.handleChange}
+                                        />
                                     </div>
-                                ) : (
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <label
-                                                htmlFor="addTitle"
-                                                className="form-label text-dark font-weight-bold ml-2"
-                                            >
-                                                Tên sản phẩm
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="title"
-                                                id="addTitle"
-                                                placeholder="Vui lòng nhập tên sản phẩm..."
-                                                value={formik.values.title}
-                                                onChange={formik.handleChange}
-                                            />
-                                        </div>
-                                        <div className="col-6">
-                                            <label
-                                                htmlFor="addPrice"
-                                                className="form-label text-dark font-weight-bold ml-2"
-                                            >
-                                                Giá
-                                            </label>
-                                            <input
-                                                type="number"
-                                                className="form-control"
-                                                name="price"
-                                                id="addPrice"
-                                                placeholder="Vui lòng nhập giá..."
-                                                value={formik.values.price}
-                                                onChange={formik.handleChange}
-                                            />
-                                        </div>
+                                    <div className="col-6">
+                                        <label
+                                            htmlFor="addPrice"
+                                            className="form-label text-dark font-weight-bold ml-2"
+                                        >
+                                            Giá khởi điểm:
+                                        </label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            name="price"
+                                            id="addPrice"
+                                            placeholder="Vui lòng nhập giá..."
+                                            value={formik.values.price}
+                                            onChange={formik.handleChange}
+                                        />
                                     </div>
-                                )}
+                                </div>
+                                <div className="col-6 d-flex">
+                                    <div className="col-6">
+                                        <label
+                                            htmlFor="addTitle"
+                                            className="form-label text-dark font-weight-bold ml-2"
+                                        >
+                                            Giá ước tính:
+                                        </label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            name="estimatePrice"
+                                            id="addTitle"
+                                            placeholder="Vui lòng nhập giá ước tính..."
+                                            value={formik.values.estimatePrice}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </div>
+                                    <div className="mb-3 col-6">
+                                        <label
+                                            htmlFor="addPrice"
+                                            className="form-label text-dark font-weight-bold ml-2"
+                                        >
+                                            Ngày kết thúc:
+                                        </label>
+                                        <select
+                                            className="form-select select select-bg-ori"
+                                            id="countday"
+                                            name="countday"
+                                            value={formik.values.countday}
+                                            onChange={formik.handleChange}
+                                        >
+                                            <option value="1" key="">
+                                                1
+                                            </option>
+                                            <option value="2" key="">
+                                                2
+                                            </option>
+                                            <option value="3" key="">
+                                                3
+                                            </option>
+                                            <option value="4" key="">
+                                                4
+                                            </option>
+                                            <option value="5" key="">
+                                                5
+                                            </option>
+                                            <option value="6" key="">
+                                                6
+                                            </option>
+                                            <option value="7" key="">
+                                                7
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="row">
+                                <div className="col-6">
+                                    <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
+                                        Tên sản phẩm
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="title"
+                                        id="addTitle"
+                                        placeholder="Vui lòng nhập tên sản phẩm..."
+                                        value={formik.values.title}
+                                        onChange={formik.handleChange}
+                                    />
+                                </div>
+                                <div className="col-6">
+                                    <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
+                                        Giá
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        name="price"
+                                        id="addPrice"
+                                        placeholder="Vui lòng nhập giá..."
+                                        value={formik.values.price}
+                                        onChange={formik.handleChange}
+                                    />
+                                </div>
+                            </div>
+                        )}
                         <div className="row">
                             <div className="mb-3 col-4">
                                 <label htmlFor="addAvailable" className="form-label text-dark font-weight-bold ml-2">
@@ -412,7 +405,7 @@ function ModalEditProduct(props) {
                         <div className="row">
                             <div className="mb-3 col-12">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
-                                    Images
+                                    Ảnh
                                 </label>
                                 <input
                                     type="file"
@@ -457,7 +450,7 @@ function ModalEditProduct(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button type="reset" variant="secondary w-auto" onClick={handleCloseEditProduct}>
-                        Close
+                        Đóng
                     </Button>
                     {stateImg ? (
                         <Button type="submit" className="btn btn-primary">
@@ -465,7 +458,7 @@ function ModalEditProduct(props) {
                         </Button>
                     ) : (
                         <Button type="submit" className="btn btn-primary">
-                            Save
+                            Cập nhật
                         </Button>
                     )}
                 </Modal.Footer>

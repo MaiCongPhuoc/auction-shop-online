@@ -38,13 +38,18 @@ const ContentAll = () => {
 
     return (
         <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? <LoadData /> : (
-                products.map(product => (
-                    <div key={product.id} className="card small-12 medium-6 cell" style={{ transform: 'none' }} 
-                    onClick={() => handleShowInfoProduct(product)}
+            {loadData ? (
+                <LoadData />
+            ) : (
+                products.map((product) => (
+                    <div
+                        key={product.id}
+                        className="card small-12 medium-6 cell"
+                        style={{ transform: 'none' }}
+                        onClick={() => handleShowInfoProduct(product)}
                     >
                         {product.action ? (
-                            <Link to={`/auction/${product.id}`} style={{color: '#333'}}>
+                            <Link to={`/auction/${product.id}`} style={{ color: '#333' }}>
                                 <figure className="card__image">
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
                                     <div className="add-to-watchlist">
@@ -73,7 +78,7 @@ const ContentAll = () => {
                                             <b>Theo dõi:</b> 34
                                         </div>
                                         <div className="stats-group__stat">
-                                            <b>Giá ước tính:</b> $15,000
+                                            <b>Giá ước tính:</b> 15,000 đ
                                         </div>
                                         <div className="stats-group__stat">
                                             <b>Giá khởi điểm:</b>
@@ -90,7 +95,7 @@ const ContentAll = () => {
                                 </div>
                             </Link>
                         ) : (
-                            <Link to={`/product/the-shop/${product.slug}`} style={{color: '#333'}}>
+                            <Link to={`/product/the-shop/${product.slug}`} style={{ color: '#333' }}>
                                 <figure className="card__image">
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
                                     <div className="add-to-watchlist">
@@ -133,7 +138,6 @@ const ContentAll = () => {
                     </div>
                 ))
             )}
-
         </div>
     );
 };

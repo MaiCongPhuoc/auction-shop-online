@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAccount } from '../../../../products/redux/selector';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import ModalDetailAccount from '../../../modal/account/ModalDetail';
 
 function AdminInfo() {
     const dispatch = useDispatch();
@@ -14,6 +16,12 @@ function AdminInfo() {
     const logout = () => {
         localStorage.removeItem('loginUser');
     };
+    const [showDetail, setShowDetail] = useState({
+        showdetail: false,
+        accountId: 0,
+    });
+    const handleCloseDetailAccount = () => setShowDetail(false);
+    const { accounts, showdetail, accountId } = showDetail;
 
     return (
         <>
@@ -24,8 +32,16 @@ function AdminInfo() {
                     <div className="adminInfo-dropdown">
                         <ul>
                             <li>
-                                <button>
-                                    <Link to="/userInfo">Hồ sơ</Link>
+                                <button
+                                    onClick={() =>
+                                        setShowDetail({
+                                            accounts: accounts,
+                                            showdetail: true,
+                                            accountId: account.id,
+                                        })
+                                    }
+                                >
+                                    <i class="fa-solid fa-user-tie"></i> Hồ sơ
                                 </button>
                             </li>
                             <button
@@ -48,12 +64,18 @@ function AdminInfo() {
                                     });
                                 }}
                             >
-                                Đăng Xuất
+                                <i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất
                             </button>
                         </ul>
                     </div>
                 </div>
                 <ToastContainer autoClose={1500} />
+                <ModalDetailAccount
+                    showDetail={showdetail}
+                    accountId={accountId}
+                    accounts={accounts}
+                    onCloseDetailAccount={handleCloseDetailAccount}
+                />
             </div>
         </>
     );

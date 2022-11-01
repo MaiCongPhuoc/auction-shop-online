@@ -223,7 +223,7 @@ function TableCategories() {
                         <div className="col-3"></div>
                         <div className="d-flex align-items-center w-50">
                             <button type="button" className="btn btn-outline-success" onClick={() => setShowAdd(true)}>
-                                <i className="fa-solid fa-plus me-2" title="Tạo"></i>Tạo danh mục
+                                <i className="fa-solid fa-plus me-2" title="Tạo"></i>Tạo
                             </button>
                         </div>
                     </div>
@@ -233,7 +233,7 @@ function TableCategories() {
                                 <thead>
                                     <tr>
                                         <th className="text-center">#</th>
-                                        <th className="text-center">Tên</th>
+                                        <th className="text-center">Tên thể loại</th>
                                         <th className="text-center">Thao tác</th>
                                     </tr>
                                 </thead>

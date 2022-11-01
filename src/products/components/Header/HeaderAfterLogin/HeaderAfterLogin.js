@@ -120,7 +120,7 @@ const HeaderAfterLogin = () => {
                                 trigger="click"
                             >
                                 <button className="logged_in_name mx-3" href="#">
-                                    THAO TÁC THÊM
+                                    ĐĂNG SẢN PHẨM
                                 </button>
                             </Tippy>
                         </div>

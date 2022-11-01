@@ -21,7 +21,7 @@ import { Carousel } from '../../products/Hooks/Hooks';
 import ComponentAuction from '../ComponentAuction';
 
 function ContentAuctionDetail() {
-    const {auctionId} = useParams();
+    const { auctionId } = useParams();
     console.log('auctionId content: ', auctionId);
     const [AuctionProduct, setAuctionProduct] = useState({
         Product: {},
@@ -49,7 +49,7 @@ function ContentAuctionDetail() {
     }, []);
 
     const { Product, imageProductAuctions, loading, auction } = AuctionProduct;
-   
+
     let max_visibility = imageProductAuctions.length;
     return (
         <div className="pages" id="productAuction">
@@ -363,24 +363,24 @@ function ContentAuctionDetail() {
                                         </div>
                                     </div>
                                     <div className="lot-tabs">
-                                        <div className="lot-tab-item active" tab="lot-overview">
-                                            Overview
+                                        <div className="lot-tab-item" tab="lot-overview">
+                                            Tổng quan
                                         </div>
                                         <div className="lot-tab-item" tab="lot-rules">
-                                            Conditions of Sale
+                                            Điều kiện bán hàng
                                         </div>
                                         <div className="lot-tab-item" tab="lot-shipping">
-                                            Shipping &amp; Redemption
+                                            Giao hàng &amp; Đổi trả
                                         </div>
                                     </div>
                                     <div className="lot-content">
                                         <div className="item lot-overview active">
-                                            <div className="lot-donator">Thông tin phiên đấu giá:</div>
+                                            <div className="lot-donator">THÔNG TIN MÔ TẢ SẢN PHẨM</div>
                                             <div className="lot-description">
                                                 <p>{Product.description}</p>
                                             </div>
                                             <hr style={{ borderWidth: '1px' }} />
-                                            <div className="new-terms-wrapper">
+                                            {/* <div className="new-terms-wrapper">
                                                 <div className="new-term-item">
                                                     <div className="new-terms-detail">
                                                         <div className="new-terms-title">Dates</div>
@@ -392,11 +392,11 @@ function ContentAuctionDetail() {
                                                                     range(s): <br /> Oct 21, 2022 to Oct 06, 2023
                                                                 </li>
                                                             </ul>
-                                                            {/* <hr className="desktop" /> */}
+                                                            <hr className="desktop" />
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
 
                                             <hr style={{ borderWidth: '1px' }} />
                                         </div>
