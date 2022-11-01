@@ -18,6 +18,7 @@ import Deny from './DenyPage/Deny';
 import ShowPageAuction from './products/components/Content/Pages/PageAuction/index';
 import ShowPageTheShop from './products/components/Content/Pages/PageTheShop/index';
 import Contact from './contact/Contact.js';
+import ShowOrderDetail from './products/components/Content/OrderDetail';
 
 function App() {
     return (
@@ -37,7 +38,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
 
                     {/* - Product */}
-                    <Route path="/product" element={<Product />} />
+                    <Route path="/product/home" element={<Product />} />
                     {/* -- Auction */}
                     <Route path="/product/auction" element={<ShowPageAuction />} />
                     <Route path="/bid/:auctionId" element={<ListBidAuction />} />
@@ -48,10 +49,13 @@ function App() {
                     <Route path="/product/the-shop" element={<ShowPageTheShop />} />
 
                     {/* -- Cart */}
-                    <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
+                    <Route path="/product/cart" element={<ShowCartItem />} />
 
                     {/* -- Contact */}
                     <Route path="/contact" element={<Contact />} />
+
+                    {/* -- Order */}
+                    <Route path="/product/order" element={<ShowOrderDetail />} />
                 </Routes>
             </div>
         </Router>

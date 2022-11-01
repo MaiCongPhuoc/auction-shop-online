@@ -8,6 +8,7 @@ class OrderService{
     static removeOrder(orderId){
         return axios.put(`${REMOVE_ORDER}/${orderId}`);
     }
+    
 }
 
 export default OrderService;

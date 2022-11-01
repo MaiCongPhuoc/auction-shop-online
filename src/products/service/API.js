@@ -36,5 +36,11 @@ export const REMOVE_ORDER = ALL_ORDERS + '/remove-order';
 export const ALL_ORDERS_DETAIL = 'http://localhost:8080/api/orders-detail';
 export const CREATE_ORDER_DETAIL = ALL_ORDERS_DETAIL + '/create';
 
+// Watch list
+export const WATCH_LISTS = 'http://localhost:8080/api/watch-lists';
+export const ADD_WATCH_LISTS = WATCH_LISTS + '/add';
+
+
+
 // Login
 export const ACCOUNT_LOGIN_URL = 'http://localhost:8080/api/auth/login';

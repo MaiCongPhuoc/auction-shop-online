@@ -4,29 +4,12 @@ import CategoriesService from './../../../service/Categories/CategoriesService';
 import LoadData from '../../Loading/LoadData';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAllProducts, getLoadData } from '../../../redux/selector';
-import { setCategories, setProducts, setLoadData, setShowInfoProduct, setProduct } from '../../../redux/actions';
+import { setShowInfoProduct, setProduct } from '../../../redux/actions';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
 
 const ContentAll = () => {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        try {
-            dispatch(setLoadData(true));
-            async function getData() {
-                let productsRes = await ProductService.getAllProducts();
-                let categoriesRes = await CategoriesService.getAllCategories();
-
-                dispatch(setProducts(productsRes.data));
-                dispatch(setCategories(categoriesRes.data));
-                dispatch(setLoadData(false));
-            }
-            getData();
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
 
     const handleShowInfoProduct = (product) => {
         dispatch(setShowInfoProduct(true));
@@ -78,7 +61,7 @@ const ContentAll = () => {
                                             <b>Theo dõi:</b> 34
                                         </div>
                                         <div className="stats-group__stat">
-                                            <b>Giá ước tính:</b> 15,000 đ
+                                            <b>Giá ước tính:</b> {FormatMoney(product.estimatePrice)} ₫
                                         </div>
                                         <div className="stats-group__stat">
                                             <b>Giá khởi điểm:</b>

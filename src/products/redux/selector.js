@@ -40,6 +40,10 @@ export const getReloadCartItem = (state) => state.cartItems.reloadCartItem;
 // Order
 export const getCheckPayment = (state) => state.orders.checkPayment;
 
+// Order details
+export const getAllOrderDetails = (state) => state.orderDetails.orderDetails;
+
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 

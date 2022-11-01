@@ -13,6 +13,7 @@ import CartItemService from '../../../service/CartItem/CartItemService';
 import { Swal } from 'sweetalert2';
 import { ToastContainer } from 'react-toastify';
 import AdminInfo from './../../../../dashboard/Layout/Header/adminInfo/AdminInfo';
+import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const HeaderAfterLogin = () => {
     };
 
     const [cartItems, setListCartItems] = useState([]);
+    const [orderDetails, setOrderDetails] = useState([]);
 
     const reloadCartItem = useSelector(getReloadCartItem);
 
@@ -30,11 +32,14 @@ const HeaderAfterLogin = () => {
         try {
             async function getCartItems() {
                 const allCartItems = await CartItemService.getCartItems(account.email);
+                const allOrderDetails = await OrdersDetailService.getAllOrdersDetail(account.email);
+
                 setListCartItems(allCartItems.data);
+                setOrderDetails(allOrderDetails.data);
             }
             getCartItems();
         } catch (error) {
-            console.log(error);
+            console.log("header after login", error);
         }
     }, [reloadCartItem]);
 
@@ -59,7 +64,7 @@ const HeaderAfterLogin = () => {
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <Link to={`/product/cart/${account.email}`} style={{ fontSize: '14px' }}>
+                <Link to={'/product/cart'} style={{ fontSize: '14px' }}>
                     <i
                         style={{ position: 'relative' }}
                         className="fa-brands fa-opencart fa-2x ic-cart me-3"
@@ -88,30 +93,32 @@ const HeaderAfterLogin = () => {
                 <div className="widget-notif-wrapper">
                     <div>
                         <div className="ic-notif-num">
-                            <i
-                                style={{ position: 'relative' }}
-                                className="fa-regular fa-bell fa-2x ic-notif "
-                                aria-hidden="true"
-                            >
-                                <span
-                                    style={{
-                                        textAlign: 'center',
-                                        position: 'absolute',
-                                        border: '0.5px solid white',
-                                        width: 'auto',
-                                        height: '20px',
-                                        borderRadius: '10px',
-                                        backgroundColor: 'red',
-                                        color: 'white',
-                                        fontSize: '12px',
-                                        left: '15px',
-                                        bottom: '15px',
-                                        padding: '3px',
-                                    }}
+                            <Link to={"/product/order"} style={{ fontSize: '14px' }}>
+                                <i
+                                    style={{ position: 'relative' }}
+                                    className="fa-regular fa-bell fa-2x ic-notif "
+                                    aria-hidden="true"
                                 >
-                                    1
-                                </span>
-                            </i>
+                                    <span
+                                        style={{
+                                            textAlign: 'center',
+                                            position: 'absolute',
+                                            border: '0.5px solid white',
+                                            width: 'auto',
+                                            height: '20px',
+                                            borderRadius: '10px',
+                                            backgroundColor: 'red',
+                                            color: 'white',
+                                            fontSize: '12px',
+                                            left: '15px',
+                                            bottom: '15px',
+                                            padding: '3px',
+                                        }}
+                                    >
+                                        {orderDetails.length}
+                                    </span>
+                                </i>
+                            </Link>
                             <Tippy
                                 placement="bottom-end"
                                 interactive

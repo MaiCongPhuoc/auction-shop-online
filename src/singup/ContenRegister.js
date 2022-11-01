@@ -7,7 +7,7 @@ import AccountLocation from './AccountLocation';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from './../login/api';
-import AccountService from './../dashboard/services/AccountService';
+import AccountService from '../dashboard/services/AccountService';
 import FileService from './../dashboard/services/FileService';
 import { useFormik } from 'formik';
 import { toast, ToastContainer } from 'react-toastify';

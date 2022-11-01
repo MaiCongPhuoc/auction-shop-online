@@ -6,6 +6,7 @@ import { FormatMoney, isNumber } from './../../../../Hooks/Hooks';
 import CartItemService from './../../../../service/CartItem/CartItemService';
 import ValidationQuantity from '../../../../utils/ValidationQuantity';
 import { setCart, setReloadCartItem } from '../../../../redux/actions';
+import WatchListsService from '../../../../service/WatchList/WatchListService';
 
 const BuyComponent = ({ product }) => {
     const dispatch = useDispatch();
@@ -83,6 +84,23 @@ const BuyComponent = ({ product }) => {
         }
     };
 
+    const handleAddWatchList = (product) => {
+        console.log("product.slug: ", product.slug);
+
+        try {
+            WatchListsService.addWatchList(account.id, product).then((res) => {
+                console.log("watch list: ", res.data);
+            }).catch((err) => {
+                if (err.response.data) {
+                    toast.error(err.response.data);
+                }
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="buy-tool" style={{ width: '22%', margin: '50px auto' }}>
             <div className="bb-rows-wrapper">
@@ -142,14 +160,14 @@ const BuyComponent = ({ product }) => {
                                         </div>
                                     </div>
                                     {loading ? (
-                                        <div className="me-1" style={{ width: '150px' ,marginTop: '46px', float: 'right' }}>
-                                            <button className="btn btn-primary" style={{borderRadius: '5px'}} type="button" disabled>
+                                        <div className="me-1" style={{ width: '150px', marginTop: '46px', float: 'right' }}>
+                                            <button className="btn btn-primary" style={{ borderRadius: '5px' }} type="button" disabled>
                                                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                 Đang mua...
                                             </button>
                                         </div>
                                     ) : (
-                                        <div className="ms-1" style={{width: '150px' ,marginTop: '46px', float: 'right' }}>
+                                        <div className="ms-1" style={{ width: '150px', marginTop: '46px', float: 'right' }}>
                                             <span className="current-bid bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>&nbsp;</span>
                                             <a className="btn btn-primary me-4" onClick={handleAddCartItem}>Mua ngay</a>
                                         </div>
@@ -164,11 +182,12 @@ const BuyComponent = ({ product }) => {
                 </div>
                 <div className="mt-4">
                     <div className="watchlist-action">
-                        <div className="watcher-btn text-center">
+                        <div className="watcher-btn text-center" onClick={() => handleAddWatchList(product)}>
                             <a className="watch-button" href="#" style={{ border: 'none !important' }}>
                                 <div className="relative-wrapper watch-wrapper btn">
                                     <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
                                         <i className="fa-regular fa-heart"></i>
+
                                         <span className="watch-type"> Thêm vào danh sách yêu thích</span>
                                     </div>
                                 </div>

@@ -67,14 +67,14 @@ const ContentResultFilters = () => {
                                     <div className="card__stats-group">
                                         <div className="stats-group__stat"><b>Đang tham gia:</b> 5</div>
                                         <div className="stats-group__stat"><b>Theo dõi:</b> 34</div>
-                                        <div className="stats-group__stat"><b>Giá ước tính:</b> $15,000</div>
+                                        <div className="stats-group__stat"><b>Giá ước tính:</b> {FormatMoney(product.estimatePrice)} ₫</div>
                                         <div className="stats-group__stat">
-                                            <b>Giá khởi điểm (VNĐ):</b>
-                                            <div className="stat__price">{FormatMoney(product.price)}</div>
+                                            <b>Giá khởi điểm:</b>
+                                            <div className="stat__price">{FormatMoney(product.price)} ₫</div>
                                         </div>
                                         <div className="stats-group__stat">
-                                            <b>Giá hiện tại (VNĐ):</b>
-                                            <div className="stat__price">4,600</div>
+                                            <b>Giá hiện tại:</b>
+                                            <div className="stat__price">4,600 ₫</div>
                                         </div>
                                     </div>
                                     <div className="card__tertiary-container">

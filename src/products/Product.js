@@ -20,14 +20,14 @@ import Footer from './components/Footer/Footer';
 
 function Product() {
     return (
-        <Provider store={store}>
+        <>
             <Header className="product-client" />
             <Content className="product-client" />
             <br />
             <br />
             <br />
             <Footer />
-        </Provider>
+        </>
     );
 }
 
