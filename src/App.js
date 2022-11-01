@@ -17,7 +17,7 @@ import TheShop from './products/components/Content/ProductDetail/TheShop/index';
 import Deny from './DenyPage/Deny';
 import ShowPageAuction from './products/components/Content/Pages/PageAuction/index';
 import ShowPageTheShop from './products/components/Content/Pages/PageTheShop/index';
-import Contact from './contact/Contact';
+import Contact from './contact/Contact.js';
 
 function App() {
     return (
