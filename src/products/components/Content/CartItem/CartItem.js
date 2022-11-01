@@ -10,6 +10,7 @@ import Checkout from './../../../Modal/Checkout';
 import EmptyCart from "../../Loading/EmptyCart";
 import LoadCart from './../../Loading/LoadCart';
 import LoadQuantity from './../../Loading/LoadQuantity';
+import { Link } from "react-router-dom";
 
 const CartItem = () => {
     const dispatch = useDispatch();
@@ -84,14 +85,23 @@ const CartItem = () => {
 
     const handleReduceQuantity = (cartItem) => {
         try {
-            setDisableLoadQuantity(true);
+            document.querySelector(`#reduce_${cartItem.id}`).classList.remove('show');
+            document.querySelector(`#increasing_${cartItem.id}`).classList.remove('show');
+            document.querySelector(`#reduce_${cartItem.id}`).classList.add('hide');
+            document.querySelector(`#increasing_${cartItem.id}`).classList.add('hide');
+
             async function reducerQuantity() {
                 setIdCartItem(cartItem.id);
                 CartItemService.getReduceCartItem(cartItem.id).then((res) => {
                     CartItemService.getCartItems(account.email).then((resp) => {
                         setListCartItems(resp.data);
                         setCheckQuantity(true);
-                        setDisableLoadQuantity(false);
+
+                        document.querySelector(`#reduce_${cartItem.id}`).classList.remove('hide');
+                        document.querySelector(`#reduce_${cartItem.id}`).classList.add('show');
+
+                        document.querySelector(`#increasing_${cartItem.id}`).classList.remove('hide');
+                        document.querySelector(`#increasing_${cartItem.id}`).classList.add('show');
                     });
                 });
             }
@@ -102,13 +112,22 @@ const CartItem = () => {
     };
     const handleIncreasingQuantity = (cartItem) => {
         try {
-            setDisableLoadQuantity(true);
+            document.querySelector(`#reduce_${cartItem.id}`).classList.remove('show');
+            document.querySelector(`#increasing_${cartItem.id}`).classList.remove('show');
+            document.querySelector(`#reduce_${cartItem.id}`).classList.add('hide');
+            document.querySelector(`#increasing_${cartItem.id}`).classList.add('hide');
             async function increasingQuantity() {
                 setIdCartItem(cartItem.id);
                 CartItemService.getIncreasingCartItem(cartItem.id).then((res) => {
                     CartItemService.getCartItems(account.email).then((resp) => {
                         setListCartItems(resp.data);
                         setDisableLoadQuantity(false);
+
+                        document.querySelector(`#reduce_${cartItem.id}`).classList.remove('hide');
+                        document.querySelector(`#reduce_${cartItem.id}`).classList.add('show');
+
+                        document.querySelector(`#increasing_${cartItem.id}`).classList.remove('hide');
+                        document.querySelector(`#increasing_${cartItem.id}`).classList.add('show');
                     });
                 });
             }
@@ -199,7 +218,7 @@ const CartItem = () => {
                     : (
                         <div id="show-list-cart-item">
                             <div className="container text-center">
-                                <div className="row col-12 my-1" style={{ height: '50px' }}>
+                                <div className="row col-12 my-1" id="head-cart-item" style={{ height: '50px' }}>
                                     <span className="fw-bold col-1" style={{ color: '#367289' }}>Giỏ hàng</span>
                                     <span className="text-center col-5" id="image-item"> Sản phẩm</span>
                                     <span className="text-center col-2" id="title-item">Đơn giá</span>
@@ -208,7 +227,8 @@ const CartItem = () => {
                                 </div>
                                 {loadDataCart ? <LoadCart /> :
                                     listCartItems.map(cartItem => (
-                                        <div title="Nhấn hai lần để chọn"
+                                        <div
+                                            // title="Nhấn hai lần để chọn"
                                             className="row col-12 cart-item"
                                             key={cartItem.id}
                                         // onDoubleClick={() => handleChoiceByDbClick(cartItem)}
@@ -236,86 +256,67 @@ const CartItem = () => {
                                                         height: '120px'
                                                     }} src={cartItem.product.image} alt="" />
                                                 </div>
-                                                <div className="text-start mx-2 col-9">
-                                                    <div>{cartItem.product.title}</div>
-                                                    <div style={{ fontSize: 'smaller', color: 'blue' }}>{cartItem.product.description}</div>
-                                                    <div style={{ fontSize: 'small', color: 'blue' }}>Sản phẩm: {cartItem.product.action ? 'Đấu giá' : 'Cửa hàng'}</div>
-                                                    <div style={{ fontSize: 'small', color: 'red' }}>Còn lại <b>{cartItem.product.available}</b></div>
-                                                </div>
+                                                <Link className="col-9" to={`/product/the-shop/${cartItem.product.slug}`}>
+                                                    <div className="text-start mx-2 col-12">
+                                                        <div>{cartItem.product.title}</div>
+                                                        <div style={{ fontSize: 'smaller', color: 'blue' }}>{cartItem.product.description}</div>
+                                                        <div style={{ fontSize: 'small', color: 'blue' }}>Sản phẩm: {cartItem.product.action ? 'Đấu giá' : 'Cửa hàng'}</div>
+                                                        <div style={{ fontSize: 'small', color: 'red' }}>Còn lại <b>{cartItem.product.available}</b></div>
+                                                    </div>
+                                                </Link>
                                             </span>
                                             <span className="text-end col-2 fw-bold">{FormatMoney(cartItem.price)} ₫</span>
-                                            {disableLoadQuantity ? (
-                                                <span style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'space-evenly'
-                                                }}
-                                                    className="text-center col-2">
-                                                    {/* <input
-                                                        className="mx-1"
-                                                        style={{
-                                                            width: '50px',
-                                                            margin: '0',
-                                                            border: 'none',
-                                                            textAlign: 'center',
-                                                            borderRadius: '20px'
-                                                        }}
-                                                        type="text"
-                                                        value={cartItem.quantity}
-                                                        // disabled={idCartItem === cartItem.id ? loadQuantity : null}
-                                                        disabled
-                                                    /> */}
-                                                    <LoadQuantity />
-                                                </span>
-                                            ) : (
+                                            <span style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-evenly'
+                                            }}
+                                                className="text-center col-2"
 
-                                                <span style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'space-evenly'
-                                                }}
-                                                    className="text-center col-2">
-                                                    <div className="change-quantity show"
-                                                        id={`reduce_${cartItem.id}`}
-                                                        title="Giảm một sản phẩm"
-                                                        onClick={() => handleReduceQuantity(cartItem)}
-                                                        style={{
-                                                            fontSize: '36px',
-                                                            height: '38px',
-                                                            lineHeight: '30px',
-                                                            cursor: 'pointer',
-                                                            marginLeft: 'auto',
-                                                        }}>
-                                                        -
-                                                    </div>
-                                                    <input
-                                                        className="mx-1"
-                                                        style={{
-                                                            width: '50px',
-                                                            margin: '0',
-                                                            border: 'none',
-                                                            textAlign: 'center',
-                                                            borderRadius: '20px'
-                                                        }}
-                                                        type="text"
-                                                        value={cartItem.quantity}
-                                                        // disabled={idCartItem === cartItem.id ? loadQuantity : null}
-                                                        disabled
-                                                    />
-                                                    <div className="change-quantity show"
-                                                        id={`increasing_${cartItem.id}`}
-                                                        title="Tăng một sản phẩm"
-                                                        onClick={() => handleIncreasingQuantity(cartItem)}
-                                                        style={{
-                                                            fontSize: '28px',
-                                                            height: '38px',
-                                                            lineHeight: '30px',
-                                                            cursor: 'pointer',
-                                                            marginRight: 'auto',
-                                                        }}>+
-                                                    </div>
-                                                </span>
-                                            )}
+                                            >
+                                                <div className="change-quantity show"
+                                                    id={`reduce_${cartItem.id}`}
+                                                    title="Giảm một sản phẩm"
+                                                    onClick={() => handleReduceQuantity(cartItem)}
+                                                    style={{
+                                                        fontSize: '36px',
+                                                        height: '38px',
+                                                        lineHeight: '30px',
+                                                        cursor: 'pointer',
+                                                        marginLeft: 'auto',
+                                                    }}>
+                                                    -
+                                                </div>
+                                                <input
+                                                    className="mx-1"
+                                                    style={{
+                                                        width: '50px',
+                                                        margin: '0',
+                                                        border: 'none',
+                                                        textAlign: 'center',
+                                                        borderRadius: '20px'
+                                                    }}
+                                                    type="text"
+                                                    value={cartItem.quantity}
+                                                    // disabled={idCartItem === cartItem.id ? loadQuantity : null}
+                                                    disabled
+                                                />
+                                                <div className="change-quantity show"
+                                                    id={`increasing_${cartItem.id}`}
+                                                    title="Tăng một sản phẩm"
+                                                    onClick={() => handleIncreasingQuantity(cartItem)}
+                                                    style={{
+                                                        fontSize: '28px',
+                                                        height: '38px',
+                                                        lineHeight: '30px',
+                                                        cursor: 'pointer',
+                                                        marginRight: 'auto',
+                                                    }}
+                                                >
+                                                    +
+                                                </div>
+                                            </span>
+
                                             <span className="text-end col-2 fw-bold">{FormatMoney(cartItem.amountTransaction)} ₫</span>
                                         </div>
                                     ))}

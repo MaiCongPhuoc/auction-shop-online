@@ -62,7 +62,7 @@ const ContentAuction = () => {
                                     <b>Theo dõi:</b> 34
                                 </div>
                                 <div className="stats-group__stat">
-                                    <b>Giá ước tính:</b> $15,000
+                                    <b>Giá ước tính:</b> {FormatMoney(product.estimatePrice)} ₫
                                 </div>
                                 <div className="stats-group__stat">
                                     <b>Giá khởi điểm:</b>

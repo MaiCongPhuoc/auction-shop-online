@@ -22,10 +22,10 @@ import './Product.css';
 function Product() {
 
     return (
-        <Provider store={store}>
+        <>
             <Header className="product-client" />
             <Content className="product-client" />
-        </Provider>
+        </>
     );
 }
 

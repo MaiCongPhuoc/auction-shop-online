@@ -6,10 +6,10 @@ import OrderDetail from './OrderDetail';
 
 function ShowOrderDetail() {
     return (
-        <Provider store={store}>
+        <>
             <Header className="product-client" />
             <OrderDetail />
-        </Provider>
+        </>
     );
 }
 

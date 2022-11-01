@@ -26,6 +26,8 @@ const Checkout = ({ items }) => {
 
     const [loadSaveOrder, setLoadSaveOrder] = useState(false);
 
+    const [errors, setErrors] = useState({});
+
     const [state, setState] = useState({
         orders: {
             fullName: '',
@@ -212,10 +214,10 @@ const Checkout = ({ items }) => {
                     })
                     .catch((error) => {
                         if (error.response) {
+                            dispatch(setCheckPayment(false));
+                            setLoadSaveOrder(false);
+                            setErrors(error.response.data);
 
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
                         } else if (error.request) {
 
                             console.log(error.request);
@@ -230,6 +232,8 @@ const Checkout = ({ items }) => {
             console.log(error);
         }
     };
+
+    console.log("errors", errors);
     return (
         <>
             <Modal
@@ -245,7 +249,7 @@ const Checkout = ({ items }) => {
                 <Modal.Body className="show-checkout-modal" style={{ backgroundColor: '#f2f2f2' }}>
                     <Container>
                         {loadSaveOrder ? <Loading /> :
-                            checkPayment ? <PaymentComponent infoRecipient={state.orders} items={items} amount={amount} newOrder={newOrder}/> : (
+                            checkPayment ? <PaymentComponent infoRecipient={state.orders} items={items} amount={amount} newOrder={newOrder} /> : (
                                 <>
                                     <Row>
                                         <Col xs={12} md={12}>
@@ -254,9 +258,27 @@ const Checkout = ({ items }) => {
                                             </div>
                                             <div className="row ms-1" style={{ height: '300px', backgroundColor: '#fff', borderRadius: '10px', boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }}>
                                                 <div className="row-info-recipient">
-                                                    <label htmlFor="fullNameRecipient" className="col-4 labelRecipient">Họ và tên </label>
-                                                    <label htmlFor="phoneRecipient" className="col-4 labelRecipient">Số điện thoại </label>
-                                                    <label htmlFor="emailRecipient" className="col-4 labelRecipient">Email </label>
+                                                    <label htmlFor="fullNameRecipient" id="error_checkout_fullName" className="col-4 labelRecipient">Họ và tên
+                                                        {errors.fullName ? (
+                                                            <span id="error_checkout_fullName" style={{ color: 'red', fontSize: 'smaller', fontStyle: 'italic' }} className="errors-checkout ms-2">
+                                                                *{errors.fullName}
+                                                            </span>
+                                                        ) : (null)}
+                                                    </label>
+                                                    <label htmlFor="phoneRecipient" id="error_checkout_phone" className="col-4 labelRecipient">Số điện thoại
+                                                        {errors.phone ? (
+                                                            <span id="error_checkout_phone" style={{ color: 'red', fontSize: 'smaller', fontStyle: 'italic' }} className="errors-checkout ms-2">
+                                                                *{errors.phone}
+                                                            </span>
+                                                        ) : (null)}
+                                                    </label>
+                                                    <label htmlFor="emailRecipient" id="error_checkout_email" className="col-4 labelRecipient">Email
+                                                        {errors.email ? (
+                                                            <span id="error_checkout_email" style={{ color: 'red', fontSize: 'smaller', fontStyle: 'italic' }} className="errors-checkout ms-2">
+                                                                *{errors.email}
+                                                            </span>
+                                                        ) : (null)}
+                                                    </label>
                                                 </div>
                                                 <div className="row-info-recipient" style={{ justifyContent: 'space-around', margin: '0' }}>
                                                     <input onChange={handleInputValue} type="text" name="fullName" className="info-input form-control col-4" id="fullNameRecipient" value={state.orders.fullName} />
@@ -369,12 +391,12 @@ const Checkout = ({ items }) => {
                                     </Row>
                                     <Row style={{ margin: '20px 0px', height: '60px', display: 'flex', alignItems: 'center' }}>
                                         <Col xs={12} md={2} className='text-end'>
-                                            <Button style={{borderRadius: '5px', width: 100, boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }} variant="secondary" onClick={handleClose}>
+                                            <Button style={{ borderRadius: '5px', width: 100, boxShadow: '0px 2px 45px 0px rgba(0, 0, 0, 0.156)' }} variant="secondary" onClick={handleClose}>
                                                 Quay lại
                                             </Button>
                                         </Col>
                                         <Col xs={12} md={10} className='text-end'>
-                                            <Button style={{borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleOrder(account.id, state.orders)}>
+                                            <Button style={{ borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleOrder(account.id, state.orders)}>
                                                 Đặt hàng
                                             </Button>
                                         </Col>

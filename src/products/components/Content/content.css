@@ -309,3 +309,8 @@ a {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+/* cart item */
+.scroll-cart-item {
+  z-index: 1;
+}

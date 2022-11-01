@@ -23,6 +23,7 @@ import Deny from './DenyPage/Deny';
 import ShowPageAuction from './products/components/Content/Pages/PageAuction/index';
 import ShowPageTheShop from './products/components/Content/Pages/PageTheShop/index';
 import UserInfor from './UserInfo/UserInfor';
+import ShowOrderDetail from './products/components/Content/OrderDetail';
 
 function App() {
     const [isLogin, setIsLogin] = useState(false);
@@ -56,7 +57,7 @@ function App() {
                     <Route path="/userInfo" element={<UserInfor />} />
 
                     {/* - Product */}
-                    <Route path="/product" element={<Product />} />
+                    <Route path="/product/home" element={<Product />} />
                     {/* -- Auction */}
                     <Route path="/product/auction" element={<ShowPageAuction />} />
                     <Route path="/bid/:auctionId" element={<ListBidAuction />} />
@@ -67,7 +68,10 @@ function App() {
                     <Route path="/product/the-shop" element={<ShowPageTheShop />} />
 
                     {/* -- Cart */}
-                    <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
+                    <Route path="/product/cart" element={<ShowCartItem />} />
+
+                    {/* -- Order */}
+                    <Route path="/product/order" element={<ShowOrderDetail />} />
                 </Routes>
             </div>
         </Router>

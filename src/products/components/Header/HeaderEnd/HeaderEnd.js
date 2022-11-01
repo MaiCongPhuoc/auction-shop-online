@@ -6,7 +6,7 @@ const HeaderEnd = () => {
         <div className="main-nav-div">
             <ul className="navigation">
                 <li className="left">
-                    <a className="home" href="/product">
+                    <a className="home" href="/product/home">
                         Trang chủ
                     </a>
                 </li>

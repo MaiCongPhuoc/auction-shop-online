@@ -18,6 +18,7 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
     const reloadCartItem = useSelector(getReloadCartItem);
 
     const [waitPayment, setWaitPayment] = useState(false);
+    const [removeOrder, setRemoveOrder] = useState(false);
 
     const [state, setState] = useState({
         payment: "Thanh toán khi nhận hàng",
@@ -52,10 +53,12 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
 
     const handleRemoveOrder = (order) => {
         try {
+            setRemoveOrder(true);
             async function removeOrders() {
                 let results = await OrderService.removeOrder(order.id);
                 dispatch(setShowCartModalCheckout(false));
                 dispatch(setCheckPayment(false));
+                setRemoveOrder(false);
             }
             removeOrders();
         } catch (error) {
@@ -122,9 +125,10 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
                                     value={state.payment}
                                     onChange={handleChangeMethod}
                                 >
-                                    {state.methods.map((method) => (
-                                        <FormControlLabel key={method} value={method} control={<Radio />} label={method} />
-                                    ))}
+                                    {/* {state.methods.map((method) => (
+                                        <FormControlLabel key={method} value={method} control={<Radio />} label={method}/>
+                                    ))} */}
+                                    <FormControlLabel value={"Thanh toán khi nhận hàng"} control={<Radio />} label={"Thanh toán khi nhận hàng"} />
                                 </RadioGroup>
                             </FormControl>
                         </div>
@@ -144,15 +148,21 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
                     )}
                 </Col>
                 <Col xs={12} md={2} className='text-center'>
-                    {waitPayment ?
-                        <button className="btn btn-primary" style={{ borderRadius: '5px', width: '170px' }} type="button" disabled>
-                            <span className="spinner-border spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            Đang thực hiện...
-                        </button> :
-                        <Button style={{ borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleCreateOrderDetail(items)}>
-                            Thanh toán
-                        </Button>
-                    }
+                    {removeOrder ? <Button disabled style={{ borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleCreateOrderDetail(items)}>
+                        Thanh toán
+                    </Button> : (
+                        <>
+                            {waitPayment ?
+                                <button className="btn btn-primary" style={{ borderRadius: '5px', width: '170px' }} type="button" disabled>
+                                    <span className="spinner-border spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                    Đang thực hiện...
+                                </button> :
+                                <Button style={{ borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleCreateOrderDetail(items)}>
+                                    Thanh toán
+                                </Button>
+                            }
+                        </>
+                    )}
                 </Col>
             </Row>
             <ToastContainer />

@@ -10,8 +10,9 @@ import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getAccount, getCheckProduct, getType, getAllCartItems, getShowCart } from '../../redux/selector';
 import { getSearchingFilters, getShowInfoProduct, getLoginStatus } from './../../redux/selector';
 import ContentResultFilters from './ContentResultFilters/ContentResultFilters';
-import { setCartItems, setCheckProduct, setShowCart } from './../../redux/actions';
-import CartItemService from './../../service/CartItem/CartItemService';
+import { setCartItems, setCategories, setCheckProduct, setLoadData, setProducts, setShowCart } from './../../redux/actions';
+import ProductService from '../../service/Product/ProductService';
+import CategoriesService from '../../service/Categories/CategoriesService';
 
 const Content = () => {
     const dispatch = useDispatch();
@@ -20,22 +21,28 @@ const Content = () => {
 
     const searchStatus = useSelector(getSearchingFilters);
 
-    const showInfoProduct = useSelector(getShowInfoProduct);
 
     const loginStatus = useSelector(getLoginStatus);
 
     const account = useSelector(getAccount);
 
     useEffect(() => {
-        if (showInfoProduct) {
-            dispatch(setCheckProduct(true));
-        } else {
-            dispatch(setCheckProduct(false));
+        try {
+            dispatch(setLoadData(true));
+            async function getData() {
+                let productsRes = await ProductService.getAllProducts();
+                let categoriesRes = await CategoriesService.getAllCategories();
+
+                dispatch(setProducts(productsRes.data));
+                dispatch(setCategories(categoriesRes.data));
+                dispatch(setLoadData(false));
+                
+            }
+            getData();
+        } catch (error) {
+            console.log(error);
         }
-    }, [
-        showInfoProduct
-        // , loginStatus
-    ]);
+    }, []);
 
     return (
         <>
