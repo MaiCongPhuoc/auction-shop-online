@@ -32,18 +32,6 @@ const Content = () => {
         } else {
             dispatch(setCheckProduct(false));
         }
-
-        // if (loginStatus) {
-        //     try {
-        //         async function getCartItems() {
-        //             const cartItemsRes = await CartItemService.getCartItems(account.email);
-        //             dispatch(setCartItems(cartItemsRes.data));
-        //         }
-        //         getCartItems();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
     }, [
         showInfoProduct
         // , loginStatus

@@ -133,17 +133,23 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
             </Row>
             <Row style={{ margin: '20px 0px', height: '60px', display: 'flex', alignItems: 'center' }}>
                 <Col xs={12} md={10} className='text-end'>
-                    <Button style={{borderRadius: '5px', width: 150 }} variant="outline-danger" onClick={() => handleRemoveOrder(newOrder)}>
-                        Hủy đơn hàng
-                    </Button>
+                    {waitPayment ? (
+                        <Button disabled style={{ borderRadius: '5px', width: 150 }} variant="outline-danger" onClick={() => handleRemoveOrder(newOrder)}>
+                            Hủy đơn hàng
+                        </Button>
+                    ) : (
+                        <Button style={{ borderRadius: '5px', width: 150 }} variant="outline-danger" onClick={() => handleRemoveOrder(newOrder)}>
+                            Hủy đơn hàng
+                        </Button>
+                    )}
                 </Col>
                 <Col xs={12} md={2} className='text-center'>
                     {waitPayment ?
-                        <button class="btn btn-primary" style={{borderRadius: '5px', width: '170px'}} type="button" disabled>
-                            <span class="spinner-border spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        <button className="btn btn-primary" style={{ borderRadius: '5px', width: '170px' }} type="button" disabled>
+                            <span className="spinner-border spinner-grow-sm" role="status" aria-hidden="true"></span>
                             Đang thực hiện...
                         </button> :
-                        <Button style={{borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleCreateOrderDetail(items)}>
+                        <Button style={{ borderRadius: '5px', width: 120 }} variant="primary" onClick={() => handleCreateOrderDetail(items)}>
                             Thanh toán
                         </Button>
                     }

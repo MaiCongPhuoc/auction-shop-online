@@ -6,7 +6,6 @@ import { getAccount, getReloadCartItem } from "../../../redux/selector";
 import CartItemService from './../../../service/CartItem/CartItemService';
 import { setCartItems, setReloadCartItem, setShowCartModalCheckout } from './../../../redux/actions';
 import { ToastContainer, toast } from 'react-toastify';
-import ValidationQuantity from "../../../utils/ValidationQuantity";
 import Checkout from './../../../Modal/Checkout';
 import EmptyCart from "../../Loading/EmptyCart";
 import LoadCart from './../../Loading/LoadCart';
@@ -170,7 +169,13 @@ const CartItem = () => {
     };
 
     const handleChoiceAll = () => {
-        setChoiceItems(listCartItems);
+        if (choiceItems == listCartItems) {
+            setChoiceAll(false);
+            setChoiceItems([]);
+        } else {
+            setChoiceAll(true);
+            setChoiceItems(listCartItems);
+        }
     };
 
     const handleBuyCartItem = () => {
@@ -213,10 +218,17 @@ const CartItem = () => {
                                                 alignItems: 'center'
                                             }}
                                                 className="col-6">
-                                                <label class="container-check-cart">
-                                                    <input type="checkbox" id={`choice_${cartItem.id}`} onClick={() => handleChoice(cartItem)} />
-                                                    <span class="checkmark"></span>
-                                                </label>
+                                                {choiceAll ? (
+                                                    <label className="container-check-cart">
+                                                        <input type="checkbox" checked />
+                                                        <span className="checkmark"></span>
+                                                    </label>
+                                                ) : (
+                                                    <label className="container-check-cart">
+                                                        <input type="checkbox" id={`choice_${cartItem.id}`} onClick={() => handleChoice(cartItem)} />
+                                                        <span className="checkmark"></span>
+                                                    </label>
+                                                )}
                                                 <div className="col-3">
                                                     <img style={{
                                                         padding: '5px',
@@ -302,7 +314,6 @@ const CartItem = () => {
                                                             marginRight: 'auto',
                                                         }}>+
                                                     </div>
-                                                    {checkQuantity ? null : <ValidationQuantity message={"Số lượng không thể nhỏ hơn 1"} />}
                                                 </span>
                                             )}
                                             <span className="text-end col-2 fw-bold">{FormatMoney(cartItem.amountTransaction)} ₫</span>
@@ -320,12 +331,12 @@ const CartItem = () => {
                                 }}
                             >
                                 <div className="col-12" style={{ display: 'flex', alignItems: 'center', height: '100px' }}>
-                                    <span onClick={handleChoiceAll} className="col-1" style={{ color: '#367289', display: 'flex', justifyContent: 'flex-end' }}>
-                                        <label class="container-check-cart col-3">
+                                    <span onChange={handleChoiceAll} className="col-1" style={{ color: '#367289', display: 'flex', justifyContent: 'flex-end' }}>
+                                        <label className="container-check-cart col-3">
                                             <input type="checkbox" id="choice_all" />
-                                            <span class="checkmark"></span>
+                                            <span className="checkmark"></span>
                                         </label>
-                                        <label style={{cursor: 'pointer'}} htmlFor="choice_all">Tất cả</label>
+                                        <label style={{ cursor: 'pointer' }} htmlFor="choice_all">Tất cả</label>
                                     </span>
                                     <div className="col-3">
                                         {removeCart ? (

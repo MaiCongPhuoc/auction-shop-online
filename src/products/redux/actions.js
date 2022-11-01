@@ -196,3 +196,11 @@ export const setCheckPayment = (boolean) => {
         payload: boolean,
     };
 };
+
+// Order detail
+export const setOrderDetails = (arr) => {
+    return {
+        type: 'orderDetails/setOrderDetails',
+        payload: arr,
+    };
+};
