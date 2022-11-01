@@ -8,14 +8,18 @@ import './asset/css/content.css';
 import './asset/css/login.css';
 import AccountService from '../dashboard/services/AccountService';
 import axios from 'axios';
+// import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import AuthService from '../dashboard/services/AuthService';
+import { useCookies } from 'react-cookie';
+import { stringify } from 'rc-field-form/es/useWatch';
 
 let flag = false;
 const ContentLogin = () => {
+    const [cookies, setCookie] = useCookies(['JWT', 'Username']);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [user, setUser] = useState({
@@ -29,11 +33,20 @@ const ContentLogin = () => {
                 async function login() {
                     let userLogin = await AuthService.postLogin(user);
                     setUser(userLogin.data);
-                    console.log('userLogin.data: ', userLogin.data.roles[0].authority);
+                    console.log('userLogin.data: ', userLogin.data);
+                    console.log('userLogin.data.token: ', userLogin.data.token);
+                    let d = new Date();
+                    d.setTime(d.getTime() + 2 * 60 * 1000);
+
+                    setCookie('JWT', userLogin.data.token, { path: '/' });
                     dispatch(loginStatus(true));
                     dispatch(setAccount(userLogin.data));
                     toast.success(`Đăng nhập thành công!`);
-                    // navigate('/dashboard', { replace: true });
+                    if (userLogin.data.roles[0].authority === 'USER') {
+                        navigate('/', { replace: true });
+                    } else {
+                        navigate('/dashboard', { replace: true });
+                    }
                 }
                 login();
                 flag = false;
