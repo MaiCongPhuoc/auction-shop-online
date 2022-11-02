@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import GoogleAndFacebook from './GoogleAndFacebook';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
@@ -16,12 +16,20 @@ import { ToastContainer } from 'react-toastify';
 import AuthService from '../dashboard/services/AuthService';
 import { useCookies } from 'react-cookie';
 import { stringify } from 'rc-field-form/es/useWatch';
+import useAuth from '../hooks/useAuth';
 
 let flag = false;
 const ContentLogin = () => {
-    const [cookies, setCookie] = useCookies(['JWT', 'Username']);
-    const dispatch = useDispatch();
+    const { setAuth } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+    const fromm = location.state?.from?.pathname || '/dashboard';
+
+    const dispatch = useDispatch();
+
+    const [cookies, setCookie] = useCookies(['JWT', 'Username']);
+
     const [user, setUser] = useState({
         email: '',
         password: '',
@@ -33,25 +41,29 @@ const ContentLogin = () => {
                 async function login() {
                     let userLogin = await AuthService.postLogin(user);
                     setUser(userLogin.data);
-                    console.log('userLogin.data: ', userLogin.data);
-                    console.log('userLogin.data.token: ', userLogin.data.token);
-                    let d = new Date();
-                    d.setTime(d.getTime() + 2 * 60 * 1000);
+                    let u = userLogin.data
+                    let email = userLogin.data.name;
+                    let username = userLogin.data.username;
+                    let token = userLogin.data.token;
+                    let roles = userLogin.data.roles;
+                    // console.log('userLogin.data: ', userLogin.data);
 
-                    setCookie('JWT', userLogin.data.token, { path: '/' });
-                    dispatch(loginStatus(true));
-                    dispatch(setAccount(userLogin.data));
+                    setAuth({ u, email, username, token, roles });
                     toast.success(`Đăng nhập thành công!`);
                     if (userLogin.data.roles[0].authority === 'USER') {
-                        navigate('/', { replace: true });
+                        navigate('/product', { replace: true });
                     } else {
                         navigate('/dashboard', { replace: true });
                     }
+                    setCookie('JWT', userLogin.data.token, { path: '/' });
+                    dispatch(loginStatus(true));
+                    dispatch(setAccount(userLogin.data));
                 }
                 login();
                 flag = false;
-                console.log('user: ', user);
-            } catch (error) {}
+                // console.log('user: ', user);
+            } catch (error) {
+            }
         }
     }, [user]);
 
@@ -75,7 +87,7 @@ const ContentLogin = () => {
         onSubmit: (account) => {
             flag = true;
             setUser(account);
-            console.log('add count: ', account);
+            // console.log('add count: ', account);
             handleReset();
         },
     });

@@ -103,7 +103,6 @@ function BangSanPham() {
                 toast.success(`Đã xóa thành công!`);
             }
         });
-
     useEffect(() => {
         try {
             setState({ ...state, loading: true });

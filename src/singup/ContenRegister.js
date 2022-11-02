@@ -218,7 +218,7 @@ const ContenRegister = () => {
         <>
             <form className="alo" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <div className="base-width-reg main-yield" style={{ maxWidth: '96%' }}>
-                    <h3 style={{ color: 'yellow' }}>ĐĂNG KÝ THÔNG TIN TÀI KHOẢN</h3>
+                    <h3 style={{ color: 'yellow', textAlign: 'center', paddingTop: '50px' }}>ĐĂNG KÝ THÔNG TIN TÀI KHOẢN</h3>
                     <hr />
                     <div className="modal-body">
                         <div className="frmError row">
@@ -461,7 +461,7 @@ const ContenRegister = () => {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="signinBtn btn btn-primary">
+                        <button type="submit" className="signinBtn btn btn-primary" style={{display: 'block',margin: '0 auto', textAlign: 'center'}}>
                             ĐĂNG KÝ
                         </button>
                     </div>

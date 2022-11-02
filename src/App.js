@@ -1,8 +1,8 @@
 // import logo from './logo.svg';
 import Dashboard from './dashboard/pages/Dashboard';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, useRoutes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './assets/bootstrap-5.2.0-dist/css/bootstrap.min.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -23,125 +23,69 @@ import Deny from './DenyPage/Deny';
 import ShowPageAuction from './products/components/Content/Pages/PageAuction/index';
 import ShowPageTheShop from './products/components/Content/Pages/PageTheShop/index';
 import UserInfor from './UserInfo/UserInfor';
-import store from './products/redux/store';
-import { Provider, useSelector } from 'react-redux';
-import { getAccount } from './products/redux/selector';
-
-// function App() {
-//     const [isLogin, setIsLogin] = useState(false);
-//     const [isAdmin, setIsAdmin] = useState(false);
-
-//     useEffect(() => {
-//         let loginUser = localStorage.getItem('loginUser');
-//         if (loginUser) {
-//             setIsLogin(true);
-//             let userLoggedin = JSON.parse(loginUser);
-//             if (userLoggedin.isAdmin === true) {
-//                 setIsAdmin(true);
-//             }
-//         }
-//     }, []);
-//     const loginAccount = useSelector(getAccount);
-//     console.log('loginAccount: ', loginAccount);
-//     return (
-//             <Router>
-//                 <div className="App">
-//                     <Routes>
-//                         {/*1. Dashboard */}
-//                         <Route path="/" element={<Product />} />
-//                         <Route path="/dashboard" element={<Dashboard />} />
-//                         <Route path="/list-account" element={<ListAccount />} />
-//                         <Route path="/list-product" element={<ListProduct />} />
-//                         <Route path="/dashboard/category" element={<ListCategories />} />
-
-//                         {/*2. Client */}
-//                         {/* - Login */}
-//                         <Route path="/registration" element={<Register />} />
-//                         <Route path="/login" element={<Login />} />
-//                         {/* <Route path="/userInfo" element={<UserInfor />} /> */}
-//                         <Route path="/userInfo" element={<UserInfor />} />
-
-//                         {/* - Product */}
-//                         <Route path="/product" element={<Product />} />
-//                         {/* -- Auction */}
-//                         <Route path="/product/auction" element={<ShowPageAuction />} />
-//                         <Route path="/bid/:auctionId" element={<ListBidAuction />} />
-//                         <Route path="/auction/:auctionId" element={<Auction />} />
-//                         <Route path="/bid/:auctionId" element={<ListBidAuction />} />
-//                         {/* -- The shop */}
-//                         <Route path="/product/the-shop/:slug" element={<TheShop />} />
-//                         <Route path="/product/the-shop" element={<ShowPageTheShop />} />
-
-//                         {/* -- Cart */}
-//                         <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
-//                     </Routes>
-//                 </div>
-//             </Router>
-//     );
-// }
+import RequireAuth from './context/RequireAuth';
+import NotFound from './NotFound';
 
 // export default App;
 
-
-// const ROLES = {
-//     'USER': 2001,
-//     'ADMIN': 5150
-//   }
+const ROLES = {
+    user: 'USER',
+    admin: 'ADMIN',
+    // nopeLogin: ''
+};
 
 function App() {
-    const loginAccount = useSelector(getAccount);
-    console.log('loginAccount: ', loginAccount);
     return (
-            <Router>
-                <div className="App">
-                    <Routes>
-                        {/*1. Dashboard */}
-                        <Route path="/" element={<Product />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/list-account" element={<ListAccount />} />
-                        <Route path="/list-product" element={<ListProduct />} />
-                        <Route path="/dashboard/category" element={<ListCategories />} />
+        // <Router>
+        <Routes>
+            <Route path="/registration" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/userInfo" element={<UserInfor />} />
+            <Route path="/unauthorized" element={<Deny />} />
+            <Route path="*" element={<NotFound />} />
 
-                        {/*2. Client */}
-                        {/* - Login */}
-                        <Route path="/registration" element={<Register />} />
-                        <Route path="/login" element={<Login />} />
-                        {/* <Route path="/userInfo" element={<UserInfor />} /> */}
-                        <Route path="/userInfo" element={<UserInfor />} />
+            {/*1. ADMIN */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.admin]} />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.admin]} />}>
+                <Route path="/list-account" element={<ListAccount />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.admin]} />}>
+                <Route path="/list-product" element={<ListProduct />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.admin]} />}>
+                <Route path="/dashboard/category" element={<ListCategories />} />
+            </Route>
 
-                        {/* - Product */}
-                        <Route path="/product" element={<Product />} />
-                        {/* -- Auction */}
-                        <Route path="/product/auction" element={<ShowPageAuction />} />
-                        <Route path="/bid/:auctionId" element={<ListBidAuction />} />
-                        <Route path="/auction/:auctionId" element={<Auction />} />
-                        <Route path="/bid/:auctionId" element={<ListBidAuction />} />
-                        {/* -- The shop */}
-                        <Route path="/product/the-shop/:slug" element={<TheShop />} />
-                        <Route path="/product/the-shop" element={<ShowPageTheShop />} />
+            {/*2. USER */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/product" element={<Product />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/product/auction" element={<ShowPageAuction />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/bid/:auctionId" element={<ListBidAuction />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/auction/:auctionId" element={<Auction />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/bid/:auctionId" element={<ListBidAuction />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/product/the-shop/:slug" element={<TheShop />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/product/the-shop" element={<ShowPageTheShop />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
+            </Route>
+        </Routes>
+        // </Router>
+        );
+    }
 
-                        {/* -- Cart */}
-                        <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
-                    </Routes>
-                </div>
-            </Router>
-    );
-}
-
-export default App;
-
-// import { LoginPage } from "./hooks/Login";
-// import { HomePage } from "./hooks/Home";
-
-// export default function App() {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path='/'>
-//           <Route path="" element={<HomePage />} />
-//           <Route path="login" element={<LoginPage />} />
-//           </Route>
-//       </Routes>
-//     </Router>
-//   );
-// }
+    export default App;

@@ -6,9 +6,9 @@ const HeaderEnd = () => {
         <div className="main-nav-div">
             <ul className="navigation">
                 <li className="left">
-                    <a className="home" href="/product">
+                    <Link className="home" to={"/product"}>
                         Trang chủ
-                    </a>
+                    </Link>
                 </li>
                 <li className="left">
                     <Link to={'/product/the-shop'} className="nav-explore drop-category">

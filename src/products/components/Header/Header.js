@@ -9,6 +9,7 @@ import HeaderAfterLogin from './HeaderAfterLogin/HeaderAfterLogin';
 import './header.css';
 import { useSelector } from 'react-redux/es/exports';
 import { getLoginStatus } from './../../redux/selector';
+import { Outlet } from 'react-router-dom';
 
 const Header = () => {
     const login = useSelector(getLoginStatus);
@@ -26,6 +27,7 @@ const Header = () => {
                         <HeaderEnd />
                     </div>
                 </div>
+                {/* <Outlet /> */}
             </div>
         </>
     );
