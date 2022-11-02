@@ -10,38 +10,67 @@ import {
     PROVINCE_URL,
     ROLES_URL,
     WARD_URL,
-    ROLE_URL,
 } from './Commom';
 
 class AccountService {
+
+    static getCookie(name) {
+        let cookie = {};
+        document.cookie.split(';').forEach(function (el) {
+            let [k, v] = el.split('=');
+            cookie[k.trim()] = v;
+        });
+        return cookie[name];
+    }
+
     static getAccount() {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(ACCOUNT_URL);
     }
     static getAddAccount(account) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.post(ADDACCOUNT_URL, account);
     }
     static getDataTableAccount(search, currentPage, recordPerPage) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${DATATABLEACCOUNT_URL}${search}?page=${currentPage}&size=${recordPerPage}`);
     }
     static getAccountById(accountId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${ACCOUNTBYID_URL}/${accountId}`);
     }
     static getEditAccount(account, accountId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.put(`${EDITACCOUNT_URL}/${accountId}`, account);
     }
     static getDeleteAccount(accountId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.patch(`${DELETEACCOUNT_URL}/${accountId}`);
     }
     static getRoles() {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(ROLES_URL);
     }
     static getProvinces() {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(PROVINCE_URL);
     }
     static getDistrict(idProvince) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${DISTRICT_URL}/${idProvince}`);
     }
     static getWard(idDistrict) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${WARD_URL}/${idDistrict}`);
     }
 }

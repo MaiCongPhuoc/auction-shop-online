@@ -6,7 +6,6 @@ const initState = {
 };
 
 const modalReducer = (state = initState, action) => {
-    console.log('action :', action);
     switch (action.type) {
         case 'modals/showInfoProduct':
             return {
