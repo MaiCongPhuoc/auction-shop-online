@@ -12,10 +12,11 @@ const Contact = () => {
             <div className="contact-user">
                 <div className="mt-4">
                     <h3 className="text-center align-items-center animate-charcter">
-                        Chào Mừng bạn đến với Auctions Shop<br></br>
+                        Chào mừng bạn đã ghé thăm Auctions Shop Online<br></br>
                         <br></br>
                         Chúng tôi rất vui khi nghe ý kiến đóng góp của bạn!
                     </h3>
+                    <hr />
                     <Penguin />
                     <hr />
                 </div>

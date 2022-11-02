@@ -6,8 +6,8 @@ import { getAccount } from '../../../../products/redux/selector';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
-import ModalDetailAccount from '../../../modal/account/ModalDetail';
-
+import ModalEditAccount from './modalAccountInfo/ModalEditAccount';
+import ModalDetail from './modalAccountInfo/ModalAccountInfo';
 function AdminInfo() {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
@@ -16,13 +16,22 @@ function AdminInfo() {
     const logout = () => {
         localStorage.removeItem('loginUser');
     };
+
+    const hanldeCloseEditAccount = () => setShowEdit(false);
+    const [showEdit, setShowEdit] = useState({
+        account: {},
+        accountEditId: 0,
+        showedit: false,
+    });
+    const { accountEditId, showedit } = showEdit;
+
     const [showDetail, setShowDetail] = useState({
         showdetail: false,
         accountId: 0,
     });
-    const handleCloseDetailAccount = () => setShowDetail(false);
     const { accounts, showdetail, accountId } = showDetail;
 
+    const handleCloseDetailAccount = () => setShowDetail(false);
     return (
         <>
             <div className="d-flex align-items-center me-3">
@@ -42,6 +51,17 @@ function AdminInfo() {
                                     }
                                 >
                                     <i class="fa-solid fa-user-tie"></i> Hồ sơ
+                                </button>
+                                <br />
+                                <button
+                                    onClick={() =>
+                                        setShowEdit({
+                                            accountEditId: account.id,
+                                            showedit: true,
+                                        })
+                                    }
+                                >
+                                    <i class="fa-solid fa-user-pen"></i> Cập nhật
                                 </button>
                             </li>
                             <button
@@ -70,10 +90,15 @@ function AdminInfo() {
                     </div>
                 </div>
                 <ToastContainer autoClose={1500} />
-                <ModalDetailAccount
+                <ModalEditAccount
+                    showEdit={showedit}
+                    accountEditId={accountEditId}
+                    onCloseEditAccount={hanldeCloseEditAccount}
+                />
+                <ModalDetail
                     showDetail={showdetail}
                     accountId={accountId}
-                    accounts={accounts}
+                    account={account}
                     onCloseDetailAccount={handleCloseDetailAccount}
                 />
             </div>

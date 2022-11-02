@@ -1,11 +1,12 @@
 import { Button, Modal } from 'react-bootstrap';
 import Moment from 'moment';
 import { useEffect, useState } from 'react';
-import AccountService from '../../../services/AccountService';
+import AccountService from '../../../../services/AccountService';
 
 function ModalDetail(props) {
     Moment.locale('vi');
     const { accountId, showDetail, onCloseDetailAccount } = props;
+    console.log('props: ', accountId);
     const [accountDetail, setAccountDetail] = useState({});
     useEffect(() => {
         if (accountId !== 0 && accountId !== undefined) {
@@ -80,7 +81,7 @@ function ModalDetail(props) {
                                 <p className="col-sm-6">{accountDetail.role.code}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-6">Tỉnh / thành phố:</h5>
+                                <h5 className="col-sm-6">Thành phố / tỉnh:</h5>
                                 <p className="col-sm-6">{accountDetail.locationRegion.provinceName}</p>
                             </div>
                             <div className="row">
@@ -88,7 +89,7 @@ function ModalDetail(props) {
                                 <p className="col-sm-6">{accountDetail.locationRegion.districtName}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-6">Thôn / xã:</h5>
+                                <h5 className="col-sm-6">Phường / xã</h5>
                                 <p className="col-sm-6">{accountDetail.locationRegion.wardName}</p>
                             </div>
                             <div className="row">

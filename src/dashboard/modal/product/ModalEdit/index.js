@@ -7,11 +7,23 @@ import CategoryService from '../../../services/Category';
 import ProductMediaService from '../../../services/ProductImageService';
 import FileService from '../../../services/FileService';
 import '../../modal.css';
+import { toast } from 'react-toastify';
 
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
 function ModalEditProduct(props) {
+    const notify = () =>
+        toast.success('Cập nhật thành công!', {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
     const { showEdit, productEditId, handleCloseEdit } = props;
     // console.log('showEdit: ', showEdit);
     const [radio, setRadio] = useState(false);
@@ -163,6 +175,7 @@ function ModalEditProduct(props) {
             console.log('product: ', product);
             setSubmitFrm(product);
             handleReset();
+            notify();
         },
         onReset: (product) => {
             console.log('onReset 2: ', product);
