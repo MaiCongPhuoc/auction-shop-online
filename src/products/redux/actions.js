@@ -204,3 +204,17 @@ export const setOrderDetails = (arr) => {
         payload: arr,
     };
 };
+
+// Watch List
+export const setWatchLists = (arr) => {
+    return {
+        type: 'watchLists/setWatchLists',
+        payload: arr,
+    };
+};
+export const setReloadWatchList = (boolean) => {
+    return {
+        type: 'watchLists/setReloadWatchList',
+        payload: boolean,
+    };
+};

@@ -1,18 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getProductsAction, getLoadData } from '../../../redux/selector';
+import { getProductsAction, getLoadData, getAccount } from '../../../redux/selector';
 import { setLoadData } from '../../../redux/actions';
 import LoadData from './../../Loading/LoadData';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
 import { getProductsAuction } from './../../../redux/selector';
+import WatchListsService from '../../../service/WatchList/WatchListService';
 
 const ContentAuction = () => {
     const dispatch = useDispatch();
+    const [watchLists, setWatchLists] = useState([]);
 
+    const account = useSelector(getAccount);
     useEffect(() => {
         try {
-            dispatch(setLoadData(false));
+            WatchListsService.getWatchListByAccountId(account.id).then((res) => {
+                setWatchLists(res.data);
+            }).catch((resp) => {
+                console.log(resp);
+            });
         } catch (error) {
             console.log(error);
         }

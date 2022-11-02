@@ -16,6 +16,23 @@ const initState = {
             address: 'Quang binh',
         },
     },
+    // account: {
+    //     id: 40,
+    //     username: 'maiphuoc',
+    //     fullName: 'Mai Công Phước',
+    //     phone: '0778224495',
+    //     email: 'maiphuoc244@gmail.com',
+    //     locationRegion: {
+    //         id: 71,
+    //         provinceId: '46',
+    //         provinceName: 'Tỉnh Thừa Thiên Huế',
+    //         districtId: '474',
+    //         districtName: 'Thành phố Huế',
+    //         wardId: '19774',
+    //         wardName: 'Phường Kim Long',
+    //         address: '18 Phạm Thị liên',
+    //     },
+    // },
 };
 
 const accountReducer = (state = initState, action) => {

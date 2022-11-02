@@ -8,6 +8,7 @@ import accountReducer from './../Slice/AccountSlice';
 import cartItemsReducer from '../Slice/CartItemSlice';
 import orderReducer from '../Slice/OrderSlice';
 import orderDetailsReducer from '../Slice/OrderDetailSlice';
+import watchListsReducer from './../Slice/WatchListSlice';
 
 const rootReducer = (state = {}, action) => {
     return {
@@ -20,7 +21,8 @@ const rootReducer = (state = {}, action) => {
         account: accountReducer(state.account, action),
         cartItems: cartItemsReducer(state.cartItems, action),
         orders: orderReducer(state.orders, action),
-        orderDetails: orderDetailsReducer(state.orderDetails, action)
+        orderDetails: orderDetailsReducer(state.orderDetails, action),
+        watchLists: watchListsReducer(state.watchLists, action)
     }   
 }
 

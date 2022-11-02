@@ -9,6 +9,7 @@ import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { toast } from 'react-toastify';
 import { setOrderDetails } from "../../../redux/actions";
 import { Link } from 'react-router-dom';
+import { compareValues } from './../../../Hooks/Hooks';
 
 const OrderDetail = () => {
     const dispatch = useDispatch();
@@ -26,7 +27,8 @@ const OrderDetail = () => {
             async function getOrderDetails() {
                 OrdersDetailService.getAllOrdersDetail(account.email).then((res) => {
                     if (res.data.length > 0) {
-                        setListOrderDetails(res.data);
+                        let list = res.data.sort(compareValues('id', 'desc'))
+                        setListOrderDetails(list);
                         setLoadOrderDetails(false);
                         setEmptyOrderDetails(false);
                     } else {

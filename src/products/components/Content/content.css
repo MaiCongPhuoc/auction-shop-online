@@ -314,3 +314,7 @@ a {
 .scroll-cart-item {
   z-index: 1;
 }
+
+.watching-plus:hover {
+  color: red;
+}

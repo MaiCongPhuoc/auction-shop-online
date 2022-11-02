@@ -24,6 +24,7 @@ function TheShopDetail() {
                 let productRes = await ProductService.getProductBySlug(productSlug.slug);
                 let productMediasRes = await ProductService.getAllMediaByProductId(productRes.data.id);
 
+
                 setTheShop({
                     ...theShop,
                     product: productRes.data,
@@ -81,7 +82,7 @@ function TheShopDetail() {
                                                 <div className="new-term-item">
                                                     <div className="new-terms-detail">
                                                         <div className="new-terms-title">Đánh giá</div>
-                                                        <div className="new-terms-content">
+                                                        <div className="new-terms-content col-12">
                                                             <ul>
                                                                 <li style={{display: 'flex', justifyContent: 'space-between'}}>
                                                                     <div className='fw-bold'>Trung Trần: </div>
@@ -92,7 +93,7 @@ function TheShopDetail() {
                                                                     <div>Ok</div>
                                                                 </li>
                                                                 <li style={{display: 'flex', justifyContent: 'space-between'}}>
-                                                                    <div className='fw-bold'>Phước Trần: </div>
+                                                                    <div className='fw-bold'>Phước Mai: </div>
                                                                     <div>Ok</div>
                                                                 </li>
                                                             </ul>

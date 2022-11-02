@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { getAccount, getReloadCartItem } from '../../../../redux/selector';
+import { getAccount, getReloadCartItem, getReloadWatchList } from '../../../../redux/selector';
 import { FormatMoney, isNumber } from './../../../../Hooks/Hooks';
 import CartItemService from './../../../../service/CartItem/CartItemService';
 import ValidationQuantity from '../../../../utils/ValidationQuantity';
-import { setCart, setReloadCartItem } from '../../../../redux/actions';
+import { setCart, setReloadCartItem, setReloadWatchList } from '../../../../redux/actions';
 import WatchListsService from '../../../../service/WatchList/WatchListService';
 
 const BuyComponent = ({ product }) => {
@@ -23,6 +23,31 @@ const BuyComponent = ({ product }) => {
     const [newTotalPrice, setNewTotalPrice] = useState(product.price);
 
     const [quantity, setQuantity] = useState(1);
+
+    const [checkWatchList, setCheckWatchList] = useState(false);
+    const [loadCheckWatchList, setLoadCheckWatchList] = useState(false);
+
+    const reloadWatchList = useSelector(getReloadWatchList);
+
+
+    useEffect(() => {
+        setLoadCheckWatchList(true);
+        try {
+            WatchListsService.checkProductInWatchListByAccountId(account.id, product).then((res) => {
+                if (res.data) {
+                    setCheckWatchList(true);
+                    setLoadCheckWatchList(false);
+                    return;
+                }
+                    setCheckWatchList(false);
+                    setLoadCheckWatchList(false);
+            }).catch((resp) => {
+                console.log("catch", resp);
+            });
+        } catch (error) {
+            console.log("err", error);
+        }
+    }, []);
 
     useEffect(() => {
         if (!isNumber(quantity)) {
@@ -85,17 +110,19 @@ const BuyComponent = ({ product }) => {
     };
 
     const handleAddWatchList = (product) => {
-        console.log("product.slug: ", product.slug);
-
         try {
-            WatchListsService.addWatchList(account.id, product).then((res) => {
-                console.log("watch list: ", res.data);
-            }).catch((err) => {
-                if (err.response.data) {
-                    toast.error(err.response.data);
-                }
-            });
-
+            async function addWatchList() {
+                WatchListsService.addWatchList(account.id, product).then((res) => {
+                    setCheckWatchList(true);
+                    dispatch(setReloadWatchList(!reloadWatchList))
+                    toast.info(`Đã thêm ${product.title} vào danh sách yêu thích`)
+                }).catch((err) => {
+                    if (err.response.data) {
+                        toast.error(err.response.data);
+                    }
+                });
+            }
+            addWatchList();
         } catch (error) {
             console.log(error);
         }
@@ -182,17 +209,31 @@ const BuyComponent = ({ product }) => {
                 </div>
                 <div className="mt-4">
                     <div className="watchlist-action">
-                        <div className="watcher-btn text-center" onClick={() => handleAddWatchList(product)}>
-                            <a className="watch-button" href="#" style={{ border: 'none !important' }}>
-                                <div className="relative-wrapper watch-wrapper btn">
-                                    <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
-                                        <i className="fa-regular fa-heart"></i>
-
-                                        <span className="watch-type"> Thêm vào danh sách yêu thích</span>
+                        {loadCheckWatchList ? null : (
+                            <>
+                                {checkWatchList ? (
+                                    <div className="watcher-btn text-center" style={{ width: 'auto' }}
+                                    // onClick={() => handleAddWatchList(product)}
+                                    >
+                                        <div className="relative-wrapper watch-wrapper btn">
+                                            <div className="watching-favorite" style={{ color: 'red', fontStyle: 'normal', display: 'block !important' }}>
+                                                <i className="fa-regular fa-heart"></i>
+                                                <span className="watch-type"> Yêu thích</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
+                                ) : (
+                                    <div className="watcher-btn text-center" style={{ width: 'auto' }} onClick={() => handleAddWatchList(product)}>
+                                        <div className="relative-wrapper watch-wrapper btn">
+                                            <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
+                                                <i className="fa-regular fa-heart"></i>import { setReloadWatchList } from './../../../../redux/actions';
+                                                <span className="watch-type"> Thêm vào danh sách yêu thích</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </>
+                        )}
                     </div>
                     <div className="viewers text-center mt-2" style={{ fontSize: '14px' }}><b>30</b> người đang theo dõi sản phẩm này</div>
                     <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>

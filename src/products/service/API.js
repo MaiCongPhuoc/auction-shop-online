@@ -39,6 +39,7 @@ export const CREATE_ORDER_DETAIL = ALL_ORDERS_DETAIL + '/create';
 // Watch list
 export const WATCH_LISTS = 'http://localhost:8080/api/watch-lists';
 export const ADD_WATCH_LISTS = WATCH_LISTS + '/add';
+export const CHECK_WATCH_LISTS = WATCH_LISTS + '/check';
 
 
 

@@ -130,3 +130,8 @@ export const getShowAddProduct = (state) => state.modals.showAddProduct;
 export const getShowEditProduct = (state) => state.modals.showEditProduct;
 
 export const getShowModerationProduct = (state) => state.modals.showModerationProduct;
+
+// Watch List
+export const getWatchLists = (state) => state.watchLists.watchLists;
+export const getReloadWatchList = (state) => state.watchLists.reloadWatchList;
+

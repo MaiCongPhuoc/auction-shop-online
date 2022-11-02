@@ -8,11 +8,12 @@ import ContentTheShop from './ContentTheShop/ContentTheShop';
 import './content.css';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getAccount, getCheckProduct, getType, getAllCartItems, getShowCart } from '../../redux/selector';
-import { getSearchingFilters, getShowInfoProduct, getLoginStatus } from './../../redux/selector';
+import { getSearchingFilters, getShowInfoProduct, getLoginStatus, getReloadWatchList } from './../../redux/selector';
 import ContentResultFilters from './ContentResultFilters/ContentResultFilters';
-import { setCartItems, setCategories, setCheckProduct, setLoadData, setProducts, setShowCart } from './../../redux/actions';
+import { setCategories, setLoadData, setProducts, setWatchLists } from './../../redux/actions';
 import ProductService from '../../service/Product/ProductService';
 import CategoriesService from '../../service/Categories/CategoriesService';
+import WatchListsService from '../../service/WatchList/WatchListService';
 
 const Content = () => {
     const dispatch = useDispatch();
@@ -25,6 +26,21 @@ const Content = () => {
     const loginStatus = useSelector(getLoginStatus);
 
     const account = useSelector(getAccount);
+
+    const reloadWatchList = useSelector(getReloadWatchList);
+
+
+    useEffect(() => {
+        try {
+            WatchListsService.getWatchListByAccountId(account.id).then((res) => {
+                dispatch(setWatchLists(res.data))
+            }).catch((resp) => {
+                console.log(resp);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }, [reloadWatchList]);
 
     useEffect(() => {
         try {
