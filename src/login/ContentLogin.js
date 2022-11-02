@@ -34,7 +34,7 @@ const ContentLogin = () => {
                     dispatch(loginStatus(true));
                     dispatch(setAccount(userLogin.data));
                     toast.success(`Đăng nhập thành công!`);
-                    // navigate('/dashboard', { replace: true });
+                    navigate('/dashboard', { replace: true });
                 }
                 login();
                 flag = false;

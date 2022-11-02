@@ -16,13 +16,9 @@ function SidebarComponent() {
             </p>
             <div id="collapseTwo" className="collapse" {...getCollapseProps()}>
                 <div className="bg-white py-2 collapse-inner rounded">
-                    <Link to="/list-product">
-                        <i class="fa-solid fa-file"></i> Danh sách
-                    </Link>
+                    <Link to="/list-product">Danh sách</Link>
                     <br />
-                    <Link to="/dashboard/category">
-                        <i class="fa-solid fa-rectangle-list"></i> Thể loại
-                    </Link>
+                    <Link to="/dashboard/category">Thể loại</Link>
                 </div>
             </div>
         </li>

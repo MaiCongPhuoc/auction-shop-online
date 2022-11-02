@@ -12,9 +12,9 @@ let flag = false;
 let img = 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png';
 function ModalEditProduct(props) {
     const notify = () =>
-        toast.success('Wow so easy!', {
+        toast.success('Cập nhật thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -177,15 +177,6 @@ function ModalEditProduct(props) {
                 .required('Vui lòng nhập họ tên đầy đủ vào!'),
             email: yup.string().email().required('Vui lòng nhập email vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
-            password: yup
-                .string()
-                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
-                .max(20, 'Mật khẩu tối đa là 20 kí tự!')
-                .required('Vui lòng nhập mật khẩu!'),
-            repassword: yup
-                .string()
-                .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
-                .required('Vui lòng nhập lại mật khẩu!'),
             role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyển hạn!') }),
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
@@ -207,7 +198,7 @@ function ModalEditProduct(props) {
 
             let roleId = Number(document.querySelector('#role').value);
 
-            flag = true
+            flag = true;
             account.avatar = img;
             account.role.id = roleId;
             account.blocked = accountById.blocked;
@@ -219,7 +210,7 @@ function ModalEditProduct(props) {
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
             console.log('account: ', account);
-            setAccountFrm({...account});
+            setAccountFrm({ ...account });
             handleReset();
             notify();
         },
@@ -230,7 +221,7 @@ function ModalEditProduct(props) {
     return (
         <Modal show={showEdit} onHide={onCloseEditAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Edit Account</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Cập nhật người dùng</Modal.Title>
             </Modal.Header>
             <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <Modal.Body>
@@ -245,12 +236,7 @@ function ModalEditProduct(props) {
                             {formik.errors.username && formik.errors.username && (
                                 <li className="error">{formik.errors.username}</li>
                             )}
-                            {formik.errors.password && formik.errors.password && (
-                                <li className="error">{formik.errors.password}</li>
-                            )}
-                            {formik.errors.repassword && formik.errors.repassword && (
-                                <li className="error">{formik.errors.repassword}</li>
-                            )}
+
                             {formik.errors.phone && formik.errors.phone && (
                                 <li className="error">{formik.errors.phone}</li>
                             )}
@@ -314,37 +300,7 @@ function ModalEditProduct(props) {
                                     onChange={formik.handleChange}
                                 />
                             </div>
-                            <div className="mb-3 col-4">
-                                <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
-                                    Mật khẩu:
-                                </label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Vui lòng nhập mật khẩu..."
-                                    value={formik.values.password}
-                                    onChange={formik.handleChange}
-                                />
-                            </div>
-                            <div className="mb-3 col-4">
-                                <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
-                                    Nhập lại mật khẩu:
-                                </label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    name="repassword"
-                                    id="repassword"
-                                    placeholder="Vui lòng nhập lại mật khẩu..."
-                                    value={formik.values.repassword}
-                                    onChange={formik.handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="row mb-3 ">
-                            <div className="col-6">
+                            <div className="col-4">
                                 <label htmlFor="addAvailable" className="form-label text-dark font-weight-bold ml-2">
                                     Số điện thoại:
                                 </label>
@@ -358,7 +314,7 @@ function ModalEditProduct(props) {
                                     placeholder="Vui lòng nhập số điện thoại..."
                                 />
                             </div>
-                            <div className="col-6">
+                            <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
                                     Quyền hạn:
                                 </label>
@@ -497,7 +453,7 @@ function ModalEditProduct(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button type="reset" variant="secondary w-auto" onClick={onCloseEditAccount}>
-                        Close
+                        Đóng
                     </Button>
                     {stateImg ? (
                         <Button type="submit" className="btn btn-primary">
@@ -505,7 +461,7 @@ function ModalEditProduct(props) {
                         </Button>
                     ) : (
                         <Button type="submit" className="btn btn-primary">
-                            Save
+                            Cập nhật
                         </Button>
                     )}
                     <ToastContainer />

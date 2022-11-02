@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 const HeaderEnd = () => {
-   
     return (
         <div className="main-nav-div">
             <ul className="navigation">
@@ -21,15 +20,15 @@ const HeaderEnd = () => {
                     </Link>
                 </li>
                 <li className="left">
-                    <a className="contact" href="#">
-                        Liên hệ
-                    </a>
+                    <Link className="contact" to="/contact">
+                        Liên hệ & Hợp tác cùng chúng tôi
+                    </Link>
                 </li>
-                <li className="left">
+                {/* <li className="left">
                     <a className="contact" href="#">
                         Hợp tác cùng chúng tôi
                     </a>
-                </li>
+                </li> */}
             </ul>
             <div className="charity-wrappper">
                 <div className="depth-bg-wrapper">

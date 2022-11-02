@@ -13,7 +13,7 @@ function ModalAddCategory(props) {
     const notify = () =>
         toast.success('Đã thêm thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -84,7 +84,7 @@ function ModalAddCategory(props) {
     return (
         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Add Category</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Thêm mới thể loại</Modal.Title>
             </Modal.Header>
             {loading ? (
                 <span className="spinner-border text-warning"></span>
@@ -102,7 +102,7 @@ function ModalAddCategory(props) {
                             <div className="row">
                                 <div className="mb-3">
                                     <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
-                                        Tên sản phẩm
+                                        Tên thể loại
                                     </label>
                                     <input
                                         type="text"
@@ -119,11 +119,11 @@ function ModalAddCategory(props) {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type="reset" variant="secondary w-auto" className="" onClick={handleClose}>
-                            Close
+                            Đóng
                         </Button>
 
                         <Button type="submit" className="btn btn-primary">
-                            Create
+                            Thêm
                         </Button>
 
                         <ToastContainer />

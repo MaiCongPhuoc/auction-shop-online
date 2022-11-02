@@ -16,15 +16,17 @@ import Content from './components/Content/Content';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import './Product.css';
-
-
+import Footer from './components/Footer/Footer';
 
 function Product() {
-
     return (
         <>
             <Header className="product-client" />
             <Content className="product-client" />
+            <br />
+            <br />
+            <br />
+            <Footer />
         </>
     );
 }

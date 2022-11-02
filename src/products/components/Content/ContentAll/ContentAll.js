@@ -154,10 +154,7 @@ const ContentAll = () => {
                             </Link>
                         )}
                     </div>
-
                 ))
-
-
             )}
         </div>
     );

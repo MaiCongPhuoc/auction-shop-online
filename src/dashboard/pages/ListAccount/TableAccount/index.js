@@ -6,7 +6,6 @@ import Spiner from '../../../Spiner';
 import ModalDetailAccount from '../../../modal/account/ModalDetail';
 import ModalAddAccount from '../../../modal/account/ModalAdd';
 import ModalEditAccount from '../../../modal/account/ModalEdit';
-import ModalRestartPassword from '../../../modal/account/ModalRestartPassWord';
 import Swal from 'sweetalert2';
 import '../../pages.css';
 import Tippy from '@tippyjs/react';
@@ -261,7 +260,7 @@ function BangTaiKhoan() {
                                             name="search"
                                             onClick={handleReset}
                                         >
-                                            reset search
+                                            Đặt lại tìm kiếm
                                         </button>
                                     </div>
                                 </div>
@@ -282,10 +281,8 @@ function BangTaiKhoan() {
                             <table className="table table-hover" id="dataTable" width="100%" cellSpacing={0}>
                                 <thead>
                                     <tr>
-                                        <th className="text-center">Avatar</th>
+                                        <th className="text-center">Ảnh</th>
                                         <th className="text-center">Tên đầy đủ</th>
-                                        {/* <th className="text-center">Email</th> */}
-                                        {/* <th className="text-center">Số điện thoại</th> */}
                                         <th className="text-center">Quyền</th>
                                         <th className="text-center">Tỉnh/Thành Phố</th>
                                         <th className="text-center">Quận/Huyện</th>
@@ -319,8 +316,6 @@ function BangTaiKhoan() {
                                                   <td>
                                                       <strong>{account.fullName}</strong>
                                                   </td>
-                                                  {/* <td>{account.email}</td> */}
-                                                  {/* <td className="text-end">{account.phone}</td> */}
                                                   <td>{account.role.code}</td>
                                                   <td>{account.locationRegion.provinceName}</td>
                                                   <td>{account.locationRegion.districtName}</td>
@@ -360,26 +355,6 @@ function BangTaiKhoan() {
                                                               onClick={() => notify(account.id)}
                                                           >
                                                               <i className="fa-solid fa-trash danger" title="Xóa"></i>
-                                                          </button>
-                                                      </Tippy>
-                                                      <Tippy
-                                                          delay={[0, 0]}
-                                                          // offset={[15, 8]}
-                                                          placement="top"
-                                                          content="Đổi mật khẩu"
-                                                      >
-                                                          <button
-                                                              className="btn btn-outline-info ml-2"
-                                                              data-bs-toggle="modal"
-                                                              data-bs-target="#btnDoiMK"
-                                                              onClick={() =>
-                                                                  setShowRestart({
-                                                                      accountEditId: account.id,
-                                                                      showRestart: true,
-                                                                  })
-                                                              }
-                                                          >
-                                                              <i class="fa-solid fa-key" title="Đổi mật khẩu"></i>
                                                           </button>
                                                       </Tippy>
                                                   </td>
@@ -459,8 +434,6 @@ function BangTaiKhoan() {
             {/*==================== Modal Add ===========================*/}
             <ModalAddAccount showAdd={showAdd} onCloseAddAccount={hanldeCloseAddAccount} />
 
-            {/* ====================== Modal RestartPassword ======================== */}
-            <ModalRestartPassword showRestart={showRestart} onCloseRestarPassword={hanldCloseRestartPassword} />
             {/* ======================= Modal detail ======================= */}
             <ModalDetailAccount
                 showDetail={showdetail}

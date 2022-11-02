@@ -12,7 +12,7 @@ function ModalEditCategory(props) {
     const notify1 = () =>
         toast.success('Đã sửa thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -98,7 +98,7 @@ function ModalEditCategory(props) {
     return (
         <Modal show={showedit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Edit Category</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Cập nhật thể loại</Modal.Title>
             </Modal.Header>
             <form multiple="multiple" onSubmit={formik.handleSubmit}>
                 <Modal.Body>
@@ -113,7 +113,7 @@ function ModalEditCategory(props) {
                         <div className="row">
                             <div className="mb-3">
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
-                                    Title
+                                    Tên thể loại
                                 </label>
                                 <input
                                     type="text"
@@ -130,10 +130,10 @@ function ModalEditCategory(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button type="reset" variant="secondary w-auto" onClick={handleCloseEdit}>
-                        Close
+                        Đóng
                     </Button>
                     <Button type="submit" className="btn btn-primary">
-                        Save
+                        Cập nhật
                     </Button>
                     <ToastContainer />
                 </Modal.Footer>

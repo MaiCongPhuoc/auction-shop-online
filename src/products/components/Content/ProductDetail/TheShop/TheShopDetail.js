@@ -13,13 +13,12 @@ function TheShopDetail() {
         product: {},
         productMedias: [],
         loading: true,
-
     });
 
     useEffect(() => {
         try {
-            console.log("aaa");
-            setTheShop({...theShop, loading: true})
+            console.log('aaa');
+            setTheShop({ ...theShop, loading: true });
             async function getData() {
                 let productRes = await ProductService.getProductBySlug(productSlug.slug);
                 let productMediasRes = await ProductService.getAllMediaByProductId(productRes.data.id);
@@ -29,17 +28,17 @@ function TheShopDetail() {
                     ...theShop,
                     product: productRes.data,
                     productMedias: productMediasRes.data,
-                    loading: false
+                    loading: false,
                 });
-            };
+            }
             getData();
-        } catch (error) { }
+        } catch (error) {}
     }, []);
 
-    const {product, productMedias, loading} = theShop;
+    const { product, productMedias, loading } = theShop;
     let max_visibility = theShop.productMedias.length;
     return (
-        <div className="pages" id="productTheShop" style={{marginTop: '160px'}}>
+        <div className="pages" id="productTheShop" style={{ marginTop: '160px' }}>
             {loading ? (
                 <LoadData />
             ) : (
@@ -61,14 +60,14 @@ function TheShopDetail() {
                                 </div>
                                 <div className="lot-detail">
                                     <div className="lot-tabs">
-                                        <div className="lot-tab-item active" tab="lot-overview">
-                                            Overview
+                                        <div className="lot-tab-item" tab="lot-overview">
+                                            Tổng quan
                                         </div>
                                         <div className="lot-tab-item" tab="lot-rules">
-                                            Conditions of Sale
+                                            Điều kiện bán hàng
                                         </div>
                                         <div className="lot-tab-item" tab="lot-shipping">
-                                            Shipping &amp; Redemption
+                                            Giao hàng &amp; Đổi trả
                                         </div>
                                     </div>
                                     <div className="lot-content">
@@ -84,17 +83,33 @@ function TheShopDetail() {
                                                         <div className="new-terms-title">Đánh giá</div>
                                                         <div className="new-terms-content col-12">
                                                             <ul>
-                                                                <li style={{display: 'flex', justifyContent: 'space-between'}}>
-                                                                    <div className='fw-bold'>Trung Trần: </div>
-                                                                    <div>Được đỏ</div>
+                                                                <li
+                                                                    style={{
+                                                                        display: 'flex',
+                                                                        justifyContent: 'space-between',
+                                                                    }}
+                                                                >
+                                                                    <div className="fw-bold">Trung Trần: </div>
+                                                                    <div> &nbsp; Được đỏ</div>
                                                                 </li>
-                                                                <li style={{display: 'flex', justifyContent: 'space-between'}}>
-                                                                    <div className='fw-bold'>Phong Trần: </div>
+                                                                <li
+                                                                    style={{
+                                                                        display: 'flex',
+                                                                        justifyContent: 'space-between',
+                                                                    }}
+                                                                >
+                                                                    <div className="fw-bold">Phong Trần: </div>
                                                                     <div>Ok</div>
                                                                 </li>
                                                                 <li style={{display: 'flex', justifyContent: 'space-between'}}>
                                                                     <div className='fw-bold'>Phước Mai: </div>
+
                                                                     <div>Ok</div>
+                                                                </li>
+                                                                <li style={{display: 'flex', justifyContent: 'space-between'}}>
+                                                                    <div className='fw-bold'>Hằng Đinh: </div>
+
+                                                                    <div>Xịn</div>
                                                                 </li>
                                                             </ul>
                                                             {/* <hr className="desktop" /> */}
@@ -130,9 +145,7 @@ function TheShopDetail() {
                             >
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522803}>
-                                        <a
-                                            id="item-link-2522803"
-                                        >
+                                        <a id="item-link-2522803">
                                             <div className="item-wrapper">
                                                 <div className="catalog-item-image">
                                                     <img
@@ -160,9 +173,7 @@ function TheShopDetail() {
                                 </div>
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522810}>
-                                        <a
-                                            id="item-link-2522810"
-                                        >
+                                        <a id="item-link-2522810">
                                             <div className="item-wrapper">
                                                 <div className="catalog-item-image">
                                                     <img
@@ -190,9 +201,7 @@ function TheShopDetail() {
                                 </div>
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522812}>
-                                        <a
-                                            id="item-link-2522812"
-                                        >
+                                        <a id="item-link-2522812">
                                             <div className="item-wrapper">
                                                 <div className="catalog-item-image">
                                                     <img
@@ -220,9 +229,7 @@ function TheShopDetail() {
                                 </div>
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522827}>
-                                        <a
-                                            id="item-link-2522827"
-                                        >
+                                        <a id="item-link-2522827">
                                             <div className="item-wrapper">
                                                 <div className="catalog-item-image">
                                                     <img
@@ -286,9 +293,7 @@ function TheShopDetail() {
                             >
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522802}>
-                                        <a
-                                            id="item-link-2522802"
-                                        >
+                                        <a id="item-link-2522802">
                                             <div className="item-wrapper">
                                                 <div className="catalog-item-image">
                                                     <img
@@ -316,9 +321,7 @@ function TheShopDetail() {
                                 </div>
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2535000}>
-                                        <a
-                                            id="item-link-2535000"
-                                        >
+                                        <a id="item-link-2535000">
                                             <div className="item-wrapper">
                                                 <div className="catalog-item-image">
                                                     <img
@@ -339,9 +342,7 @@ function TheShopDetail() {
                                 </div>
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522829}>
-                                        <a
-                                            id="item-link-2522829"
-                                        >
+                                        <a id="item-link-2522829">
                                             <div className="item-wrapper">
                                                 <div className="catalog-item-image">
                                                     <img
@@ -369,9 +370,7 @@ function TheShopDetail() {
                                 </div>
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2536514}>
-                                        <a
-                                            id="item-link-2536514"
-                                        >
+                                        <a id="item-link-2536514">
                                             <div className="item-wrapper">
                                                 <div className="catalog-item-image">
                                                     <img
