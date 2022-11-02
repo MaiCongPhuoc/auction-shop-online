@@ -7,6 +7,7 @@ import modalReducer from './../Slice/ModalSlice';
 import accountReducer from './../Slice/AccountSlice';
 import cartItemsReducer from '../Slice/CartItemSlice';
 import orderReducer from '../Slice/OrderSlice';
+import orderDetailsReducer from '../Slice/OrderDetailSlice';
 
 const rootReducer = (state = {}, action) => {
     return {
@@ -18,7 +19,8 @@ const rootReducer = (state = {}, action) => {
         modals: modalReducer(state.modals, action),
         account: accountReducer(state.account, action),
         cartItems: cartItemsReducer(state.cartItems, action),
-        orders: orderReducer(state.orders, action)
+        orders: orderReducer(state.orders, action),
+        orderDetails: orderDetailsReducer(state.orderDetails, action)
     }   
 }
 

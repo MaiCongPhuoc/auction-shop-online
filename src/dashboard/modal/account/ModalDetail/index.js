@@ -102,7 +102,7 @@ function ModalDetail(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onCloseDetailAccount}>
-                    Close
+                    Đóng
                 </Button>
             </Modal.Footer>
         </Modal>

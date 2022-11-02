@@ -2,6 +2,7 @@
   "name": "auction-shop-online",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080/api/products",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",

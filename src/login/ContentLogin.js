@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import Google from './Google';
 import AuthService from '../dashboard/services/AuthService';
 import { useCookies } from 'react-cookie';
 import { stringify } from 'rc-field-form/es/useWatch';
@@ -58,6 +59,7 @@ const ContentLogin = () => {
                     setCookie('JWT', userLogin.data.token, { path: '/' });
                     dispatch(loginStatus(true));
                     dispatch(setAccount(userLogin.data));
+                    toast.success(`Đăng nhập thành công!`);
                 }
                 login();
                 flag = false;
@@ -91,6 +93,7 @@ const ContentLogin = () => {
             handleReset();
         },
     });
+
     return (
         <div className="base-width main-yield">
             <div className="login" data-pages-shell>
@@ -143,6 +146,7 @@ const ContentLogin = () => {
                                                     <Facebook />
                                                 </div>
                                             </div> */}
+
                                         <button type="submit" className="loginBtn">
                                             Đăng Nhập
                                         </button>

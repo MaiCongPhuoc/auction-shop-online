@@ -20,41 +20,52 @@ function ListBidAuction() {
         getListBid();
     }, []);
 
-    let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
-    let days = diffTime / (24 * 60 * 60 * 1000);
-    let hours = (days % 1) * 24;
-    let minutes = (hours % 1) * 60;
-    let secs = (minutes % 1) * 60;
+    // let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
+    // let days = diffTime / (24 * 60 * 60 * 1000);
+    // let hours = (days % 1) * 24;
+    // let minutes = (hours % 1) * 60;
+    // let secs = (minutes % 1) * 60;
+    // setTimeout(() => {
+    //     if (Math.floor(days) === 0 && Math.floor(hours) === 0 && Math.floor(minutes) === 0 && Math.floor(secs) === 0) {
+    //         setCloseAction(true);
+    //         // setDiffTime(0);
+    //     } else {
+    //         setTimeAuction([
+    //             Math.floor(days),
+    //             Math.floor(hours),
+    //             Math.floor(minutes),
+    //             Math.floor(secs),
+    //             // Math.floor(0), Math.floor(0), Math.floor(0), Math.floor(0)
+    //         ]);
+    //     }
+    // }, 1000);
     setTimeout(() => {
-        if (
-            Math.floor(days) == 0 &&
-            Math.floor(hours) == 0 &&
-            Math.floor(minutes) == 0 &&
-            Math.floor(secs) == 0
-        ) {
+        let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
+        let days = diffTime / (24 * 60 * 60 * 1000);
+        let hours = (days % 1) * 24;
+        let minutes = (hours % 1) * 60;
+        let secs = (minutes % 1) * 60;
+        setTimeAuction([Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]);
+        if (Math.floor(days) === 0 && Math.floor(hours) === 0 && Math.floor(minutes) === 0 && Math.floor(secs) === 0) {
             setCloseAction(true);
+            clearTimeout();
             // setDiffTime(0);
         } else {
             setTimeAuction([
-                Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)
+                Math.floor(days),
+                Math.floor(hours),
+                Math.floor(minutes),
+                Math.floor(secs),
                 // Math.floor(0), Math.floor(0), Math.floor(0), Math.floor(0)
             ]);
         }
     }, 1000);
-    // setTimeout(() => {
-    //     let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
-    //     let days = diffTime / (24 * 60 * 60 * 1000);
-    //     let hours = (days % 1) * 24;
-    //     let minutes = (hours % 1) * 60;
-    //     let secs = (minutes % 1) * 60;
-    //     setTimeAuction([Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]);
-    // }, 1000);
 
     // let diffTime = new Date();
     return (
         <>
             <Header className="product-client" />
-            <div className="base-width main-yield" style={{ padding: '135px 0 0 0' }}>
+            <div className="base-width main-yield">
                 <div className="top-flash-bar" />
                 <div className="pages" data-pages-shell>
                     <link
@@ -69,7 +80,7 @@ function ListBidAuction() {
                             <div className="title-desc">
                                 <h2>Sản phẩm: {bids.length === 0 ? '' : bids[0].auction.product.title}</h2>
                                 <p>
-                                    <span className="bold">Người đấu giá cuối cùng: </span>{' '}
+                                    <span className="">NGƯỜI ĐẤU GIÁ CUỐI CÙNG: </span>{' '}
                                     {bids.length === 0 ? '' : bids[0].createdBy}
                                 </p>
                             </div>
@@ -79,12 +90,17 @@ function ListBidAuction() {
                                         <div className="summary-title">
                                             <b>Giá lớn nhất:</b>
                                         </div>
-                                        <div className="summary-text">{bids.length === 0 ? '' : <NumericFormat
-                                            value={bids[0].bidPrice}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            suffix={' đ'}
-                                        />}
+                                        <div className="summary-text">
+                                            {bids.length === 0 ? (
+                                                ''
+                                            ) : (
+                                                <NumericFormat
+                                                    value={bids[0].bidPrice}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    suffix={' đ'}
+                                                />
+                                            )}
                                         </div>
                                     </div>
                                     <div className="summary-block cell small-3">
@@ -98,13 +114,11 @@ function ListBidAuction() {
                                             <b>Thời gian còn lại</b>
                                         </div>
                                         {closeAction ? (
-                                            <div className="summary-text">
-                                                Phiên đấu giá đã kết thúc
-                                            </div>
+                                            <div className="summary-text">Phiên đấu giá đã kết thúc</div>
                                         ) : (
                                             <div className="summary-text">
-                                                {timeAuction[0]}d : {timeAuction[1]}h : {timeAuction[2]}m : {timeAuction[3]}
-                                                s
+                                                {timeAuction[0]}d : {timeAuction[1]}h : {timeAuction[2]}m :{' '}
+                                                {timeAuction[3]}s
                                             </div>
                                         )}
                                     </div>
@@ -112,10 +126,10 @@ function ListBidAuction() {
                             </div>
                         </div>
                         <div className="history-list show-for-medium">
-                            <div className="grid-x grid-padding-x bid-header">
+                            <div className="grid-x grid-padding-x bid-header" style={{ backgroundColor: 'aqua' }}>
                                 <div className="cell small-1 col-rank">THỨ HẠNG</div>
-                                <div className="cell small-5 col-info">NGƯỜI ĐẤU THẦU</div>
-                                <div className="cell small-2 col-info col-amt">SỐ TIỀN</div>
+                                <div className="cell small-5 col-info">NGƯỜI ĐẤU GIÁ</div>
+                                <div className="cell small-2 col-info col-amt">SỐ TIỀN (đ)</div>
                                 <div className="cell small-2 col-info">NGÀY</div>
                                 <div className="cell small-2 col-info">THỜI GIAN</div>
                             </div>
@@ -133,14 +147,14 @@ function ListBidAuction() {
                                                 value={bid.bidPrice}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
-                                                suffix={' đ'}
+                                                // suffix={' đ'}
                                             />
                                         </div>
                                     </div>
-                                    <div className="cell small-2 col-info col-date">
+                                    <div className="cell small-2 col-info col-date" style={{ textAlign: 'end' }}>
                                         {Moment(bid.createdAt).format('DD-MM-YYYY')}
                                     </div>
-                                    <div className="cell small-2 col-info col-time">
+                                    <div className="cell small-2 col-info col-time" style={{ textAlign: 'end' }}>
                                         {Moment(bid.createdAt).format('hh:mm:ss')}
                                     </div>
                                 </div>

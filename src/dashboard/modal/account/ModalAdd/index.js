@@ -11,9 +11,9 @@ import 'react-toastify/dist/ReactToastify.css';
 let flag = false;
 function ModalDetailAccount(props) {
     const notify = () =>
-        toast.success('Wow so easy!', {
+        toast.success('Thêm mới thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -53,7 +53,7 @@ function ModalDetailAccount(props) {
         if (flag) {
             try {
                 async function postData() {
-                    let createRes =  await AccountService.getAddAccount(accountFrm);
+                    let createRes = await AccountService.getAddAccount(accountFrm);
                     console.log('createRes: ', createRes.data);
                 }
                 postData();
@@ -229,7 +229,7 @@ function ModalDetailAccount(props) {
     return (
         <Modal show={showAdd} onHide={onCloseAddAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Add Account</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Thêm mới người dùng</Modal.Title>
             </Modal.Header>
             <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <Modal.Body>
@@ -424,7 +424,7 @@ function ModalDetailAccount(props) {
                                         ''
                                     ) : (
                                         <option value={-1} key={-1} defaultValue disabled>
-                                            Chọn tỉnh / Thành phố:
+                                            Tỉnh / Thành phố:
                                         </option>
                                     )}
                                     {districts.map((district) => (
@@ -436,12 +436,12 @@ function ModalDetailAccount(props) {
                             </div>
                             <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
-                                    Thôn / Thị xã:
+                                    Thị trấn / Xã:
                                 </label>
                                 <select
-                                    className="form-select select"
+                                    className="form-select select select-bg-ori"
                                     id="ward"
-                                    name="locationRegion.wardId select-bg-ori"
+                                    name="locationRegion.wardId"
                                     value={formik.values.locationRegion.wardId}
                                     onChange={formik.handleChange}
                                     onInput={handleWard}
@@ -496,7 +496,7 @@ function ModalDetailAccount(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button type="reset" variant="secondary w-auto" onClick={onCloseAddAccount}>
-                        Close
+                        Đóng
                     </Button>
                     {stateImg ? (
                         <Button type="submit" className="btn btn-primary">
@@ -504,7 +504,7 @@ function ModalDetailAccount(props) {
                         </Button>
                     ) : (
                         <Button type="submit" className="btn btn-primary">
-                            Create
+                            Thêm
                         </Button>
                     )}
                     <ToastContainer />

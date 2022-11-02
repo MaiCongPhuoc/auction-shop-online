@@ -1,14 +1,10 @@
-// import logo from './logo.svg';
 import Dashboard from './dashboard/pages/Dashboard';
 import React from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import './assets/bootstrap-5.2.0-dist/css/bootstrap.min.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
-
 import './assets/css/sb-admin-2.min.css';
-// import '../node_modules/startbootstrap-sb-admin-2/js/sb-admin-2.min.js';
-
 import Product from './products/Product';
 import ListProduct from './dashboard/pages/ListProduct';
 import ListAccount from './dashboard/pages/ListAccount';
@@ -22,9 +18,10 @@ import TheShop from './products/components/Content/ProductDetail/TheShop/index';
 import Deny from './DenyPage/Deny';
 import ShowPageAuction from './products/components/Content/Pages/PageAuction/index';
 import ShowPageTheShop from './products/components/Content/Pages/PageTheShop/index';
-import UserInfor from './UserInfo/UserInfor';
 import RequireAuth from './context/RequireAuth';
 import NotFound from './NotFound';
+import Contact from './contact/Contact.js';
+import ShowOrderDetail from './products/components/Content/OrderDetail';
 
 // export default App;
 
@@ -40,7 +37,6 @@ function App() {
         <Routes>
             <Route path="/registration" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/userInfo" element={<UserInfor />} />
             <Route path="/unauthorized" element={<Deny />} />
             <Route path="*" element={<NotFound />} />
 
@@ -83,6 +79,8 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
                 <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
             </Route>
+            {/* -- Contact */}
+            <Route path="/contact" element={<Contact />} />
         </Routes>
         // </Router>
         );

@@ -23,7 +23,7 @@ function ModalAddProduct(props) {
     const notify = () =>
         toast.success('Đã thêm thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -166,12 +166,13 @@ function ModalAddProduct(props) {
             // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
             // .max(999900000, 'Vui lòng nhập giá ước tính dưới 999900000 VNĐ!'),
             // .required('Vui lòng nhập giá ước tính!'),
-            available: radio ? null :
-                yup
-                    .number('Vui lòng nhập số!')
-                    .min(1, 'Số lượng nhỏ nhất là 1!')
-                    .max(200, 'Số lượng lớn nhất là 200!')
-                    .required('Vui lòng nhập số lượng!'),
+            available: radio
+                ? null
+                : yup
+                      .number('Vui lòng nhập số!')
+                      .min(1, 'Số lượng nhỏ nhất là 1!')
+                      .max(200, 'Số lượng lớn nhất là 200!')
+                      .required('Vui lòng nhập số lượng!'),
             action: yup.string(),
             image: yup.mixed(),
             description: yup.string(),
@@ -208,7 +209,7 @@ function ModalAddProduct(props) {
     return (
         <Modal show={showAddProduct} onHide={handleCloseAddProduct} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Add Product</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Thêm mới sản phẩm</Modal.Title>
             </Modal.Header>
             {loading ? (
                 <span className="spinner-border text-warning"></span>
@@ -468,7 +469,7 @@ function ModalAddProduct(props) {
                             <div className="row">
                                 <div className="mb-3 col-12">
                                     <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
-                                        Images
+                                        Ảnh{' '}
                                     </label>
                                     <input
                                         type="file"
@@ -512,7 +513,7 @@ function ModalAddProduct(props) {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type="reset" variant="secondary w-auto" className="" onClick={handleCloseAddProduct}>
-                            Close
+                            Đóng
                         </Button>
                         {stateImg ? (
                             <Button type="submit" className="btn btn-primary">
@@ -520,10 +521,10 @@ function ModalAddProduct(props) {
                             </Button>
                         ) : (
                             <Button type="submit" className="btn btn-primary">
-                                Create
+                                Thêm
                             </Button>
                         )}
-                        <ToastContainer autoClose={1500}/>
+                        <ToastContainer autoClose={1500} />
                     </Modal.Footer>
                 </form>
             )}
