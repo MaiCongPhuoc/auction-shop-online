@@ -35,6 +35,7 @@ function App() {
     return (
         // <Router>
         <Routes>
+            <Route path="/" element={<Product />} />
             <Route path="/registration" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/unauthorized" element={<Deny />} />
@@ -77,7 +78,7 @@ function App() {
                 <Route path="/product/the-shop" element={<ShowPageTheShop />} />
             </Route>
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
-                <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
+                <Route path="/product/cart" element={<ShowCartItem />} />
             </Route>
             {/* -- Contact */}
             <Route path="/contact" element={<Contact />} />
