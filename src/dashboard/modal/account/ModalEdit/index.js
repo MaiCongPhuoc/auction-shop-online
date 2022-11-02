@@ -175,7 +175,7 @@ function ModalEditProduct(props) {
                 .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
                 .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
                 .required('Vui lòng nhập họ tên đầy đủ vào!'),
-            email: yup.string().email().required('Vui lòng nhập email vào!'),
+            email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập email vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyển hạn!') }),
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
@@ -221,7 +221,7 @@ function ModalEditProduct(props) {
     return (
         <Modal show={showEdit} onHide={onCloseEditAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Cập nhật người dùng</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Cập nhật tài khoản</Modal.Title>
             </Modal.Header>
             <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <Modal.Body>

@@ -19,7 +19,7 @@ function Sidebar() {
             <hr className="sidebar-divider my-0" />
             {/* Nav Item - Dashboard */}
             <li className="nav-item active">
-                <Link className="nav-link" to="/product">
+                <Link className="nav-link" to="/product/home">
                     <i class="fa-solid fa-store"></i>
                     <span>TRANG BÁN HÀNG</span>
                 </Link>

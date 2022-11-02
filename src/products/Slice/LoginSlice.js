@@ -1,5 +1,5 @@
 const initState = {
-    login: true,
+    login: false,
     showSignupInfo: false,
     showLocation: false,
 };
