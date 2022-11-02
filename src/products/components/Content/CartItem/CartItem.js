@@ -11,6 +11,7 @@ import EmptyCart from "../../Loading/EmptyCart";
 import LoadCart from './../../Loading/LoadCart';
 import LoadQuantity from './../../Loading/LoadQuantity';
 import { Link } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 
 const CartItem = () => {
     const dispatch = useDispatch();
@@ -275,8 +276,8 @@ const CartItem = () => {
 
                                             >
                                                 <div className="change-quantity show"
+                                                    data-tip="Giảm số lượng"
                                                     id={`reduce_${cartItem.id}`}
-                                                    title="Giảm một sản phẩm"
                                                     onClick={() => handleReduceQuantity(cartItem)}
                                                     style={{
                                                         fontSize: '36px',
@@ -302,8 +303,8 @@ const CartItem = () => {
                                                     disabled
                                                 />
                                                 <div className="change-quantity show"
+                                                    data-tip="Tăng số lượng"
                                                     id={`increasing_${cartItem.id}`}
-                                                    title="Tăng một sản phẩm"
                                                     onClick={() => handleIncreasingQuantity(cartItem)}
                                                     style={{
                                                         fontSize: '28px',
@@ -315,6 +316,7 @@ const CartItem = () => {
                                                 >
                                                     +
                                                 </div>
+                                                <ReactTooltip />
                                             </span>
 
                                             <span className="text-end col-2 fw-bold">{FormatMoney(cartItem.amountTransaction)} ₫</span>
@@ -379,8 +381,6 @@ const CartItem = () => {
                         </div>
                     )
             }
-            <template id="product-box" />
-            <template id="buy-box" />
             <ToastContainer autoClose={1000} />
             <StyledEngineProvider injectFirst>
                 <Checkout items={choiceItems} />

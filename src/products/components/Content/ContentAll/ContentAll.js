@@ -7,7 +7,7 @@ import { getAccount, getAllProducts, getLoadData, getWatchLists } from '../../..
 import { setShowInfoProduct, setProduct } from '../../../redux/actions';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
-import WatchListsService from './../../../service/WatchList/WatchListService';
+import ReactTooltip from 'react-tooltip';
 
 const ContentAll = () => {
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const ContentAll = () => {
                 setWatchLists(currentWatchLists);
                 return
             } else {
-                console.log("watch list" , currentWatchLists.length);
+                console.log("watch list", currentWatchLists.length);
             }
         }
         checkWatchList();
@@ -52,20 +52,18 @@ const ContentAll = () => {
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
 
                                     {watchLists.forEach((item) => (
-                                        <>
-                                            {(item.product.id == product.id) ? (
-                                                <div className="add-to-watchlist">
-                                                    <span className="ico-circle" ico_action="fav">
-                                                        <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
-                                                    </span>
-                                                </div>
+                                        <div key={item.id} className="add-to-watchlist">
+                                            {(item.product.id === product.id) ? (
+                                                <span className="ico-circle" ico_action="fav">
+                                                    <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                </span>
                                             ) : (
                                                 null
                                                 // <span className="ico-circle" ico_action="fav">
                                                 //     <i className="fa-regular fa-heart"></i>
                                                 // </span>
                                             )}
-                                        </>
+                                        </div>
                                     ))}
                                 </figure>
                                 <div className="card__info-container">
@@ -111,7 +109,8 @@ const ContentAll = () => {
                                     {watchLists.map((item) => (
                                         <div key={item.id} className="add-to-watchlist">
                                             {(item.product.id === product.id) ? (
-                                                <span className="ico-circle" ico_action="fav">
+                                                <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
+                                                    <ReactTooltip />
                                                     <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
                                                 </span>
                                             ) : (
@@ -160,7 +159,6 @@ const ContentAll = () => {
 
 
             )}
-
         </div>
     );
 };

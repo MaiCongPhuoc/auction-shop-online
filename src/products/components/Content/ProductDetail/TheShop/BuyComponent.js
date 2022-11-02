@@ -7,6 +7,7 @@ import CartItemService from './../../../../service/CartItem/CartItemService';
 import ValidationQuantity from '../../../../utils/ValidationQuantity';
 import { setCart, setReloadCartItem, setReloadWatchList } from '../../../../redux/actions';
 import WatchListsService from '../../../../service/WatchList/WatchListService';
+import ReactTooltip from 'react-tooltip';
 
 const BuyComponent = ({ product }) => {
     const dispatch = useDispatch();
@@ -163,7 +164,8 @@ const BuyComponent = ({ product }) => {
                                     <div className="bb-item-qty" style={{ width: '30%', display: 'inline-block' }}>
                                         <label htmlFor='quantity' className="bid-box-label" style={{ color: '#333', fontWeight: 600, padding: '3px 0px' }}>Số lượng</label>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <div id='reduce-quantity' onClick={reduceQuantity}>
+                                            <div id='reduce-quantity' data-tip="Giảm số lượng" onClick={reduceQuantity}>
+                                                <ReactTooltip />
                                                 <i
                                                     className="fa fa-window-minimize"
                                                 >
@@ -178,7 +180,8 @@ const BuyComponent = ({ product }) => {
                                                 value={quantity}
                                                 style={{ lineHeight: '30px', width: '50px' }}>
                                             </input>
-                                            <div id='increasing-quantity' onClick={increasingQuantity}>
+                                            <div id='increasing-quantity' data-tip="Tăng số lượng" onClick={increasingQuantity}>
+                                                <ReactTooltip />
                                                 <i
                                                     className="fa fa-plus"
                                                 >
