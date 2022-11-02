@@ -29,7 +29,28 @@ const BuyComponent = ({ product }) => {
     const [loadCheckWatchList, setLoadCheckWatchList] = useState(false);
 
     const reloadWatchList = useSelector(getReloadWatchList);
-
+    const notify = (title) =>
+        toast.success(`Đã thêm ${title} vào giỏ hàng của bạn!`, {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
+    const notifyWarn = (err) =>
+        toast.warn(`${err}`, {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
 
     useEffect(() => {
         setLoadCheckWatchList(true);
@@ -40,8 +61,8 @@ const BuyComponent = ({ product }) => {
                     setLoadCheckWatchList(false);
                     return;
                 }
-                    setCheckWatchList(false);
-                    setLoadCheckWatchList(false);
+                setCheckWatchList(false);
+                setLoadCheckWatchList(false);
             }).catch((resp) => {
                 console.log("catch", resp);
             });
@@ -99,9 +120,16 @@ const BuyComponent = ({ product }) => {
                     dispatch(setCart(res.data.cart.id))
                     dispatch(setReloadCartItem(!reloadCartItem));
                     setLoading(false);
-                    toast.success(`Đã thêm ${product.title} vào giỏ hàng của bạn`);
-                }).catch((res) => {
-                    console.log('err', res);
+                    notify(product.title);
+                }).catch((resp) => {
+                    if (resp.response) {
+                        setLoading(false);
+
+                        notifyWarn(resp.response.data.message);
+
+                        // toast.warn(resp.response.data.message);
+
+                    }
                 });
             }
             postData();
@@ -229,7 +257,7 @@ const BuyComponent = ({ product }) => {
                                     <div className="watcher-btn text-center" style={{ width: 'auto' }} onClick={() => handleAddWatchList(product)}>
                                         <div className="relative-wrapper watch-wrapper btn">
                                             <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
-                                                <i className="fa-regular fa-heart"></i>import { setReloadWatchList } from './../../../../redux/actions';
+                                                <i className="fa-regular fa-heart"></i>
                                                 <span className="watch-type"> Thêm vào danh sách yêu thích</span>
                                             </div>
                                         </div>

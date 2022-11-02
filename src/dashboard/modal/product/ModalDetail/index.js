@@ -20,7 +20,6 @@ function ModalDetailProduct(props) {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
-    // console.log('imageProduct: ', imageProduct);
 
     useEffect(() => {
         async function getImage() {

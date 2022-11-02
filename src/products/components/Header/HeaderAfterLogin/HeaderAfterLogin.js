@@ -5,15 +5,14 @@ import { getAccount, getAllCartItems, getShowAddProduct, getReloadCartItem } fro
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react';
 import ModalAdd from '../../../../dashboard/modal/product/ModalAdd';
 import CartItemService from '../../../service/CartItem/CartItemService';
-import { Swal } from 'sweetalert2';
 import { ToastContainer } from 'react-toastify';
 import AdminInfo from './../../../../dashboard/Layout/Header/adminInfo/AdminInfo';
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
+import { width } from '@mui/system';
+import Notification from '../Notification/Notification';
 
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
@@ -46,6 +45,7 @@ const HeaderAfterLogin = () => {
     const handleShowModalAddProduct = () => {
         dispatch(setShowAddProduct(true));
     };
+
 
     const renderAccount = () => {
         return (
@@ -89,36 +89,19 @@ const HeaderAfterLogin = () => {
                             {cartItems.length}
                         </span>
                     </i>
+
                 </Link>
+                <div className="widget-notif-wrapper mx-2">
+                    <div>
+                        <div className="ic-notif-num">
+                            <Notification countOrder={orderDetails.length} />
+                            {/* <Notification countOrder={orderDetails.length} /> */}
+                        </div>
+                    </div>
+                </div>
                 <div className="widget-notif-wrapper">
                     <div>
                         <div className="ic-notif-num">
-                            <Link to={"/product/order"} style={{ fontSize: '14px' }}>
-                                <i
-                                    style={{ position: 'relative' }}
-                                    className="fa-regular fa-bell fa-2x ic-notif "
-                                    aria-hidden="true"
-                                >
-                                    <span
-                                        style={{
-                                            textAlign: 'center',
-                                            position: 'absolute',
-                                            border: '0.5px solid white',
-                                            width: 'auto',
-                                            height: '20px',
-                                            borderRadius: '10px',
-                                            backgroundColor: 'red',
-                                            color: 'white',
-                                            fontSize: '12px',
-                                            left: '15px',
-                                            bottom: '15px',
-                                            padding: '3px',
-                                        }}
-                                    >
-                                        {orderDetails.length}
-                                    </span>
-                                </i>
-                            </Link>
                             <Tippy
                                 placement="bottom-end"
                                 interactive
@@ -133,11 +116,11 @@ const HeaderAfterLogin = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
             <AdminInfo />
             <ModalAdd />
             <ToastContainer autoClose={1500} />
-        </div>
+        </div >
     );
 };
 

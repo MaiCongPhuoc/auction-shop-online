@@ -20,6 +20,7 @@
 }
 
 .login-button-container {
+    width: auto;
 }
 
 .product-client a {
@@ -52,3 +53,4 @@
     position: fixed;
     top: 0;
 }
+

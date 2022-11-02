@@ -9,6 +9,7 @@ import BuyComponent from './BuyComponent';
 function TheShopDetail() {
     const productSlug = useParams();
 
+    console.log("productSlug", productSlug);
     const [theShop, setTheShop] = useState({
         product: {},
         productMedias: [],
