@@ -1,25 +1,15 @@
 import React from 'react';
-import AccountInfo from './AccountInfo';
 import './asset/css/content.css';
-import AccountSingupPhone from './AccountSingupPhone';
-import AccountSingupInfo from './AccountSingupInfo';
-import AccountLocation from './AccountLocation';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from './../login/api';
 import AccountService from '../dashboard/services/AccountService';
 import FileService from './../dashboard/services/FileService';
 import { useFormik } from 'formik';
 import { toast, ToastContainer } from 'react-toastify';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { loginStatus, setShowSignupInfo } from './../products/redux/actions';
 import AuthService from '../dashboard/services/AuthService';
 
 let flag = false;
 const ContenRegister = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [stateImg, setStateImg] = useState(false);
     const [img, setImg] = useState(
         'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
@@ -218,7 +208,7 @@ const ContenRegister = () => {
         <>
             <form className="alo" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <div className="base-width-reg main-yield" style={{ maxWidth: '96%' }}>
-                    <h3 style={{ color: 'yellow' }}>ĐĂNG KÝ THÔNG TIN TÀI KHOẢN</h3>
+                    <h3 style={{ color: 'yellow', textAlign: 'center', paddingTop: '50px' }}>ĐĂNG KÝ THÔNG TIN TÀI KHOẢN</h3>
                     <hr />
                     <div className="modal-body">
                         <div className="frmError row">
@@ -461,7 +451,7 @@ const ContenRegister = () => {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="signinBtn btn btn-primary">
+                        <button type="submit" className="signinBtn btn btn-primary" style={{display: 'block',margin: '0 auto', textAlign: 'center'}}>
                             ĐĂNG KÝ
                         </button>
                     </div>

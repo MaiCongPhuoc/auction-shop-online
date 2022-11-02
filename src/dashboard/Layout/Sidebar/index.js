@@ -7,7 +7,7 @@ function Sidebar() {
     return (
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             {/* Sidebar - Brand */}
-            <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
+            <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/dashboard">
                 <div className="sidebar-brand-icon rotate-n-15">
                     <i className="fas fa-laugh-wink" />
                 </div>
@@ -19,9 +19,9 @@ function Sidebar() {
             <hr className="sidebar-divider my-0" />
             {/* Nav Item - Dashboard */}
             <li className="nav-item active">
-                <Link className="nav-link" to="/product/home">
+                <Link className="nav-link" to="/dashboard">
                     <i class="fa-solid fa-store"></i>
-                    <span>TRANG BÁN HÀNG</span>
+                    <span>TRANG QUẢN LÝ</span>
                 </Link>
             </li>
             {/* Divider */}
@@ -49,7 +49,6 @@ function Sidebar() {
                     <i className="fas fa-fw fa-chart-area" />
                     <span>Charts</span>
                 </a>
-            </li>
             <li className="nav-item">
                 <a className="nav-link" href="tables.html">
                     <i className="fas fa-fw fa-table" />

@@ -5,9 +5,9 @@ const HeaderEnd = () => {
         <div className="main-nav-div">
             <ul className="navigation">
                 <li className="left">
-                    <a className="home" href="/product/home">
+                    <Link className="home" to={"/product"}>
                         Trang chủ
-                    </a>
+                    </Link>
                 </li>
                 <li className="left">
                     <Link to={'/product/the-shop'} className="nav-explore drop-category">
@@ -15,7 +15,7 @@ const HeaderEnd = () => {
                     </Link>
                 </li>
                 <li className="left">
-                    <Link className="btn-bin" to="/product/auction">
+                    <Link className="btn-bin" to={"/product/auction"}>
                         Đấu giá
                     </Link>
                 </li>
