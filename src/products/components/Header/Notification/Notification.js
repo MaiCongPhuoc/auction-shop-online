@@ -70,13 +70,13 @@ function Notification({ countOrder, myOrderDetails }) {
                                                 textAlign: 'center',
                                                 position: 'absolute',
                                                 border: '0.5px solid',
-                                                width: 'auto',
-                                                height: '20px',
+                                                width: '12px',
+                                                height: '12px',
                                                 borderRadius: '10px',
                                                 backgroundColor: 'red',
                                                 color: 'white',
                                                 fontSize: '12px',
-                                                left: '38px',
+                                                left: '34px',
                                                 bottom: '28px',
                                             }}
                                         >
