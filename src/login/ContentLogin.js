@@ -13,6 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import AuthService from '../dashboard/services/AuthService';
 import { useCookies } from 'react-cookie';
 import useAuth from '../hooks/useAuth';
+import AccountService from './../dashboard/services/AccountService';
 
 let flag = false;
 const ContentLogin = () => {
