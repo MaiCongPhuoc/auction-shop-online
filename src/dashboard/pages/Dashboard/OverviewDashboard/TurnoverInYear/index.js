@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function DoanhThuTrongNam() {
     return (
         <div className="col-xl-3 col-md-6 mb-4">
@@ -5,10 +7,10 @@ function DoanhThuTrongNam() {
                 <div className="card-body">
                     <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
-                            <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                <a href="#">Doanh thu (Năm)</a>
+                            <div className="text-xs font-weight-bold text-success text-uppercase mb-1 text-center">
+                                <Link to="#">Doanh thu (Năm)</Link>
                             </div>
-                            <div className="h5 mb-0 ml-1 font-weight-bold text-gray-800">$215,000</div>
+                            <div className="h5 mb-0 ml-1 font-weight-bold text-gray-800 text-center">215,000 đ</div>
                         </div>
                         <div className="col-auto">
                             <i className="fas fa-dollar-sign fa-2x text-black-300" />

@@ -172,8 +172,8 @@ function ModalEditProduct(props) {
                 .required('Vui lòng nhập tên vào!'),
             username: yup
                 .string()
-                .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
-                .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
+                .min(8, 'tên của bạn nhỏ nhất là 8 kí tự!')
+                .max(20, 'tên của bạn nhỏ nhất là 20 kí tự!')
                 .required('Vui lòng nhập họ tên đầy đủ vào!'),
             email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập email vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
@@ -218,6 +218,7 @@ function ModalEditProduct(props) {
 
     const { roles, provinces } = state;
     const { districts, wards } = location;
+    console.log('accountById: ', accountById);
     return (
         <Modal show={showEdit} onHide={onCloseEditAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>

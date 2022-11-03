@@ -1,3 +1,4 @@
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faAngleDown, faAngleRight, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useCollapse from 'react-collapsed';
@@ -15,7 +16,8 @@ function SidebarUtilities() {
                 </i>
             </a>
             <div id="collapseUtilities" className="collapse" {...getCollapseProps()}>
-                <div className="bg-white py-2 collapse-inner rounded">
+                <div className="bg-white py-2 collapse-inner rounded" style={{padding: '5px'}}>
+                    <FontAwesomeIcon icon={faUser} style={{marginRight: '5px'}} />
                     <Link to="/list-account">Danh sách</Link>
                 </div>
             </div>

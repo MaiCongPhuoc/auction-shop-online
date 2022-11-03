@@ -36,6 +36,7 @@ function App() {
     return (
         // <Router>
         <Routes>
+            <Route path="/" element={<Product />} />
             <Route path="/registration" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/unauthorized" element={<Deny />} />

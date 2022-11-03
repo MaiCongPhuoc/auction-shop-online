@@ -4,7 +4,6 @@ import '../../../assets/css/sb-admin-2.min.css';
 import Sidebar from '../../Layout/Sidebar';
 import AccountAdmin from '../../Layout/Header/AccountAdmin';
 import TurnoverYear from './ChartDashboard/TurnoverYear';
-import TurnoverMonth from './ChartDashboard/TurnoverMonth';
 import OverviewDashboard from './OverviewDashboard';
 import './OverviewDashboard/dashboard.css';
 import { useSelector } from 'react-redux';
@@ -36,9 +35,7 @@ function Dashboard() {
                                 <h1 className="h3 mb-0 text-gray-800" style={{ fontWeight: 'bold' }}>
                                     Auctions Shop Online
                                 </h1>
-                                <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                    <i className="fas fa-download fa-sm text-white-50" /> File
-                                </a>
+                                <p></p>
                             </div>
                             {/* Content Row */}
                             <OverviewDashboard />
