@@ -178,7 +178,7 @@ function ModalAddProduct(props) {
             description: yup.string(),
         }),
         onSubmit: (product) => {
-            product.createdBy = account.username;
+            product.createdBy = account.email;
             if (radio) {
                 product.action = radio;
                 product.available = 1;

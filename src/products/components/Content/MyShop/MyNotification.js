@@ -1,69 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { FormatMoney } from "../../../Hooks/Hooks";
-import { getAccount, getReloadCartItem } from "../../../redux/selector";
-import CartItemService from '../../../service/CartItem/CartItemService';
-import LoadCart from '../../Loading/LoadCart';
-import LoadQuantity from '../../Loading/LoadQuantity';
-import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
-import { toast } from 'react-toastify';
-import { setOrderDetails } from "../../../redux/actions";
-import { Link } from 'react-router-dom';
-import { compareValues } from './../../../Hooks/Hooks';
-import NotFound from "../../Loading/NotFound";
-import EmptyOrder from './../../Loading/EmptyOrder';
+import React, { useEffect } from "react";
 
-const OrderDetail = () => {
-    const dispatch = useDispatch();
-    const account = useSelector(getAccount);
-
-    const [loadOrderDetails, setLoadOrderDetails] = useState(false);
-    const [emptyOrderDetails, setEmptyOrderDetails] = useState(false);
-    const [listOrderDetails, setListOrderDetails] = useState([]);
-
-
-
-    useEffect(() => {
-        try {
-            setLoadOrderDetails(true);
-            async function getOrderDetails() {
-                OrdersDetailService.getAllOrdersDetail(account.email).then((res) => {
-                    if (res.data.length > 0) {
-                        let list = res.data.sort(compareValues('id', 'desc'))
-                        setListOrderDetails(list);
-                        setLoadOrderDetails(false);
-                        setEmptyOrderDetails(false);
-                        return;
-                    }
-                    setLoadOrderDetails(false);
-                    setEmptyOrderDetails(true);
-
-                }).catch((err) => {
-                    toast.error(err.responseText)
-                });
-            }
-            getOrderDetails();
-
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
-
-    dispatch(setOrderDetails(listOrderDetails));
-
+function MyNotification({orderDetails}) {
+    
     return (
-        <div>
-            <div id="show-list-cart-item">
+        <>
+            <div id="show-list-my-order-detail">
                 <div className="container text-center">
-                    <div className="fw-bold col-3" style={{ color: '#367289' }}>Đơn hàng</div>
-                    <div className="row col-10 my-1" style={{ height: '50px' }}>
+                    <div className="fw-bold col-3" style={{ color: '#367289' }}>Đơn hàng cần duyệt</div>
+                    <div className="row col-12 my-3" style={{ height: '50px' }}>
                         <span className="text-center col-4" id="image-order"> Sản phẩm</span>
                         <span className="text-center col-2" id="date-item-order">Thời gian mua</span>
                         <span className="text-center col-2" id="price-item-order">Số lượng</span>
                         <span className="text-center col-2" id="quantity-item-order">Tổng tiền</span>
                         <span className="text-center col-2" id="status-item-order">Trạng thái</span>
                     </div>
-                    {loadOrderDetails ? <LoadCart /> :
+                    {/* {loadOrderDetails ? <LoadCart /> :
                         emptyOrderDetails ? <EmptyOrder /> :
                             listOrderDetails.map(orderDetail => (
                                 <div
@@ -94,12 +45,12 @@ const OrderDetail = () => {
                                     <span className="text-end col-2 fw-bold">{FormatMoney(orderDetail.amountTransaction)} ₫</span>
                                     <span className="text-center col-2 fw-bold">{orderDetail.status.name}</span>
                                 </div>
-                            ))}
+                            ))} */}
                 </div>
 
             </div>
-        </div >
+        </>
     );
 }
 
-export default OrderDetail;
+export default MyNotification;

@@ -135,3 +135,6 @@ export const getShowModerationProduct = (state) => state.modals.showModerationPr
 export const getWatchLists = (state) => state.watchLists.watchLists;
 export const getReloadWatchList = (state) => state.watchLists.reloadWatchList;
 
+// My Shop
+export const getOpenSidebar = (state) => state.myShops.openSidebar;
+export const getMenu = (state) => state.myShops.menu;

@@ -218,3 +218,17 @@ export const setReloadWatchList = (boolean) => {
         payload: boolean,
     };
 };
+
+// My Shop
+export const setOpenSidebar = (boolean) => {
+    return {
+        type: 'myShops/setOpenSidebar',
+        payload: boolean,
+    };
+};
+export const setMenu = (string) => {
+    return {
+        type: 'myShops/setMenu',
+        payload: string,
+    };
+};

@@ -41,6 +41,7 @@ const ContentLogin = () => {
             try {
                 async function login() {
                     let userLogin = await AuthService.postLogin(user);
+                    let account = await AccountService.getAccountById(userLogin.data.id);
                     setUser(userLogin.data);
                     let u = userLogin.data
                     let email = userLogin.data.name;
@@ -48,22 +49,24 @@ const ContentLogin = () => {
                     let token = userLogin.data.token;
                     let roles = userLogin.data.roles;
                     // console.log('userLogin.data: ', userLogin.data);
+                    dispatch(loginStatus(true));
+                    dispatch(setAccount(account.data));
+                    setCookie('JWT', userLogin.data.token, { path: '/' });
 
                     setAuth({ u, email, username, token, roles });
-                    toast.success(`Đăng nhập thành công!`);
                     if (userLogin.data.roles[0].authority === 'USER') {
-                        navigate('/product', { replace: true });
+                        setTimeout(() => {
+                            navigate('/product', { replace: true });
+                        }, 2000)
                     } else {
-                        navigate('/dashboard', { replace: true });
+                        setTimeout(() => {
+                            navigate('/dashboard', { replace: true });
+                        }, 2000)
                     }
-                    setCookie('JWT', userLogin.data.token, { path: '/' });
-                    dispatch(loginStatus(true));
-                    dispatch(setAccount(userLogin.data));
                     toast.success(`Đăng nhập thành công!`);
                 }
                 login();
                 flag = false;
-                // console.log('user: ', user);
             } catch (error) {
             }
         }

@@ -50,7 +50,7 @@ function AdminInfo() {
                                         })
                                     }
                                 >
-                                    <i class="fa-solid fa-user-tie"></i> Hồ sơ
+                                    <i className="fa-solid fa-user-tie"></i> Hồ sơ
                                 </button>
                                 <br />
                                 <button
@@ -61,7 +61,7 @@ function AdminInfo() {
                                         })
                                     }
                                 >
-                                    <i class="fa-solid fa-user-pen"></i> Cập nhật
+                                    <i className="fa-solid fa-user-pen"></i> Cập nhật
                                 </button>
                             </li>
                             <button
@@ -84,7 +84,7 @@ function AdminInfo() {
                                     });
                                 }}
                             >
-                                <i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất
+                                <i className="fa-solid fa-right-from-bracket"></i> Đăng Xuất
                             </button>
                         </ul>
                     </div>

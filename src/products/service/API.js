@@ -3,6 +3,7 @@ export const ALL_PRODUCTS = 'http://localhost:8080/api/products';
 export const GET_PRODUCTS_BY_SLUG = ALL_PRODUCTS + '/find-by-slug';
 export const GET_PRODUCTS_AUCTIONS = ALL_PRODUCTS + '/auctions';
 export const GET_PRODUCTS_THE_SHOPS = ALL_PRODUCTS + '/the-shops';
+export const GET_PRODUCTS_MODERATED_BY_CREATED_BY = ALL_PRODUCTS + '/get-moderated-by-created-by';
 
 // Product Media
 export const ALL_MEDIA_PRODUCT = 'http://localhost:8080/api/productmedia';
@@ -23,9 +24,9 @@ export const REMOVE_CART_ITEM = ALL_CART_ITEM + '/remove';
 export const REMOVE_CART_ITEMS = ALL_CART_ITEM + '/remove-list';
 
 // Location Region
-export const ALL_PROVINCE_URL = 'https://vapi.vnappmob.com/api/province';
-export const ALL_DISTRICT_URL = ALL_PROVINCE_URL + '/district';
-export const ALL_WARD_URL = ALL_PROVINCE_URL + '/ward';
+export const ALL_PROVINCE_URL = 'https://vapi.vnappmob.com/api/province/';
+export const ALL_DISTRICT_URL = ALL_PROVINCE_URL + 'district';
+export const ALL_WARD_URL = ALL_PROVINCE_URL + 'ward';
 
 // Order
 export const ALL_ORDERS = 'http://localhost:8080/api/orders';
@@ -35,6 +36,7 @@ export const REMOVE_ORDER = ALL_ORDERS + '/remove-order';
 // Orders Detail
 export const ALL_ORDERS_DETAIL = 'http://localhost:8080/api/orders-detail';
 export const CREATE_ORDER_DETAIL = ALL_ORDERS_DETAIL + '/create';
+export const GET_BY_PRODUCT_CREATED_BY = ALL_ORDERS_DETAIL + '/get-by-product-created-by';
 
 // Watch list
 export const WATCH_LISTS = 'http://localhost:8080/api/watch-lists';
