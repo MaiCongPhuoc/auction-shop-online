@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../dashboard.css';
 function DoanhThuTrongThang() {
     return (
@@ -6,10 +7,10 @@ function DoanhThuTrongThang() {
                 <div className="card-body">
                     <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
-                            <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                <a href="#">Doanh thu (Tháng)</a>
+                            <div className="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center">
+                                <Link to="#">Doanh thu (Tháng)</Link>
                             </div>
-                            <div className="h5 mb-0 ml-1 font-weight-bold text-gray-800">$40,000</div>
+                            <div className="h5 mb-0 ml-1 font-weight-bold text-gray-800 text-center">40,000 đ</div>
                         </div>
                         <div className="col-auto">
                             <i className="fas fa-calendar fa-2x text-black-300" />

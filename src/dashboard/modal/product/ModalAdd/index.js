@@ -5,14 +5,12 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
 import FileService from '../../../services/FileService';
-import ProductMediaService from '../../../services/ProductImageService';
 import '../../modal.css';
 import 'react-toastify/dist/ReactToastify.css';
 import ProductService from '../../../services/productService';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccount, getShowAddProduct } from '../../../../products/redux/selector';
 import { setShowAddProduct } from '../../../../products/redux/actions';
-// import { withSwal } from 'react-sweetalert2';
 
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
@@ -178,7 +176,7 @@ function ModalAddProduct(props) {
             description: yup.string().required('Vui lòng nhập mô tả!'),
         }),
         onSubmit: (product) => {
-            product.createdBy = account.username;
+            product.createdBy = account.email;
             if (radio) {
                 product.action = radio;
                 product.available = 1;

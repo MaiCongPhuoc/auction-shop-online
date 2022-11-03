@@ -1,31 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import GoogleAndFacebook from './GoogleAndFacebook';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import Swal from 'sweetalert2';
 import './asset/css/content.css';
 import './asset/css/login.css';
-import AccountService from '../dashboard/services/AccountService';
-import axios from 'axios';
 // import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
-import Google from './Google';
 import AuthService from '../dashboard/services/AuthService';
 import { useCookies } from 'react-cookie';
-import { stringify } from 'rc-field-form/es/useWatch';
 import useAuth from '../hooks/useAuth';
+import AccountService from '../dashboard/services/AccountService';
 
 let flag = false;
 const ContentLogin = () => {
     const { setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
-    const fromm = location.state?.from?.pathname || '/dashboard';
+    // const from = location.state?.from?.pathname || '/';
+    // const fromm = location.state?.from?.pathname || '/dashboard';
 
     const dispatch = useDispatch();
 
@@ -41,6 +37,7 @@ const ContentLogin = () => {
             try {
                 async function login() {
                     let userLogin = await AuthService.postLogin(user);
+                    let account = await AccountService.getAccountById(userLogin.data.id);
                     setUser(userLogin.data);
                     let u = userLogin.data;
                     let email = userLogin.data.name;
@@ -48,22 +45,24 @@ const ContentLogin = () => {
                     let token = userLogin.data.token;
                     let roles = userLogin.data.roles;
                     // console.log('userLogin.data: ', userLogin.data);
+                    dispatch(loginStatus(true));
+                    dispatch(setAccount(account.data));
+                    setCookie('JWT', userLogin.data.token, { path: '/' });
 
                     setAuth({ u, email, username, token, roles });
-                    toast.success(`Đăng nhập thành công!`);
                     if (userLogin.data.roles[0].authority === 'USER') {
-                        navigate('/product', { replace: true });
+                        setTimeout(() => {
+                            navigate('/product', { replace: true });
+                        }, 2000);
                     } else {
-                        navigate('/dashboard', { replace: true });
+                        setTimeout(() => {
+                            navigate('/dashboard', { replace: true });
+                        }, 2000);
                     }
-                    setCookie('JWT', userLogin.data.token, { path: '/' });
-                    dispatch(loginStatus(true));
-                    dispatch(setAccount(userLogin.data));
                     toast.success(`Đăng nhập thành công!`);
                 }
                 login();
                 flag = false;
-                // console.log('user: ', user);
             } catch (error) {}
         }
     }, [user]);

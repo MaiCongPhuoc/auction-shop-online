@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import SidebarComponent from './SidebarComponent';
-import SidebarPage from './SidebarPage';
 import SidebarUtilities from './SidebarUtilelties';
 
 function Sidebar() {

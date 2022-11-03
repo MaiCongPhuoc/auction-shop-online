@@ -22,6 +22,7 @@ import RequireAuth from './context/RequireAuth';
 import NotFound from './NotFound';
 import Contact from './contact/Contact.js';
 import ShowOrderDetail from './products/components/Content/OrderDetail';
+import ShowMyShop from './products/components/Content/MyShop';
 
 // export default App;
 
@@ -35,6 +36,7 @@ function App() {
     return (
         // <Router>
         <Routes>
+            <Route path="/" element={<Product />} />
             <Route path="/registration" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/unauthorized" element={<Deny />} />
@@ -77,10 +79,18 @@ function App() {
                 <Route path="/product/the-shop" element={<ShowPageTheShop />} />
             </Route>
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
-                <Route path="/product/cart/:accountId" element={<ShowCartItem />} />
+                <Route path="/product/order" element={<ShowOrderDetail />} />
             </Route>
-            {/* -- Contact */}
-            <Route path="/contact" element={<Contact />} />
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/product/cart" element={<ShowCartItem />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/product/my-shop" element={<ShowMyShop />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/contact" element={<Contact />} />
+            </Route>
+            
         </Routes>
         // </Router>
     );

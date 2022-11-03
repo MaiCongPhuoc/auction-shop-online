@@ -15,6 +15,8 @@ export const ACCOUNT_URL = 'http://localhost:8080/api/accounts';
 export const ADDACCOUNT_URL = 'http://localhost:8080/api/accounts/create';
 export const EDITACCOUNT_URL = 'http://localhost:8080/api/accounts/update';
 export const DELETEACCOUNT_URL = 'http://localhost:8080/api/accounts/delete';
+export const LOCKACCOUNT_URL = 'http://localhost:8080/api/accounts/block';
+export const UNLOCKACCOUNT_URL = 'http://localhost:8080/api/accounts/unblock';
 export const ACCOUNTBYID_URL = 'http://localhost:8080/api/accounts/getAccount/account';
 export const DATATABLEACCOUNT_URL = 'http://localhost:8080/api/accounts/p/';
 

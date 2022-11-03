@@ -1,6 +1,7 @@
 import React from 'react';
 import './asset/css/content.css';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AccountService from '../dashboard/services/AccountService';
 import FileService from './../dashboard/services/FileService';
 import { useFormik } from 'formik';
@@ -10,6 +11,7 @@ import AuthService from '../dashboard/services/AuthService';
 
 let flag = false;
 const ContenRegister = () => {
+    const navigate = useNavigate();
     const [stateImg, setStateImg] = useState(false);
     const [img, setImg] = useState(
         'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
@@ -191,11 +193,12 @@ const ContenRegister = () => {
             flag = true;
             setAccountFrm(account);
             handleReset();
+
             notify();
         },
     });
 
-    const notify = () =>
+    const notify = () => {
         toast.success('Đăng ký thành công!', {
             position: 'top-right',
             autoClose: 5000,
@@ -206,6 +209,10 @@ const ContenRegister = () => {
             progress: undefined,
             theme: 'colored',
         });
+        setTimeout(() => {
+            navigate('/login', { replace: true });
+        }, 2000);
+    };
     return (
         <>
             <form className="alo" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
@@ -233,7 +240,7 @@ const ContenRegister = () => {
                                     <li className="error">{formik.errors.phone}</li>
                                 )}
 
-                                {formik.errors.locationRegionDistrictId && formik.errors.locationRegionDistrictId && (
+                                {/* {formik.errors.locationRegionDistrictId && formik.errors.locationRegionDistrictId && (
                                     <li className="error">{formik.errors.locationRegionDistrictId}</li>
                                 )}
                                 {formik.errors.locationRegionWardId && formik.errors.locationRegionWardId && (
@@ -242,9 +249,9 @@ const ContenRegister = () => {
                                 {formik.errors.locationRegionProvinceId && formik.errors.locationRegionProvinceId && (
                                     <li className="error">{formik.errors.locationRegionProvinceId}</li>
                                 )}
-                                {formik.errors.locationRegionAddress && formik.errors.locationRegionAddress && (
+                                {formik.errors.locationRegionAddress && formik.errors.locationRegion.address && (
                                     <li className="error">{formik.errors.locationRegionAddress}</li>
-                                )}
+                                )} */}
 
                                 {formik.errors.username && formik.errors.username && (
                                     <li className="error">{formik.errors.username}</li>

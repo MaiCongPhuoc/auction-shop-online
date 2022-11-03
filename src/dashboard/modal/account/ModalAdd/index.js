@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import AccountService from '../../../services/AccountService';
 import { useFormik } from 'formik';
@@ -218,8 +218,8 @@ function ModalDetailAccount(props) {
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
             console.log('add count: ', account);
-            handleReset();
             setAccountFrm(account);
+            handleReset();
             notify();
         },
     });

@@ -24,6 +24,7 @@ const HeaderAfterLogin = () => {
 
     const [cartItems, setListCartItems] = useState([]);
     const [orderDetails, setOrderDetails] = useState([]);
+    const [myOrderDetails, setMyOrderDetails] = useState([]);
 
     const reloadCartItem = useSelector(getReloadCartItem);
 
@@ -32,9 +33,10 @@ const HeaderAfterLogin = () => {
             async function getCartItems() {
                 const allCartItems = await CartItemService.getCartItems(account.email);
                 const allOrderDetails = await OrdersDetailService.getAllOrdersDetail(account.email);
-
+                const myOrderDetailsRes = await OrdersDetailService.getOrdersDetailByProductCreatedBy(account.email);
                 setListCartItems(allCartItems.data);
                 setOrderDetails(allOrderDetails.data);
+                setMyOrderDetails(myOrderDetailsRes.data);
             }
             getCartItems();
         } catch (error) {
@@ -69,30 +71,32 @@ const HeaderAfterLogin = () => {
                         className="fa-brands fa-opencart fa-2x ic-cart me-3"
                         aria-hidden="true"
                     >
-                        <span
-                            style={{
-                                textAlign: 'center',
-                                position: 'absolute',
-                                border: '0.5px solid white',
-                                width: 'auto',
-                                height: '20px',
-                                borderRadius: '10px',
-                                backgroundColor: 'red',
-                                color: 'white',
-                                fontSize: '12px',
-                                left: '30px',
-                                bottom: '15px',
-                                padding: '3px',
-                            }}
-                        >
-                            {cartItems.length}
-                        </span>
+                        {cartItems.length === 0 ? null : (
+                            <span
+                                style={{
+                                    textAlign: 'center',
+                                    position: 'absolute',
+                                    border: '0.5px solid white',
+                                    width: 'auto',
+                                    height: '20px',
+                                    borderRadius: '10px',
+                                    backgroundColor: 'red',
+                                    color: 'white',
+                                    fontSize: '12px',
+                                    left: '30px',
+                                    bottom: '15px',
+                                    padding: '3px',
+                                }}
+                            >
+                                {cartItems.length}
+                            </span>
+                        )}
                     </i>
                 </Link>
                 <div className="widget-notif-wrapper mx-2">
                     <div>
                         <div className="ic-notif-num">
-                            <Notification countOrder={orderDetails.length} />
+                            <Notification countOrder={orderDetails.length} myOrderDetails={myOrderDetails.length} />
                             {/* <Notification countOrder={orderDetails.length} /> */}
                         </div>
                     </div>

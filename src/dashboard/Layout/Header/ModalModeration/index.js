@@ -4,15 +4,11 @@ import ProductMediaService from '../../../services/ProductImageService';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import { getIdProduct, getShowModerationProduct } from '../../../../products/redux/selector';
 import ProductService from '../../../services/productService';
-import { setShowModerationProduct } from '../../../../products/redux/actions';
 
 function ModalDetailProduct(props) {
     const { showModal, idProduct, handleCloseModeration } = props;
-    console.log('props: ', props);
     const [product, setProduct] = useState([]);
     const [imageProduct, setImageProduct] = useState([
         {

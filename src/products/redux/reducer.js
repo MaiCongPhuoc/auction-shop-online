@@ -9,6 +9,7 @@ import cartItemsReducer from '../Slice/CartItemSlice';
 import orderReducer from '../Slice/OrderSlice';
 import orderDetailsReducer from '../Slice/OrderDetailSlice';
 import watchListsReducer from './../Slice/WatchListSlice';
+import myShopsReducer from '../Slice/MyShopSlice';
 
 const rootReducer = (state = {}, action) => {
     return {
@@ -22,7 +23,8 @@ const rootReducer = (state = {}, action) => {
         cartItems: cartItemsReducer(state.cartItems, action),
         orders: orderReducer(state.orders, action),
         orderDetails: orderDetailsReducer(state.orderDetails, action),
-        watchLists: watchListsReducer(state.watchLists, action)
+        watchLists: watchListsReducer(state.watchLists, action),
+        myShops: myShopsReducer(state.myShops, action)
     }   
 }
 

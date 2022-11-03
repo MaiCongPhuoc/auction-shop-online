@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 
-function Notification({countOrder}) {
+function Notification({ countOrder, myOrderDetails }) {
 
     return (
         <>
@@ -37,49 +37,53 @@ function Notification({countOrder}) {
                         <ul>
                             <li>
                                 <Link to={"/product/order"} style={{ fontSize: '14px' }}>
-                                    <i style={{ position: 'relative', color: '#1779ba' }} class="fa-solid fa-truck-fast"></i>
-                                    <span className='notifi-dot'
-                                        style={{
-                                            textAlign: 'center',
-                                            position: 'absolute',
-                                            border: '0.5px solid white',
-                                            width: 'auto',
-                                            height: '20px',
-                                            borderRadius: '10px',
-                                            backgroundColor: 'red',
-                                            color: 'white',
-                                            fontSize: '12px',
-                                            left: '35px',
-                                            top: '4px',
-                                        }}
-                                    >
-                                        {countOrder}
-                                    </span>
+                                    <i style={{ position: 'relative', color: '#1779ba' }} className="fa-solid fa-truck-fast"></i>
+                                    {countOrder === 0 ? null : (
+                                        <span className='notifi-dot'
+                                            style={{
+                                                textAlign: 'center',
+                                                position: 'absolute',
+                                                border: '0.5px solid white',
+                                                width: 'auto',
+                                                height: '20px',
+                                                borderRadius: '10px',
+                                                backgroundColor: 'red',
+                                                color: 'white',
+                                                fontSize: '12px',
+                                                left: '35px',
+                                                top: '4px',
+                                            }}
+                                        >
+                                            {countOrder}
+                                        </span>
+                                    )}
                                     <span style={{ color: '#1779ba' }} className='ms-3'>Đơn hàng</span>
                                 </Link>
                             </li>
                             <li>
-                            <Link to={"#"} style={{ fontSize: '14px' }}>
-                                <i style={{ position: 'relative', color: '#1779ba' }} class="fa-solid fa-message"></i>
-                                <span className='notifi-dot'
-                                    style={{
-                                        textAlign: 'center',
-                                        position: 'absolute',
-                                        border: '0.5px solid white',
-                                        width: 'auto',
-                                        height: '20px',
-                                        borderRadius: '10px',
-                                        backgroundColor: 'red',
-                                        color: 'white',
-                                        fontSize: '12px',
-                                        left: '38px',
-                                        bottom: '28px',
-                                    }}
-                                >
-                                    0
-                                </span>
-                                <span style={{ color: '#1779ba' }} className='ms-3'>Tin nhắn</span>
-                            </Link>
+                                <Link to={"/product/my-shop"} style={{ fontSize: '14px' }}>
+                                    {/* <i style={{ position: 'relative', color: '#1779ba' }} className="fa-solid fa-message"></i> */}
+                                    <i style={{ position: 'relative', color: '#1779ba' }} className="fa-solid fa-store"></i>
+                                    {myOrderDetails > 0 ? (
+                                        <span className='notifi-dot'
+                                            style={{
+                                                textAlign: 'center',
+                                                position: 'absolute',
+                                                border: '0.5px solid',
+                                                width: 'auto',
+                                                height: '20px',
+                                                borderRadius: '10px',
+                                                backgroundColor: 'red',
+                                                color: 'white',
+                                                fontSize: '12px',
+                                                left: '38px',
+                                                bottom: '28px',
+                                            }}
+                                        >
+                                        </span>
+                                    ) : null}
+                                    <span style={{ color: '#1779ba' }} className='ms-3'>Cửa hàng</span>
+                                </Link>
                             </li>
                         </ul>
                     </div>

@@ -220,6 +220,7 @@ function ModalEditProduct(props) {
 
     const { roles, provinces } = state;
     const { districts, wards } = location;
+    console.log('accountById: ', accountById);
     return (
         <Modal show={showEdit} onHide={onCloseEditAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>

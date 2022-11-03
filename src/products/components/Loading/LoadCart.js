@@ -3,7 +3,7 @@ import loadCart from './../../asset/images/loadCart.gif'
 
 function LoadCart() {
     return ( 
-        <div className='loadCart' style={{position: 'static'}}>
+        <div className='loadCart text-center'>
             <img className='loading' src={loadCart} alt="" />
         </div>
      );

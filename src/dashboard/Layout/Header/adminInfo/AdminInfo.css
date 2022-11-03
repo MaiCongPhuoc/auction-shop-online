@@ -69,3 +69,9 @@
     list-style: number;
     margin-top: 1rem;
 }
+.sp-adminInfo:hover {
+    color: rgb(225, 75, 30);
+}
+.btn-adminInfo:hover {
+    color: rgb(166, 50, 42);
+}

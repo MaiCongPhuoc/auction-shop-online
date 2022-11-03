@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ACCOUNT_LOGIN_URL } from './../API';
 
-class AcountService {
+class AccountService {
 
     static getCookie(name) {
         let cookie = {};
@@ -19,4 +19,4 @@ class AcountService {
     }
 }
 
-export default AcountService;
+export default AccountService;

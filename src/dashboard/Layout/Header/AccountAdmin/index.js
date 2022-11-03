@@ -22,7 +22,6 @@ function AccountAdmin() {
         async function getListProduct() {
             let listProduct = await ProductService.getProductsModeration();
             setShowModerationProduct({ ...showModalModeration, products: listProduct.data });
-            console.log('listProduct.data: ', listProduct.data);
         }
         getListProduct();
     }, [showModal]);

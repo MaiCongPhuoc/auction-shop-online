@@ -163,6 +163,22 @@ function TableCategories() {
         });
     };
 
+    const handleReset = () => {
+        document.querySelector('#search').value = '';
+        async function getDataTable() {
+            let dataTable = await CategoryService.getDataTableCategory('', 0, 5);
+            setState({
+                ...state,
+                categorys: dataTable.data.content,
+                totalPages: dataTable.data.totalPages,
+                totalElements: dataTable.data.totalElements,
+                currentPage: dataTable.data.number + 1,
+                search: '',
+            });
+        }
+        getDataTable();
+    };
+
     const searchBook = (currentPage) => {
         if (document.querySelector('#search').value === '') {
             document.querySelector('#select').value = '-1';
@@ -190,27 +206,35 @@ function TableCategories() {
 
     return (
         <div className="container-fluid">
-            <div className="d-flex justify-content-between">
+            {/* <div className="d-flex justify-content-between">
                 <h2>DANH SÁCH THỂ LOẠI</h2>
                 <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search"></div>
-            </div>
+            </div> */}
             {loading ? (
                 <Spiner />
             ) : (
                 <div className="shadow mb-4 cur-div">
-                    <div className="card-header py-3 d-flex justify-content-between">
+                    <div className="card-header d-flex justify-content-between">
+                        <h5 className="font-weight-bold text-primary w-25" style={{ marginTop: '18px' }}>
+                            Danh sách thể loại
+                        </h5>
+                        {/* <div className="d-flex align-items-center w-75"> */}
+                        {/* <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search"> */}
                         <div className="input-group">
+                            <div className="col-3"></div>
                             <input
+                                style={{ marginTop: '18px' }}
                                 type="text"
                                 id="search"
                                 name="search"
-                                size="50"
+                                size="75"
                                 className="form-control bg-light small"
-                                placeholder="Tìm kiếm theo tên"
+                                placeholder="Tìm kiếm thể loại..."
                                 onChange={searchBox}
                             />
                             <div className="input-group-append">
                                 <button
+                                    style={{ marginTop: '18px' }}
                                     className="btn btn-primary ml-1"
                                     type="button"
                                     name="search"
@@ -218,14 +242,33 @@ function TableCategories() {
                                 >
                                     <i className="fas fa-search fa-sm" />
                                 </button>
+                                <button
+                                    style={{ marginTop: '18px' }}
+                                    className="btn btn-info ml-1"
+                                    type="button"
+                                    name="search"
+                                    onClick={handleReset}
+                                >
+                                    Đặt lại tìm kiếm
+                                </button>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="d-flex align-items-end">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-success"
+                                    onClick={() => setShowAdd(true)}
+                                >
+                                    <i className="fa-solid fa-plus me-2" title="Tạo"></i>Tạo
+                                </button>
                             </div>
                         </div>
-                        <div className="col-3"></div>
-                        <div className="d-flex align-items-center w-50">
-                            <button type="button" className="btn btn-outline-success" onClick={() => setShowAdd(true)}>
-                                <i className="fa-solid fa-plus me-2" title="Tạo"></i>Tạo
-                            </button>
-                        </div>
+                        {/* </div> */}
+                        {/* Button trigger modal */}
+                        {/* <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
+                                Tạo
+                            </Button> */}
+                        {/* </div> */}
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">

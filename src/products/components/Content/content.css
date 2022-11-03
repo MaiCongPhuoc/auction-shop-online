@@ -318,3 +318,39 @@ a {
 .watching-plus:hover {
   color: red;
 }
+
+/* My shop */
+.css-19z1ozs-MuiPaper-root-MuiAppBar-root, .css-1191obr-MuiPaper-root-MuiAppBar-root{
+  top: 136px !important;
+  background-color: #ff523d !important;
+}
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
+  top: 136px !important;
+}
+
+.css-i4bv87-MuiSvgIcon-root{
+  color: #1779ba; 
+}
+
+.css-k008qs{
+  margin-top: 150px;
+}
+
+.css-1191obr-MuiPaper-root-MuiAppBar-root{
+  z-index: 120 !important;
+}
+.css-19z1ozs-MuiPaper-root-MuiAppBar-root{
+  z-index: 120 !important;
+}
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
+  z-index: 110 !important;
+}
+.moderation-list, .non-moderation-list{
+  margin-left: 80px;
+  transition: 0.3s all ease-in-out;
+}
+
+.moderation-item, .non-moderation-item{
+  margin-left: 80px;
+  transition: 0.3s all ease-in-out;
+}

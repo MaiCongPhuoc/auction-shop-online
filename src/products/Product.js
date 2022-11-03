@@ -19,6 +19,7 @@ import './Product.css';
 import Footer from './components/Footer/Footer';
 
 function Product() {
+
     return (
         <>
             <Header className="product-client" />
