@@ -7,8 +7,10 @@ import {
     DELETEACCOUNT_URL,
     DISTRICT_URL,
     EDITACCOUNT_URL,
+    LOCKACCOUNT_URL,
     PROVINCE_URL,
     ROLES_URL,
+    UNLOCKACCOUNT_URL,
     WARD_URL,
 } from './Commom';
 
@@ -50,8 +52,22 @@ class AccountService {
     }
     static getDeleteAccount(accountId) {
         let cookie = this.getCookie('JWT');
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.headers.post['Content-Type'] ='application/json';
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.patch(`${DELETEACCOUNT_URL}/${accountId}`);
+    }
+    static patchLockAccount(id) {
+        let cookie = this.getCookie('JWT');
+        console.log('cookie: ', cookie);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios.patch(`${LOCKACCOUNT_URL}/${id}`);
+    }
+    static patchUnLockAccount(id) {
+        let cookie = this.getCookie('JWT');
+        console.log('cookie: ', cookie);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios.patch(`${UNLOCKACCOUNT_URL}/${id}`);
     }
     static getRoles() {
         let cookie = this.getCookie('JWT');

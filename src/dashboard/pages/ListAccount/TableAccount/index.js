@@ -1,4 +1,4 @@
-import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import AccountService from '../../../services/AccountService';
@@ -9,7 +9,6 @@ import ModalEditAccount from '../../../modal/account/ModalEdit';
 import Swal from 'sweetalert2';
 import '../../pages.css';
 import Tippy from '@tippyjs/react';
-import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 
 function BangTaiKhoan() {
@@ -44,19 +43,15 @@ function BangTaiKhoan() {
     });
     const hanldeCloseEditAccount = () => setShowEdit(false);
 
-    //modal restartPassword
-    const [showRestart, setShowRestart] = useState(false);
-    const hanldCloseRestartPassword = () => setShowRestart(false);
-
-    const notify = (id) =>
+    const deleAccount = (id) =>
         Swal.fire({
-            title: 'Bạn chắc không?',
+            title: 'Bạn có chắc xóa chứ?',
             text: 'Bạn sẽ không hoàn tác lại!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Vâng! Tôi xóa nó',
+            confirmButtonText: 'Vâng! Tôi xóa',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function daleteAcount() {
@@ -65,7 +60,44 @@ function BangTaiKhoan() {
                 }
                 daleteAcount();
                 Swal.fire('</br> Đã xóa!', 'Bạn đã xóa người dùng này.', 'Thành công!');
-                // toast.success(`Đã xóa thành công!`);
+            }
+        });
+    const lockAccount = (id) =>
+        Swal.fire({
+            title: 'Bạn có chắc muốn khóa tài khoản này?',
+            text: 'Bạn hãy xem xét lựa chọn của mình!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vâng! Tôi muốn khóa',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                async function daleteAcount() {
+                    await AccountService.patchLockAccount(id);
+                    setReRender(!reRender);
+                }
+                daleteAcount();
+                Swal.fire('</br> Đã khóa!', 'Bạn đã khóa người dùng này.', 'Thành công!');
+            }
+        });
+    const unLockAccount = (id) =>
+        Swal.fire({
+            title: 'Bạn có chắc muốn mở khóa tài khoản này?',
+            text: 'Bạn hãy xem xét lựa chọn của mình!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vâng! Tôi muốn mở khóa',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                async function daleteAcount() {
+                    await AccountService.patchUnLockAccount(id);
+                    setReRender(!reRender);
+                }
+                daleteAcount();
+                Swal.fire('</br> Đã mở khóa!', 'Bạn đã mở khóa người dùng này.', 'Thành công!');
             }
         });
 
@@ -93,7 +125,6 @@ function BangTaiKhoan() {
 
     // data table
     async function getProductsByPagination(currentPage) {
-        console.log('currentPage: ', currentPage);
         state.currentPage = currentPage - 1;
         let accountData = await AccountService.getDataTableAccount(
             state.search,
@@ -168,6 +199,8 @@ function BangTaiKhoan() {
         });
     };
     const handleReset = () => {
+        document.querySelector('#select').value = '-1';
+        document.querySelector('#search').value = '';
         async function getDataTable() {
             let dataTable = await AccountService.getDataTableAccount('', 0, 5);
             setState({
@@ -176,6 +209,7 @@ function BangTaiKhoan() {
                 totalPages: dataTable.data.totalPages,
                 totalElements: dataTable.data.totalElements,
                 currentPage: dataTable.data.number + 1,
+                search: '',
             });
         }
         getDataTable();
@@ -200,6 +234,7 @@ function BangTaiKhoan() {
         getDataTable();
     };
 
+    console.log('account: ', state.accounts);
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
     const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, roles } = state;
@@ -352,11 +387,40 @@ function BangTaiKhoan() {
                                                       >
                                                           <button
                                                               className="btn btn-outline-danger ml-2"
-                                                              onClick={() => notify(account.id)}
+                                                              onClick={() => deleAccount(account.id)}
                                                           >
                                                               <i className="fa-solid fa-trash danger" title="Xóa"></i>
                                                           </button>
                                                       </Tippy>
+                                                      {account.blocked ? (
+                                                          <Tippy
+                                                              delay={[0, 0]}
+                                                              // offset={[15, 8]}
+                                                              placement="top"
+                                                              content="Khóa"
+                                                          >
+                                                              <button
+                                                                  className="btn btn-outline-warning ml-2"
+                                                                  onClick={() => unLockAccount(account.id)}
+                                                              >
+                                                                  <FontAwesomeIcon icon={faUnlockKeyhole} />
+                                                              </button>
+                                                          </Tippy>
+                                                      ) : (
+                                                          <Tippy
+                                                              delay={[0, 0]}
+                                                              // offset={[15, 8]}
+                                                              placement="top"
+                                                              content="Khóa"
+                                                          >
+                                                              <button
+                                                                  className="btn btn-outline-warning ml-2"
+                                                                  onClick={() => lockAccount(account.id)}
+                                                              >
+                                                                  <FontAwesomeIcon icon={faLock} />
+                                                              </button>
+                                                          </Tippy>
+                                                      )}
                                                   </td>
                                               </tr>
                                           ))}

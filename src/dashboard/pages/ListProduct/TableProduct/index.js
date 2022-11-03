@@ -1,21 +1,13 @@
 import React from 'react';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactDOM from 'react-dom/client';
 import { useEffect, useState } from 'react';
 import ProductService from '../../../services/productService';
 import Moment from 'moment';
 import { NumericFormat } from 'react-number-format';
 import Spiner from '../../../Spiner';
 import ModalDetailProduct from '../../../modal/product/ModalDetail';
-import { Button, Modal } from 'react-bootstrap';
-import ModalAddProduct from '../../../modal/product/ModalAdd';
 import ModalEditProduct from '../../../modal/product/ModalEdit';
 import Swal from 'sweetalert2';
-import DefaultProduct from '../../../Spiner/defaultProduct';
 import '../../pages.css';
-import Pagination from '@mui/material/Pagination';
-import ProductsComponent from './ProductsComponent';
 import CategoryService from '../../../services/Category';
 import Tippy from '@tippyjs/react';
 import { toast } from 'react-toastify';
@@ -220,6 +212,23 @@ function BangSanPham() {
         });
     };
 
+    const handleReset = () => {
+        document.querySelector('#select').value = '-1';
+        document.querySelector('#search').value = '';
+        async function getDataTable() {
+            let dataTable = await ProductService.getDataTableProduct('', 0, 5);
+            setState({
+                ...state,
+                products: dataTable.data.content,
+                totalPages: dataTable.data.totalPages,
+                totalElements: dataTable.data.totalElements,
+                currentPage: dataTable.data.number + 1,
+                search: ''
+            });
+        }
+        getDataTable();
+    };
+
     const searchBook = (currentPage) => {
         if (document.querySelector('#search').value === '') {
             document.querySelector('#select').value = '-1';
@@ -259,9 +268,9 @@ function BangSanPham() {
                             Danh sách sản phẩm
                         </h5>
                         <div className="d-flex align-items-center w-75">
-                            <p className="w-100 mb-0">Lọc theo thể loại:</p>
+                            <p className="w-25 mb-0 ">Lọc theo thể loại:</p>
                             <select
-                                className="form-select mr-3 select-bg-ori"
+                                className="form-select select-bg-ori w-25"
                                 id="select"
                                 name="search"
                                 onChange={searchBox}
@@ -270,12 +279,12 @@ function BangSanPham() {
                                     Chọn
                                 </option>
                                 {categories.map((category) => (
-                                    <option value={category.title} key={category.id}>
+                                    <option value={category.slug} key={category.id}>
                                         {category.title}
                                     </option>
                                 ))}
                             </select>
-                            <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 navbar-search ">
                                 <div className="input-group">
                                     <input
                                         style={{ marginTop: '18px' }}
@@ -296,6 +305,15 @@ function BangSanPham() {
                                             onClick={searchBook}
                                         >
                                             <i className="fas fa-search fa-sm" />
+                                        </button>
+                                        <button
+                                            style={{ marginTop: '18px' }}
+                                            className="btn btn-info ml-1"
+                                            type="button"
+                                            name="search"
+                                            onClick={handleReset}
+                                        >
+                                            Đặt lại tìm kiếm
                                         </button>
                                     </div>
                                 </div>

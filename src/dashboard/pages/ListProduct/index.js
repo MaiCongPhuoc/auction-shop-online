@@ -1,9 +1,6 @@
-import Footer from '../../Layout/Footer';
 import AccountAdmin from '../../Layout/Header/AccountAdmin';
-import Search from '../../Layout/Header/Search';
 import Sidebar from '../../Layout/Sidebar';
 import BangSanPham from './TableProduct';
-import ProductsComponent from './TableProduct/ProductsComponent';
 
 function DanhSachSanPham() {
     return (

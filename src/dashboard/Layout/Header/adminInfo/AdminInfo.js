@@ -1,16 +1,20 @@
 import './AdminInfo.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAccount } from '../../../../products/redux/selector';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ModalEditAccount from './modalAccountInfo/ModalEditAccount';
 import ModalDetail from './modalAccountInfo/ModalAccountInfo';
+import { loginStatus, setAccount } from '../../../../products/redux/actions';
+
 function AdminInfo() {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
+    const [cookies, setCookie] = useCookies(['JWT']);
 
     const navigate = useNavigate();
     const logout = () => {
@@ -36,12 +40,13 @@ function AdminInfo() {
         <>
             <div className="d-flex align-items-center me-3">
                 <div className="adminInfoGroup">
-                    <span className="ms-2 fw-bold">{account.username}</span>
+                    <span className="ms-2 fw-bold sp-adminInfo">{account.username} </span>
                     <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-black-400" />
                     <div className="adminInfo-dropdown">
                         <ul>
                             <li>
                                 <button
+                                    className="btn-adminInfo"
                                     onClick={() =>
                                         setShowDetail({
                                             accounts: accounts,
@@ -54,6 +59,7 @@ function AdminInfo() {
                                 </button>
                                 <br />
                                 <button
+                                    className="btn-adminInfo"
                                     onClick={() =>
                                         setShowEdit({
                                             accountEditId: account.id,
@@ -65,6 +71,7 @@ function AdminInfo() {
                                 </button>
                             </li>
                             <button
+                                className="btn-adminInfo"
                                 onClick={function () {
                                     Swal.fire({
                                         icon: 'warning',
@@ -76,7 +83,13 @@ function AdminInfo() {
                                     }).then((result) => {
                                         if (result.isDenied) {
                                             toast.success(`Đăng xuất thành công!`);
+                                            dispatch(loginStatus(false));
+                                            dispatch(setAccount({}));
+                                            function eraseCookie(name) {
+                                                document.cookie = name + '=; Max-Age=0';
+                                            }
                                             setTimeout(() => {
+                                                eraseCookie('JWT');
                                                 navigate('/login');
                                                 logout();
                                             }, 2000);

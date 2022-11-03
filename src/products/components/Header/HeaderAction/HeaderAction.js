@@ -1,12 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeaderAction = () => {
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <a id="show-login-popup" className="new-login-button" href="/login">ĐĂNG NHẬP</a>
-
-                <a className="new-signup-button" href="/registration">ĐĂNG KÝ</a>
+                <Link id="show-login-popup" className="new-login-button" to={"/login"}>ĐĂNG NHẬP</Link>
+                <Link className="new-signup-button" to={"/registration"}>ĐĂNG KÝ</Link>
             </div>
         </div>
     )

@@ -1,6 +1,7 @@
 import React from 'react';
 import './asset/css/content.css';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AccountService from '../dashboard/services/AccountService';
 import FileService from './../dashboard/services/FileService';
 import { useFormik } from 'formik';
@@ -10,6 +11,7 @@ import AuthService from '../dashboard/services/AuthService';
 
 let flag = false;
 const ContenRegister = () => {
+    const navigate = useNavigate();
     const [stateImg, setStateImg] = useState(false);
     const [img, setImg] = useState(
         'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
@@ -145,8 +147,8 @@ const ContenRegister = () => {
                 .required('Vui lòng nhập tên vào!'),
             username: yup
                 .string()
-                .min(8, 'Tên sản phẩm nhỏ nhất là 8 kí tự!')
-                .max(20, 'Tên sản phẩm nhỏ nhất là 20 kí tự!')
+                .min(8, 'Tên của bạn nhỏ nhất là 8 kí tự!')
+                .max(20, 'Tên của bạn nhỏ nhất là 20 kí tự!')
                 .required('Vui lòng nhập tên sản phẩm vào!'),
             email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
@@ -189,11 +191,12 @@ const ContenRegister = () => {
             flag = true;
             setAccountFrm(account);
             handleReset();
+
             notify();
         },
     });
 
-    const notify = () =>
+    const notify = () => {
         toast.success('Đăng ký thành công!', {
             position: 'top-right',
             autoClose: 5000,
@@ -204,11 +207,17 @@ const ContenRegister = () => {
             progress: undefined,
             theme: 'colored',
         });
+        setTimeout(() => {
+            navigate('/login', { replace: true });
+        }, 2000);
+    };
     return (
         <>
             <form className="alo" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <div className="base-width-reg main-yield" style={{ maxWidth: '96%' }}>
-                    <h3 style={{ color: 'yellow', textAlign: 'center', paddingTop: '50px' }}>ĐĂNG KÝ THÔNG TIN TÀI KHOẢN</h3>
+                    <h3 style={{ color: 'yellow', textAlign: 'center', paddingTop: '50px' }}>
+                        ĐĂNG KÝ THÔNG TIN TÀI KHOẢN
+                    </h3>
                     <hr />
                     <div className="modal-body">
                         <div className="frmError row">
@@ -229,7 +238,7 @@ const ContenRegister = () => {
                                     <li className="error">{formik.errors.phone}</li>
                                 )}
 
-                                {formik.errors.locationRegionDistrictId && formik.errors.locationRegionDistrictId && (
+                                {/* {formik.errors.locationRegionDistrictId && formik.errors.locationRegionDistrictId && (
                                     <li className="error">{formik.errors.locationRegionDistrictId}</li>
                                 )}
                                 {formik.errors.locationRegionWardId && formik.errors.locationRegionWardId && (
@@ -238,9 +247,9 @@ const ContenRegister = () => {
                                 {formik.errors.locationRegionProvinceId && formik.errors.locationRegionProvinceId && (
                                     <li className="error">{formik.errors.locationRegionProvinceId}</li>
                                 )}
-                                {formik.errors.locationRegionAddress && formik.errors.locationRegionAddress && (
+                                {formik.errors.locationRegionAddress && formik.errors.locationRegion.address && (
                                     <li className="error">{formik.errors.locationRegionAddress}</li>
-                                )}
+                                )} */}
 
                                 {formik.errors.username && formik.errors.username && (
                                     <li className="error">{formik.errors.username}</li>
@@ -451,7 +460,11 @@ const ContenRegister = () => {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="signinBtn btn btn-primary" style={{display: 'block',margin: '0 auto', textAlign: 'center'}}>
+                        <button
+                            type="submit"
+                            className="signinBtn btn btn-primary"
+                            style={{ display: 'block', margin: '0 auto', textAlign: 'center' }}
+                        >
                             ĐĂNG KÝ
                         </button>
                     </div>

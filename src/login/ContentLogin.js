@@ -1,22 +1,17 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import GoogleAndFacebook from './GoogleAndFacebook';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import Swal from 'sweetalert2';
 import './asset/css/content.css';
 import './asset/css/login.css';
-import AccountService from '../dashboard/services/AccountService';
-import axios from 'axios';
 // import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
-import Google from './Google';
 import AuthService from '../dashboard/services/AuthService';
 import { useCookies } from 'react-cookie';
-import { stringify } from 'rc-field-form/es/useWatch';
 import useAuth from '../hooks/useAuth';
 
 let flag = false;
@@ -24,8 +19,8 @@ const ContentLogin = () => {
     const { setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
-    const fromm = location.state?.from?.pathname || '/dashboard';
+    // const from = location.state?.from?.pathname || '/';
+    // const fromm = location.state?.from?.pathname || '/dashboard';
 
     const dispatch = useDispatch();
 
