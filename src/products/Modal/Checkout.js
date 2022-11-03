@@ -44,7 +44,8 @@ const Checkout = ({ items }) => {
                 wardName: null,
                 address: null
             },
-            description: ''
+            description: '',
+            
         },
         provinces: [],
         districts: [],

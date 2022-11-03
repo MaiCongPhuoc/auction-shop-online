@@ -354,3 +354,17 @@ a {
   margin-left: 80px;
   transition: 0.3s all ease-in-out;
 }
+ /* My Notification */
+ .order-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+ }
+ .order-item span, .order-item a span{
+  font-size: smaller;
+ }
+
+ .order-item:hover {
+  background-color: #d9d9d9;
+ }

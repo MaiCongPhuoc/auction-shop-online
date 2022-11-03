@@ -9,6 +9,8 @@ import MyProduct from "./MyProduct";
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { getMenu } from './../../../redux/selector';
 import MyNotification from "./MyNotification";
+import EmptyOrder from './../../Loading/EmptyOrder';
+import LoadCart from "../../Loading/LoadCart";
 
 function ShowMyShop() {
     const account = useSelector(getAccount);
@@ -19,9 +21,6 @@ function ShowMyShop() {
     const [loading, setLoading] = useState(false);
 
     const menu = useSelector(getMenu);
-
-    console.log('menu', menu);
-
 
     useEffect(() => {
         setLoading(true);
@@ -55,7 +54,7 @@ function ShowMyShop() {
             <Header className="product-client" />
             <SideBar orderDetails={orderDetails} />
             {menu === 'myProduct' ? (
-                <MyProduct products={products} loading={loading} />
+                (loading) ? <LoadCart /> : <MyProduct products={products}/>
             ) : (
                 <MyNotification orderDetails={orderDetails}/>
             )}
