@@ -5,11 +5,12 @@ import ProductService from './../../../../service/Product/ProductService';
 import LoadData from '../../../Loading/LoadData';
 import { Carousel } from '../../../../Hooks/Hooks';
 import BuyComponent from './BuyComponent';
+import ReviewProductShop from '../Review/ReviewProductShop';
 
 function TheShopDetail() {
     const productSlug = useParams();
 
-    console.log("productSlug", productSlug);
+    console.log('productSlug', productSlug);
     const [theShop, setTheShop] = useState({
         product: {},
         productMedias: [],
@@ -23,7 +24,6 @@ function TheShopDetail() {
             async function getData() {
                 let productRes = await ProductService.getProductBySlug(productSlug.slug);
                 let productMediasRes = await ProductService.getAllMediaByProductId(productRes.data.id);
-
 
                 setTheShop({
                     ...theShop,
@@ -81,7 +81,7 @@ function TheShopDetail() {
                                             <div className="new-terms-wrapper">
                                                 <div className="new-term-item">
                                                     <div className="new-terms-detail">
-                                                        <div className="new-terms-title">Đánh giá</div>
+                                                        {/* <div className="new-terms-title">Đánh giá</div>
                                                         <div className="new-terms-content col-12">
                                                             <ul>
                                                                 <li
@@ -102,19 +102,29 @@ function TheShopDetail() {
                                                                     <div className="fw-bold">Phong Trần: </div>
                                                                     <div>Ok</div>
                                                                 </li>
-                                                                <li style={{display: 'flex', justifyContent: 'space-between'}}>
-                                                                    <div className='fw-bold'>Phước Mai: </div>
+                                                                <li
+                                                                    style={{
+                                                                        display: 'flex',
+                                                                        justifyContent: 'space-between',
+                                                                    }}
+                                                                >
+                                                                    <div className="fw-bold">Phước Mai: </div>
 
                                                                     <div>Ok</div>
                                                                 </li>
-                                                                <li style={{display: 'flex', justifyContent: 'space-between'}}>
-                                                                    <div className='fw-bold'>Hằng Đinh: </div>
+                                                                <li
+                                                                    style={{
+                                                                        display: 'flex',
+                                                                        justifyContent: 'space-between',
+                                                                    }}
+                                                                >
+                                                                    <div className="fw-bold">Hằng Đinh: </div>
 
                                                                     <div>Xịn</div>
                                                                 </li>
                                                             </ul>
-                                                            {/* <hr className="desktop" /> */}
-                                                        </div>
+                                                        </div> */}
+                                                        <ReviewProductShop />
                                                     </div>
                                                 </div>
                                             </div>

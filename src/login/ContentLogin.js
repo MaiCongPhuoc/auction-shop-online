@@ -42,7 +42,7 @@ const ContentLogin = () => {
                 async function login() {
                     let userLogin = await AuthService.postLogin(user);
                     setUser(userLogin.data);
-                    let u = userLogin.data
+                    let u = userLogin.data;
                     let email = userLogin.data.name;
                     let username = userLogin.data.username;
                     let token = userLogin.data.token;
@@ -64,8 +64,7 @@ const ContentLogin = () => {
                 login();
                 flag = false;
                 // console.log('user: ', user);
-            } catch (error) {
-            }
+            } catch (error) {}
         }
     }, [user]);
 
@@ -79,10 +78,10 @@ const ContentLogin = () => {
             password: '',
         },
         validationSchema: yup.object({
-            email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
+            email: yup.string().email('Vui lòng nhập đúng định dạng email!').required('Vui lòng nhập email!'),
             password: yup
                 .string()
-                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .min(8, 'Mật khẩu tối thiểu là 8 kí tự!')
                 .max(20, 'Mật khẩu tối đa là 20 kí tự!')
                 .required('Vui lòng nhập mật khẩu!'),
         }),

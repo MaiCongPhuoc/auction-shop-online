@@ -78,9 +78,9 @@ function ModalEditCategory(props) {
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'Tên ngắn nhất là 5 kí tự!')
-                .max(25, 'Tên dài nhất là 25 kí tự!')
-                .required('Tên không được để trống!'),
+                .min(3, 'Tên thể loại tối thiểu là 3 kí tự!')
+                .max(20, 'Tên thể loại tối đa là 20 kí tự!')
+                .required('Tên thể loại không được để trống!'),
             // .test(
             //     'title',
             //     'Tên đã tồn tại! Vui lòng nhập tên khác!',

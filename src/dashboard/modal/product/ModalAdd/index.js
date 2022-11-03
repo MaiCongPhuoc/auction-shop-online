@@ -154,13 +154,13 @@ function ModalAddProduct(props) {
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'tên sản phẩm nhỏ nhất là 5 kí tự!')
-                .max(25, 'tên sản phẩm nhỏ nhất là 25 kí tự!')
+                .min(5, 'Tên sản phẩm tối thiểu là 5 kí tự!')
+                .max(25, 'Tên sản phẩm tối đa là 25 kí tự!')
                 .required('Bạn phải nhập tên sản phẩm vào!'),
             price: yup
                 .number('Vui lòng nhập số!')
-                .min(10000, 'Vui lòng nhập giá trên 10000 VNĐ!')
-                .max(999900000, 'Vui lòng nhập giá dưới 999900000 VNĐ!')
+                .min(10000, 'Vui lòng nhập giá trên 10.000 đ')
+                .max(999900000, 'Vui lòng nhập giá dưới 1.000.000.000 đ!')
                 .required('Vui lòng nhập giá!'),
             estimatePrice: yup.number('Vui lòng nhập số!'),
             // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
@@ -170,12 +170,12 @@ function ModalAddProduct(props) {
                 ? null
                 : yup
                       .number('Vui lòng nhập số!')
-                      .min(1, 'Số lượng nhỏ nhất là 1!')
-                      .max(200, 'Số lượng lớn nhất là 200!')
+                      .min(1, 'Số lượng tối thiểu là 1!')
+                      .max(200, 'Số lượng tối đa là 200!')
                       .required('Vui lòng nhập số lượng!'),
             action: yup.string(),
             image: yup.mixed(),
-            description: yup.string(),
+            description: yup.string().required('Vui lòng nhập mô tả!'),
         }),
         onSubmit: (product) => {
             product.createdBy = account.username;
