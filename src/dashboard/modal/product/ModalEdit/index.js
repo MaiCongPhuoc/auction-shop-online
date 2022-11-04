@@ -123,7 +123,7 @@ function ModalEditProduct(props) {
             moderation: 0,
             price: product.price,
             slug: product.slug,
-            sold: product.sold,
+            sold: product.sold,     
             title: product.title,
             viewed: product.viewed,
             category: {
