@@ -204,6 +204,12 @@ export const setOrderDetails = (arr) => {
         payload: arr,
     };
 };
+export const setReloadOrder = (boolean) => {
+    return {
+        type: 'orderDetails/setReloadOrder',
+        payload: boolean,
+    };
+};
 
 // Watch List
 export const setWatchLists = (arr) => {

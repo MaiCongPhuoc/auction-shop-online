@@ -37,6 +37,7 @@ export const REMOVE_ORDER = ALL_ORDERS + '/remove-order';
 export const ALL_ORDERS_DETAIL = 'http://localhost:8080/api/orders-detail';
 export const CREATE_ORDER_DETAIL = ALL_ORDERS_DETAIL + '/create';
 export const GET_BY_PRODUCT_CREATED_BY = ALL_ORDERS_DETAIL + '/get-by-product-created-by';
+export const UPDATE_STATUS = ALL_ORDERS_DETAIL + '/update-status';
 
 // Watch list
 export const WATCH_LISTS = 'http://localhost:8080/api/watch-lists';

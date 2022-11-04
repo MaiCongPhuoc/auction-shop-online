@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getAccount } from "../../../redux/selector";
+import { getAccount, getReloadOrder } from "../../../redux/selector";
 import Header from '../../Header/Header';
 import SideBar from "./SideBar.tsx";
 import ProductService from './../../../service/Product/ProductService';
@@ -21,6 +21,8 @@ function ShowMyShop() {
     const [loading, setLoading] = useState(false);
 
     const menu = useSelector(getMenu);
+
+    const reLoadOrder = useSelector(getReloadOrder);
 
     useEffect(() => {
         setLoading(true);
@@ -48,7 +50,6 @@ function ShowMyShop() {
         }
     }, []);
 
-
     return (
         <>
             <Header className="product-client" />
@@ -56,7 +57,7 @@ function ShowMyShop() {
             {menu === 'myProduct' ? (
                 (loading) ? <LoadCart /> : <MyProduct products={products}/>
             ) : (
-                <MyNotification orderDetails={orderDetails}/>
+                (loading) ? <LoadCart /> : <MyNotification orderDetails={orderDetails}/>
             )}
             <ToastContainer />
         </>

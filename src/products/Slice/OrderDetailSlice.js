@@ -11,6 +11,11 @@ const orderDetailsReducer = (state = initState, action) => {
                 ...state,
                 orderDetails: action.payload
             }
+        case 'orderDetails/setReloadOrder':
+            return {
+                ...state,
+                reloadOrder: action.payload
+            }
         
         default:
             return state;

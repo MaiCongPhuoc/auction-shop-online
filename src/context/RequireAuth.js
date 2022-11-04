@@ -18,25 +18,6 @@ const RequireAuth = ({ allowedRoles }) => {
                 ? <Navigate to="/unauthorized" state={{ from: location }} replace />
                 : <Navigate to="/login" state={{ from: location }} replace />
     );
-
-    const getCookie = (name) => {
-        let cookie = {};
-        document.cookie.split(';').forEach(function (el) {
-            let [k, v] = el.split('=');
-            cookie[k.trim()] = v;
-        });
-        return cookie[name];
-    };
-    let cookie = getCookie('JWT');
-    console.log('cookie: ', cookie);
-    let url = window.location.href;
-    return account?.roles?.find((role) => allowedRoles?.includes(role.authority)) ? (
-        <Outlet />
-    ) : account ? (
-        <Navigate to="/login" state={{ from: location }} replace />
-    ) : (
-        <Navigate to="/unauthorized" state={{ from: location }} replace />
-    );
 };
 
 export default RequireAuth;

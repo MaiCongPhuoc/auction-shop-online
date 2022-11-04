@@ -41,8 +41,9 @@ function MyProduct({ products, }) {
     console.log(products.length > 0);
     return (
         <>
-            <div className="moderation-list">
+            <div className="moderation-list" style={{display: 'flex'}}>
                 <h2>Đã kiểm duyệt &gt;&gt;</h2>
+                <div className="ms-5"><b>{moderatedList.length}</b> sản phẩm</div>
             </div>
             <div className="moderation-item lot-cards grid-x mt-3">
                 {moderatedList.length > 0 ?
@@ -133,8 +134,9 @@ function MyProduct({ products, }) {
                     )) : <EmptyOrder />
                 }
             </div>
-            <div className="non-moderation-list" style={{ marginTop: '50px' }}>
+            <div className="non-moderation-list" style={{ marginTop: '50px', display: 'flex' }}>
                 <h2>Đang chờ kiểm duyệt &gt;&gt;</h2>
+                <div className="ms-5"><b>{nonModeratedList.length}</b> sản phẩm</div>
             </div>
             <div className="non-moderation-item lot-cards grid-x mt-3">
                 {nonModeratedList.length > 0 ?

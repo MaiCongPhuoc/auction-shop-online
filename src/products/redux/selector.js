@@ -42,6 +42,7 @@ export const getCheckPayment = (state) => state.orders.checkPayment;
 
 // Order details
 export const getAllOrderDetails = (state) => state.orderDetails.orderDetails;
+export const getReloadOrder = (state) => state.orderDetails.reloadOrder;
 
 
 // Filters
