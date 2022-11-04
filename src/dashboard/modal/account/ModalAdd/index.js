@@ -174,19 +174,19 @@ function ModalDetailAccount(props) {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(8, 'tên của bạn ít nhất là 8 kí tự!')
-                .max(20, 'tên của bạn tối đa nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên đầy đủ vào!'),
+                .min(8, 'Tên của bạn tối thiểu là 8 kí tự!')
+                .max(20, 'Tên của bạn tối đa là 20 kí tự!')
+                .required('Vui lòng nhập họ và tên đầy đủ!'),
             username: yup
                 .string()
-                .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
-                .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên đăng nhập vào!'),
-            email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập tên sản phẩm vào!'),
+                .min(8, 'Tên đăng nhập tối thiểu là 8 kí tự!')
+                .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
+                .required('Vui lòng nhập tên đăng nhập!'),
+            email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập địa chỉ email!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             password: yup
                 .string()
-                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .min(8, 'Mật khẩu tối thiểu là 8 kí tự!')
                 .max(20, 'Mật khẩu tối đa là 20 kí tự!')
                 .required('Vui lòng nhập mật khẩu!'),
             repassword: yup
@@ -198,7 +198,7 @@ function ModalDetailAccount(props) {
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
             locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
-            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng Nhập địa chỉ!') }),
+            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng nhập địa chỉ!') }),
         }),
         onSubmit: (account) => {
             let provinceId = document.querySelector('#province').value;

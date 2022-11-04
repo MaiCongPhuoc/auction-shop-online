@@ -330,7 +330,7 @@ function BangTaiKhoan() {
                                         ? ''
                                         : accounts.map((account) => (
                                               <tr key={account.id}>
-                                                  <td>
+                                                  <td className="text-center">
                                                       <button
                                                           onClick={() =>
                                                               setShowDetail({
@@ -348,13 +348,13 @@ function BangTaiKhoan() {
                                                           />
                                                       </button>
                                                   </td>
-                                                  <td>
+                                                  <td className="text-center">
                                                       <strong>{account.fullName}</strong>
                                                   </td>
-                                                  <td>{account.role.code}</td>
-                                                  <td>{account.locationRegion.provinceName}</td>
-                                                  <td>{account.locationRegion.districtName}</td>
-                                                  <td>{account.locationRegion.wardName}</td>
+                                                  <td className="text-center">{account.role.code}</td>
+                                                  <td className="text-center">{account.locationRegion.provinceName}</td>
+                                                  <td className="text-center">{account.locationRegion.districtName}</td>
+                                                  <td className="text-center">{account.locationRegion.wardName}</td>
                                                   <td className="text-center">
                                                       <Tippy
                                                           delay={[0, 0]}

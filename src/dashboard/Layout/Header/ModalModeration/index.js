@@ -121,28 +121,30 @@ function ModalDetailProduct(props) {
                                 <p className="col-sm-8">{Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Người tạo:</h5>
-                                <p className="col-sm-8">{product.createdBy}</p>
+                                <h5 className="col-sm-5">Người tạo:</h5>
+                                <p className="col-sm-7">{product.createdBy}</p>
                             </div>
                             <div className="row">
+                                <h5 className="col-sm-5">Ngày Sửa Đổi Gần Nhất</h5>
+                                <p className="col-sm-7">{product.updateAt}</p>
                                 <h5 className="col-sm-4">Ngày Sửa Đổi Gần Nhất</h5>
                                 <p className="col-sm-8">{Moment(product.updateAt).format('DD-MM-yyyy hh:mm:ss')}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Người Sửa Đổi:</h5>
-                                <p className="col-sm-8">{product.updateBy}</p>
+                                <h5 className="col-sm-5">Người Sửa Đổi:</h5>
+                                <p className="col-sm-7">{product.updateBy}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Đấu Giá / Bán</h5>
-                                <p className="col-sm-8">{product.action ? 'Đấu Giá' : 'Bán'}</p>
+                                <h5 className="col-sm-5">Đấu Giá / Bán</h5>
+                                <p className="col-sm-7">{product.action ? 'Đấu Giá' : 'Bán'}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Số Lượng Còn Lại</h5>
-                                <p className="col-sm-8">{product.available}</p>
+                                <h5 className="col-sm-5">Số Lượng Còn Lại</h5>
+                                <p className="col-sm-7">{product.available}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Đã Kiểm Duyệt:</h5>
-                                <p className="col-sm-8">{product.moderation ? 'Đã kiểm duyệt' : 'Chưa kiểm duyệt'}</p>
+                                <h5 className="col-sm-5">Đã Kiểm Duyệt:</h5>
+                                <p className="col-sm-7">{product.moderation ? 'Đã kiểm duyệt' : 'Chưa kiểm duyệt'}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Giá:</h5>
@@ -156,16 +158,16 @@ function ModalDetailProduct(props) {
                                 </p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Đã bán:</h5>
-                                <p className="col-sm-8">{product.sold}</p>
+                                <h5 className="col-sm-5">Đã bán:</h5>
+                                <p className="col-sm-7">{product.sold}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Thể Loại:</h5>
-                                <p className="col-sm-8">{product.category && product.category.title}</p>
+                                <h5 className="col-sm-5">Thể Loại:</h5>
+                                <p className="col-sm-7">{product.category && product.category.title}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Mô tả:</h5>
-                                <p className="col-sm-8">{product.description}</p>
+                                <h5 className="col-sm-5">Mô tả:</h5>
+                                <p className="col-sm-7">{product.description}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Tiền quỵ:</h5>

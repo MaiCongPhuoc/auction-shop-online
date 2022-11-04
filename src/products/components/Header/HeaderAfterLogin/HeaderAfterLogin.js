@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import AdminInfo from './../../../../dashboard/Layout/Header/adminInfo/AdminInfo';
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { width } from '@mui/system';
-import Notification from '../Notification/Notification';
+import Notification from '../Notification/Notification.js';
 
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
@@ -40,14 +40,13 @@ const HeaderAfterLogin = () => {
             }
             getCartItems();
         } catch (error) {
-            console.log("header after login", error);
+            console.log('header after login', error);
         }
     }, [reloadCartItem]);
 
     const handleShowModalAddProduct = () => {
         dispatch(setShowAddProduct(true));
     };
-
 
     const renderAccount = () => {
         return (
@@ -93,7 +92,6 @@ const HeaderAfterLogin = () => {
                             </span>
                         )}
                     </i>
-
                 </Link>
                 <div className="widget-notif-wrapper mx-2">
                     <div>
@@ -120,11 +118,11 @@ const HeaderAfterLogin = () => {
                         </div>
                     </div>
                 </div>
-            </div >
+            </div>
             <AdminInfo />
             <ModalAdd />
             <ToastContainer autoClose={1500} />
-        </div >
+        </div>
     );
 };
 

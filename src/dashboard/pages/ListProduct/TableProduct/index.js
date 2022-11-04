@@ -345,7 +345,7 @@ function BangSanPham() {
                                         tongtien += product.available * product.price;
                                         return (
                                             <tr key={product.id}>
-                                                <td>
+                                                <td className="text-center">
                                                     <button
                                                         onClick={() =>
                                                             setShowDetail({
@@ -366,17 +366,17 @@ function BangSanPham() {
                                                         />
                                                     </button>
                                                 </td>
-                                                <td>
+                                                <td className="text-center">
                                                     <strong>{product.title}</strong>
                                                 </td>
                                                 {/* <td className="text-center">{product.createdBy}</td>
                                                 <td className="text-end">
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
                                                 </td> */}
-                                                <td>
+                                                <td className="text-center">
                                                     {product.category.deleted === true ? null : product.category.title}
                                                 </td>
-                                                <td>{product.action ? 'Đấu giá' : 'Bán'}</td>
+                                                <td className="text-center">{product.action ? 'Đấu giá' : 'Bán'}</td>
                                                 <td className="text-end">{product.available}</td>
                                                 <td className="text-end">
                                                     <NumericFormat

@@ -10,6 +10,7 @@ import orderReducer from '../Slice/OrderSlice';
 import orderDetailsReducer from '../Slice/OrderDetailSlice';
 import watchListsReducer from './../Slice/WatchListSlice';
 import myShopsReducer from '../Slice/MyShopSlice';
+import reviewsReducer from '../Slice/ReviewSlice';
 
 const rootReducer = (state = {}, action) => {
     return {
@@ -24,9 +25,9 @@ const rootReducer = (state = {}, action) => {
         orders: orderReducer(state.orders, action),
         orderDetails: orderDetailsReducer(state.orderDetails, action),
         watchLists: watchListsReducer(state.watchLists, action),
-        myShops: myShopsReducer(state.myShops, action)
-    }   
-}
+        myShops: myShopsReducer(state.myShops, action),
+        reviews: reviewsReducer(state.reviews, action),
+    };
+};
 
 export default rootReducer;
-

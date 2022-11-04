@@ -13,7 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import AuthService from '../dashboard/services/AuthService';
 import { useCookies } from 'react-cookie';
 import useAuth from '../hooks/useAuth';
-import AccountService from './../dashboard/services/AccountService';
+import AccountService from '../dashboard/services/AccountService';
 
 let flag = false;
 const ContentLogin = () => {
@@ -39,7 +39,7 @@ const ContentLogin = () => {
                     let userLogin = await AuthService.postLogin(user);
                     let account = await AccountService.getAccountById(userLogin.data.id);
                     setUser(userLogin.data);
-                    let u = userLogin.data
+                    let u = userLogin.data;
                     let email = userLogin.data.name;
                     let username = userLogin.data.username;
                     let token = userLogin.data.token;
@@ -53,18 +53,17 @@ const ContentLogin = () => {
                     if (userLogin.data.roles[0].authority === 'USER') {
                         setTimeout(() => {
                             navigate('/product', { replace: true });
-                        }, 2000)
+                        }, 2000);
                     } else {
                         setTimeout(() => {
                             navigate('/dashboard', { replace: true });
-                        }, 2000)
+                        }, 2000);
                     }
                     toast.success(`Đăng nhập thành công!`);
                 }
                 login();
                 flag = false;
-            } catch (error) {
-            }
+            } catch (error) {}
         }
     }, [user]);
 
@@ -78,10 +77,10 @@ const ContentLogin = () => {
             password: '',
         },
         validationSchema: yup.object({
-            email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
+            email: yup.string().email('Vui lòng nhập đúng định dạng email!').required('Vui lòng nhập email!'),
             password: yup
                 .string()
-                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .min(8, 'Mật khẩu tối thiểu là 8 kí tự!')
                 .max(20, 'Mật khẩu tối đa là 20 kí tự!')
                 .required('Vui lòng nhập mật khẩu!'),
         }),

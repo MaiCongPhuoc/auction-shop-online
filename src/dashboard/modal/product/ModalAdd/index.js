@@ -143,8 +143,8 @@ function ModalAddProduct(props) {
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'tên sản phẩm nhỏ nhất là 5 kí tự!')
-                .max(25, 'tên sản phẩm nhỏ nhất là 25 kí tự!')
+                .min(5, 'Tên sản phẩm tối thiểu là 5 kí tự!')
+                .max(25, 'Tên sản phẩm tối đa là 25 kí tự!')
                 .required('Bạn phải nhập tên sản phẩm vào!'),
             price: yup
                 .number('Vui lòng nhập số!')
