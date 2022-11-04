@@ -58,10 +58,12 @@ function ModalEditProduct(props) {
     useEffect(() => {
         if (flag) {
             try {
-                async function postData(accountFrm) {
+                async function postData() {
                     await AccountService.getEditAccount(accountFrm, accountEditId);
                 }
-                postData(accountFrm);
+                postData();
+                handleReset();
+                flag = false;
             } catch (error) {
                 console.log(error);
             }
@@ -167,21 +169,23 @@ function ModalEditProduct(props) {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(5, 'tên của bạn ít nhất là 5 kí tự!')
-                .max(20, 'tên của bạn tối đa nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên vào!'),
+                .min(8, 'Tên của bạn tối thiểu là 8 kí tự!')
+                .max(20, 'Tên của bạn tối đa là 20 kí tự!')
+                .required('Vui lòng nhập họ và tên đầy đủ!'),
             username: yup
                 .string()
-                .min(8, 'tên của bạn nhỏ nhất là 8 kí tự!')
-                .max(20, 'tên của bạn nhỏ nhất là 20 kí tự!')
-                .required('Vui lòng nhập họ tên đầy đủ vào!'),
+                .min(8, 'Tên đăng nhập tối thiểu là 8 kí tự!')
+                .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
+                .required('Vui lòng nhập tên đăng nhập!'),
             email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập email vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
-            role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyển hạn!') }),
-            locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
+            role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyền hạn!') }),
+            locationRegion: yup
+                .object()
+                .shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh / Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
             locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
-            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng Nhập địa chỉ!') }),
+            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng nhập địa chỉ!') }),
         }),
         onSubmit: (account) => {
             let provinceId = document.querySelector('#province').value;
@@ -211,7 +215,6 @@ function ModalEditProduct(props) {
             account.locationRegion.wardName = currentWard;
             console.log('account: ', account);
             setAccountFrm({ ...account });
-            handleReset();
             notify();
         },
     });

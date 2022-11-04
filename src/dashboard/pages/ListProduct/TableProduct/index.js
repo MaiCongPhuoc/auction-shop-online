@@ -345,7 +345,7 @@ function BangSanPham() {
                                         tongtien += product.available * product.price;
                                         return (
                                             <tr key={product.id}>
-                                                <td>
+                                                <td className="text-center">
                                                     <button
                                                         onClick={() =>
                                                             setShowDetail({
@@ -366,17 +366,17 @@ function BangSanPham() {
                                                         />
                                                     </button>
                                                 </td>
-                                                <td>
+                                                <td className="text-center">
                                                     <strong>{product.title}</strong>
                                                 </td>
                                                 {/* <td className="text-center">{product.createdBy}</td>
                                                 <td className="text-end">
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
                                                 </td> */}
-                                                <td>
+                                                <td className="text-center">
                                                     {product.category.deleted === true ? null : product.category.title}
                                                 </td>
-                                                <td>{product.action ? 'Đấu giá' : 'Bán'}</td>
+                                                <td className="text-center">{product.action ? 'Đấu giá' : 'Bán'}</td>
                                                 <td className="text-end">{product.available}</td>
                                                 <td className="text-end">
                                                     <NumericFormat
@@ -458,7 +458,7 @@ function BangSanPham() {
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
-                                <nav aria-label="Page navigation example">
+                                {/* <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <a
@@ -500,6 +500,50 @@ function BangSanPham() {
                                             >
                                                 <i class="fa-solid fa-forward-fast"></i>
                                             </a>
+                                        </li>
+                                    </ul>
+                                </nav> */}
+                                <nav>
+                                    <ul className="pagination">
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showPrevPage}
+                                            >
+                                                Trang đầu
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showFirstPage}
+                                            >
+                                                Lùi một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showNextPage}
+                                            >
+                                                Tiếp một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showLastPage}
+                                            >
+                                                Trang cuối
+                                            </span>
                                         </li>
                                     </ul>
                                 </nav>

@@ -25,7 +25,6 @@ function ModalEditProduct(props) {
             theme: 'colored',
         });
     const { showEdit, productEditId, handleCloseEdit } = props;
-    // console.log('showEdit: ', showEdit);
     const [radio, setRadio] = useState(false);
     const [stateImg, setStateImg] = useState(false);
     const [category, setCategory] = useState({
@@ -96,17 +95,7 @@ function ModalEditProduct(props) {
                     await ProductService.EditProduct(submitFrm, productEditId);
                 }
                 postData(submitFrm);
-                // async function saveAvatar() {
-                //     for (let i = 0; i < listImg.length; i++) {
-                //         let img = {
-                //             id: 0,
-                //             fileUrl: listImg[i],
-                //         };
-                //         await ProductMediaService.AddMedia(img);
-                //     }
-                //     listImg = [];
-                // }
-                // saveAvatar();
+                flag = false;
                 setCategory({ ...category, loading: false });
             } catch (error) {
                 console.log(error);
@@ -142,24 +131,25 @@ function ModalEditProduct(props) {
             },
             description: product.description,
             countday: product.countday,
+            cheatMoney: product.cheatMoney,
             images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
         },
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'tên sản phẩm nhỏ nhất là 5 kí tự!')
-                .max(25, 'tên sản phẩm nhỏ nhất là 25 kí tự!')
+                .min(5, 'Tên sản phẩm tối thiểu là 5 kí tự!')
+                .max(25, 'Tên sản phẩm tối đa là 25 kí tự!')
                 .required('Vui lòng đổi tên sản phẩm vào!'),
             price: yup
                 .number('Vui lòng nhập số!')
-                .min(10000, 'Vui lòng nhập giá trên 10000 VNĐ!')
-                .max(999900000, 'Vui lòng nhập giá dưới 999900000 VNĐ!')
-                .required('Vui lòng đổi  giá!'),
+                .min(10000, 'Vui lòng nhập giá trên 10.000 đ!')
+                .max(999900000, 'Vui lòng nhập giá dưới 1.000.000.000 đ!')
+                .required('Vui lòng đổi giá!'),
             available: yup
                 .number('Vui lòng nhập số!')
-                .min(10, 'Số lượng nhỏ nhất là 10!')
-                .max(200, 'Số lượng lớn nhất là 200!')
-                .required('Vui lòng đổi  số lượng!'),
+                .min(10, 'Số lượng tối thiểu là 10!')
+                .max(200, 'Số lượng tối đa là 200!')
+                .required('Vui lòng đổi số lượng!'),
             action: yup.string(),
             image: yup.mixed(),
             description: yup.string().required('Vui lòng sửa lại mô tả!'),

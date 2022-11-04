@@ -165,7 +165,7 @@ function ModalEditAccount(props) {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(5, 'Tên của bạn tối thiểu là 5 kí tự!')
+                .min(8, 'Tên của bạn tối thiểu là 8 kí tự!')
                 .max(20, 'Tên của bạn tối đa là 20 kí tự!')
                 .required('Vui lòng nhập họ và tên!'),
             username: yup
@@ -173,7 +173,7 @@ function ModalEditAccount(props) {
                 .min(8, 'Tên đăng nhập tối thiểu là 8 kí tự!')
                 .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
                 .required('Vui lòng nhập tên đăng nhập!'),
-            email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập email vào!'),
+            email: yup.string().email('Vui lòng nhập đúng định dạng email!').required('Vui lòng nhập email!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             password: yup
                 .string()
@@ -184,7 +184,7 @@ function ModalEditAccount(props) {
                 .string()
                 .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
                 .required('Vui lòng nhập lại mật khẩu!'),
-            role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyển hạn!') }),
+            role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyền hạn!') }),
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Thành phố/Tỉnh!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận/Huyện!') }),
             locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Phường/Xã!') }),
@@ -342,7 +342,7 @@ function ModalEditAccount(props) {
                                     name="password"
                                     id="password"
                                     placeholder="Vui lòng nhập mật khẩu..."
-                                    value={formik.values.password}
+                                    value={formik.values.password || accountById.password}
                                     onChange={formik.handleChange}
                                 />
                             </div>
@@ -359,7 +359,7 @@ function ModalEditAccount(props) {
                                     name="repassword"
                                     id="repassword"
                                     placeholder="Vui lòng nhập lại mật khẩu..."
-                                    value={formik.values.repassword}
+                                    value={formik.values.repassword || accountById.repassword}
                                     onChange={formik.handleChange}
                                 />
                             </div>

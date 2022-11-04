@@ -44,7 +44,12 @@ export const WATCH_LISTS = 'http://localhost:8080/api/watch-lists';
 export const ADD_WATCH_LISTS = WATCH_LISTS + '/add';
 export const CHECK_WATCH_LISTS = WATCH_LISTS + '/check';
 
-
-
 // Login
 export const ACCOUNT_LOGIN_URL = 'http://localhost:8080/api/auth/login';
+
+//Reviews
+export const REVIEW_ALL_URL = 'http://localhost:8080/api/reviews';
+export const REVIEW_GET_BY_ID_URL = 'http://localhost:8080/api/reviews';
+export const REVIEW_ADD_URL = 'http://localhost:8080/api/reviews/create';
+export const REVIEW_DELETE_URL = 'http://localhost:8080/api/reviews/delete-soft';
+export const REVIEW_EDIT_URL = 'http://localhost:8080/api/reviews/edit';

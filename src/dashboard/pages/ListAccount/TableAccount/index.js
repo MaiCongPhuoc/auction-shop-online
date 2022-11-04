@@ -330,7 +330,7 @@ function BangTaiKhoan() {
                                         ? ''
                                         : accounts.map((account) => (
                                               <tr key={account.id}>
-                                                  <td>
+                                                  <td className="text-center">
                                                       <button
                                                           onClick={() =>
                                                               setShowDetail({
@@ -348,13 +348,13 @@ function BangTaiKhoan() {
                                                           />
                                                       </button>
                                                   </td>
-                                                  <td>
+                                                  <td className="text-center">
                                                       <strong>{account.fullName}</strong>
                                                   </td>
-                                                  <td>{account.role.code}</td>
-                                                  <td>{account.locationRegion.provinceName}</td>
-                                                  <td>{account.locationRegion.districtName}</td>
-                                                  <td>{account.locationRegion.wardName}</td>
+                                                  <td className="text-center">{account.role.code}</td>
+                                                  <td className="text-center">{account.locationRegion.provinceName}</td>
+                                                  <td className="text-center">{account.locationRegion.districtName}</td>
+                                                  <td className="text-center">{account.locationRegion.wardName}</td>
                                                   <td className="text-center">
                                                       <Tippy
                                                           delay={[0, 0]}
@@ -437,7 +437,7 @@ function BangTaiKhoan() {
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
-                                <nav aria-label="Page navigation example">
+                                {/* <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <a
@@ -478,6 +478,50 @@ function BangTaiKhoan() {
                                             >
                                                 <i class="fa-solid fa-forward-fast"></i>
                                             </a>
+                                        </li>
+                                    </ul>
+                                </nav> */}
+                                <nav>
+                                    <ul className="pagination">
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showPrevPage}
+                                            >
+                                                Trang đầu
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showFirstPage}
+                                            >
+                                                Lùi một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showNextPage}
+                                            >
+                                                Tiếp một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showLastPage}
+                                            >
+                                                Trang cuối
+                                            </span>
                                         </li>
                                     </ul>
                                 </nav>

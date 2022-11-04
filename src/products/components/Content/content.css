@@ -1,26 +1,26 @@
 @import '~antd/dist/antd.css';
 
 .ant-select-multiple .ant-select-selection-item {
-  height: 27px;
+    height: 27px;
 }
 
 .base-width {
-  max-width: 98%;
-  background-color: #f1f2f3 !important;
+    max-width: 98%;
+    background-color: #f1f2f3 !important;
 }
 
 #homepage-lot {
-  width: 100%;
-  display: block;
-  padding-top: 20px;
+    width: 100%;
+    display: block;
+    padding-top: 20px;
 }
 
 #homepage-lot-list {
-  overflow-anchor: none;
+    overflow-anchor: none;
 }
 
 .card {
-  cursor: pointer !important;
+    cursor: pointer !important;
 }
 
 /* .card figure img:hover {
@@ -29,196 +29,194 @@
 
 .card .card__info-container .test-wrapper,
 .card .card__info-container .card__stats-group {
-  text-align: left;
+    text-align: left;
 }
 
 .simple-filters {
-  text-align: left;
+    text-align: left;
 }
 
 a {
-  text-decoration: none !important;
+    text-decoration: none !important;
 }
 
 .card:hover {
-  transition: 0.5s all ease-in-out;
-  box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.522);
+    transition: 0.5s all ease-in-out;
+    box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.522);
 }
 
 .lot-cards img {
-  height: 200px;
-  transition: 0.5s all ease-in-out;
+    height: 200px;
+    transition: 0.5s all ease-in-out;
 }
 
 .lot-cards img:hover {
-  transform: scale(1.2) !important;
+    transform: scale(1.2) !important;
 }
 
 .tab-sel-wrapper .tab-item.left-end {
-  border-radius: 50px 50px 50px 50px;
+    border-radius: 50px 50px 50px 50px;
 }
 
 .tab-sel-wrapper .tab-item:hover {
-  background-color: rgb(211, 211, 211);
-  border-radius: 50px;
+    background-color: rgb(211, 211, 211);
+    border-radius: 50px;
 }
 
 .tab-sel-wrapper .tab-item .i-label {
-  font-size: large;
+    font-size: large;
 }
 
 .loadData {
-  position: absolute;
-  top: 40vh;
-  width: 100%;
+    position: absolute;
+    top: 40vh;
+    width: 100%;
 }
 
 .searching {
-  position: absolute;
-  top: 15vh;
-  left: 22vw;
-  width: 200px;
+    position: absolute;
+    top: 15vh;
+    left: 22vw;
+    width: 200px;
 }
 
 .notfound {
-  top: 40vh;
-  width: 100%;
-  display: flex;
+    top: 40vh;
+    width: 100%;
+    display: flex;
 }
 
 .simple-filters-wrapper .simple-filters .large-offset-1 {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .show-filters {
-  background: #ffffff;
-  box-shadow: 0px 2px 45px 0px rgb(0 0 0 / 15%);
+    background: #ffffff;
+    box-shadow: 0px 2px 45px 0px rgb(0 0 0 / 15%);
 }
 
 .filters-bar-div {
-  background: #fff;
-  border-radius: 50px;
-  box-shadow: 0px 2px 45px 0px rgb(0 0 0 / 15%);
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0px 2px 45px 0px rgb(0 0 0 / 15%);
 }
 
 .filter-group {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 /* filters */
 .sidenav {
-  font-size: large;
-  height: 500px;
-  width: 0;
-  position: absolute;
-  z-index: 1;
-  top: -22px;
-  ;
-  right: 0;
-  background-color: #ffffffef;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-  box-shadow: 0px 2px 45px 0px rgb(0 0 0 / 15%);
+    font-size: large;
+    height: 500px;
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    top: -22px;
+    right: 0;
+    background-color: #ffffffef;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: 0px 2px 45px 0px rgb(0 0 0 / 15%);
 }
 
 .sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #000000;
-  display: block;
-  transition: 0.3s;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #000000;
+    display: block;
+    transition: 0.3s;
 }
 
 .sidenav a:hover {
-  color: rgb(255, 82, 61);
+    color: rgb(255, 82, 61);
 }
 
 .sidenav .closebtn {
-  position: absolute;
-  top: -6px;
-  right: 2px;
-  font-size: 36px;
-  margin-left: 50px;
+    position: absolute;
+    top: -6px;
+    right: 2px;
+    font-size: 36px;
+    margin-left: 50px;
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
+    .sidenav {
+        padding-top: 15px;
+    }
 
-  .sidenav a {
-    font-size: 18px;
-  }
+    .sidenav a {
+        font-size: 18px;
+    }
 }
 
 .ant-col {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .ant-radio-wrapper {
-  margin-left: 30px;
-  width: 125px;
+    margin-left: 30px;
+    width: 125px;
 }
 
 .ant-radio-wrapper:hover {
-  font-weight: bold;
+    font-weight: bold;
 }
 
-
 .ant-radio-inner {
-  border: 2px solid;
+    border: 2px solid;
 }
 
 .ant-typography {
-  color: #367289;
+    color: #367289;
 }
 
 .ant-row-center .ant-col:hover {
-  transition: 0.5s;
-  box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.156);
+    transition: 0.5s;
+    box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.156);
 }
 
 .result-filters {
-  display: flex;
+    display: flex;
 }
 
 .back-page {
-  color: rgb(51, 51, 51);
-  background: rgb(255, 255, 255) !important;
-  box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.156);
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+    color: rgb(51, 51, 51);
+    background: rgb(255, 255, 255) !important;
+    box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.156);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .back-page:hover {
-  color: rgb(255, 255, 255);
-  background: rgb(120, 120, 120) !important;
-  box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.156);
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+    color: rgb(255, 255, 255);
+    background: rgb(120, 120, 120) !important;
+    box-shadow: 0px 2px 45px 0px rgba(0, 0, 0, 0.156);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .change-quantity:hover {
-  color: red;
+    color: red;
 }
 
 .remove-cart-item {
-  color: #3f3f3f;
-  cursor: pointer;
-  transition: 0.3s;
+    color: #3f3f3f;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .remove-cart-item:hover {
-  color: red !important;
+    color: red !important;
 }
 
 #client-content {
@@ -235,44 +233,57 @@ a {
 
 .cart-item {
   transition: 0.5s;
+    margin-top: 100px;
+}
+
+#show-list-cart-item {
+    margin-top: 150px;
+}
+
+#show-list-cart-item .row {
+    max-width: none;
+}
+
+.cart-item {
+    transition: 0.5s;
 }
 
 .cart-item:hover {
-  background-color: #dee5ed !important;
-  cursor: pointer;
+    background-color: #dee5ed !important;
+    cursor: pointer;
 }
 
 /* CSS checkbox cart */
 .container-check-cart {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Hide the browser's default checkbox */
 .container-check-cart input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
 }
 
 /* Create a custom checkbox */
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: rgb(196, 196, 196);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: rgb(196, 196, 196);
 }
 
 /* On mouse-over, add a grey background color */
@@ -287,9 +298,9 @@ a {
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+    content: '';
+    position: absolute;
+    display: none;
 }
 
 /* Show the checkmark when checked */
@@ -299,24 +310,24 @@ a {
 
 /* Style the checkmark/indicator */
 .container-check-cart .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid rgb(255, 255, 255);
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid rgb(255, 255, 255);
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 /* cart item */
 .scroll-cart-item {
-  z-index: 1;
+    z-index: 1;
 }
 
 .watching-plus:hover {
-  color: red;
+    color: red;
 }
 
 /* My shop */
