@@ -184,10 +184,9 @@ export const setShowCartModalCheckout = (boolean) => {
 export const setReloadCartItem = (boolean) => {
     return {
         type: 'cartItems/setReloadCartItem',
-        payload: boolean
-    }
-}
-
+        payload: boolean,
+    };
+};
 
 // Order
 export const setCheckPayment = (boolean) => {
@@ -230,5 +229,32 @@ export const setMenu = (string) => {
     return {
         type: 'myShops/setMenu',
         payload: string,
+    };
+};
+
+// Reviews
+export const setReviews = (arr) => {
+    return {
+        type: 'reviews/setReviews',
+        payload: arr,
+    };
+};
+export const setReviewId = (int) => {
+    return {
+        type: 'reviews/setReviewId',
+        payload: int,
+    };
+};
+
+export const setReloadReviews = (boolean) => {
+    return {
+        type: 'reviews/setReloadReviews',
+        payload: boolean,
+    };
+};
+export const setRating = (int) => {
+    return {
+        type: 'reviews/setRating',
+        payload: int,
     };
 };

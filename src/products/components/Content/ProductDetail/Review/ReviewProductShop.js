@@ -1,368 +1,166 @@
-import React from 'react';
-function ReviewsProductShop() {
+import React, { useState, useEffect, useRef } from 'react';
+import StarRating from './StarRating';
+import './Review.css';
+import ReviewService from './../../../../service/Reviews/ReviewService';
+import { compareValues } from './../../../../Hooks/Hooks';
+import { Rating } from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { getAccount } from '../../../../redux/selector';
+import { useSelector } from 'react-redux';
+import { setRating } from './../../../../redux/actions';
+
+let flag = false;
+function ReviewsProductShop({ product }) {
+    const [state, setState] = useState({
+        loading: false,
+        errorMessage: '',
+        reviews: [],
+    });
+
+    const account = useSelector(getAccount);
+
+    const [rating, setRating] = useState(0);
+
+    const [reloadReview, setReloadReview] = useState(false);
+
+    const [submitFrm, setSubmitFrm] = useState({
+        vote: '',
+        review: '',
+        account: account,
+        product: product,
+    });
+    const handleSetRating = (int) => {
+        setRating(int);
+    };
+    console.log('account: ', submitFrm.account);
+
+    useEffect(() => {
+        try {
+            setState({ ...state, loading: true });
+            async function getData() {
+                let review = await ReviewService.getAllReviews();
+                setState({
+                    ...state,
+                    reviews: review.data,
+                    loading: false,
+                });
+                console.log('goi lai');
+            }
+            getData();
+        } catch (error) {
+            setState({
+                ...state,
+                loading: false,
+                errorMessage: error.message,
+            });
+        }
+    }, [reloadReview]);
+    useEffect(() => {
+        if (flag) {
+            try {
+                console.log('form: ', submitFrm);
+                async function postData() {
+                    await ReviewService.addReview(submitFrm);
+                    // let review = await ReviewService.getAllReviews();
+                    // setReloadReview(!reloadReview);
+                    // setState({
+                    //     ...state,
+                    //     reviews: review.data,
+                    //     loading: false,
+                    // });
+                    setReloadReview(!reloadReview);
+                    setState({ ...state, loading: false });
+                }
+                postData();
+                flag = false;
+            } catch (error) {
+                console.log('error: ', error);
+            }
+        }
+    }, [submitFrm]);
+    const { loading, reviews, errorMessage } = state;
+
+    useEffect(() => {
+        setSubmitFrm({
+            ...submitFrm,
+            vote: rating,
+            //  review
+        });
+    }, [rating]);
+
+    const handleReset = () => {
+        formik.handleReset();
+    };
+
+    const formik = useFormik({
+        initialValues: {
+            vote: '',
+            review: '',
+            account: account,
+            product: product,
+        },
+        validationSchema: yup.object({
+            review: yup
+                .string()
+                .min(5, 'Đánh giá tối thiểu là 5 kí tự!')
+                .max(200, 'Đánh giá loại tối đa là 20 kí tự!')
+                .required('Đánh giá không được để trống!'),
+        }),
+
+        onSubmit: (product) => {
+            console.log('submitFrm: ', submitFrm);
+            setSubmitFrm({ ...product, vote: rating });
+            handleReset();
+            flag = true;
+        },
+    });
     return (
         <>
             <div className="col-12">
-                <form action="">
+                <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                     <div className="new-terms-title">
-                        ĐÁNH GIÁ SẢN PHẨM: <br />
-                        (Chọn mức độ): &nbsp;
-                        {/* Màu vàng */}
-                        <ul class="ant-rate m-r-16" tabindex="0" role="radiogroup">
-                            <li class="ant-rate-star ant-rate-star-full">
-                                <div role="radio" aria-checked="true" aria-posinset="1" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="ant-rate-star ant-rate-star-full">
-                                <div role="radio" aria-checked="true" aria-posinset="2" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="ant-rate-star ant-rate-star-full">
-                                <div role="radio" aria-checked="true" aria-posinset="3" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="ant-rate-star ant-rate-star-full">
-                                <div role="radio" aria-checked="true" aria-posinset="4" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="ant-rate-star ant-rate-star-full">
-                                <div role="radio" aria-checked="true" aria-posinset="5" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        &nbsp;
-                        {/* Màu trắng */}
-                        <ul class="ant-rate m-r-16" tabindex="0" role="radiogroup">
-                            <li class="ant-rate-star ant-rate-star-zero">
-                                <div role="radio" aria-checked="false" aria-posinset="1" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="ant-rate-star ant-rate-star-zero">
-                                <div role="radio" aria-checked="false" aria-posinset="2" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="ant-rate-star ant-rate-star-zero">
-                                <div role="radio" aria-checked="false" aria-posinset="3" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="ant-rate-star ant-rate-star-zero">
-                                <div role="radio" aria-checked="false" aria-posinset="4" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="ant-rate-star ant-rate-star-zero">
-                                <div role="radio" aria-checked="false" aria-posinset="5" aria-setsize="5" tabindex="0">
-                                    <div class="ant-rate-star-first">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="ant-rate-star-second">
-                                        <span role="img" aria-label="star" class="anticon anticon-star">
-                                            <svg
-                                                viewBox="64 64 896 896"
-                                                focusable="false"
-                                                data-icon="star"
-                                                width="1em"
-                                                height="1em"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                        ĐÁNH GIÁ SẢN PHẨM: (Chọn mức độ):
+                        <StarRating setNewRating={handleSetRating} />
                         <div className="new-terms-content col-12">
-                            <textarea placeholder="Nhập đánh giá của bạn" name="" id="" cols="30" rows="3"></textarea>
-                            <button className="btn btn-primary" type="button">
+                            <ul>
+                                {formik.errors.review && formik.touched.review && (
+                                    <li className="error">{formik.errors.review}</li>
+                                )}
+                            </ul>
+                            <textarea
+                                value={formik.values.review}
+                                onChange={formik.handleChange}
+                                type="text"
+                                placeholder="Nhập đánh giá của bạn"
+                                name="review"
+                                id="addReview"
+                                cols="60"
+                                rows="3"
+                            ></textarea>
+                            <button className="btn btn-primary" type="submit">
                                 Gửi
                             </button>
                         </div>
                     </div>
                 </form>
+                <hr style={{ height: '5px', backgroundColor: 'black' }} />
             </div>
+            {reviews.sort(compareValues('id', 'desc')).map((review) => (
+                <div className="" key={review.id}>
+                    {review.product.id === product.id ? (
+                        <p>
+                            <div>
+                                {review.account.avatar} {review.account.username}{' '}
+                            </div>
+                            <Rating disabled name="simple-controlled" value={review.vote} />
+                            <div>
+                                {review.review} {review.createdAt}
+                            </div>
+                        </p>
+                    ) : null}
+                </div>
+            ))}
         </>
     );
 }

@@ -43,7 +43,6 @@ export const getCheckPayment = (state) => state.orders.checkPayment;
 // Order details
 export const getAllOrderDetails = (state) => state.orderDetails.orderDetails;
 
-
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 
@@ -138,3 +137,9 @@ export const getReloadWatchList = (state) => state.watchLists.reloadWatchList;
 // My Shop
 export const getOpenSidebar = (state) => state.myShops.openSidebar;
 export const getMenu = (state) => state.myShops.menu;
+
+//Reviews
+export const getReviews = (state) => state.reviews.reviews;
+export const getReviewId = (state) => state.reviews.idReview;
+export const getReloadReviews = (state) => state.reviews.reloadReviews;
+export const getRating = (state) => state.reviews.rating;

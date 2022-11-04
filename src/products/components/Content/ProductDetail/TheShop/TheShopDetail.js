@@ -48,7 +48,7 @@ function TheShopDetail() {
                         <div className="medium-7 medium-large-8 cell left-col">
                             <div className="lot-page-left">
                                 <div className="lot-title">
-                                    <h2>{theShop.product.title}</h2>
+                                    <h2 style={{ textAlign: 'center' }}>{theShop.product.title}</h2>
                                 </div>
                                 <div className="lot-image-showcase">
                                     <div className="slide-image">
@@ -72,63 +72,19 @@ function TheShopDetail() {
                                         </div>
                                     </div>
                                     <div className="lot-content">
-                                        <div className="item lot-overview active">
-                                            <div className="lot-donator">Thông tin sản phẩm:</div>
-                                            <div className="lot-description">
-                                                <p>{product.description}</p>
-                                            </div>
-                                            <hr style={{ borderWidth: '1px' }} />
-                                            <div className="new-terms-wrapper">
-                                                <div className="new-term-item">
-                                                    <div className="new-terms-detail">
-                                                        {/* <div className="new-terms-title">Đánh giá</div>
-                                                        <div className="new-terms-content col-12">
-                                                            <ul>
-                                                                <li
-                                                                    style={{
-                                                                        display: 'flex',
-                                                                        justifyContent: 'space-between',
-                                                                    }}
-                                                                >
-                                                                    <div className="fw-bold">Trung Trần: </div>
-                                                                    <div> &nbsp; Được đỏ</div>
-                                                                </li>
-                                                                <li
-                                                                    style={{
-                                                                        display: 'flex',
-                                                                        justifyContent: 'space-between',
-                                                                    }}
-                                                                >
-                                                                    <div className="fw-bold">Phong Trần: </div>
-                                                                    <div>Ok</div>
-                                                                </li>
-                                                                <li
-                                                                    style={{
-                                                                        display: 'flex',
-                                                                        justifyContent: 'space-between',
-                                                                    }}
-                                                                >
-                                                                    <div className="fw-bold">Phước Mai: </div>
-
-                                                                    <div>Ok</div>
-                                                                </li>
-                                                                <li
-                                                                    style={{
-                                                                        display: 'flex',
-                                                                        justifyContent: 'space-between',
-                                                                    }}
-                                                                >
-                                                                    <div className="fw-bold">Hằng Đinh: </div>
-
-                                                                    <div>Xịn</div>
-                                                                </li>
-                                                            </ul>
-                                                        </div> */}
-                                                        <ReviewProductShop />
+                                        <div className="item-lot-overview active">
+                                            <div className="lot-donator">
+                                                <h2 className="lot-desc">MÔ TẢ SẢN PHẨM: </h2>
+                                                <p className="lot-description">{product.description}</p>
+                                                <div className="new-terms-wrapper">
+                                                    <div className="new-term-item">
+                                                        <br />
+                                                        <div className="new-terms-detail">
+                                                            <ReviewProductShop product={product} />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <hr style={{ borderWidth: '1px' }} />
                                         </div>
                                     </div>
