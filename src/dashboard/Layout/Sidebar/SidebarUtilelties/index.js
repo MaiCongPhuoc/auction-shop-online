@@ -18,7 +18,7 @@ function SidebarUtilities() {
             <div id="collapseUtilities" className="collapse" {...getCollapseProps()}>
                 <div className="bg-white py-2 collapse-inner rounded" style={{padding: '5px'}}>
                     <FontAwesomeIcon icon={faUser} style={{marginRight: '5px'}} />
-                    <Link to="/list-account">Danh sách</Link>
+                    <Link to="/list-account">Tài khoản</Link>
                 </div>
             </div>
         </li>

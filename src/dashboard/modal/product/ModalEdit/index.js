@@ -25,7 +25,6 @@ function ModalEditProduct(props) {
             theme: 'colored',
         });
     const { showEdit, productEditId, handleCloseEdit } = props;
-    // console.log('showEdit: ', showEdit);
     const [radio, setRadio] = useState(false);
     const [stateImg, setStateImg] = useState(false);
     const [category, setCategory] = useState({
@@ -96,17 +95,7 @@ function ModalEditProduct(props) {
                     await ProductService.EditProduct(submitFrm, productEditId);
                 }
                 postData(submitFrm);
-                // async function saveAvatar() {
-                //     for (let i = 0; i < listImg.length; i++) {
-                //         let img = {
-                //             id: 0,
-                //             fileUrl: listImg[i],
-                //         };
-                //         await ProductMediaService.AddMedia(img);
-                //     }
-                //     listImg = [];
-                // }
-                // saveAvatar();
+                flag = false;
                 setCategory({ ...category, loading: false });
             } catch (error) {
                 console.log(error);
@@ -142,6 +131,7 @@ function ModalEditProduct(props) {
             },
             description: product.description,
             countday: product.countday,
+            cheatMoney: product.cheatMoney,
             images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
         },
         validationSchema: yup.object({

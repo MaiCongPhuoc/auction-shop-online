@@ -56,7 +56,7 @@ const HeaderAfterLogin = () => {
                     <FontAwesomeIcon icon={faPlus} className="pr-2" />
                     Add product
                 </a> */}
-                <a title="Thêm mới" type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
+                <a title="Thêm mới" type="button" className="btn btn-success" style={{width: '180px'}} onClick={handleShowModalAddProduct}>
                     <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Tạo sản phẩm
                 </a>
             </div>

@@ -75,3 +75,7 @@
 .btn-adminInfo:hover {
     color: rgb(166, 50, 42);
 }
+.slick-active {
+    padding: 0 20px !important;
+    display: auto !important;
+}

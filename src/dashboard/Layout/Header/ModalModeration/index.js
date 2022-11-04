@@ -6,8 +6,11 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Swal from 'sweetalert2';
 import ProductService from '../../../services/productService';
+import Moment from 'moment';
+import { NumericFormat } from 'react-number-format';
 
 function ModalDetailProduct(props) {
+    Moment.locale('vi');
     const { showModal, idProduct, handleCloseModeration } = props;
     const [product, setProduct] = useState([]);
     const [imageProduct, setImageProduct] = useState([
@@ -31,7 +34,6 @@ function ModalDetailProduct(props) {
                 async function getImage() {
                     let imageData = await ProductMediaService.getListMedia(idProduct);
                     setImageProduct(imageData.data);
-                    console.log('imageData.data: ', imageData.data);
                     let pro = await ProductService.ProductById(idProduct);
                     setProduct(pro.data);
                 }
@@ -44,7 +46,7 @@ function ModalDetailProduct(props) {
 
     const notify = () =>
         Swal.fire({
-            title: 'Bạn chắc không?',
+            title: 'Bạn có đồng ý không?',
             text: 'Bạn sẽ không hoàn tác lại!',
             icon: 'info',
             showCancelButton: true,
@@ -63,7 +65,28 @@ function ModalDetailProduct(props) {
                 );
             }
         });
-
+    const notifyDel = () =>
+        Swal.fire({
+            title: 'Bạn có chắc xóa không?',
+            text: 'Bạn sẽ không hoàn tác lại!',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vâng! Tôi muốn xóa',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                async function getModeration() {
+                    let moderation = await ProductService.DeleteProduct(idProduct);
+                    console.log('moderation.data: ', moderation.data);
+                }
+                getModeration();
+                Swal.fire('<br/> Đã xóa!', 'Bạn đã xóa sản phẩm này.', 'Thành công!').then(() =>
+                    handleCloseModeration(),
+                );
+            }
+        });
+    console.log('moderation: ', product);
     return (
         <Modal show={showModal} onHide={handleCloseModeration} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
@@ -91,11 +114,11 @@ function ModalDetailProduct(props) {
                         <div className="col-md-7 ml-5">
                             <div className="row">
                                 <h5 className="col-sm-4">Title:</h5>
-                                <p className="col-sm-8">{product.title}</p>
+                                <b className="col-sm-8">{product.title}</b>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Ngày Tạo:</h5>
-                                <p className="col-sm-8">{product.createdAt}</p>
+                                <p className="col-sm-8">{Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Người tạo:</h5>
@@ -103,7 +126,7 @@ function ModalDetailProduct(props) {
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Ngày Sửa Đổi Gần Nhất</h5>
-                                <p className="col-sm-8">{product.updateAt}</p>
+                                <p className="col-sm-8">{Moment(product.updateAt).format('DD-MM-yyyy hh:mm:ss')}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Người Sửa Đổi:</h5>
@@ -123,7 +146,14 @@ function ModalDetailProduct(props) {
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Giá:</h5>
-                                <p className="col-sm-8">{product.price}</p>
+                                <p className="col-sm-8">
+                                    <NumericFormat
+                                        value={product.price}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={' đ'}
+                                    />
+                                </p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-4">Đã bán:</h5>
@@ -137,11 +167,25 @@ function ModalDetailProduct(props) {
                                 <h5 className="col-sm-4">Mô tả:</h5>
                                 <p className="col-sm-8">{product.description}</p>
                             </div>
+                            <div className="row">
+                                <h5 className="col-sm-4">Tiền quỵ:</h5>
+                                <p className="col-sm-8">
+                                    <NumericFormat
+                                        value={product.cheatMoney}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={' đ'}
+                                    />
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )}
             </Modal.Body>
             <Modal.Footer>
+                <Button variant="outline-danger" onClick={notifyDel}>
+                    Xóa
+                </Button>
                 <Button variant="info" onClick={notify}>
                     Kiểm duyệt
                 </Button>

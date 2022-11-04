@@ -1,17 +1,15 @@
 import React from 'react';
-import './asset/css/content.css';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import './asset/css/content.css';
 import AccountService from '../dashboard/services/AccountService';
 import FileService from './../dashboard/services/FileService';
-import { useFormik } from 'formik';
-import { toast, ToastContainer } from 'react-toastify';
-import * as yup from 'yup';
 import AuthService from '../dashboard/services/AuthService';
 
 let flag = false;
 const ContenRegister = () => {
-    const navigate = useNavigate();
     const [stateImg, setStateImg] = useState(false);
     const [img, setImg] = useState(
         'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
@@ -32,6 +30,9 @@ const ContenRegister = () => {
                 await AuthService.postRegister(accountFrm);
             }
             register();
+            flag = false;
+            try {
+            } catch (error) {}
         }
     }, [accountFrm]);
 
@@ -124,6 +125,7 @@ const ContenRegister = () => {
             repassword: '',
             phone: '',
             blocked: 0,
+            surplus: 0,
             avatar: 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
             role: {
                 id: 2,
@@ -161,6 +163,7 @@ const ContenRegister = () => {
                 .string()
                 .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
                 .required('Vui lòng nhập lại mật khẩu!'),
+            surplus: yup.number('Bạn phải nhập số!'),
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
             locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
@@ -187,30 +190,12 @@ const ContenRegister = () => {
             account.locationRegion.districtName = currentDistrict;
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
-            console.log('add count: ', account);
             flag = true;
             setAccountFrm(account);
             handleReset();
-
-            notify();
+            console.log('add count: ', account);
         },
     });
-
-    const notify = () => {
-        toast.success('Đăng ký thành công!', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-        });
-        setTimeout(() => {
-            navigate('/login', { replace: true });
-        }, 2000);
-    };
     return (
         <>
             <form className="alo" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
@@ -253,6 +238,9 @@ const ContenRegister = () => {
 
                                 {formik.errors.username && formik.errors.username && (
                                     <li className="error">{formik.errors.username}</li>
+                                )}
+                                {formik.errors.surplus && formik.errors.surplus && (
+                                    <li className="error">{formik.errors.surplus}</li>
                                 )}
                             </ul>
                         </div>
@@ -429,7 +417,7 @@ const ContenRegister = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="mb-2 col-6">
+                            <div className="mb-2 col-4">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Ảnh:
                                 </label>
@@ -444,7 +432,7 @@ const ContenRegister = () => {
                                     onInput={handleUpload}
                                 />
                             </div>
-                            <div className="mb-2 col-6">
+                            <div className="mb-2 col-4">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Địa chỉ:
                                 </label>
@@ -456,6 +444,20 @@ const ContenRegister = () => {
                                     name="locationRegion.address"
                                     placeholder="Vui lòng nhập địa chỉ..."
                                     value={formik.values.address}
+                                    onChange={formik.handleChange}
+                                />
+                            </div>
+                            <div className="mb-2 col-4">
+                                <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
+                                    Nạp tiền:
+                                </label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="surplus"
+                                    name="surplus"
+                                    placeholder="Vui lòng nhập số tiền muốn nạp..."
+                                    value={formik.values.surplus}
                                     onChange={formik.handleChange}
                                 />
                             </div>

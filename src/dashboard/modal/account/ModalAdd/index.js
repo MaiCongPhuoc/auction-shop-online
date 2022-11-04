@@ -57,6 +57,7 @@ function ModalDetailAccount(props) {
                     console.log('createRes: ', createRes.data);
                 }
                 postData();
+                flag = false;
             } catch (error) {
                 console.log(error);
             }
@@ -113,17 +114,23 @@ function ModalDetailAccount(props) {
         });
     };
 
-    const handleUpload = (e) => {
-        async function uploadAvatar() {
-            for (let i = 0; i < e.target.files.length; i++) {
-                setStateImg(true);
-                let uploadResult = await FileService.Upload(e.target.files[0]);
-                setImg(uploadResult.data.url);
-                console.log(uploadResult.data);
-                setStateImg(false);
-            }
-        }
-        uploadAvatar();
+    const handleUpload = async (e) => {
+        // console.log(e.target.files[0]);
+        // async function uploadAvatar() {
+        //     for (let i = 0; i < e.target.files.length; i++) {
+        //         setStateImg(true);
+        //         let uploadResult = await FileService.Upload(e.target.files[0]);
+        //         setImg(uploadResult.data.url);
+        //         console.log(uploadResult.data);
+        //         setStateImg(false);
+        //     }
+        // }
+        // uploadAvatar();
+        setStateImg(true);
+        let uploadResult = await FileService.Upload(e.target.files[0]);
+        console.log(uploadResult.data);
+        setImg(uploadResult.data.url);
+        setStateImg(false);
     };
     const handleReset = () => {
         document.querySelector('#image').value = '';
@@ -148,6 +155,7 @@ function ModalDetailAccount(props) {
             password: '',
             repassword: '',
             blocked: 0,
+            surplus: 0,
             avatar: 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
             role: {
                 id: 0,
@@ -185,6 +193,7 @@ function ModalDetailAccount(props) {
                 .string()
                 .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
                 .required('Vui lòng nhập lại mật khẩu!'),
+            surplus: yup.number('Bạn phải nhập số!'),
             role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyển hạn!') }),
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
@@ -264,6 +273,9 @@ function ModalDetailAccount(props) {
                             )}
                             {formik.errors.username && formik.errors.username && (
                                 <li className="error">{formik.errors.username}</li>
+                            )}
+                            {formik.errors.surplus && formik.errors.surplus && (
+                                <li className="error">{formik.errors.surplus}</li>
                             )}
                         </ul>
                     </div>
@@ -462,22 +474,21 @@ function ModalDetailAccount(props) {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="mb-3 col-6">
+                            <div className="mb-3 col-4">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Ảnh:
                                 </label>
                                 <input
                                     type="file"
                                     className="form-control"
-                                    multiple="multiple"
                                     accept="image/*"
                                     id="image"
                                     name="avatar"
                                     placeholder="Vui lòng chọn file..."
-                                    onInput={handleUpload}
+                                    onChange={handleUpload}
                                 />
                             </div>
-                            <div className="mb-3 col-6">
+                            <div className="mb-3 col-4">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Địa chỉ:
                                 </label>
@@ -488,6 +499,20 @@ function ModalDetailAccount(props) {
                                     name="locationRegion.address"
                                     placeholder="Vui lòng nhập địa chỉ..."
                                     value={formik.values.locationRegion.address}
+                                    onChange={formik.handleChange}
+                                />
+                            </div>
+                            <div className="mb-3 col-4">
+                                <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
+                                    Nạp tiền:
+                                </label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="surplus"
+                                    name="surplus"
+                                    placeholder="Vui lòng nhập địa chỉ..."
+                                    value={formik.values.surplus}
                                     onChange={formik.handleChange}
                                 />
                             </div>

@@ -2,27 +2,16 @@ import axios from 'axios';
 import sha1 from 'sha1';
 
 class FileService {
-    static getCookie(name) {
-        let cookie = {};
-        document.cookie.split(';').forEach(function (el) {
-            let [k, v] = el.split('=');
-            cookie[k.trim()] = v;
-        });
-        return cookie[name];
-    }
 
     static Upload(file) {
         const CLOUD_NAME = 'com-codegym';
-        const UPLOAD_API = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload/`;
+        // const UPLOAD_API = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload/`;
+        const UPLOAD_API = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
         const formData = new FormData();
         formData.append('file', file);
-        // formData.append("upload_preset", "a09ikbyc");
-        formData.append('upload_preset', 'vgaqpgya');
-        // let cookie = this.getCookie('JWT');
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
-        return axios.post(UPLOAD_API, formData, {
-            'Access-Control-Allow-Origin': '*'
-          });
+        formData.append('upload_preset', 'tspzhjsu');
+        delete axios.defaults.headers.common["Authorization"];
+        return axios.post(UPLOAD_API, formData);
     }
 
     static destroy(filepath) {
@@ -40,13 +29,8 @@ class FileService {
         formData.append('signature', signature);
         formData.append('api_key', api_key);
         formData.append('timestamp', timestamp);
-        let cookie = this.getCookie('JWT');
-        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
-        return axios.post(DESTROY_API, formData, {
-            headers: {
-                'access-control-allow-headers': '*',
-            },
-        });
+        delete axios.defaults.headers.common["Authorization"];
+        return axios.post(DESTROY_API, formData);
     }
 }
 

@@ -18,7 +18,7 @@ function SidebarComponent() {
             <div id="collapseTwo" className="collapse" {...getCollapseProps()}>
                 <div className="bg-white py-2 collapse-inner rounded" style={{padding: '5px'}}>
                     <FontAwesomeIcon icon={faProductHunt} style={{marginRight: '5px'}} />
-                    <Link to="/list-product">Danh sách</Link>
+                    <Link to="/list-product">Sản phẩm</Link>
                     <br />
                     <FontAwesomeIcon icon={faCaretDown} style={{marginRight: '5px'}} />
                     <Link to="/dashboard/category">Thể loại</Link>

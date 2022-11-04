@@ -4,8 +4,10 @@ import ProductMediaService from '../../../services/ProductImageService';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Moment from 'moment';
 
 function ModalDetailProduct(props) {
+    Moment.locale('vi');
     const { product, showdetail, handleCloseDetail, productIdDetail } = props;
     const [imageProduct, setImageProduct] = useState([
         {
@@ -57,7 +59,7 @@ function ModalDetailProduct(props) {
                         </div>
                         <div className="row">
                             <h5 className="col-sm-6">Ngày Tạo:</h5>
-                            <p className="col-sm-6">{product.createdAt}</p>
+                            <p className="col-sm-6">{Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}</p>
                         </div>
                         <div className="row">
                             <h5 className="col-sm-6">Người tạo:</h5>
@@ -65,7 +67,7 @@ function ModalDetailProduct(props) {
                         </div>
                         <div className="row">
                             <h5 className="col-sm-6">Ngày Sửa Đổi Gần Nhất:</h5>
-                            <p className="col-sm-6">{product.updateAt}</p>
+                            <p className="col-sm-6">{Moment(product.updateAt).format('DD-MM-yyyy hh:mm:ss')}</p>
                         </div>
                         <div className="row">
                             <h5 className="col-sm-6">Người Sửa Đổi:</h5>
