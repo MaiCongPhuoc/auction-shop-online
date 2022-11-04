@@ -121,7 +121,7 @@ function ModalEditCategory(props) {
                                     name="title"
                                     id="addTitle"
                                     placeholder="Vui lòng nhập tên sản phẩm..."
-                                    value={formik.values.title || categorys.title}
+                                    value={formik.values.title || categorys.title || ''}
                                     onChange={formik.handleChange}
                                 />
                             </div>

@@ -58,10 +58,12 @@ function ModalEditProduct(props) {
     useEffect(() => {
         if (flag) {
             try {
-                async function postData(accountFrm) {
+                async function postData() {
                     await AccountService.getEditAccount(accountFrm, accountEditId);
                 }
-                postData(accountFrm);
+                postData();
+                handleReset();
+                flag = false;
             } catch (error) {
                 console.log(error);
             }
@@ -213,7 +215,6 @@ function ModalEditProduct(props) {
             account.locationRegion.wardName = currentWard;
             console.log('account: ', account);
             setAccountFrm({ ...account });
-            handleReset();
             notify();
         },
     });

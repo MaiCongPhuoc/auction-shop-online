@@ -33,14 +33,17 @@ function ModalAddCategory(props) {
         title: '',
     });
     useEffect(() => {
-        try {
-            async function postData() {
-                let createRes = await CategoryService.addCategory(submitFrm);
+        if (flag) {
+            try {
+                async function postData() {
+                    let createRes = await CategoryService.addCategory(submitFrm);
+                }
+                postData(submitFrm);
+                setCategory({ ...category, loading: false });
+                flag = false;
+            } catch (error) {
+                console.log(error);
             }
-            postData(submitFrm);
-            setCategory({ ...category, loading: false });
-        } catch (error) {
-            console.log(error);
         }
     }, [submitFrm]);
     const handleReset = () => {
@@ -76,6 +79,7 @@ function ModalAddCategory(props) {
         onSubmit: (product) => {
             setSubmitFrm(product);
             handleReset();
+            flag = true;
         },
     });
 

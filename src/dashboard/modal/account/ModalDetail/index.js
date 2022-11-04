@@ -6,6 +6,7 @@ import AccountService from '../../../services/AccountService';
 function ModalDetail(props) {
     Moment.locale('vi');
     const { accountId, showDetail, onCloseDetailAccount } = props;
+    console.log('accountId: ', accountId);
     const [accountDetail, setAccountDetail] = useState({});
     useEffect(() => {
         if (accountId !== 0 && accountId !== undefined) {

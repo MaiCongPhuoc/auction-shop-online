@@ -86,6 +86,9 @@ function ModalAddProduct(props) {
             setCategory({ ...categorys, errorMessage: error.message, loading: false });
         }
     }, []);
+
+    //here
+
     useEffect(() => {
         if (flag) {
             try {
@@ -96,19 +99,6 @@ function ModalAddProduct(props) {
                     console.log('createRes: ', createRes);
                 }
                 postData(submitFrm);
-                // async function saveAvatar() {
-                //     for (let i = 0; i < listImg.length; i++) {
-                //         console.log("here");
-                //         let img = {
-                //             id: 0,
-                //             fileUrl: listImg[i],
-                //         };
-
-                //         await ProductMediaService.AddMedia(img);
-                //     }
-                //     listImg = [];
-                // }
-                // saveAvatar();
                 notify();
                 setCategory({ ...category, loading: false });
             } catch (error) {
@@ -146,6 +136,7 @@ function ModalAddProduct(props) {
             },
             description: '',
             countday: '0',
+            cheatMoney: 0,
             images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
             createdBy: '',
         },
@@ -157,9 +148,8 @@ function ModalAddProduct(props) {
                 .required('Bạn phải nhập tên sản phẩm vào!'),
             price: yup
                 .number('Vui lòng nhập số!')
-                .min(10000, 'Vui lòng nhập giá trên 10.000 đ')
-                .max(999900000, 'Vui lòng nhập giá dưới 1.000.000.000 đ!')
-                .required('Vui lòng nhập giá!'),
+                .required('Vui lòng nhập giá!')
+                .moreThan(99999, 'Sản phẩm có giá nhỏ nhất là: 100.000'),
             estimatePrice: yup.number('Vui lòng nhập số!'),
             // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
             // .max(999900000, 'Vui lòng nhập giá ước tính dưới 999900000 VNĐ!'),
@@ -168,12 +158,16 @@ function ModalAddProduct(props) {
                 ? null
                 : yup
                       .number('Vui lòng nhập số!')
-                      .min(1, 'Số lượng tối thiểu là 1!')
-                      .max(200, 'Số lượng tối đa là 200!')
-                      .required('Vui lòng nhập số lượng!'),
+                      .required('Vui lòng nhập số lượng!')
+                      .moreThan(9, 'Số lượng nhỏ nhất là 10')
+                      .lessThan(199, 'Số lượng lớn nhất là 200'),
             action: yup.string(),
             image: yup.mixed(),
-            description: yup.string().required('Vui lòng nhập mô tả!'),
+            description: yup.string(),
+            cheatMoney: yup
+                .number()
+                .required('vui lòng nhập tiền quỵ')
+                .moreThan(499999, 'Tiền quỵ nhỏ nhất là 500.000'),
         }),
         onSubmit: (product) => {
             product.createdBy = account.email;
@@ -234,6 +228,9 @@ function ModalAddProduct(props) {
                                 )}
                                 {formik.errors.estimatePrice && formik.touched.estimatePrice && (
                                     <li className="error">{formik.errors.estimatePrice}</li>
+                                )}
+                                {formik.errors.cheatMoney && formik.touched.cheatMoney && (
+                                    <li className="error">{formik.errors.cheatMoney}</li>
                                 )}
                             </ul>
                         </div>
@@ -465,7 +462,7 @@ function ModalAddProduct(props) {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="mb-3 col-12">
+                                <div className="mb-3 col-6">
                                     <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                         Ảnh{' '}
                                     </label>
@@ -479,18 +476,34 @@ function ModalAddProduct(props) {
                                         placeholder="Vui lòng chọn file..."
                                         onInput={handleUpload}
                                     />
-                                    <div className="row d-flex justify-content-around">
-                                        {listImg.map((image, index) => (
-                                            <div className="col-3 imgAdd" key={index} style={{ height: '200px' }}>
-                                                <img
-                                                    src={image}
-                                                    alt=""
-                                                    onClick={() => document.querySelector('#image').click()}
-                                                    className="imgproduct"
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
+                                </div>
+                                <div className="mb-3 col-6">
+                                    <label htmlFor="cheatMoney" className="form-label text-dark font-weight-bold ml-2">
+                                        Tiền quỵ:
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        value={formik.values.cheatMoney}
+                                        onChange={formik.handleChange}
+                                        name="cheatMoney"
+                                        id="cheatMoney"
+                                        placeholder="Vui lòng nhập số lượng..."
+                                    />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="row d-flex justify-content-around">
+                                    {listImg.map((image, index) => (
+                                        <div className="col-3 imgAdd" key={index} style={{ height: '200px' }}>
+                                            <img
+                                                src={image}
+                                                alt=""
+                                                onClick={() => document.querySelector('#image').click()}
+                                                className="imgproduct"
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                             <div className="row">
