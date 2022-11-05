@@ -99,7 +99,7 @@ function MyNotification({ orderDetails }) {
             console.log("Err:", error);
         }
     };
-console.log("ỏdẻ:", orderDetails);
+    console.log("ỏdẻ:", orderDetails);
     return (
         <>
             <div id="show-list-my-order-detail">
@@ -196,6 +196,18 @@ console.log("ỏdẻ:", orderDetails);
                                                 </div>
                                             </div>
                                         </div>
+                                        {orderDetail.order.description.length > 0 ? (
+                                            <div className="action-group">
+                                                <div className="ms-3 action-item fw-bold" style={{ color: '#ff523d' }}>
+                                                    Lời nhắn
+                                                </div>
+                                                <div className="action-item col-9" style={{ display: 'flex' }}>
+                                                    <div>
+                                                        {orderDetail.order.description}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : null}
                                     </div>
                                 </>
                             )) : <EmptyOrder />
