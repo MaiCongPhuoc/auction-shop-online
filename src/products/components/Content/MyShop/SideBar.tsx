@@ -116,8 +116,8 @@ export default function MiniDrawer({ orderDetails }) {
   };
 
   const handleChangeMenu = (text: String) => {
-      dispatch(setMenu(text));
-  };  
+    dispatch(setMenu(text));
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -152,6 +152,7 @@ export default function MiniDrawer({ orderDetails }) {
           {['myProduct', 'myNotification'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }} onClick={() => handleChangeMenu(text)}>
               <ListItemButton
+                id={`hover-left-bar-${text}`}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -165,9 +166,9 @@ export default function MiniDrawer({ orderDetails }) {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon data-tip="Sản phẩm" style={menu === 'myProduct' ? {color: '#ff523d'} : {}} /> :
+                  {index % 2 === 0 ? <InboxIcon data-tip="Sản phẩm" style={menu === 'myProduct' ? { color: '#ff523d' } : {}} /> :
                     <>
-                      <MailIcon data-tip="Thông báo" style={menu === 'myNotification' ? {color: '#ff523d'} : {}} />
+                      <MailIcon style={menu === 'myNotification' ? { color: '#ff523d' } : {}} />
                       <span className='notifi-dot'
                         style={{
                           textAlign: 'center',
@@ -183,7 +184,7 @@ export default function MiniDrawer({ orderDetails }) {
                           top: '2px',
                         }}
                       >
-                        <span style={{lineHeight: '18px', padding: '3px', fontSize: '12px'}}>
+                        <span style={{ lineHeight: '18px', padding: '3px', fontSize: '12px' }}>
                           {orderDetails.length}
                         </span>
                       </span>
