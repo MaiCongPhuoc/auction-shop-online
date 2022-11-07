@@ -51,6 +51,29 @@ const BuyComponent = ({ product }) => {
             progress: undefined,
             theme: 'colored',
         });
+    const notifyWarnMessWl = (watchListMess) =>
+        toast.warn(`${watchListMess}`, {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
+
+    const notifyInfo = (text) =>
+        toast.info(`Đã thêm ${text} vào danh sách yêu thích`, {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
 
     useEffect(() => {
         setLoadCheckWatchList(true);
@@ -143,9 +166,31 @@ const BuyComponent = ({ product }) => {
             async function addWatchList() {
                 WatchListsService.addWatchList(account.id, product).then((res) => {
                     setCheckWatchList(true);
-                    dispatch(setReloadWatchList(!reloadWatchList))
-                    toast.info(`Đã thêm ${product.title} vào danh sách yêu thích`)
+                    dispatch(setReloadWatchList(!reloadWatchList));
+                    notifyInfo(product.title);
+                    // toast.info(`Đã thêm ${product.title} vào danh sách yêu thích`)
                 }).catch((err) => {
+                    if (err.response.data) {
+                        toast.error(err.response.data);
+                    }
+                });
+            }
+            addWatchList();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleRemoveWatchList = (product) => {
+        try {
+            async function addWatchList() {
+                WatchListsService.removeWatchList(account.id, product).then((res) => {
+                    setCheckWatchList(false);
+                    dispatch(setReloadWatchList(!reloadWatchList));
+                    notifyWarnMessWl(`Đã xóa ${product.title} khỏi danh sách yêu thích`);
+                    // toast.info(`Đã thêm ${product.title} vào danh sách yêu thích`)
+                }).catch((err) => {
+                    console.log(err);
                     if (err.response.data) {
                         toast.error(err.response.data);
                     }
@@ -244,7 +289,7 @@ const BuyComponent = ({ product }) => {
                             <>
                                 {checkWatchList ? (
                                     <div className="watcher-btn text-center" style={{ width: 'auto' }}
-                                    // onClick={() => handleAddWatchList(product)}
+                                        onClick={() => handleRemoveWatchList(product)}
                                     >
                                         <div className="relative-wrapper watch-wrapper btn">
                                             <div className="watching-favorite" style={{ color: 'red', fontStyle: 'normal', display: 'block !important' }}>
