@@ -42,6 +42,7 @@ export const UPDATE_STATUS = ALL_ORDERS_DETAIL + '/update-status';
 // Watch list
 export const WATCH_LISTS = 'http://localhost:8080/api/watch-lists';
 export const ADD_WATCH_LISTS = WATCH_LISTS + '/add';
+export const REMOVE_WATCH_LISTS = WATCH_LISTS + '/remove';
 export const CHECK_WATCH_LISTS = WATCH_LISTS + '/check';
 
 // Login

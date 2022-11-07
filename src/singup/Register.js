@@ -24,10 +24,7 @@ const Register = () => {
             <br />
             <br />
             <br />
-            <br />
-            <br />
-            <br />
-            <Footer />
+            {/* <Footer /> */}
         </Provider>
     );
 };

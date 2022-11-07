@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import ProductService from './../../../service/Product/ProductService';
-import CategoriesService from './../../../service/Categories/CategoriesService';
+import React, { useState } from 'react';
+import { FormatMoney } from '../../../Hooks/Hooks';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProduct, setShowInfoProduct } from '../../../redux/actions';
+import { getLoadData, getWatchLists } from '../../../redux/selector';
 import LoadData from '../../Loading/LoadData';
-import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { getAccount, getAllProducts, getLoadData, getWatchLists } from '../../../redux/selector';
-import { setShowInfoProduct, setProduct } from '../../../redux/actions';
-import { FormatMoney } from './../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
+import { useEffect } from 'react';
 
-const ContentAll = () => {
+const Posts = ({ products, loading }) => {
     const dispatch = useDispatch();
-    // const [watchLists, setWatchLists] = useState([]);
-
-    const account = useSelector(getAccount);
     const [watchLists, setWatchLists] = useState([]);
+
+    // debugger;
+    const handleShowInfoProduct = (product) => {
+        dispatch(setShowInfoProduct(true));
+        dispatch(setProduct(product));
+    };
 
     const currentWatchLists = useSelector(getWatchLists);
 
@@ -30,14 +31,7 @@ const ContentAll = () => {
         checkWatchList();
     }, [currentWatchLists]);
 
-    const handleShowInfoProduct = (product) => {
-        dispatch(setShowInfoProduct(true));
-        dispatch(setProduct(product));
-    };
-
-    const products = useSelector(getAllProducts);
     const loadData = useSelector(getLoadData);
-
     return (
         <div className="lot-cards grid-x grid-margin-x">
             {loadData ? (
@@ -57,11 +51,16 @@ const ContentAll = () => {
 
                                     {watchLists.forEach((item) => (
                                         <div key={item.id} className="add-to-watchlist">
-                                            {item.product.id === product.id ? (
-                                                <span className="ico-circle" ico_action="fav">
-                                                    <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
-                                                </span>
-                                            ) : null}
+                                            {
+                                                item.product.id === product.id ? (
+                                                    <span className="ico-circle" ico_action="fav">
+                                                        <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                    </span>
+                                                ) : null
+                                                // <span className="ico-circle" ico_action="fav">
+                                                //     <i className="fa-regular fa-heart"></i>
+                                                // </span>
+                                            }
                                         </div>
                                     ))}
                                 </figure>
@@ -107,12 +106,16 @@ const ContentAll = () => {
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
                                     {watchLists.map((item) => (
                                         <div key={item.id} className="add-to-watchlist">
-                                            {item.product.id === product.id ? (
-                                                <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
-                                                    <ReactTooltip />
-                                                    <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
-                                                </span>
-                                            ) : null}
+                                            {
+                                                item.product.id === product.id ? (
+                                                    <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
+                                                        <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                    </span>
+                                                ) : null
+                                                // <span className="ico-circle" ico_action="fav">
+                                                //     <i className="fa-regular fa-heart"></i>
+                                                // </span>
+                                            }
                                         </div>
                                     ))}
                                 </figure>
@@ -154,4 +157,4 @@ const ContentAll = () => {
     );
 };
 
-export default ContentAll;
+export default Posts;

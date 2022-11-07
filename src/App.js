@@ -24,6 +24,7 @@ import NotFound from './NotFound';
 import Contact from './contact/Contact.js';
 import ShowOrderDetail from './products/components/Content/OrderDetail';
 import ShowMyShop from './products/components/Content/MyShop';
+import PagingProducts from './products/components/Content/ContentAll/index';
 
 // export default App;
 
@@ -91,6 +92,9 @@ function App() {
             </Route>
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
                 <Route path="/contact" element={<Contact />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+                <Route path="/page-product" element={<PagingProducts />} />
             </Route>
         </Routes>
         // </Router>

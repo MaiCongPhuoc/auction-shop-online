@@ -55,7 +55,7 @@ const Contact = () => {
                         ></iframe>
                     </div>
                 </section>
-                <section id="form-details" className="row">
+                {/* <section id="form-details" className="row">
                     <form action="" className="col-sm-12 col-md-8 col-lg-7">
                         <span>ĐÓNG GÓP Ý KIẾN</span>
                         <h2>Gửi phản hồi cho chúng tôi! </h2>
@@ -90,7 +90,7 @@ const Contact = () => {
                             </p>
                         </div>
                     </div>
-                </section>
+                </section> */}
                 <Footer />
             </div>
         </Provider>
