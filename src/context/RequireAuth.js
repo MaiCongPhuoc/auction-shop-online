@@ -20,6 +20,7 @@ const RequireAuth = ({ allowedRoles }) => {
     const token = getCookie('JWT');
     const decoded = jwt_decode(token);
     const account = useSelector(getAccount);
+    console.log('account: ', account);
     if (Object.keys(account).length === 0) {
         async function getAccoun() {
             let account = await AccountService.getEmail(decoded.sub);
@@ -31,12 +32,6 @@ const RequireAuth = ({ allowedRoles }) => {
 
     const location = useLocation();
     return (
-        // auth?.roles?.find(role => allowedRoles?.includes(role.authority))
-        // ? <Outlet />
-        // : account
-        //     ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-        //     : <Navigate to="/login" state={{ from: location }} replace />
-        // <Outlet />
         decoded.role.find((role) => allowedRoles?.includes(role.authority)) ? (
             <Outlet />
         ) : (
