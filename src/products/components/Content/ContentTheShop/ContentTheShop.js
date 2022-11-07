@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getLoadData, getProductsAction, getWatchLists } from "../../../redux/selector";
-import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
+import { getLoadData, getProductsAction, getWatchLists } from '../../../redux/selector';
+import { setLoadData, setShowInfoProduct } from '../../../redux/actions';
 import LoadData from './../../Loading/LoadData';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import { setProduct } from './../../../redux/actions';
@@ -20,7 +20,7 @@ const ContentTheShop = () => {
                 setWatchLists(currentWatchLists);
                 return;
             } else {
-                console.log("watch list", currentWatchLists.length);
+                console.log('watch list', currentWatchLists.length);
             }
         }
         checkWatchList();
@@ -29,7 +29,6 @@ const ContentTheShop = () => {
     useEffect(() => {
         try {
             dispatch(setLoadData(false));
-
         } catch (error) {
             console.log(error);
         }
@@ -45,26 +44,30 @@ const ContentTheShop = () => {
     // dispatch(setLoadData(false));
 
     const loadData = useSelector(getLoadData);
-    console.log("watch list", watchLists);
-
+    console.log('watch list', watchLists);
 
     return (
         <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? <LoadData /> :
-                productsAuction.map(product => (
-                    <div className="card small-12 medium-6 cell" onClick={() => handleShowInfoProduct(product)} style={{ transform: 'none' }} key={product.id}>
+            {loadData ? (
+                <LoadData />
+            ) : (
+                productsAuction.map((product) => (
+                    <div
+                        className="card small-12 medium-6 cell"
+                        onClick={() => handleShowInfoProduct(product)}
+                        style={{ transform: 'none' }}
+                        key={product.id}
+                    >
                         <Link to={`/product/the-shop/${product.slug}`} style={{ color: '#333' }}>
                             <figure className="card__image">
                                 <img src={product.image} alt="" style={{ transform: 'none' }} />
                                 {watchLists.forEach((item) => (
                                     <div key={item.id} className="add-to-watchlist">
-                                        {(item.product.id === product.id) ? (
+                                        {item.product.id === product.id ? (
                                             <span className="ico-circle" ico_action="fav">
                                                 <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
                                             </span>
-                                        ) : (
-                                            null
-                                        )}
+                                        ) : null}
                                     </div>
                                 ))}
                             </figure>
@@ -74,7 +77,6 @@ const ContentTheShop = () => {
                                         <i className="fas fa-tag"></i>
                                     </span>
                                     <span className="label__main"> Cửa hàng </span>
-
                                 </div>
                                 <h3 className="card__title">
                                     <span>{product.title}</span>
@@ -91,8 +93,7 @@ const ContentTheShop = () => {
                                     </div>
                                     <div className="ItemCard-module__marketPrice___3E7JK">
                                         <b>Đã bán: </b>
-                                        <span className="ItemCard-module__lineThrough___3xq25">100
-                                        </span>
+                                        <span className="ItemCard-module__lineThrough___3xq25">100</span>
                                     </div>
                                 </div>
                                 <div className="card__tertiary-container">
@@ -101,12 +102,10 @@ const ContentTheShop = () => {
                             </div>
                         </Link>
                     </div>
-
-                ))}
-
-
+                ))
+            )}
         </div>
     );
-}
+};
 
 export default ContentTheShop;

@@ -52,6 +52,7 @@ function BangTaiKhoan() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi xóa',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function daleteAcount() {
@@ -71,6 +72,7 @@ function BangTaiKhoan() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi muốn khóa',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function daleteAcount() {
@@ -90,6 +92,7 @@ function BangTaiKhoan() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi muốn mở khóa',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function daleteAcount() {
@@ -486,7 +489,11 @@ function BangTaiKhoan() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showPrevPage}
                                             >
@@ -496,7 +503,11 @@ function BangTaiKhoan() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showFirstPage}
                                             >
@@ -506,7 +517,11 @@ function BangTaiKhoan() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showNextPage}
                                             >
@@ -516,7 +531,11 @@ function BangTaiKhoan() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showLastPage}
                                             >

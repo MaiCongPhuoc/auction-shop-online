@@ -84,6 +84,7 @@ function BangSanPham() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi xóa nó',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function deleteProduct(id) {
@@ -223,7 +224,7 @@ function BangSanPham() {
                 totalPages: dataTable.data.totalPages,
                 totalElements: dataTable.data.totalElements,
                 currentPage: dataTable.data.number + 1,
-                search: ''
+                search: '',
             });
         }
         getDataTable();
@@ -508,7 +509,11 @@ function BangSanPham() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showPrevPage}
                                             >
@@ -518,7 +523,11 @@ function BangSanPham() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showFirstPage}
                                             >
@@ -528,7 +537,11 @@ function BangSanPham() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showNextPage}
                                             >
@@ -538,7 +551,11 @@ function BangSanPham() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showLastPage}
                                             >

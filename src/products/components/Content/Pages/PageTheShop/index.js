@@ -10,6 +10,7 @@ function ShowPageTheShop() {
         <Provider store={store}>
             <Header className="product-client" />
             <PageTheShop />
+            <Footer />
         </Provider>
     );
 }
