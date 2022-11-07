@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GoogleAndFacebook from './GoogleAndFacebook';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import './asset/css/content.css';
@@ -103,7 +103,7 @@ const ContentLogin = () => {
                                     <div className="loginNav">
                                         <h1>Đăng nhập tài khoản của bạn để trải nghiệm!</h1>
                                     </div>
-
+                                    <br />
                                     {/* <form onSubmit={loginHandler} readOnly> */}
                                     <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                                         <div className="frmError">
@@ -150,13 +150,12 @@ const ContentLogin = () => {
                                         </button>
                                         <br />
                                         <br />
-                                        <GoogleAndFacebook />
-                                        <div className="loginFooter">
-                                            {/* <button className="forgetPass" onClick={forgetPass}>
-                                                Quên Mật Khẩu?
-                                            </button> */}
-                                            <button className="forgetPass">Quên Mật Khẩu?</button>
-                                        </div>
+                                        {/* <GoogleAndFacebook /> */}
+                                        {/* <div className="loginFooter">
+                                            <p className="forgot-password">
+                                                <a href="/forgot"> Quên Mật Khẩu?</a>
+                                            </p>
+                                        </div> */}
                                     </form>
                                 </div>
                             </div>

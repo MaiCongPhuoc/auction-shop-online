@@ -13,6 +13,7 @@ import AdminInfo from './../../../../dashboard/Layout/Header/adminInfo/AdminInfo
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { width } from '@mui/system';
 import Notification from '../Notification/Notification.js';
+import ClientInfo from './../ClientInfo/ClientInfo';
 
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
@@ -55,7 +56,13 @@ const HeaderAfterLogin = () => {
                     <FontAwesomeIcon icon={faPlus} className="pr-2" />
                     Add product
                 </a> */}
-                <a title="Thêm mới" type="button" className="btn btn-success" style={{width: '180px'}} onClick={handleShowModalAddProduct}>
+                <a
+                    title="Thêm mới"
+                    type="button"
+                    className="btn btn-success"
+                    style={{ width: '180px' }}
+                    onClick={handleShowModalAddProduct}
+                >
                     <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Tạo sản phẩm
                 </a>
             </div>
@@ -119,7 +126,7 @@ const HeaderAfterLogin = () => {
                     </div>
                 </div>
             </div>
-            <AdminInfo />
+            <ClientInfo />
             <ModalAdd />
             <ToastContainer autoClose={1500} />
         </div>

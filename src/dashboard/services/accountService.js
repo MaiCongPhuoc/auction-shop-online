@@ -12,10 +12,10 @@ import {
     ROLES_URL,
     UNLOCKACCOUNT_URL,
     WARD_URL,
+    EDIT_PASSWORD_ACCOUNT_URL,
 } from './Commom';
 
 class AccountService {
-
     static getCookie(name) {
         let cookie = {};
         document.cookie.split(';').forEach(function (el) {
@@ -53,7 +53,7 @@ class AccountService {
     static getDeleteAccount(accountId) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.headers.post['Content-Type'] ='application/json';
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.patch(`${DELETEACCOUNT_URL}/${accountId}`);
     }
@@ -88,6 +88,11 @@ class AccountService {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${WARD_URL}/${idDistrict}`);
+    }
+    static editPasswordAccount(account, accountId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios.put(`${EDIT_PASSWORD_ACCOUNT_URL}/${accountId}`, account);
     }
 }
 

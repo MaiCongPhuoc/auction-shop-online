@@ -90,7 +90,6 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
                 <Route path="/contact" element={<Contact />} />
             </Route>
-            
         </Routes>
         // </Router>
     );

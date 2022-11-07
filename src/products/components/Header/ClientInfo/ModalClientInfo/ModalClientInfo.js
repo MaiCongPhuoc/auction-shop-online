@@ -1,7 +1,7 @@
 import { Button, Modal } from 'react-bootstrap';
 import Moment from 'moment';
 import { useEffect, useState } from 'react';
-import AccountService from '../../../../services/AccountService';
+import AccountService from '../../../../../dashboard/services/AccountService';
 
 function ModalDetail(props) {
     Moment.locale('vi');

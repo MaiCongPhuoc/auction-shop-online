@@ -40,3 +40,6 @@ export const BARCHART_URL = 'http://localhost:8080/api/orders-detail/chart';
 
 export const REGISTER_URL = 'http://localhost:8080/api/auth/register';
 export const LOGIN_URL = 'http://localhost:8080/api/auth/login';
+
+// edit-password
+export const EDIT_PASSWORD_ACCOUNT_URL = 'http://localhost:8080/api/accounts/update/password';
