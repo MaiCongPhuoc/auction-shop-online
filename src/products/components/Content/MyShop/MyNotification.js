@@ -173,7 +173,7 @@ function MyNotification() {
     };
 
     const handleChangDate = (value) => {
-        setCompletedLists(getCompletedListsBetween(completedLists, value[0], value[1]));
+        setCompletedLists(getCompletedListsBetween(completedLists, "02/11/2022", "04/11/2022"));
     };
     
     console.log("statusId: ", status.id);
@@ -188,8 +188,8 @@ function MyNotification() {
             <div id="show-list-my-order-detail">
                 <div className="container text-center">
                     <div className="filter-order-detail">
-                        {typeLists.map((item) => (
-                            <div key={item} className="col-3" onClick={() => handleChangeTypeList(item)}>
+                        {typeLists.map((item, index) => (
+                            <div key={index} className="col-3" onClick={() => handleChangeTypeList(item)}>
                                 <div className="fw-bold col-12 filter-item-order-detail" style={item === typeList ? { textDecorationLine: 'underline', color: '#0068b8' } : null}>
                                     {item === 'waitingList' ? `Đơn hàng đang chờ (${waitingLists.length})` : (item === 'confirm' ? `Đơn hàng đã xác nhận (${confirmLists.length})` : (item === 'completed' ? `Đơn hàng đã hoàn thành (${completedLists.length})` : `Đơn hàng đã bị hủy (${canceledLists.length})`))}
                                 </div>
@@ -207,10 +207,10 @@ function MyNotification() {
                     {typeList === 'waitingList' ?
                         waitingLists.length > 0 ?
                             waitingLists.map((orderDetail, index) => (
-                                <>
+                                <div key={index}>
                                     <div
                                         className="col-12 order-item mt-2"
-                                        key={index}
+                                        // key={index}
                                         onClick={() => handleShowInfo(orderDetail)}
                                         data-tip="Nhấn để xem thông tin đơn hàng"
                                         id={`order-detail-${orderDetail.id}`}
@@ -300,15 +300,14 @@ function MyNotification() {
                                             </div>
                                         ) : null}
                                     </div>
-                                </>
+                                </div>
                             )) : <EmptyOrder />
                         : (typeList === 'confirm' ?
                             (confirmLists.length > 0 ?
                                 confirmLists.map((orderDetail, index) => (
-                                    <>
+                                    <div key={index}>
                                         <div
                                             className="col-12 order-item mt-2"
-                                            key={index}
                                             onClick={() => handleShowInfo(orderDetail)}
                                             data-tip="Nhấn để xem thông tin đơn hàng"
                                             id={`order-detail-${orderDetail.id}`}
@@ -406,15 +405,14 @@ function MyNotification() {
                                                 </div>
                                             ) : null}
                                         </div>
-                                    </>
+                                    </div>
                                 )) : <EmptyOrder />) :
                             typeList === 'completed' ? (
                                 completedLists.length > 0 ?
                                     completedLists.map((orderDetail, index) => (
-                                        <>
+                                        <div key={index}>
                                             <div
                                                 className="col-12 order-item mt-2"
-                                                key={index}
                                                 onClick={() => handleShowInfo(orderDetail)}
                                                 data-tip="Nhấn để xem thông tin đơn hàng"
                                                 id={`order-detail-${orderDetail.id}`}
@@ -492,14 +490,13 @@ function MyNotification() {
                                                 <div className="me-2">Tổng tiền:</div>
                                                 <div className="fw-bold">10000</div>
                                             </div>
-                                        </>
+                                        </div>
                                     )) : <EmptyOrder />
                             ) : (canceledLists.length > 0 ?
                                 canceledLists.map((orderDetail, index) => (
-                                    <>
+                                    <div key={index}>
                                         <div
                                             className="col-12 order-item mt-2"
-                                            key={index}
                                             onClick={() => handleShowInfo(orderDetail)}
                                             data-tip="Nhấn để xem thông tin đơn hàng"
                                             id={`order-detail-${orderDetail.id}`}
@@ -570,7 +567,7 @@ function MyNotification() {
                                                 </div>
                                             ) : null}
                                         </div>
-                                    </>
+                                    </div>
                                 )) : <EmptyOrder />)
                         )
                     }
