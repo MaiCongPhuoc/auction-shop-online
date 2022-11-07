@@ -57,7 +57,7 @@ function ShowMyShop() {
             {menu === 'myProduct' ? (
                 (loading) ? <LoadCart /> : <MyProduct products={products}/>
             ) : (
-                (loading) ? <LoadCart /> : <MyNotification orderDetails={orderDetails}/>
+                <MyNotification />
             )}
             <ToastContainer />
         </>

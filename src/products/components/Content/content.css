@@ -220,19 +220,19 @@ a {
 }
 
 #client-content {
-  margin-top: 100px;
+    margin-top: 100px;
 }
 
 #show-list-cart-item {
-  margin-top: 150px;
+    margin-top: 150px;
 }
 
 #show-list-cart-item .row {
-  max-width: none;
+    max-width: none;
 }
 
 .cart-item {
-  transition: 0.5s;
+    transition: 0.5s;
     margin-top: 100px;
 }
 
@@ -288,12 +288,12 @@ a {
 
 /* On mouse-over, add a grey background color */
 .container-check-cart:hover input~.checkmark {
-  background-color: rgb(72, 102, 198);
+    background-color: rgb(72, 102, 198);
 }
 
 /* When the checkbox is checked, add a blue background */
 .container-check-cart input:checked~.checkmark {
-  background-color: #2196F3;
+    background-color: #2196F3;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -305,7 +305,7 @@ a {
 
 /* Show the checkmark when checked */
 .container-check-cart input:checked~.checkmark:after {
-  display: block;
+    display: block;
 }
 
 /* Style the checkmark/indicator */
@@ -333,67 +333,67 @@ a {
 /* My shop */
 .css-19z1ozs-MuiPaper-root-MuiAppBar-root,
 .css-1191obr-MuiPaper-root-MuiAppBar-root {
-  top: 136px !important;
-  background-color: #ff523d !important;
+    top: 136px !important;
+    background-color: #ff523d !important;
 }
 
 .css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
-  top: 136px !important;
+    top: 136px !important;
 }
 
 .css-i4bv87-MuiSvgIcon-root {
-  color: #1779ba;
+    color: #1779ba;
 }
 
 .css-k008qs {
-  margin-top: 150px;
+    margin-top: 150px;
 }
 
 .css-1191obr-MuiPaper-root-MuiAppBar-root {
-  z-index: 120 !important;
+    z-index: 120 !important;
 }
 
 .css-19z1ozs-MuiPaper-root-MuiAppBar-root {
-  z-index: 120 !important;
+    z-index: 120 !important;
 }
 
 .css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
-  z-index: 110 !important;
+    z-index: 110 !important;
 }
 
 .moderation-list,
 .non-moderation-list {
-  margin-left: 80px;
-  transition: 0.3s all ease-in-out;
+    margin-left: 80px;
+    transition: 0.3s all ease-in-out;
 }
 
 .moderation-item,
 .non-moderation-item {
-  margin-left: 80px;
-  transition: 0.3s all ease-in-out;
+    margin-left: 80px;
+    transition: 0.3s all ease-in-out;
 }
 
 /* My Notification */
 .order-item {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: 0.3s all ease-in-out;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
 }
 
 .order-item span,
 .order-item a span {
-  font-size: smaller;
+    font-size: smaller;
 }
 
 .order-item:hover {
-  background-color: #d9d9d9;
+    background-color: #d9d9d9;
 }
 
 /* My Order Detail */
 #show-list-my-order-detail {
-  position: relative;
-  transition: 0.3s all ease-in-out;
+    position: relative;
+    transition: 0.3s all ease-in-out;
 }
 
 /* #show-list-my-order-detail:hover .my-order-action-dropdown {
@@ -401,27 +401,68 @@ a {
 } */
 
 .my-order-action-dropdown {
-  /* position: absolute; */
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  background-color: #fff;
-  border-radius: 5px;
-  display: block;
-  z-index: 1203;
-  transition: 0.3s all ease-in-out;
+    /* position: absolute; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    display: block;
+    z-index: 1203;
+    transition: 0.3s all ease-in-out;
 }
 
-.action-group{
-  display: flex;
-  align-items: center;
-  height: 50px;
-  justify-content: space-between;
+.action-group {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    justify-content: space-between;
 }
 
-.action-item{
-  margin-right: 20px;
+.action-item {
+    margin-right: 20px;
 }
 
-.select-status{
-  padding: 0 0 0 5px;
-  border-radius: 5px;
+.select-status {
+    padding: 0 0 0 5px;
+    border-radius: 5px;
+}
+
+.filter-order-detail{
+    display: flex;
+    color: #313131;
+    cursor: pointer;
+}
+
+/* Order detail */
+.order-item-list{
+    position: relative;
+}
+.show-cancel-order{
+    position: absolute;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+    right: 0;
+    background-color: #002089;
+    height: 100%;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    opacity: 0;
+}
+.show-cancel-order:hover{
+    position: absolute;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+    right: 0;
+    background-color: #ff523d;
+    height: 100%;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    opacity: 0;
+}
+
+.rs-picker-daterange-menu {
+    top: 452.79999999999995px !important;
 }
