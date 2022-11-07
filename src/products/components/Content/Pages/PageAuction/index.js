@@ -1,8 +1,9 @@
-import React from "react";
+import React from 'react';
 import Header from './../../../Header/Header';
-import { Provider } from "react-redux";
-import store from "../../../../redux/store";
+import { Provider } from 'react-redux';
+import store from '../../../../redux/store';
 import PageAuction from './PageAuction';
+import Footer from '../../../Footer/Footer';
 
 function ShowPageAuction() {
     return (

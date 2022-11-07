@@ -6,8 +6,8 @@ function Footer() {
             <div className="containerFooter mt-5 footer">
                 <div className="row">
                     <div className="col-sm-12 col-md-6 col-lg-6 mt-4">
-                        <h2>Liên Hệ Với Chung Tôi</h2>
-                        <h3>Trụ Sở Chính</h3>
+                        <h2 style={{ textAlign: 'center' }}>Liên Hệ Với Chúng Tôi</h2>
+                        <h3 style={{ textAlign: 'center' }}>Trụ Sở Chính</h3>
                         <div>
                             <i className="fa-solid fa-map-location-dot"></i>
                             : Trung tâm Auctions Shop Online tại 28 Nguyễn Tri Phương <br />
@@ -37,7 +37,9 @@ function Footer() {
                             <i className="fa-brands fa-tiktok"></i>
                         </div>
                     </div>
-                    <p>Trung tâm CodeGym Huế @10-2022 code by HPTP</p>
+                    <p style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                        Trung tâm CodeGym Huế @10-2022 code by HPTP
+                    </p>
                 </div>
             </div>
         </>

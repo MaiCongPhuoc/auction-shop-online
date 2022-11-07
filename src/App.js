@@ -13,6 +13,7 @@ import ListCategories from './dashboard/pages/ListCategories/index';
 import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
+import RestartPassword from './RestartPassword';
 import Login from './login/Login';
 import TheShop from './products/components/Content/ProductDetail/TheShop/index';
 import Deny from './DenyPage/Deny';
@@ -38,6 +39,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Product />} />
             <Route path="/registration" element={<Register />} />
+            <Route path="/restartPassword" element={<RestartPassword />} />
             <Route path="/login" element={<Login />} />
             <Route path="/unauthorized" element={<Deny />} />
             <Route path="*" element={<NotFound />} />
@@ -90,7 +92,6 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
                 <Route path="/contact" element={<Contact />} />
             </Route>
-            
         </Routes>
         // </Router>
     );

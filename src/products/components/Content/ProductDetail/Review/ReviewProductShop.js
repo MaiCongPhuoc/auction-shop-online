@@ -8,7 +8,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { getAccount } from '../../../../redux/selector';
 import { useSelector } from 'react-redux';
-import { setRating } from './../../../../redux/actions';
 
 let flag = false;
 function ReviewsProductShop({ product }) {
@@ -17,13 +16,9 @@ function ReviewsProductShop({ product }) {
         errorMessage: '',
         reviews: [],
     });
-
     const account = useSelector(getAccount);
-
     const [rating, setRating] = useState(0);
-
     const [reloadReview, setReloadReview] = useState(false);
-
     const [submitFrm, setSubmitFrm] = useState({
         vote: '',
         review: '',
@@ -33,8 +28,10 @@ function ReviewsProductShop({ product }) {
     const handleSetRating = (int) => {
         setRating(int);
     };
-    console.log('account: ', submitFrm.account);
-
+    const { loading, reviews, errorMessage } = state;
+    const handleReset = () => {
+        formik.handleReset();
+    };
     useEffect(() => {
         try {
             setState({ ...state, loading: true });
@@ -45,7 +42,6 @@ function ReviewsProductShop({ product }) {
                     reviews: review.data,
                     loading: false,
                 });
-                console.log('goi lai');
             }
             getData();
         } catch (error) {
@@ -56,19 +52,13 @@ function ReviewsProductShop({ product }) {
             });
         }
     }, [reloadReview]);
+
     useEffect(() => {
         if (flag) {
             try {
                 console.log('form: ', submitFrm);
                 async function postData() {
                     await ReviewService.addReview(submitFrm);
-                    // let review = await ReviewService.getAllReviews();
-                    // setReloadReview(!reloadReview);
-                    // setState({
-                    //     ...state,
-                    //     reviews: review.data,
-                    //     loading: false,
-                    // });
                     setReloadReview(!reloadReview);
                     setState({ ...state, loading: false });
                 }
@@ -79,19 +69,13 @@ function ReviewsProductShop({ product }) {
             }
         }
     }, [submitFrm]);
-    const { loading, reviews, errorMessage } = state;
 
     useEffect(() => {
         setSubmitFrm({
             ...submitFrm,
             vote: rating,
-            //  review
         });
     }, [rating]);
-
-    const handleReset = () => {
-        formik.handleReset();
-    };
 
     const formik = useFormik({
         initialValues: {
@@ -109,7 +93,6 @@ function ReviewsProductShop({ product }) {
         }),
 
         onSubmit: (product) => {
-            console.log('submitFrm: ', submitFrm);
             setSubmitFrm({ ...product, vote: rating });
             handleReset();
             flag = true;

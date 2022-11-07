@@ -113,26 +113,16 @@ function ModalDetailProduct(props) {
 
                         <div className="col-md-7 ml-5">
                             <div className="row">
-                                <h5 className="col-sm-4">Title:</h5>
-                                <b className="col-sm-8">{product.title}</b>
+                                <h5 className="col-sm-5">Title:</h5>
+                                <b className="col-sm-7">{product.title}</b>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Ngày Tạo:</h5>
-                                <p className="col-sm-8">{Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}</p>
+                                <h5 className="col-sm-5">Ngày Tạo:</h5>
+                                <p className="col-sm-7">{Moment(product.createdAt).format('DD-MM-yyyy HH:mm:ss')}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-5">Người tạo:</h5>
                                 <p className="col-sm-7">{product.createdBy}</p>
-                            </div>
-                            <div className="row">
-                                <h5 className="col-sm-5">Ngày Sửa Đổi Gần Nhất</h5>
-                                <p className="col-sm-7">{product.updateAt}</p>
-                                <h5 className="col-sm-4">Ngày Sửa Đổi Gần Nhất</h5>
-                                <p className="col-sm-8">{Moment(product.updateAt).format('DD-MM-yyyy hh:mm:ss')}</p>
-                            </div>
-                            <div className="row">
-                                <h5 className="col-sm-5">Người Sửa Đổi:</h5>
-                                <p className="col-sm-7">{product.updateBy}</p>
                             </div>
                             <div className="row">
                                 <h5 className="col-sm-5">Đấu Giá / Bán</h5>
@@ -147,8 +137,8 @@ function ModalDetailProduct(props) {
                                 <p className="col-sm-7">{product.moderation ? 'Đã kiểm duyệt' : 'Chưa kiểm duyệt'}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Giá:</h5>
-                                <p className="col-sm-8">
+                                <h5 className="col-sm-5">Giá:</h5>
+                                <p className="col-sm-7">
                                     <NumericFormat
                                         value={product.price}
                                         displayType={'text'}
@@ -170,8 +160,8 @@ function ModalDetailProduct(props) {
                                 <p className="col-sm-7">{product.description}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-4">Tiền quỵ:</h5>
-                                <p className="col-sm-8">
+                                <h5 className="col-sm-5">Tiền quỵ:</h5>
+                                <p className="col-sm-7">
                                     <NumericFormat
                                         value={product.cheatMoney}
                                         displayType={'text'}
@@ -185,6 +175,9 @@ function ModalDetailProduct(props) {
                 )}
             </Modal.Body>
             <Modal.Footer>
+                <Button variant="outline-secondary" onClick={handleCloseModeration} >
+                    Đóng
+                </Button>
                 <Button variant="outline-danger" onClick={notifyDel}>
                     Xóa
                 </Button>

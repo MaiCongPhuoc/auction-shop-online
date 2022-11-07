@@ -19,6 +19,8 @@ export const LOCKACCOUNT_URL = 'http://localhost:8080/api/accounts/block';
 export const UNLOCKACCOUNT_URL = 'http://localhost:8080/api/accounts/unblock';
 export const ACCOUNTBYID_URL = 'http://localhost:8080/api/accounts/getAccount/account';
 export const DATATABLEACCOUNT_URL = 'http://localhost:8080/api/accounts/p/';
+export const ACCOUNTBYEMAIL_URL = 'http://localhost:8080/api/accounts/getAccountEmail';
+export const RESTARTPASSWORD_URL = 'http://localhost:8080/api/accounts/restartPassword';
 
 export const ROLES_URL = 'http://localhost:8080/api/roles';
 
@@ -40,3 +42,6 @@ export const BARCHART_URL = 'http://localhost:8080/api/orders-detail/chart';
 
 export const REGISTER_URL = 'http://localhost:8080/api/auth/register';
 export const LOGIN_URL = 'http://localhost:8080/api/auth/login';
+
+// edit-password
+export const EDIT_PASSWORD_ACCOUNT_URL = 'http://localhost:8080/api/accounts/update/password';

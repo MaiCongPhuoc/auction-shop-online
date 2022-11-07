@@ -1,4 +1,4 @@
-import './AdminInfo.css';
+import './ClientInfo.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useCookies } from 'react-cookie';
@@ -7,10 +7,12 @@ import { getAccount } from '../../../../products/redux/selector';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import ModalDetail from './ModalClientInfo/ModalClientInfo';
 import { loginStatus, setAccount } from '../../../../products/redux/actions';
-import ModalAccountResetPassword from './modalAccountInfo/ModalAccountResetPassword';
+import ModalClientResetPassword from './ModalClientInfo/ModalClientResetPassword';
+import ModalEditClient from './ModalClientInfo/ModalEditClient';
 
-function AdminInfo() {
+function ClientInfo() {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
     const [cookies, setCookie] = useCookies(['JWT']);
@@ -19,7 +21,7 @@ function AdminInfo() {
     const logout = () => {
         localStorage.removeItem('loginUser');
     };
-
+    // modal edit
     const hanldeCloseEditAccount = () => setShowEdit(false);
     const [showEdit, setShowEdit] = useState({
         account: {},
@@ -28,6 +30,7 @@ function AdminInfo() {
     });
     const { accountEditId, showedit } = showEdit;
 
+    //modal edit pass
     const hanldeCloseEditPasswordAccount = () => setShowEditPassword(false);
     const [showEditPassword, setShowEditPassword] = useState({
         account: {},
@@ -35,7 +38,7 @@ function AdminInfo() {
         showeditpassword: false,
     });
     const { accountEditPasswordId, showeditpassword } = showEditPassword;
-
+    // modal detail
     const [showDetail, setShowDetail] = useState({
         showdetail: false,
         accountId: 0,
@@ -46,14 +49,14 @@ function AdminInfo() {
     return (
         <>
             <div className="d-flex align-items-center me-3">
-                <div className="adminInfoGroup">
-                    <span className="ms-2 fw-bold sp-adminInfo">{account.username} </span>
+                <div className="clientInfoGroup">
+                    <span className="ms-2 fw-bold sp-clientInfo">{account.username} </span>
                     <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-black-400" />
-                    <div className="adminInfo-dropdown">
+                    <div className="clientInfo-dropdown">
                         <ul>
                             <li>
-                                {/* <button
-                                    className="btn-adminInfo"
+                                <button
+                                    className="btn-clientInfo"
                                     onClick={() =>
                                         setShowDetail({
                                             accounts: accounts,
@@ -64,9 +67,9 @@ function AdminInfo() {
                                 >
                                     <i className="fa-solid fa-user-tie"></i> Hồ sơ
                                 </button>
-                                <br /> */}
-                                {/* <button
-                                    className="btn-adminInfo"
+                                <br />
+                                <button
+                                    className="btn-clientInfo"
                                     onClick={() =>
                                         setShowEdit({
                                             accountEditId: account.id,
@@ -76,9 +79,9 @@ function AdminInfo() {
                                 >
                                     <i className="fa-solid fa-user-pen"></i> Cập nhật
                                 </button>
-                                <br /> */}
+                                <br />
                                 <button
-                                    className="btn-adminInfo"
+                                    className="btn-clientInfo"
                                     onClick={() =>
                                         setShowEditPassword({
                                             accountEditPasswordId: account.id,
@@ -90,7 +93,7 @@ function AdminInfo() {
                                 </button>
                             </li>
                             <button
-                                className="btn-adminInfo"
+                                className="btn-clientInfo"
                                 onClick={function () {
                                     Swal.fire({
                                         icon: 'warning',
@@ -99,7 +102,6 @@ function AdminInfo() {
                                         showCancelButton: true,
                                         showConfirmButton: false,
                                         denyButtonText: `Đăng xuất`,
-                                        cancelButtonText: 'Không'
                                     }).then((result) => {
                                         if (result.isDenied) {
                                             toast.success(`Đăng xuất thành công!`);
@@ -123,7 +125,18 @@ function AdminInfo() {
                     </div>
                 </div>
                 <ToastContainer autoClose={1500} />
-                <ModalAccountResetPassword
+                <ModalEditClient
+                    showEdit={showedit}
+                    accountEditId={accountEditId}
+                    onCloseEditAccount={hanldeCloseEditAccount}
+                />
+                <ModalDetail
+                    showDetail={showdetail}
+                    accountId={accountId}
+                    account={account}
+                    onCloseDetailAccount={handleCloseDetailAccount}
+                />
+                <ModalClientResetPassword
                     showEditPassword={showeditpassword}
                     accountEditPasswordId={accountEditPasswordId}
                     onCloseEditPasswordAccount={hanldeCloseEditPasswordAccount}
@@ -133,4 +146,4 @@ function AdminInfo() {
     );
 }
 
-export default AdminInfo;
+export default ClientInfo;
