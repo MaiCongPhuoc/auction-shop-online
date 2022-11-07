@@ -67,6 +67,7 @@ function ModalEditCategory(props) {
 
     const handleCloseEditProduct = () => {
         formik.handleReset();
+        handleCloseEditProduct();
         handleCloseEdit();
     };
 

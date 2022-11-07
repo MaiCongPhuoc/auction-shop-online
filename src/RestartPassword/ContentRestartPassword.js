@@ -19,16 +19,18 @@ const ContentRestartPassword = () => {
     useEffect(() => {
         if (flag && flag2) {
             async function register() {
-                await AccountService.postRestartPassword(accountFrm).then(() => {
-                    toast.success('Bạn đã đổi mật khẩu thành công!');
-                    setTimeout(() => {
-                        navigate('/login', { replace: true });
-                    }, 2000);
-                }).catch((error) => {
-                    toast.error(error.response.data.exceptionMessage);
-                    document.querySelector('#email').disabled = false;
-                    setCheckError(true);
-                });
+                await AccountService.postRestartPassword(accountFrm)
+                    .then(() => {
+                        toast.success('Bạn đã đổi mật khẩu thành công!');
+                        setTimeout(() => {
+                            navigate('/login', { replace: true });
+                        }, 2000);
+                    })
+                    .catch((error) => {
+                        toast.error(error.response.data.exceptionMessage);
+                        document.querySelector('#email').disabled = false;
+                        setCheckError(true);
+                    });
             }
             register();
             document.querySelector('#email').disabled = false;
@@ -72,7 +74,7 @@ const ContentRestartPassword = () => {
             email: yup.string().email('Vui lòng nhập đúng định dạng email!').required('Vui lòng nhập địa chỉ email!'),
             password: yup
                 .string()
-                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .min(8, 'Mật khẩu ít nhất là 8 kí tự!')
                 .max(20, 'Mật khẩu tối đa là 20 kí tự!')
                 .required('Vui lòng nhập mật khẩu!'),
             repassword: yup

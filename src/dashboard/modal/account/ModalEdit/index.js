@@ -135,6 +135,7 @@ function ModalEditProduct(props) {
     const handleReset = () => {
         document.querySelector('#image').value = '';
         formik.handleReset();
+        onCloseEditAccount();
     };
 
     const formik = useFormik({

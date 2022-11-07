@@ -25,7 +25,7 @@ const restartPassword = () => {
             <br />
             <br />
             <br />
-            <Footer />
+            {/* <Footer /> */}
         </Provider>
     );
 };

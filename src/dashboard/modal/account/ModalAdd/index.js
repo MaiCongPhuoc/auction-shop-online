@@ -135,6 +135,7 @@ function ModalDetailAccount(props) {
     const handleReset = () => {
         document.querySelector('#image').value = '';
         formik.handleReset();
+        onCloseAddAccount();
     };
 
     const handleSubmit = async () => {

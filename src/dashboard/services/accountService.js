@@ -110,11 +110,11 @@ class AccountService {
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.post(RESTARTPASSWORD_URL, account);
     }
-    
-    static editPasswordAccount(account, accountId) {
+
+    static editPasswordAccount(account) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
-        return axios.put(`${EDIT_PASSWORD_ACCOUNT_URL}/${accountId}`, account);
+        return axios.post(EDIT_PASSWORD_ACCOUNT_URL, account);
     }
 }
 

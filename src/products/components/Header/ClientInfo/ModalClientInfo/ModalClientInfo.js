@@ -13,7 +13,6 @@ function ModalDetail(props) {
                 async function getaccountDetail() {
                     let account = await AccountService.getAccountById(accountId);
                     setAccountDetail({ ...accountDetail, ...account.data });
-                    console.log('vao day');
                 }
                 getaccountDetail();
             } catch (error) {

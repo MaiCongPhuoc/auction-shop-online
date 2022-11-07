@@ -155,7 +155,9 @@ const ContentLogin = () => {
                                             {/* <button className="forgetPass" onClick={forgetPass}>
                                                 Quên Mật Khẩu?
                                             </button> */}
-                                            <Link to={'/restartPassword'} className="forgetPass">Quên Mật Khẩu?</Link>
+                                            <Link to={'/restartPassword'} className="forgetPass">
+                                                Quên Mật Khẩu?
+                                            </Link>
                                         </div>
                                     </form>
                                 </div>

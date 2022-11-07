@@ -25,7 +25,7 @@ function ModalEditClient(props) {
     const { showEdit, onCloseEditAccount, accountEditId } = props;
     const [stateImg, setStateImg] = useState(false);
     const [state, setState] = useState({
-        roles: [],
+        // roles: [],
         provinces: [],
     });
     const [accountById, setAccountById] = useState({});
@@ -43,9 +43,7 @@ function ModalEditClient(props) {
                     let role = await AccountService.getRoles();
                     let Province = await AccountService.getProvinces();
                     let accountEdit = await AccountService.getAccountById(accountEditId);
-                    // let accountEdit = await AccountService.getAccountById(accountEditId);
                     setAccountById({ ...accountEdit.data });
-                    console.log('accountEdit.data: ', accountEdit.data);
                     setState({ ...state, roles: role.data, provinces: Province.data.results });
                 }
                 getAddAccount();
@@ -126,7 +124,6 @@ function ModalEditClient(props) {
                 setStateImg(true);
                 let uploadResult = await FileService.Upload(e.target.files[0]);
                 img = uploadResult.data.url;
-                console.log(uploadResult.data);
                 setStateImg(false);
             }
         }
@@ -135,6 +132,7 @@ function ModalEditClient(props) {
     const handleReset = () => {
         document.querySelector('#image').value = '';
         formik.handleReset();
+        onCloseEditAccount();
     };
 
     const formik = useFormik({
@@ -152,9 +150,9 @@ function ModalEditClient(props) {
             repassword: '',
             blocked: accountById.blocked,
             avatar: '',
-            // role: {
-            //     id: 0,
-            // },
+            role: {
+                id: 2,
+            },
             locationRegion: {
                 id: accountById.locationRegionId,
                 provinceId: accountById.locationRegionProvinceId,
@@ -213,13 +211,13 @@ function ModalEditClient(props) {
             account.locationRegion.districtName = currentDistrict;
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
-            console.log('account: ', account);
+            console.log('account1: ', account);
             setAccountFrm({ ...account });
             notify();
         },
     });
 
-    const { roles, provinces } = state;
+    const { provinces } = state;
     const { districts, wards } = location;
     console.log('accountById: ', accountById);
     return (
@@ -244,9 +242,9 @@ function ModalEditClient(props) {
                             {formik.errors.phone && formik.errors.phone && (
                                 <li className="error">{formik.errors.phone}</li>
                             )}
-                            {formik.errors.role && formik.errors.role && (
+                            {/* {formik.errors.role && formik.errors.role && (
                                 <li className="error">{formik.errors.role}</li>
-                            )}
+                            )} */}
                             {formik.errors.districtname && formik.errors.districtname && (
                                 <li className="error">{formik.errors.districtname}</li>
                             )}
@@ -290,7 +288,7 @@ function ModalEditClient(props) {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="mb-3 col-4">
+                            <div className="mb-3 col-6">
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
                                     Tên đăng nhập:
                                 </label>
@@ -304,7 +302,7 @@ function ModalEditClient(props) {
                                     onChange={formik.handleChange}
                                 />
                             </div>
-                            <div className="col-4">
+                            <div className="col-6">
                                 <label htmlFor="addAvailable" className="form-label text-dark font-weight-bold ml-2">
                                     Số điện thoại:
                                 </label>
@@ -356,11 +354,7 @@ function ModalEditClient(props) {
                                         </option>
                                     )}
                                     {provinces.map((province) => (
-                                        <option
-                                            value={province.province_id}
-                                            key={province.province_id}
-                                            // onClick={() => handleProvince(province.id)}
-                                        >
+                                        <option value={province.province_id} key={province.province_id}>
                                             {province.province_name}
                                         </option>
                                     ))}

@@ -48,6 +48,7 @@ function ModalAddCategory(props) {
     }, [submitFrm]);
     const handleReset = () => {
         formik.handleReset();
+        handleClose();
         notify();
     };
     const formik = useFormik({
