@@ -57,16 +57,11 @@ const ContentAll = () => {
 
                                     {watchLists.forEach((item) => (
                                         <div key={item.id} className="add-to-watchlist">
-                                            {
-                                                item.product.id === product.id ? (
-                                                    <span className="ico-circle" ico_action="fav">
-                                                        <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
-                                                    </span>
-                                                ) : null
-                                                // <span className="ico-circle" ico_action="fav">
-                                                //     <i className="fa-regular fa-heart"></i>
-                                                // </span>
-                                            }
+                                            {item.product.id === product.id ? (
+                                                <span className="ico-circle" ico_action="fav">
+                                                    <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
+                                                </span>
+                                            ) : null}
                                         </div>
                                     ))}
                                 </figure>
@@ -112,17 +107,12 @@ const ContentAll = () => {
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
                                     {watchLists.map((item) => (
                                         <div key={item.id} className="add-to-watchlist">
-                                            {
-                                                item.product.id === product.id ? (
-                                                    <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
-                                                        <ReactTooltip />
-                                                        <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
-                                                    </span>
-                                                ) : null
-                                                // <span className="ico-circle" ico_action="fav">
-                                                //     <i className="fa-regular fa-heart"></i>
-                                                // </span>
-                                            }
+                                            {item.product.id === product.id ? (
+                                                <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
+                                                    <ReactTooltip />
+                                                    <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
+                                                </span>
+                                            ) : null}
                                         </div>
                                     ))}
                                 </figure>
