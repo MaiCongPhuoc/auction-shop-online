@@ -14,6 +14,7 @@ import {
     ROLES_URL,
     UNLOCKACCOUNT_URL,
     WARD_URL,
+    EDIT_PASSWORD_ACCOUNT_URL,
 } from './Commom';
 import { toast } from 'react-toastify';
 
@@ -108,6 +109,12 @@ class AccountService {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.post(RESTARTPASSWORD_URL, account);
+    }
+    
+    static editPasswordAccount(account, accountId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios.put(`${EDIT_PASSWORD_ACCOUNT_URL}/${accountId}`, account);
     }
 }
 

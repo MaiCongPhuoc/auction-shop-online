@@ -3,6 +3,7 @@ import Header from './../../../Header/Header';
 import { Provider } from 'react-redux';
 import store from '../../../../redux/store';
 import PageTheShop from './PageTheShop';
+import Footer from '../../../Footer/Footer';
 
 function ShowPageTheShop() {
     return (

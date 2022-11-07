@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import AccountService from '../../../../services/AccountService';
+import AccountService from '../../../../../dashboard/services/AccountService';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import FileService from '../../../../services/FileService';
+import FileService from '../../../../../dashboard/services/FileService';
+// import '../../modal.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 let flag = false;
 let img = 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png';
-function ModalEditAccount(props) {
+function ModalEditClient(props) {
     const notify = () =>
         toast.success('Cập nhật thành công!', {
             position: 'top-right',
@@ -21,14 +22,12 @@ function ModalEditAccount(props) {
             progress: undefined,
             theme: 'colored',
         });
-
     const { showEdit, onCloseEditAccount, accountEditId } = props;
     const [stateImg, setStateImg] = useState(false);
     const [state, setState] = useState({
         roles: [],
         provinces: [],
     });
-
     const [accountById, setAccountById] = useState({});
     const [accountFrm, setAccountFrm] = useState({});
 
@@ -44,7 +43,9 @@ function ModalEditAccount(props) {
                     let role = await AccountService.getRoles();
                     let Province = await AccountService.getProvinces();
                     let accountEdit = await AccountService.getAccountById(accountEditId);
+                    // let accountEdit = await AccountService.getAccountById(accountEditId);
                     setAccountById({ ...accountEdit.data });
+                    console.log('accountEdit.data: ', accountEdit.data);
                     setState({ ...state, roles: role.data, provinces: Province.data.results });
                 }
                 getAddAccount();
@@ -57,10 +58,12 @@ function ModalEditAccount(props) {
     useEffect(() => {
         if (flag) {
             try {
-                async function postData(accountFrm) {
+                async function postData() {
                     await AccountService.getEditAccount(accountFrm, accountEditId);
                 }
-                postData(accountFrm);
+                postData();
+                handleReset();
+                flag = false;
             } catch (error) {
                 console.log(error);
             }
@@ -123,6 +126,7 @@ function ModalEditAccount(props) {
                 setStateImg(true);
                 let uploadResult = await FileService.Upload(e.target.files[0]);
                 img = uploadResult.data.url;
+                console.log(uploadResult.data);
                 setStateImg(false);
             }
         }
@@ -148,9 +152,9 @@ function ModalEditAccount(props) {
             repassword: '',
             blocked: accountById.blocked,
             avatar: '',
-            role: {
-                id: 0,
-            },
+            // role: {
+            //     id: 0,
+            // },
             locationRegion: {
                 id: accountById.locationRegionId,
                 provinceId: accountById.locationRegionProvinceId,
@@ -167,27 +171,20 @@ function ModalEditAccount(props) {
                 .string()
                 .min(8, 'Tên của bạn tối thiểu là 8 kí tự!')
                 .max(20, 'Tên của bạn tối đa là 20 kí tự!')
-                .required('Vui lòng nhập họ và tên!'),
+                .required('Vui lòng nhập họ và tên đầy đủ!'),
             username: yup
                 .string()
                 .min(8, 'Tên đăng nhập tối thiểu là 8 kí tự!')
                 .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
                 .required('Vui lòng nhập tên đăng nhập!'),
-            email: yup.string().email('Vui lòng nhập đúng định dạng email!').required('Vui lòng nhập email!'),
+            email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập email vào!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
-            password: yup
-                .string()
-                .min(8, 'Mật khẩu tối thiểu là 8 kí tự!')
-                .max(20, 'Mật khẩu tối đa là 20 kí tự!')
-                .required('Vui lòng nhập mật khẩu!'),
-            repassword: yup
-                .string()
-                .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
-                .required('Vui lòng nhập lại mật khẩu!'),
-            role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyền hạn!') }),
-            locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Thành phố/Tỉnh!') }),
-            locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận/Huyện!') }),
-            locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Phường/Xã!') }),
+            // role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyền hạn!') }),
+            locationRegion: yup
+                .object()
+                .shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh / Thành phố!') }),
+            locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
+            locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
             locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng nhập địa chỉ!') }),
         }),
         onSubmit: (account) => {
@@ -203,11 +200,11 @@ function ModalEditAccount(props) {
             let war = document.querySelector('#ward').options.selectedIndex;
             let currentWard = document.querySelector('#ward').options[war].text;
 
-            let roleId = Number(document.querySelector('#role').value);
+            // let roleId = Number(document.querySelector('#role').value);
 
             flag = true;
             account.avatar = img;
-            account.role.id = roleId;
+            // account.role.id = roleId;
             account.blocked = accountById.blocked;
             account.locationRegion.id = accountById.locationRegion.id;
             account.locationRegion.provinceId = provinceId;
@@ -216,15 +213,15 @@ function ModalEditAccount(props) {
             account.locationRegion.districtName = currentDistrict;
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
-            // console.log('account: ', account);
+            console.log('account: ', account);
             setAccountFrm({ ...account });
-            handleReset();
             notify();
         },
     });
 
     const { roles, provinces } = state;
     const { districts, wards } = location;
+    console.log('accountById: ', accountById);
     return (
         <Modal show={showEdit} onHide={onCloseEditAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
@@ -233,18 +230,40 @@ function ModalEditAccount(props) {
             <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <Modal.Body>
                     <div className="frmError">
-                        <ul></ul>
+                        <ul>
+                            {formik.errors.fullName && formik.errors.fullName && (
+                                <li className="error">{formik.errors.fullName}</li>
+                            )}
+                            {formik.errors.email && formik.errors.email && (
+                                <li className="error">{formik.errors.email}</li>
+                            )}
+                            {formik.errors.username && formik.errors.username && (
+                                <li className="error">{formik.errors.username}</li>
+                            )}
+
+                            {formik.errors.phone && formik.errors.phone && (
+                                <li className="error">{formik.errors.phone}</li>
+                            )}
+                            {formik.errors.role && formik.errors.role && (
+                                <li className="error">{formik.errors.role}</li>
+                            )}
+                            {formik.errors.districtname && formik.errors.districtname && (
+                                <li className="error">{formik.errors.districtname}</li>
+                            )}
+                            {formik.errors.wardname && formik.errors.wardname && (
+                                <li className="error">{formik.errors.wardname}</li>
+                            )}
+                            {formik.errors.address && formik.errors.address && (
+                                <li className="error">{formik.errors.address}</li>
+                            )}
+                        </ul>
                     </div>
                     <div className="modal-body">
                         <div className="row">
-                            <div className="mb-2 col-6">
+                            <div className="mb-3 col-6">
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
                                     Tên đầy đủ:
-                                    {formik.errors.fullName && formik.errors.fullName && (
-                                        <li className="error">{formik.errors.fullName}</li>
-                                    )}
                                 </label>
-
                                 <input
                                     type="text"
                                     className="form-control"
@@ -255,12 +274,9 @@ function ModalEditAccount(props) {
                                     onChange={formik.handleChange}
                                 />
                             </div>
-                            <div className="mb-2 col-6">
+                            <div className="mb-3 col-6">
                                 <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
                                     Email:
-                                    {formik.errors.email && formik.errors.email && (
-                                        <li className="error">{formik.errors.email}</li>
-                                    )}
                                 </label>
                                 <input
                                     type="Email"
@@ -274,12 +290,9 @@ function ModalEditAccount(props) {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="mb-2 col-4">
+                            <div className="mb-3 col-4">
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
                                     Tên đăng nhập:
-                                    {formik.errors.username && formik.errors.username && (
-                                        <li className="error">{formik.errors.username}</li>
-                                    )}
                                 </label>
                                 <input
                                     type="text"
@@ -294,9 +307,6 @@ function ModalEditAccount(props) {
                             <div className="col-4">
                                 <label htmlFor="addAvailable" className="form-label text-dark font-weight-bold ml-2">
                                     Số điện thoại:
-                                    {formik.errors.phone && formik.errors.phone && (
-                                        <li className="error">{formik.errors.phone}</li>
-                                    )}
                                 </label>
                                 <input
                                     type="phone"
@@ -308,12 +318,9 @@ function ModalEditAccount(props) {
                                     placeholder="Vui lòng nhập số điện thoại..."
                                 />
                             </div>
-                            <div className="col-4">
+                            {/* <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
                                     Quyền hạn:
-                                    {formik.errors.role && formik.errors.role && (
-                                        <li className="error">{formik.errors.role}</li>
-                                    )}
                                 </label>
                                 <select
                                     className="form-select select select-bg-ori"
@@ -328,49 +335,12 @@ function ModalEditAccount(props) {
                                         </option>
                                     ))}
                                 </select>
-                            </div>
-                            <div className="mb-2 col-6">
-                                <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
-                                    Mật khẩu:
-                                    {formik.errors.password && formik.errors.password && (
-                                        <li className="error">{formik.errors.password}</li>
-                                    )}
-                                </label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Vui lòng nhập mật khẩu..."
-                                    value={formik.values.password || accountById.password}
-                                    onChange={formik.handleChange}
-                                />
-                            </div>
-                            <div className="mb-2 col-6">
-                                <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
-                                    Nhập lại mật khẩu:
-                                    {formik.errors.repassword && formik.errors.repassword && (
-                                        <li className="error">{formik.errors.repassword}</li>
-                                    )}
-                                </label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    name="repassword"
-                                    id="repassword"
-                                    placeholder="Vui lòng nhập lại mật khẩu..."
-                                    value={formik.values.repassword || accountById.repassword}
-                                    onChange={formik.handleChange}
-                                />
-                            </div>
+                            </div> */}
                         </div>
-                        <div className="row mb-2 ">
+                        <div className="row mb-3 ">
                             <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
-                                    Thành phố / tỉnh:
-                                    {formik.errors.provinceName && formik.errors.provinceName && (
-                                        <li className="error">{formik.errors.provinceName}</li>
-                                    )}
+                                    Tỉnh / Thành phố:
                                 </label>
                                 <select
                                     className="form-select select select-bg-ori"
@@ -386,7 +356,11 @@ function ModalEditAccount(props) {
                                         </option>
                                     )}
                                     {provinces.map((province) => (
-                                        <option value={province.province_id} key={province.province_id}>
+                                        <option
+                                            value={province.province_id}
+                                            key={province.province_id}
+                                            // onClick={() => handleProvince(province.id)}
+                                        >
                                             {province.province_name}
                                         </option>
                                     ))}
@@ -394,10 +368,7 @@ function ModalEditAccount(props) {
                             </div>
                             <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
-                                    Quận / huyện:
-                                    {formik.errors.districtname && formik.errors.districtname && (
-                                        <li className="error">{formik.errors.districtname}</li>
-                                    )}
+                                    Quận / Huyện:
                                 </label>
                                 <select
                                     className="form-select select select-bg-ori"
@@ -423,10 +394,7 @@ function ModalEditAccount(props) {
                             </div>
                             <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
-                                    Phường / xã:
-                                    {formik.errors.wardname && formik.errors.wardname && (
-                                        <li className="error">{formik.errors.wardname}</li>
-                                    )}
+                                    Thôn / Thị xã:
                                 </label>
                                 <select
                                     className="form-select select select-bg-ori"
@@ -452,7 +420,7 @@ function ModalEditAccount(props) {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="mb-2 col-6">
+                            <div className="mb-3 col-6">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Ảnh:
                                 </label>
@@ -467,12 +435,9 @@ function ModalEditAccount(props) {
                                     onInput={handleUpload}
                                 />
                             </div>
-                            <div className="mb-2 col-6">
+                            <div className="mb-3 col-6">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Địa chỉ:
-                                    {formik.errors.address && formik.errors.address && (
-                                        <li className="error">{formik.errors.address}</li>
-                                    )}
                                 </label>
                                 <input
                                     type="text"
@@ -480,7 +445,7 @@ function ModalEditAccount(props) {
                                     id="address"
                                     name="locationRegion.address"
                                     placeholder="Vui lòng nhập địa chỉ..."
-                                    value={formik.values.locationRegion.address || accountById.locationRegionAddress}
+                                    value={formik.values.locationRegion.address}
                                     onChange={formik.handleChange}
                                 />
                             </div>
@@ -488,7 +453,7 @@ function ModalEditAccount(props) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button type="reset" className="btn btn-primary" onClick={onCloseEditAccount}>
+                    <Button type="reset" variant="secondary w-auto" onClick={onCloseEditAccount}>
                         Đóng
                     </Button>
                     {stateImg ? (
@@ -496,7 +461,7 @@ function ModalEditAccount(props) {
                             <span className="spinner-border text-info"></span>
                         </Button>
                     ) : (
-                        <Button type="submit" className="btn btn-info">
+                        <Button type="submit" className="btn btn-primary">
                             Cập nhật
                         </Button>
                     )}
@@ -507,4 +472,4 @@ function ModalEditAccount(props) {
     );
 }
 
-export default ModalEditAccount;
+export default ModalEditClient;

@@ -11,7 +11,6 @@ import ProductService from '../../../services/productService';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccount, getShowAddProduct } from '../../../../products/redux/selector';
 import { setShowAddProduct } from '../../../../products/redux/actions';
-
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 

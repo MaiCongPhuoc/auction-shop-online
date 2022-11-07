@@ -12,22 +12,22 @@ const Contact = () => {
             <div className="contact-user">
                 <div className="mt-4">
                     <h3 className="text-center align-items-center animate-charcter">
-                        Chào mừng bạn đã ghé thăm Auctions Shop Online<br></br>
-                        <br></br>
+                        Chào mừng bạn đã ghé thăm Auctions Shop <br />
+                        <br />
                         Chúng tôi rất vui khi nghe ý kiến đóng góp của bạn!
                     </h3>
-                    <hr />
+                    {/* <hr />
                     <Penguin />
-                    <hr />
+                    <hr /> */}
                 </div>
                 <section id="contact-detail" className="row px-4">
                     <div className="details col-sm-12 col-md-6 col-lg-6">
-                        <h2>Liên Hệ Với Chung Tôi</h2>
-                        <h3>Trụ Sở Chính</h3>
+                        <h2 style={{ textAlign: 'center' }}>Liên Hệ Với Chúng Tôi</h2>
+                        <h3 style={{ textAlign: 'center' }}>Trụ Sở Chính</h3>
                         <div>
                             <li>
                                 <i className="fa-solid fa-map-location-dot"></i>
-                                <p>Trung tâm Auctions Shop Online tại 28 Nguyễn Tri Phương, phường Phú Nhuận</p>
+                                <p>Trung tâm Auctions Shop Online tại 28 Nguyễn Tri Phương, phường Phú Hội</p>
                             </li>
                             <li>
                                 <i className="fa-solid fa-envelope"></i>

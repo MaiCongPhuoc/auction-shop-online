@@ -1,10 +1,4 @@
-import {
-    faCheck,
-    faCircleInfo,
-    faClock,
-    faHeart,
-    faTag,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleInfo, faClock, faHeart, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -15,8 +9,11 @@ import AuctionService from '../../dashboard/services/AuctionService';
 import LoadData from '../../products/components/Loading/LoadData';
 import { Carousel } from '../../products/Hooks/Hooks';
 import ComponentAuction from '../ComponentAuction';
-
+import { useSelector } from 'react-redux';
+import { getProduct } from '../../products/redux/selector';
+import ReviewsProductShop from '../../products/components/Content/ProductDetail/Review/ReviewProductShop';
 function ContentAuctionDetail() {
+    const product = useSelector(getProduct);
     const { auctionId } = useParams();
     console.log('auctionId content: ', auctionId);
     const [AuctionProduct, setAuctionProduct] = useState({
@@ -297,6 +294,8 @@ function ContentAuctionDetail() {
                                                             className="watching-plus"
                                                             style={{ fontStyle: 'normal', display: 'block !important' }}
                                                         >
+                                                            import ReviewsProductShop from
+                                                            './../../products/components/Content/ProductDetail/Review/ReviewProductShop';
                                                             <FontAwesomeIcon icon={faHeart} />
                                                         </b>
                                                         <span className="watch-type Add-to-Watchlist">
@@ -375,6 +374,7 @@ function ContentAuctionDetail() {
                                             <div className="lot-description">
                                                 <p>{Product.description}</p>
                                             </div>
+                                            <ReviewsProductShop product={product} />
                                             <hr style={{ borderWidth: '1px' }} />
                                             {/* <div className="new-terms-wrapper">
                                                 <div className="new-term-item">
