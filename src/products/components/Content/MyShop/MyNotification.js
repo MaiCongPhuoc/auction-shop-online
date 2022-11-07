@@ -101,8 +101,12 @@ function MyNotification() {
     };
 
     const getCompletedListsBetween = (orderDetails, startDate, endDate) => {
+        let date1 = new Date(startDate);
+        let date2 = new Date(endDate);
+        console.log("date1: ", date1);
+        console.log("date2: ", date2);
         return orderDetails.filter((orderDetail) => {
-            return orderDetail.updatedAt >= startDate && orderDetail.updatedAt <= endDate;
+            return orderDetail.updatedAt >= date1 && orderDetail.updatedAt <= date2;
         });
     };
 
@@ -173,15 +177,15 @@ function MyNotification() {
     };
 
     const handleChangDate = (value) => {
-        setCompletedLists(getCompletedListsBetween(completedLists, "02/11/2022", "04/11/2022"));
+        setCompletedLists(getCompletedListsBetween(completedLists, value[0], value[1]));
     };
     
-    console.log("statusId: ", status.id);
-    console.log("orderDetails: ", orderDetails);
-    console.log("orderDetail: ", orderChoice);
-    console.log("changeStatus: ", changeStatus);
-    console.log('value', dateRanger);
-    console.log('completedLists', completedLists);
+    // console.log("statusId: ", status.id);
+    // console.log("orderDetails: ", orderDetails);
+    // console.log("orderDetail: ", orderChoice);
+    // console.log("changeStatus: ", changeStatus);
+    // console.log('value', dateRanger);
+    // console.log('completedLists', completedLists);
 
     return (
         <>
@@ -485,7 +489,7 @@ function MyNotification() {
                                             </div>
                                             <div className="col-12 order-item mt-5" style={{ justifyContent: 'flex-end' }}>
                                                 <div className="me-2">
-                                                    <DateRangePicker showOneCalendar format="dd-MM-yyyy" onChange={handleChangDate} />
+                                                    <DateRangePicker showOneCalendar onChange={handleChangDate} />
                                                 </div>
                                                 <div className="me-2">Tổng tiền:</div>
                                                 <div className="fw-bold">10000</div>
