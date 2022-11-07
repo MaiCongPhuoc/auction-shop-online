@@ -32,7 +32,6 @@ function Notification({ countOrder, myOrderDetails }) {
                         >
                         </span>
                     </i>
-
                     <div className="norif-Info-dropdown">
                         <ul>
                             <li>

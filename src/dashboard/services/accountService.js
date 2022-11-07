@@ -92,17 +92,17 @@ class AccountService {
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${WARD_URL}/${idDistrict}`);
     }
-    static getEmail(email) {
+    static async getEmail(email) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
-        return axios
+        return await axios
             .get(`${ACCOUNTBYEMAIL_URL}/${email}`)
             .then((res) => {
                 toast.success('Kiểm tra email thành công');
                 document.querySelector('#email').disabled = true;
             })
             .catch((error) => {
-                toast.error(error.response.data.exceptionMessage);
+                console.log('error: ', error);
             });
     }
     static postRestartPassword(account) {
@@ -110,7 +110,7 @@ class AccountService {
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.post(RESTARTPASSWORD_URL, account);
     }
-    
+
     static editPasswordAccount(account, accountId) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;

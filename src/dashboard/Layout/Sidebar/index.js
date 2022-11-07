@@ -7,11 +7,13 @@ function Sidebar() {
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             {/* Sidebar - Brand */}
             <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/dashboard">
-                <div className="sidebar-brand-icon rotate-n-15">
+                {/* <div className="sidebar-brand-icon rotate-n-15">
                     <i className="fas fa-laugh-wink" />
-                </div>
-                <div className="sidebar-brand-text mx-3">
-                    HPTP BID<sup></sup>
+                </div> */}
+                <div className="box elegant">
+                    <div className="paragraph-logo" style={{fontSize: '20px', textShadow: '-5px 5px 3px #333', color: '#d76060', fontWeight: 'bold'}}>
+                        AUCTIONS SHOP
+                    </div>
                 </div>
             </Link>
             {/* Divider */}

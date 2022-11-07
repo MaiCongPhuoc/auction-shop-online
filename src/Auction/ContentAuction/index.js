@@ -102,7 +102,7 @@ function ContentAuctionDetail() {
                         <div className="medium-7 medium-large-8 cell left-col">
                             <div className="lot-page-left">
                                 <div className="lot-title">
-                                    <h2>{Product.title}</h2>
+                                    <h2 className='text-center'>{Product.title}</h2>
                                 </div>
                                 <div className="lot-notice alert-info hide" />
                                 <div className="lot-image-showcase">
@@ -294,8 +294,6 @@ function ContentAuctionDetail() {
                                                             className="watching-plus"
                                                             style={{ fontStyle: 'normal', display: 'block !important' }}
                                                         >
-                                                            import ReviewsProductShop from
-                                                            './../../products/components/Content/ProductDetail/Review/ReviewProductShop';
                                                             <FontAwesomeIcon icon={faHeart} />
                                                         </b>
                                                         <span className="watch-type Add-to-Watchlist">
@@ -359,14 +357,14 @@ function ContentAuctionDetail() {
                                     </div>
                                     <div className="lot-tabs">
                                         <div className="lot-tab-item" tab="lot-overview">
-                                            Tổng quan
+                                            Tổng quan sản phẩm
                                         </div>
-                                        <div className="lot-tab-item" tab="lot-rules">
+                                        {/* <div className="lot-tab-item" tab="lot-rules">
                                             Điều kiện bán hàng
                                         </div>
                                         <div className="lot-tab-item" tab="lot-shipping">
                                             Giao hàng &amp; Đổi trả
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="lot-content">
                                         <div className="item lot-overview active">

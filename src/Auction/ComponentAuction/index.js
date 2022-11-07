@@ -7,7 +7,7 @@ import { isNumber } from '../../products/Hooks/Hooks';
 import ValidationQuantity from '../../products/utils/ValidationQuantity';
 import BidService from '../../dashboard/services/BidService';
 import { Link, useParams } from 'react-router-dom';
-import AuctionService from '../../dashboard/services/AuctionService';
+import AuctionService from '../../dashboard/services/AuctionService';   
 import { useSelector } from 'react-redux';
 import { getAccount } from '../../products/redux/selector';
 import { toast, ToastContainer } from 'react-toastify';
@@ -100,11 +100,12 @@ function ComponentAuction(props) {
     }, [rerender]);
 
     const handleMinAuction = () => {
-        let priceAuction = (state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed();
+        let priceAuction = Math.ceil((state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed() / 1000) * 1000;
         setPrice(priceAuction);
     };
 
     const handleBid = () => {
+        let priceAuction = Math.ceil((state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed() / 1000) * 1000;
         let bidPrice = Number(document.querySelector('#bid').value);
         if (!isNumber(bidPrice)) {
             setErrorMess('Giá phải là một số nguyên');
@@ -112,9 +113,15 @@ function ComponentAuction(props) {
         }
         if (Price < (state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12).toFixed()) {
             setCheckPrice(false);
-            setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12% đ`);
+            setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12% với giá tiền hiện tại`);
             return;
         }
+        if (bidPrice > (priceAuction + 500000)) {
+            setCheckPrice(false);
+            setErrorMess(`Giá thầu hiện tại không được quá lớn! (bé hơn 500.000 đ)`);
+            return;
+        }
+        bidPrice = Math.ceil(bidPrice / 1000) * 1000;
         let subBid = { ...bid, bidPrice: bidPrice, estimatePrice: state.bids[0].estimatePrice };
         setBid({ ...subBid });
         setRerender(true);

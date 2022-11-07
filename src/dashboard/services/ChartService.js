@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BARCHART_URL } from './Commom';
+import { BARCHART_URL, TURNOVERBYMONTH_URL } from './Commom';
 
 class ChartService {
 
@@ -16,6 +16,11 @@ class ChartService {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${BARCHART_URL}/${sYear}`);
+    }
+    static getTurnoverByMonth() {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios.get(`${TURNOVERBYMONTH_URL}`);
     }
 }
 

@@ -39,7 +39,7 @@ function ModalDetail(props) {
                                 <h5 className="col-sm-6">Tên đầy đủ:</h5>
                                 <p className="col-sm-6">{accountDetail.fullName}</p>
                             </div>
-                            <div className="row">
+                            {/* <div className="row">
                                 <h5 className="col-sm-6">Ngày Tạo:</h5>
                                 <p className="col-sm-6">
                                     {Moment(accountDetail.createdAt).format('DD-MM-yyyy hh:mm:ss')}
@@ -58,7 +58,7 @@ function ModalDetail(props) {
                             <div className="row">
                                 <h5 className="col-sm-6">Người Sửa Đổi:</h5>
                                 <p className="col-sm-6">{accountDetail.updateBy}</p>
-                            </div>
+                            </div> */}
                             <div className="row">
                                 <h5 className="col-sm-6">Tên đăng nhập:</h5>
                                 <p className="col-sm-6">{accountDetail.username}</p>
@@ -75,10 +75,10 @@ function ModalDetail(props) {
                                 <h5 className="col-sm-6">Tình trạng:</h5>
                                 <p className="col-sm-6">{accountDetail.blocked ? 'đã bị khóa' : 'chưa khóa'}</p>
                             </div>
-                            <div className="row">
+                            {/* <div className="row">
                                 <h5 className="col-sm-6">Quyền hạn:</h5>
                                 <p className="col-sm-6">{accountDetail.role.code}</p>
-                            </div>
+                            </div> */}
                             <div className="row">
                                 <h5 className="col-sm-6">Thành phố / tỉnh:</h5>
                                 <p className="col-sm-6">{accountDetail.locationRegion.provinceName}</p>
