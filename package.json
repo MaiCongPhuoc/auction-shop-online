@@ -33,6 +33,7 @@
         "formik": "^2.2.9",
         "jquery": "^3.6.1",
         "jquery.easing": "^1.4.1",
+        "jwt-decode": "^3.1.2",
         "material": "^0.4.3",
         "moment": "^2.29.4",
         "normalize.css": "^8.0.1",

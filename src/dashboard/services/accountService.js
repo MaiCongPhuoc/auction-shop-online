@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    ACCOUNTBYEMAIL_URL,
     ACCOUNTBYID_URL,
     ACCOUNT_URL,
     ADDACCOUNT_URL,
@@ -9,13 +10,14 @@ import {
     EDITACCOUNT_URL,
     LOCKACCOUNT_URL,
     PROVINCE_URL,
+    RESTARTPASSWORD_URL,
     ROLES_URL,
     UNLOCKACCOUNT_URL,
     WARD_URL,
 } from './Commom';
+import { toast } from 'react-toastify';
 
 class AccountService {
-
     static getCookie(name) {
         let cookie = {};
         document.cookie.split(';').forEach(function (el) {
@@ -53,7 +55,7 @@ class AccountService {
     static getDeleteAccount(accountId) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.headers.post['Content-Type'] ='application/json';
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.patch(`${DELETEACCOUNT_URL}/${accountId}`);
     }
@@ -88,6 +90,24 @@ class AccountService {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${WARD_URL}/${idDistrict}`);
+    }
+    static getEmail(email) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios
+            .get(`${ACCOUNTBYEMAIL_URL}/${email}`)
+            .then((res) => {
+                toast.success('Kiểm tra email thành công');
+                document.querySelector('#email').disabled = true;
+            })
+            .catch((error) => {
+                toast.error(error.response.data.exceptionMessage);
+            });
+    }
+    static postRestartPassword(account) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios.post(RESTARTPASSWORD_URL, account);
     }
 }
 

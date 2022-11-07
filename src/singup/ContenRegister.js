@@ -182,7 +182,6 @@ const ContenRegister = () => {
             let war = document.querySelector('#ward').options.selectedIndex;
             let currentWard = document.querySelector('#ward').options[war].text;
 
-            flag = true;
             account.avatar = img;
             account.locationRegion.provinceId = provinceId;
             account.locationRegion.provinceName = currentProvince;
