@@ -12,6 +12,7 @@ import ComponentAuction from '../ComponentAuction';
 import { useSelector } from 'react-redux';
 import { getProduct } from '../../products/redux/selector';
 import ReviewsProductShop from '../../products/components/Content/ProductDetail/Review/ReviewProductShop';
+import LoadCart from '../../products/components/Loading/LoadCart';
 function ContentAuctionDetail() {
     const product = useSelector(getProduct);
     const { auctionId } = useParams();
@@ -60,7 +61,7 @@ function ContentAuctionDetail() {
                 live-update-trigger
             </a>
             {loading ? (
-                <LoadData />
+                <LoadCart />
             ) : (
                 <div id="lot-body">
                     <div className="grid-x grid-margin-x" id="lot-page-redesign-2">
@@ -293,7 +294,8 @@ function ContentAuctionDetail() {
                                                         <b
                                                             className="watching-plus"
                                                             style={{ fontStyle: 'normal', display: 'block !important' }}
-                                                        >
+                                                        >import LoadCart from './../../products/components/Loading/LoadCart';
+
                                                             <FontAwesomeIcon icon={faHeart} />
                                                         </b>
                                                         <span className="watch-type Add-to-Watchlist">
@@ -366,12 +368,13 @@ function ContentAuctionDetail() {
                                             Giao hàng &amp; Đổi trả
                                         </div> */}
                                     </div>
-                                    <div className="lot-content">
+                                    <div className="lot-content ms-5">
                                         <div className="item lot-overview active">
                                             <div className="lot-donator">THÔNG TIN MÔ TẢ SẢN PHẨM</div>
                                             <div className="lot-description">
                                                 <p>{Product.description}</p>
                                             </div>
+                                            <hr/>
                                             <ReviewsProductShop product={product} />
                                             <hr style={{ borderWidth: '1px' }} />
                                             {/* <div className="new-terms-wrapper">

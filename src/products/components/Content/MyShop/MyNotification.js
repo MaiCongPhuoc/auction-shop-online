@@ -503,6 +503,7 @@ function MyNotification() {
                                                     <div className="action-group">
                                                         <div className="ms-3 action-item fw-bold" style={{ color: '#26cf8e' }}>
                                                             <i className="fa-solid fa-circle-check"></i> {orderDetail.status.name}
+                                                            <span className="ms-2">{orderDetail.updatedAt}</span>
                                                         </div>
                                                     </div>
                                                     <div className="action-group">
@@ -589,6 +590,7 @@ function MyNotification() {
                                             <div className="action-group">
                                                 <div className="ms-3 action-item fw-bold" style={{ color: 'red' }}>
                                                     <i className="fa-solid fa-circle-xmark"></i> {orderDetail.status.name}
+                                                    <span className="ms-2">{orderDetail.updatedAt}</span>
                                                 </div>
                                             </div>
                                             <div className="action-group">

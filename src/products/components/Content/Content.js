@@ -14,6 +14,7 @@ import { setCategories, setLoadData, setProducts, setWatchLists } from './../../
 import ProductService from '../../service/Product/ProductService';
 import CategoriesService from '../../service/Categories/CategoriesService';
 import WatchListsService from '../../service/WatchList/WatchListService';
+import PagingProducts from './ContentAll/index';
 
 const Content = () => {
     const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const Content = () => {
                                             ) : type === 'Cửa hàng' ? (
                                                 <ContentTheShop />
                                             ) : (
-                                                <ContentAll />
+                                                <PagingProducts />
                                             )}
                                         </div>
                                     </div>

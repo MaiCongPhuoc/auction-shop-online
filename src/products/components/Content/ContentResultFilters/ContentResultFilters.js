@@ -40,7 +40,7 @@ const ContentResultFilters = () => {
         <div className="lot-cards grid-x grid-margin-x">
             {loadData ? <Searching /> : (checkData ? (
                 products.map(product => (
-                    <a key={product.id} className="card small-12 medium-6 cell"
+                    <div key={product.id} className="card small-12 medium-6 cell"
                         // onClick={handleShowInfoProduct} 
                         style={{ transform: 'none' }}>
                         {product.action ? (
@@ -125,7 +125,7 @@ const ContentResultFilters = () => {
                                 </div>
                             </Link>
                         )}
-                    </a>
+                    </div>
                 ))
             ) : <NotFound />)}
         </div>

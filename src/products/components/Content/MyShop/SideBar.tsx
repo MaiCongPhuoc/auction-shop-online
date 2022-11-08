@@ -168,25 +168,29 @@ export default function MiniDrawer({ orderDetails }) {
                   {index % 2 === 0 ? <InboxIcon data-tip="Sản phẩm" style={menu === 'myProduct' ? { color: '#ff523d' } : {}} /> :
                     <>
                       <MailIcon style={menu === 'myNotification' ? { color: '#ff523d' } : {}} />
-                      <span className='notifi-dot'
-                        style={{
-                          textAlign: 'center',
-                          position: 'absolute',
-                          border: '0.5px solid white',
-                          width: 'auto',
-                          height: '18px',
-                          borderRadius: '10px',
-                          backgroundColor: 'red',
-                          color: 'white',
-                          fontSize: '12px',
-                          left: '38px',
-                          top: '2px',
-                        }}
-                      >
-                        <span style={{ lineHeight: '18px', padding: '3px', fontSize: '12px' }}>
-                          {orderDetails.length}
+                      {orderDetails.length > 0 ? (
+                        <span className='notifi-dot'
+                          style={{
+                            textAlign: 'center',
+                            position: 'absolute',
+                            border: '0.5px solid white',
+                            width: 'auto',
+                            height: '18px',
+                            borderRadius: '10px',
+                            backgroundColor: 'red',
+                            color: 'white',
+                            fontSize: '12px',
+                            left: '38px',
+                            top: '2px',
+                          }}
+                        >
+                          <span style={{ lineHeight: '18px', padding: '3px', fontSize: '12px' }}>
+                            {orderDetails.length}
+                          </span>
                         </span>
-                      </span>
+                      ) : (
+                        null
+                      )}
                     </>
                   }
                 </ListItemIcon>

@@ -10,12 +10,11 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
     return (
         <div>
             <nav>
-                <ul className="pagination">
+                <ul className="pagination" style={{display: 'flex', justifyContent: 'flex-end'}}>
                     {pageNumbers.map((number) => (
                         <li className="page-item" key={number}>
                             <div
                                 onClick={() => paginate(number)}
-                                // href="!#"
                                 className="page-link"
                             >
                                 {number}

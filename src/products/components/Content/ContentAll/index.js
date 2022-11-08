@@ -4,16 +4,17 @@ import axios from 'axios';
 
 import Posts from './Posts';
 import Pagination from './Pagination';
+import { ALL_PRODUCTS } from './../../../service/API';
 
 function PagingProducts() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(8);
+    const [postsPerPage, setPostsPerPage] = useState(10);
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const res = await axios.get('http://localhost:8080/api/products');
+            const res = await axios.get(ALL_PRODUCTS);
             setPosts(res.data);
             setLoading(false);
         };
@@ -37,11 +38,10 @@ function PagingProducts() {
     console.log('currentPosts: ', currentPosts);
 
     return (
-        <div className="container mt-5">
-            <h1 className="text-primary mn-3">My Posts</h1>
+        <>
             <Posts products={currentPosts} loading={loading} />
             <Pagination paginate={paginate} postsPerPage={postsPerPage} totalPosts={posts.length} />
-        </div>
+        </>
     );
 }
 export default PagingProducts;
