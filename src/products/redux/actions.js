@@ -109,6 +109,12 @@ export const typeFiltersChange = (text) => {
         payload: text,
     };
 };
+export const sortFiltersChange = (text) => {
+    return {
+        type: 'filters/sortFiltersChange',
+        payload: text,
+    };
+};
 
 export const categoryFiltersChange = (arr) => {
     return {

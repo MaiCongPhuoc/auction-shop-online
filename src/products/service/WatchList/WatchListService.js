@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_WATCH_LISTS, REMOVE_WATCH_LISTS, WATCH_LISTS } from "../API";
+import { ADD_WATCH_LISTS, WATCH_LISTS } from "../API";
 import { CHECK_WATCH_LISTS } from './../API';
 
 class WatchListsService{
@@ -15,11 +15,6 @@ class WatchListsService{
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.post(`${ADD_WATCH_LISTS}/${accountId}`, product);
-    }
-    static removeWatchList(accountId, product){
-        let cookie = this.getCookie('JWT');
-        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
-        return axios.post(`${REMOVE_WATCH_LISTS}/${accountId}`, product);
     }
     static getWatchListByAccountId(accountId){
         let cookie = this.getCookie('JWT');

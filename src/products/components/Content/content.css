@@ -80,12 +80,6 @@ a {
     width: 200px;
 }
 
-.notfound {
-    top: 40vh;
-    width: 100%;
-    display: flex;
-}
-
 .simple-filters-wrapper .simple-filters .large-offset-1 {
     display: flex;
     justify-content: flex-end;
@@ -465,4 +459,16 @@ a {
 
 .rs-picker-daterange-menu {
     top: 452.79999999999995px !important;
+}
+
+.typeList{
+    color: #367289;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+    height: 50px;
+    line-height: 50px   ;
+}
+
+.lot-cards .loadCart {
+    margin: auto;
 }

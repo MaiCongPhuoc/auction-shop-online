@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Col, Row, Input, Typography, Radio, Select, Tag } from 'antd';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getAllCategories, searchTextSelector, productsRemainingCategorySelector, getTypeFiltersChange } from './../../../../redux/selector';
-import { setResultsFilterChange, searchFilterChange, typeFiltersChange, setSearchingFilters, categoryFiltersChange } from './../../../../redux/actions';
+import { getAllCategories, searchTextSelector, productsRemainingCategorySelector, getTypeFiltersChange, productsRemainingSortSelector, getSortFiltersChange } from './../../../../redux/selector';
+import { setResultsFilterChange, searchFilterChange, typeFiltersChange, setSearchingFilters, categoryFiltersChange, sortFiltersChange } from './../../../../redux/actions';
 
 const { Search } = Input;
 
@@ -15,6 +15,9 @@ const ShowFilters = () => {
 
     const searchText = useSelector(searchTextSelector);
     const type = useSelector(getTypeFiltersChange);
+    const sort = useSelector(getSortFiltersChange);
+
+   
 
     const handleSearchTextChange = (e) => {
         dispatch(searchFilterChange(e.target.value));
@@ -24,17 +27,22 @@ const ShowFilters = () => {
         dispatch(typeFiltersChange(e.target.value));
     };
 
+    const handleSortByPrice = (e) => {
+        dispatch(sortFiltersChange(e.target.value));
+    };
+
     const handleCategoryChange = (value) => {
         dispatch(categoryFiltersChange(value));
     };
 
-    const results = useSelector(productsRemainingCategorySelector);
+    const results = useSelector(productsRemainingSortSelector);
 
     useEffect(() => {
         dispatch(setResultsFilterChange(results));
         dispatch(setSearchingFilters(true));
-    }, [searchText, type])
+    }, [searchText, type, sort])
 
+    console.log("sort", sort);
     const categories = useSelector(getAllCategories);
 
     const colorCategories = ['blue', 'red', 'green', 'yellow']
@@ -67,6 +75,17 @@ const ShowFilters = () => {
                         <Radio value='Tất cả'>Tất cả</Radio>
                         <Radio value='Đấu giá'>Đấu giá</Radio>
                         <Radio value='Cửa hàng'>Cửa hàng</Radio>
+                    </Radio.Group>
+                </Col>
+                <Col sm={24}>
+                    <Typography.Paragraph
+                        style={{ fontWeight: 'bold', marginBottom: 3, marginTop: 10 }}
+                    >
+                        Lọc theo giá
+                    </Typography.Paragraph>
+                    <Radio.Group onChange={handleSortByPrice}>
+                        <Radio value='asc'>Tăng dần</Radio>
+                        <Radio value='desc'>Giảm dần</Radio>
                     </Radio.Group>
                 </Col>
                 <Col sm={24}>

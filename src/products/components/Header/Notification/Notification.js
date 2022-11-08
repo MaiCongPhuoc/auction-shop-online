@@ -14,23 +14,25 @@ function Notification({ countOrder, myOrderDetails }) {
                         className="fa-regular fa-bell fa-2x ic-notif "
                         aria-hidden="true"
                     >
-                        <span
-                            style={{
-                                textAlign: 'center',
-                                position: 'absolute',
-                                border: '0.5px solid white',
-                                width: '12px',
-                                height: '12px',
-                                borderRadius: '10px',
-                                backgroundColor: 'red',
-                                color: 'white',
-                                fontSize: '12px',
-                                left: '15px',
-                                bottom: '15px',
-                                padding: '3px',
-                            }}
-                        >
-                        </span>
+                        {(countOrder > 0 || myOrderDetails.length > 0) ? (
+                            <span
+                                style={{
+                                    textAlign: 'center',
+                                    position: 'absolute',
+                                    border: '0.5px solid white',
+                                    width: '12px',
+                                    height: '12px',
+                                    borderRadius: '10px',
+                                    backgroundColor: 'red',
+                                    color: 'white',
+                                    fontSize: '12px',
+                                    left: '15px',
+                                    bottom: '15px',
+                                    padding: '3px',
+                                }}
+                            >
+                            </span>
+                        ) : null}
                     </i>
                     <div className="norif-Info-dropdown">
                         <ul>

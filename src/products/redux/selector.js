@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { compareValues } from './../Hooks/Hooks';
 //login
 export const getLoginStatus = (state) => state.login.login;
 export const getShowSignupInfo = (state) => state.login.showSignupInfo;
@@ -52,6 +53,8 @@ export const getResultsFiltersChange = (state) => state.filters.results;
 export const getSearchingFilters = (state) => state.filters.searching;
 
 export const getTypeFiltersChange = (state) => state.filters.type;
+
+export const getSortFiltersChange = (state) => state.filters.sort;
 
 export const getCategoriesFiltersChange = (state) => state.filters.categories;
 
@@ -120,6 +123,15 @@ export const productsRemainingCategorySelector = createSelector(
         }
     },
 );
+
+export const productsRemainingSortSelector = createSelector(
+    productsRemainingCategorySelector,
+    getSortFiltersChange,
+    (products, sortChange) => {
+        return products.sort(compareValues('price', sortChange));
+    },
+);
+
 
 // Modals
 

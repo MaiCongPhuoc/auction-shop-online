@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { getLoadData, getResultsFiltersChange, productsRemainingCategorySelector, productsRemainingSortSelector } from "../../../redux/selector";
-import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { FormatMoney } from './../../../Hooks/Hooks';
-import NotFound from './../../Loading/NotFound';
-import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
-import Searching from './../../Loading/Searching';
+import React, { useState } from 'react';
+import { FormatMoney } from '../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
+import NotFound from '../../Loading/NotFound';
 
-
-const ContentResultFilters = () => {
-    const dispatch = useDispatch();
-
-    const products = useSelector(getResultsFiltersChange);
-
+const Posts = ({ products }) => {
+    
+    
     return (
         <>
             {products.length > 0 ? (
-
                 <div className="lot-cards grid-x grid-margin-x">
                     {
                         products.map(product => (
@@ -113,7 +105,7 @@ const ContentResultFilters = () => {
                 <NotFound />
             )}
         </>
-    )
-}
+    );
+};
 
-export default ContentResultFilters;
+export default Posts;

@@ -44,32 +44,20 @@ const ContentTheShop = () => {
     // dispatch(setLoadData(false));
 
     const loadData = useSelector(getLoadData);
-    console.log('watch list', watchLists);
+
 
     return (
         <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? (
-                <LoadData />
-            ) : (
-                productsAuction.map((product) => (
-                    <div
-                        className="card small-12 medium-6 cell"
-                        onClick={() => handleShowInfoProduct(product)}
-                        style={{ transform: 'none' }}
-                        key={product.id}
-                    >
-                        <Link to={`/product/the-shop/${product.slug}`} style={{ color: '#333' }}>
-                            <figure className="card__image">
-                                <img src={product.image} alt="" style={{ transform: 'none' }} />
-                                {watchLists.forEach((item) => (
-                                    <div key={item.id} className="add-to-watchlist">
-                                        {item.product.id === product.id ? (
-                                            <span className="ico-circle" ico_action="fav">
-                                                <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
-                                            </span>
-                                        ) : null}
-                                    </div>
-                                ))}
+            {loadData ? <LoadData /> : (
+                productsAuction.map(product => (
+                    <div className="card small-12 medium-6 cell" onClick={() => handleShowInfoProduct(product)} style={{ transform: 'none' }} key={product.id}>
+                        <Link to={`/product/the-shop/${product.slug}`} style={{color: '#333'}}>
+                            <figure className="card__image"><img src={product.image} alt="" style={{ transform: 'none' }} />
+                                <div className="add-to-watchlist">
+                                    <span className="ico-circle" ico_action="fav">
+                                        <i className="fa-regular fa-heart"></i>
+                                    </span>
+                                </div>
                             </figure>
                             <div className="card__info-container">
                                 <div className="info-container__label">
