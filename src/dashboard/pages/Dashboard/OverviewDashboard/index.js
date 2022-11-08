@@ -11,26 +11,28 @@ function TongQuanDashboard() {
     const [state, setState] = useState({
         accounts: [],
         products: [],
+        turnover: [],
     });
     const { accounts, products } = state;
 
     useEffect(() => {
         async function getdashboard() {
+            let turnover = await ChartService.getTurnoverByMonth();
             let product = await productService.getProducts();
             let account = await AccountService.getAccount();
-            let turnover = await ChartService.getTurnoverByMonth();
             setState({
                 accounts: account.data,
                 products: product.data,
+                turnover: turnover.data[0],
             });
         }
         getdashboard();
     }, []);
     return (
         <div className="row dashboard">
-            <TurnoverInMonth />
+            <TurnoverInMonth turnoverByMonth={state.turnover.turnoverMonth}/>
 
-            <TurnoverInYear />
+            <TurnoverInYear turnoverByYear={state.turnover.turnoverYear} />
 
             <Product totalProduct={products.length} />
 

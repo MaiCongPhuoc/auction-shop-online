@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function SanPham(props) {
+function Products(props) {
     return (
         <div className="col-xl-3 col-md-6 mb-4">
             <div className="card border-left-info shadow h-100 py-2" style={{ cursor: 'auto' }}>
@@ -42,4 +42,4 @@ function SanPham(props) {
     );
 }
 
-export default SanPham;
+export default Products;

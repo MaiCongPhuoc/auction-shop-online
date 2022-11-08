@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
-import AccountService from './../../../../../dashboard/services/AccountService';
+import AccountService from '../../../../../dashboard/services/AccountService';
 import { getAccount } from '../../../../redux/selector';
 
 let flag = false;
