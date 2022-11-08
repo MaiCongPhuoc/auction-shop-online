@@ -102,6 +102,7 @@ function ClientInfo() {
                                         showCancelButton: true,
                                         showConfirmButton: false,
                                         denyButtonText: `Đăng xuất`,
+                                        cancelButtonText: 'Không',
                                     }).then((result) => {
                                         if (result.isDenied) {
                                             toast.success(`Đăng xuất thành công!`);

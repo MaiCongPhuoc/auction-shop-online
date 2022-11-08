@@ -10,6 +10,7 @@ function ShowPageAuction() {
         <Provider store={store}>
             <Header className="product-client" />
             <PageAuction />
+            <Footer />
         </Provider>
     );
 }
