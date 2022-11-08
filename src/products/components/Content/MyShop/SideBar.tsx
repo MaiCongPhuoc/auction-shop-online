@@ -104,6 +104,7 @@ export default function MiniDrawer({ orderDetails }) {
 
   const menu = useSelector(getMenu);
 
+
   const handleDrawerOpen = () => {
     setOpen(true);
     dispatch(setOpenSidebar(true));

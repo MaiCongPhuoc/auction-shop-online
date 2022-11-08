@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getLoadData, getProductsAction, getWatchLists } from "../../../redux/selector";
+import { getLoadData, getProductsAction } from "../../../redux/selector";
 import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
 import LoadData from './../../Loading/LoadData';
 import { FormatMoney } from './../../../Hooks/Hooks';
@@ -9,23 +9,6 @@ import { Link } from 'react-router-dom';
 
 const ContentTheShop = () => {
     const dispatch = useDispatch();
-
-    const [watchLists, setWatchLists] = useState([]);
-
-    const currentWatchLists = useSelector(getWatchLists);
-
-    useEffect(() => {
-        async function checkWatchList() {
-            if (currentWatchLists.length > 0) {
-                setWatchLists(currentWatchLists);
-                return;
-            } else {
-                console.log("watch list", currentWatchLists.length);
-            }
-        }
-        checkWatchList();
-    }, [currentWatchLists]);
-
     useEffect(() => {
         try {
             dispatch(setLoadData(false));
@@ -45,7 +28,6 @@ const ContentTheShop = () => {
     // dispatch(setLoadData(false));
 
     const loadData = useSelector(getLoadData);
-    console.log("watch list", watchLists);
 
 
     return (
@@ -53,20 +35,13 @@ const ContentTheShop = () => {
             {loadData ? <LoadData /> :
                 productsAuction.map(product => (
                     <div className="card small-12 medium-6 cell" onClick={() => handleShowInfoProduct(product)} style={{ transform: 'none' }} key={product.id}>
-                        <Link to={`/product/the-shop/${product.slug}`} style={{ color: '#333' }}>
-                            <figure className="card__image">
-                                <img src={product.image} alt="" style={{ transform: 'none' }} />
-                                {watchLists.forEach((item) => (
-                                    <div key={item.id} className="add-to-watchlist">
-                                        {(item.product.id === product.id) ? (
-                                            <span className="ico-circle" ico_action="fav">
-                                                <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
-                                            </span>
-                                        ) : (
-                                            null
-                                        )}
-                                    </div>
-                                ))}
+                        <Link to={`/product/the-shop/${product.slug}`} style={{color: '#333'}}>
+                            <figure className="card__image"><img src={product.image} alt="" style={{ transform: 'none' }} />
+                                <div className="add-to-watchlist">
+                                    <span className="ico-circle" ico_action="fav">
+                                        <i className="fa-regular fa-heart"></i>
+                                    </span>
+                                </div>
                             </figure>
                             <div className="card__info-container">
                                 <div className="info-container__label">

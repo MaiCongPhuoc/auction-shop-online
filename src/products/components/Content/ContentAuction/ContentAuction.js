@@ -1,15 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getProductsAction, getLoadData, getAccount } from '../../../redux/selector';
+import { setLoadData } from '../../../redux/actions';
 import LoadData from './../../Loading/LoadData';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
 import { getProductsAuction } from './../../../redux/selector';
+import WatchListsService from '../../../service/WatchList/WatchListService';
 
 const ContentAuction = () => {
     const dispatch = useDispatch();
+    const [watchLists, setWatchLists] = useState([]);
+
+    const account = useSelector(getAccount);
+    useEffect(() => {
+        try {
+            WatchListsService.getWatchListByAccountId(account.id).then((res) => {
+                setWatchLists(res.data);
+            }).catch((resp) => {
+                console.log(resp);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
     
     const productsAuction = useSelector(getProductsAuction);
+
 
     const loadData = useSelector(getLoadData);
     return (
@@ -26,11 +44,11 @@ const ContentAuction = () => {
                     >
                         <figure className="card__image">
                             <img src={product.image} alt="" style={{ transform: 'none' }} />
-                            {/* <div className="add-to-watchlist">
+                            <div className="add-to-watchlist">
                                 <span className="ico-circle" ico_action="fav">
                                     <i className="fa-regular fa-heart"></i>
                                 </span>
-                            </div> */}
+                            </div>
                         </figure>
                         <div className="card__info-container">
                             <div className="info-container__label">
