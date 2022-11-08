@@ -89,7 +89,7 @@ function ClientInfo() {
                                         })
                                     }
                                 >
-                                    <i class="fa-solid fa-key"></i> Đổi mật khẩu
+                                    <i className="fa-solid fa-key"></i> Đổi mật khẩu
                                 </button>
                             </li>
                             <button

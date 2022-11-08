@@ -53,6 +53,7 @@ function ModalDetailProduct(props) {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi muốn duyệt',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function getModeration() {
@@ -74,6 +75,7 @@ function ModalDetailProduct(props) {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi muốn xóa',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function getModeration() {
@@ -175,7 +177,7 @@ function ModalDetailProduct(props) {
                 )}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-secondary" onClick={handleCloseModeration} >
+                <Button variant="outline-secondary" onClick={handleCloseModeration}>
                     Đóng
                 </Button>
                 <Button variant="outline-danger" onClick={notifyDel}>

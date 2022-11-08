@@ -4,6 +4,7 @@ export const GET_PRODUCTS_BY_SLUG = ALL_PRODUCTS + '/find-by-slug';
 export const GET_PRODUCTS_AUCTIONS = ALL_PRODUCTS + '/auctions';
 export const GET_PRODUCTS_THE_SHOPS = ALL_PRODUCTS + '/the-shops';
 export const GET_PRODUCTS_MODERATED_BY_CREATED_BY = ALL_PRODUCTS + '/get-moderated-by-created-by';
+export const GET_TOP_PRODUCTS = 'http://localhost:8080/api/products/find-by-sold';
 
 // Product Media
 export const ALL_MEDIA_PRODUCT = 'http://localhost:8080/api/productmedia';

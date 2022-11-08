@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 import { getProduct } from '../../products/redux/selector';
 import ReviewsProductShop from '../../products/components/Content/ProductDetail/Review/ReviewProductShop';
 function ContentAuctionDetail() {
-    const product = useSelector(getProduct);
     const { auctionId } = useParams();
     console.log('auctionId content: ', auctionId);
     const [AuctionProduct, setAuctionProduct] = useState({
@@ -102,7 +101,7 @@ function ContentAuctionDetail() {
                         <div className="medium-7 medium-large-8 cell left-col">
                             <div className="lot-page-left">
                                 <div className="lot-title">
-                                    <h2 className='text-center'>{Product.title}</h2>
+                                    <h2 className="text-center">{Product.title}</h2>
                                 </div>
                                 <div className="lot-notice alert-info hide" />
                                 <div className="lot-image-showcase">
@@ -372,7 +371,7 @@ function ContentAuctionDetail() {
                                             <div className="lot-description">
                                                 <p>{Product.description}</p>
                                             </div>
-                                            <ReviewsProductShop product={product} />
+                                            <ReviewsProductShop product={Product} />
                                             <hr style={{ borderWidth: '1px' }} />
                                             {/* <div className="new-terms-wrapper">
                                                 <div className="new-term-item">

@@ -14,6 +14,7 @@ import { setCategories, setLoadData, setProducts, setWatchLists } from './../../
 import ProductService from '../../service/Product/ProductService';
 import CategoriesService from '../../service/Categories/CategoriesService';
 import WatchListsService from '../../service/WatchList/WatchListService';
+import TopProducts from './HeaderTopProduct/TopProducts';
 
 const Content = () => {
     const dispatch = useDispatch();
@@ -22,21 +23,21 @@ const Content = () => {
 
     const searchStatus = useSelector(getSearchingFilters);
 
-
     const loginStatus = useSelector(getLoginStatus);
 
     const account = useSelector(getAccount);
 
     const reloadWatchList = useSelector(getReloadWatchList);
 
-
     useEffect(() => {
         try {
-            WatchListsService.getWatchListByAccountId(account.id).then((res) => {
-                dispatch(setWatchLists(res.data))
-            }).catch((resp) => {
-                console.log(resp);
-            });
+            WatchListsService.getWatchListByAccountId(account.id)
+                .then((res) => {
+                    dispatch(setWatchLists(res.data));
+                })
+                .catch((resp) => {
+                    console.log(resp);
+                });
         } catch (error) {
             console.log(error);
         }
@@ -52,7 +53,6 @@ const Content = () => {
                 dispatch(setProducts(productsRes.data));
                 dispatch(setCategories(categoriesRes.data));
                 dispatch(setLoadData(false));
-                
             }
             getData();
         } catch (error) {
@@ -63,6 +63,7 @@ const Content = () => {
     return (
         <>
             <div className="base-width main-yield" id="client-content" style={{ maxWidth: '96%' }}>
+                <TopProducts />
                 <div className="pages" data-pages-shell="">
                     <div id="homepage-lot">
                         <div

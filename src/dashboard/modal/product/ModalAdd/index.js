@@ -178,7 +178,7 @@ function ModalAddProduct(props) {
                 product.images = listImg;
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
-                // product.estimatePrice = document.querySelector('#countday').value;
+                product.estimatePrice = document.querySelector('#countday').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             } else {
@@ -188,7 +188,7 @@ function ModalAddProduct(props) {
                 product.images = listImg;
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
-                product.estimatePrice = document.querySelector('#countday').value;
+                // product.estimatePrice = document.querySelector('#countday').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             }
