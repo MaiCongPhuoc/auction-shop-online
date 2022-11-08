@@ -5,14 +5,9 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-<<<<<<< HEAD
-=======
-import { useSelector } from 'react-redux';
 import AccountService from '../../../../../dashboard/services/AccountService';
->>>>>>> phuoc-dev
 import { getAccount } from '../../../../redux/selector';
 import { useSelector } from 'react-redux';
-import AccountService from '../../../../../dashboard/services/AccountService.js';
 
 let flag = false;
 const ModalClientResetPassword = (props) => {
