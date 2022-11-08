@@ -33,6 +33,7 @@ const Posts = ({ products, loading }) => {
     }, [currentWatchLists]);
 
     const loadData = useSelector(getLoadData);
+    
     return (
         <>
             {loadData ? <LoadCart /> : (

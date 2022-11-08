@@ -15,6 +15,7 @@ import ProductService from '../../service/Product/ProductService';
 import CategoriesService from '../../service/Categories/CategoriesService';
 import WatchListsService from '../../service/WatchList/WatchListService';
 import PagingProducts from './ContentAll/index';
+import PagingResultFilters from './ContentResultFilters/index';
 
 const Content = () => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Content = () => {
 
     const searchStatus = useSelector(getSearchingFilters);
 
-
+    
     const loginStatus = useSelector(getLoginStatus);
 
     const account = useSelector(getAccount);
@@ -77,7 +78,7 @@ const Content = () => {
                                         <div>
                                             <ContentLotType />
                                             {searchStatus ? (
-                                                <ContentResultFilters />
+                                                <PagingResultFilters />
                                             ) : type === 'Đấu giá' ? (
                                                 <ContentAuction />
                                             ) : type === 'Cửa hàng' ? (

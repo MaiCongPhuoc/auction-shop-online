@@ -61,16 +61,7 @@ const ContentAll = () => {
                                                 <span className="ico-circle" ico_action="fav">
                                                     <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
                                                 </span>
-<<<<<<< HEAD
                                             ) : null}
-=======
-                                            ) : (
-                                                null
-                                                // <span className="ico-circle" ico_action="fav">
-                                                //     <i className="fa-regular fa-heart"></i>
-                                                // </span>
-                                            )}
->>>>>>> parent of 9dbd1e0 (Chỉnh sửa một vài chức năng của order)
                                         </div>
                                     ))}
                                 </figure>

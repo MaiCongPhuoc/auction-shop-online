@@ -1,6 +1,7 @@
 const initState =  {
     search: '',
     type: '',
+    sort: '',
     categories: [],
     results: [],
     searching: false,
@@ -14,7 +15,7 @@ switch (action.type) {
                 ...state,
                 search: action.payload
             }
-    case 'filters/getResultsFilterChange':
+    case 'filters/setResultsFilterChange':
         return {
                 ...state,
                 results: action.payload
@@ -28,6 +29,11 @@ switch (action.type) {
         return {
                 ...state,
                 type: action.payload
+            }
+    case 'filters/sortFiltersChange':
+        return {
+                ...state,
+                sort: action.payload
             }
     case 'filters/categoryFiltersChange':
         return {

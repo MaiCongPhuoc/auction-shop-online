@@ -80,12 +80,6 @@ a {
     width: 200px;
 }
 
-.notfound {
-    top: 40vh;
-    width: 100%;
-    display: flex;
-}
-
 .simple-filters-wrapper .simple-filters .large-offset-1 {
     display: flex;
     justify-content: flex-end;

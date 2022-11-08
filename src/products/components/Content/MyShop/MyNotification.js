@@ -452,13 +452,7 @@ function MyNotification() {
                                                         <i className="fa-solid fa-circle-check"></i> {orderDetail.status.name}
                                                     </div>
                                                 </div>
-<<<<<<< HEAD
-                                                <div className="order-item my-order-action-dropdown hide" id={`info_my_order_${orderDetail.id}`}>
-                                                    <div className="action-group">
-                                                        <div className="ms-3 action-item fw-bold" style={{ color: '#26cf8e' }}>
-                                                            <i className="fa-solid fa-circle-check"></i> {orderDetail.status.name}
-                                                            <span className="ms-2">{orderDetail.updatedAt}</span>
-=======
+                                                  <span className="ms-2">{orderDetail.updatedAt}</span>
                                                 <div className="action-group">
                                                     <div className="ms-3 action-item fw-bold" style={{ color: '#ff523d' }}>
                                                         Thông tin người nhận
@@ -478,7 +472,6 @@ function MyNotification() {
                                                             {" "}{orderDetail.order.locationRegion.wardName},
                                                             {" "}{orderDetail.order.locationRegion.districtName},
                                                             {" "}{orderDetail.order.locationRegion.provinceName}
->>>>>>> parent of 9dbd1e0 (Chỉnh sửa một vài chức năng của order)
                                                         </div>
                                                     </div>
                                                 </div>
