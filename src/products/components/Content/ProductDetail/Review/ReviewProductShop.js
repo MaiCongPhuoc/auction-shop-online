@@ -130,21 +130,17 @@ function ReviewsProductShop({ product }) {
                 <hr style={{ height: '5px', backgroundColor: 'black' }} />
             </div>
             {reviews.sort(compareValues('id', 'desc')).map((review) => (
-                <div className="col-12" key={review.id}>
+                <div className="" key={review.id}>
                     {review.product.id === product.id ? (
-                        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #00000038'}}>
+                        <p>
                             <div>
-                                <div>
-                                    <img width={50} src={review.account.avatar} alt="" /> <b>{review.account.username}</b>
-                                </div>
-                                <Rating readOnly name="simple-controlled" value={review.vote} /> {review.createdAt}
+                                {review.account.avatar} {review.account.username}{' '}
                             </div>
+                            <Rating disabled name="simple-controlled" value={review.vote} />
                             <div>
-                                <div>
-                                    {review.review}
-                                </div>
+                                {review.review} {review.createdAt}
                             </div>
-                        </div>
+                        </p>
                     ) : null}
                 </div>
             ))}

@@ -1,7 +1,15 @@
-import axios from "axios";
-import { ALL_MEDIA_PRODUCT, ALL_PRODUCTS, GET_PRODUCTS_BY_SLUG, GET_PRODUCTS_AUCTIONS, GET_PRODUCTS_THE_SHOPS, GET_PRODUCTS_MODERATED_BY_CREATED_BY } from './../API';
+import axios from 'axios';
+import {
+    ALL_MEDIA_PRODUCT,
+    ALL_PRODUCTS,
+    GET_PRODUCTS_BY_SLUG,
+    GET_PRODUCTS_AUCTIONS,
+    GET_PRODUCTS_THE_SHOPS,
+    GET_PRODUCTS_MODERATED_BY_CREATED_BY,
+    GET_TOP_PRODUCTS,
+} from './../API';
 
-class ProductService{
+class ProductService {
     static getCookie(name) {
         let cookie = {};
         document.cookie.split(';').forEach(function (el) {
@@ -10,19 +18,19 @@ class ProductService{
         });
         return cookie[name];
     }
-    static getAllProducts(){
+    static getAllProducts() {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(ALL_PRODUCTS);
     }
 
-    static getProductById(id){
+    static getProductById(id) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${ALL_PRODUCTS}/${id}`);
     }
 
-    static getProductBySlug(slug){
+    static getProductBySlug(slug) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${GET_PRODUCTS_BY_SLUG}/${slug}`);
@@ -47,6 +55,11 @@ class ProductService{
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${GET_PRODUCTS_MODERATED_BY_CREATED_BY}/${createBy}`);
+    }
+    static getTopProductBySold() {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios.get(GET_TOP_PRODUCTS);
     }
 }
 

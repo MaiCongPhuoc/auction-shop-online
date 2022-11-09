@@ -80,12 +80,6 @@ a {
     width: 200px;
 }
 
-.notfound {
-    top: 40vh;
-    width: 100%;
-    display: flex;
-}
-
 .simple-filters-wrapper .simple-filters .large-offset-1 {
     display: flex;
     justify-content: flex-end;
@@ -220,7 +214,7 @@ a {
 }
 
 #client-content {
-    margin-top: 100px;
+    margin-top: 30px;
 }
 
 #show-list-cart-item {
@@ -287,13 +281,13 @@ a {
 }
 
 /* On mouse-over, add a grey background color */
-.container-check-cart:hover input~.checkmark {
+.container-check-cart:hover input ~ .checkmark {
     background-color: rgb(72, 102, 198);
 }
 
 /* When the checkbox is checked, add a blue background */
-.container-check-cart input:checked~.checkmark {
-    background-color: #2196F3;
+.container-check-cart input:checked ~ .checkmark {
+    background-color: #2196f3;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -304,7 +298,7 @@ a {
 }
 
 /* Show the checkmark when checked */
-.container-check-cart input:checked~.checkmark:after {
+.container-check-cart input:checked ~ .checkmark:after {
     display: block;
 }
 
@@ -426,17 +420,17 @@ a {
     border-radius: 5px;
 }
 
-.filter-order-detail{
+.filter-order-detail {
     display: flex;
     color: #313131;
     cursor: pointer;
 }
 
 /* Order detail */
-.order-item-list{
+.order-item-list {
     position: relative;
 }
-.show-cancel-order{
+.show-cancel-order {
     position: absolute;
     cursor: pointer;
     transition: 0.3s all ease-in-out;
@@ -449,7 +443,7 @@ a {
     justify-content: space-around;
     opacity: 0;
 }
-.show-cancel-order:hover{
+.show-cancel-order:hover {
     position: absolute;
     cursor: pointer;
     transition: 0.3s all ease-in-out;
@@ -465,4 +459,16 @@ a {
 
 .rs-picker-daterange-menu {
     top: 452.79999999999995px !important;
+}
+
+.typeList{
+    color: #367289;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+    height: 50px;
+    line-height: 50px   ;
+}
+
+.lot-cards .loadCart {
+    margin: auto;
 }

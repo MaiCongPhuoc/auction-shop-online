@@ -26,6 +26,7 @@ const HeaderAfterLogin = () => {
     const [cartItems, setListCartItems] = useState([]);
     const [orderDetails, setOrderDetails] = useState([]);
     const [myOrderDetails, setMyOrderDetails] = useState([]);
+    const [waitingLists, setWaitingLists] = useState([]);
 
     const reloadCartItem = useSelector(getReloadCartItem);
 
@@ -37,7 +38,8 @@ const HeaderAfterLogin = () => {
                 const myOrderDetailsRes = await OrdersDetailService.getOrdersDetailByProductCreatedBy(account.email);
                 setListCartItems(allCartItems.data);
                 setOrderDetails(allOrderDetails.data);
-                setMyOrderDetails(myOrderDetailsRes.data);
+                setWaitingLists(getWaitingLists(allOrderDetails.data));
+                setMyOrderDetails(getWaitingLists(myOrderDetailsRes.data));
             }
             getCartItems();
         } catch (error) {
@@ -45,6 +47,11 @@ const HeaderAfterLogin = () => {
         }
     }, [reloadCartItem]);
 
+    const getWaitingLists = (orderDetails) => {
+        return orderDetails.filter((orderDetail) => {
+            return orderDetail.status.id === 7 || orderDetail.status.id === 8 || orderDetail.status.id === 9;
+        });
+    };
     const handleShowModalAddProduct = () => {
         dispatch(setShowAddProduct(true));
     };
@@ -103,7 +110,7 @@ const HeaderAfterLogin = () => {
                 <div className="widget-notif-wrapper mx-2">
                     <div>
                         <div className="ic-notif-num">
-                            <Notification countOrder={orderDetails.length} myOrderDetails={myOrderDetails.length} />
+                            <Notification countOrder={waitingLists.length} myOrderDetails={myOrderDetails.length} />
                             {/* <Notification countOrder={orderDetails.length} /> */}
                         </div>
                     </div>

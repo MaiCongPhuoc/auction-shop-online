@@ -20,9 +20,6 @@ function ShowMyShop() {
 
     const [loading, setLoading] = useState(false);
 
-    const [waitingLists, setWaitingLists] = useState([]);
-
-
     const menu = useSelector(getMenu);
 
     const reLoadOrder = useSelector(getReloadOrder);
@@ -45,7 +42,6 @@ function ShowMyShop() {
 
             OrdersDetailService.getOrdersDetailByProductCreatedBy(account.email).then((res) => {
                 setOrderDetails(res.data);
-                setWaitingLists(getWaitingLists(res.data));
             }).catch((resp) => {
                 toast.warn(resp.data.message);
             });
@@ -54,16 +50,10 @@ function ShowMyShop() {
         }
     }, []);
 
-    const getWaitingLists = (orderDetails) => {
-        return orderDetails.filter((orderDetail) => {
-            return orderDetail.status.id === 7;
-        });
-    };
-
     return (
         <>
             <Header className="product-client" />
-            <SideBar orderDetails={waitingLists} />
+            <SideBar orderDetails={orderDetails} />
             {menu === 'myProduct' ? (
                 (loading) ? <LoadCart /> : <MyProduct products={products}/>
             ) : (

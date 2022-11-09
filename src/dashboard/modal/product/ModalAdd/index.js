@@ -148,7 +148,7 @@ function ModalAddProduct(props) {
             price: yup
                 .number('Vui lòng nhập số!')
                 .required('Vui lòng nhập giá!')
-                .moreThan(99999, 'Sản phẩm có giá nhỏ nhất là: 100.000'),
+                .moreThan(99999, 'Sản phẩm có giá nhỏ nhất là: 100.000 đ'),
             estimatePrice: yup.number('Vui lòng nhập số!'),
             // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
             // .max(999900000, 'Vui lòng nhập giá ước tính dưới 999900000 VNĐ!'),
@@ -178,7 +178,7 @@ function ModalAddProduct(props) {
                 product.images = listImg;
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
-                // product.estimatePrice = document.querySelector('#countday').value;
+                product.estimatePrice = document.querySelector('#estimatePrice').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             } else {
@@ -188,7 +188,7 @@ function ModalAddProduct(props) {
                 product.images = listImg;
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
-                product.estimatePrice = document.querySelector('#countday').value;
+                // product.estimatePrice = document.querySelector('#countday').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             }
@@ -285,7 +285,7 @@ function ModalAddProduct(props) {
                                                 type="number"
                                                 className="form-control"
                                                 name="estimatePrice"
-                                                id="addTitle"
+                                                id="estimatePrice"
                                                 placeholder="Vui lòng nhập giá ước tính..."
                                                 value={formik.values.estimatePrice}
                                                 onChange={formik.handleChange}

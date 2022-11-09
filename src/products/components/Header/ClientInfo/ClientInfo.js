@@ -89,7 +89,7 @@ function ClientInfo() {
                                         })
                                     }
                                 >
-                                    <i class="fa-solid fa-key"></i> Đổi mật khẩu
+                                    <i className="fa-solid fa-key"></i> Đổi mật khẩu
                                 </button>
                             </li>
                             <button
@@ -107,7 +107,7 @@ function ClientInfo() {
                                         if (result.isDenied) {
                                             toast.success(`Đăng xuất thành công!`);
                                             dispatch(loginStatus(false));
-                                            dispatch(setAccount({}));
+                                            dispatch(setAccount({NOTFOUND: ''}));
                                             function eraseCookie(name) {
                                                 document.cookie = name + '=; Max-Age=0';
                                             }

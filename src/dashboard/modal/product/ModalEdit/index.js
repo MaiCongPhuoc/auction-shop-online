@@ -123,7 +123,7 @@ function ModalEditProduct(props) {
             moderation: 0,
             price: product.price,
             slug: product.slug,
-            sold: product.sold,     
+            sold: product.sold,
             title: product.title,
             viewed: product.viewed,
             category: {
@@ -142,9 +142,8 @@ function ModalEditProduct(props) {
                 .required('Vui lòng đổi tên sản phẩm vào!'),
             price: yup
                 .number('Vui lòng nhập số!')
-                .min(10000, 'Vui lòng nhập giá trên 10.000 đ!')
-                .max(999900000, 'Vui lòng nhập giá dưới 1.000.000.000 đ!')
-                .required('Vui lòng đổi giá!'),
+                .required('Vui lòng nhập giá!')
+                .moreThan(99999, 'Sản phẩm có giá nhỏ nhất là: 100.000 đ'),
             available: yup
                 .number('Vui lòng nhập số!')
                 .min(10, 'Số lượng tối thiểu là 10!')

@@ -4,6 +4,7 @@ export const GET_PRODUCTS_BY_SLUG = ALL_PRODUCTS + '/find-by-slug';
 export const GET_PRODUCTS_AUCTIONS = ALL_PRODUCTS + '/auctions';
 export const GET_PRODUCTS_THE_SHOPS = ALL_PRODUCTS + '/the-shops';
 export const GET_PRODUCTS_MODERATED_BY_CREATED_BY = ALL_PRODUCTS + '/get-moderated-by-created-by';
+export const GET_TOP_PRODUCTS = 'http://localhost:8080/api/products/find-by-sold';
 
 // Product Media
 export const ALL_MEDIA_PRODUCT = 'http://localhost:8080/api/productmedia';
@@ -42,7 +43,6 @@ export const UPDATE_STATUS = ALL_ORDERS_DETAIL + '/update-status';
 // Watch list
 export const WATCH_LISTS = 'http://localhost:8080/api/watch-lists';
 export const ADD_WATCH_LISTS = WATCH_LISTS + '/add';
-export const REMOVE_WATCH_LISTS = WATCH_LISTS + '/remove';
 export const CHECK_WATCH_LISTS = WATCH_LISTS + '/check';
 
 // Login

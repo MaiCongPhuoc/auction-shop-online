@@ -9,8 +9,6 @@ import store from './../../../../redux/store';
 function TheShop() {
     // const { auctionId } = useParams();
     // console.log('auctionId: ', auctionId);
-    
-
     return (
         <>
             <Header className="product-client" />

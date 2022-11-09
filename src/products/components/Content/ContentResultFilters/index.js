@@ -4,23 +4,23 @@ import axios from 'axios';
 
 import Posts from './Posts';
 import Pagination from './Pagination';
-import { ALL_PRODUCTS } from './../../../service/API';
+import { useSelector } from 'react-redux';
+import { getResultsFiltersChange } from '../../../redux/selector';
 
-function PagingProducts() {
+function PagingResultFilters() {
     const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(10);
+    const products = useSelector(getResultsFiltersChange);
+
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const res = await axios.get(ALL_PRODUCTS);
-            setPosts(res.data);
-            setLoading(false);
+            setPosts(products);
         };
 
         fetchPosts();
-    }, []);
+    }, [products]);
 
     // console.log(posts);
 
@@ -38,9 +38,9 @@ function PagingProducts() {
 
     return (
         <>
-            <Posts products={currentPosts} loading={loading} />
+            <Posts products={currentPosts} />
             <Pagination paginate={paginate} postsPerPage={postsPerPage} totalPosts={posts.length} />
         </>
     );
 }
-export default PagingProducts;
+export default PagingResultFilters;

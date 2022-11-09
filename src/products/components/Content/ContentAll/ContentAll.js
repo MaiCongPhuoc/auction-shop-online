@@ -22,7 +22,7 @@ const ContentAll = () => {
         async function checkWatchList() {
             if (currentWatchLists.length > 0) {
                 setWatchLists(currentWatchLists);
-                return;
+                return
             } else {
                 console.log('watch list', currentWatchLists.length);
             }
@@ -59,7 +59,7 @@ const ContentAll = () => {
                                         <div key={item.id} className="add-to-watchlist">
                                             {item.product.id === product.id ? (
                                                 <span className="ico-circle" ico_action="fav">
-                                                    <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
+                                                    <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
                                                 </span>
                                             ) : null}
                                         </div>
@@ -110,7 +110,7 @@ const ContentAll = () => {
                                             {item.product.id === product.id ? (
                                                 <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
                                                     <ReactTooltip />
-                                                    <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
+                                                    <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
                                                 </span>
                                             ) : null}
                                         </div>

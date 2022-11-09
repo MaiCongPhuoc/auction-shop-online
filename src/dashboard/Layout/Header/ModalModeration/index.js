@@ -53,6 +53,7 @@ function ModalDetailProduct(props) {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi muốn duyệt',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function getModeration() {
@@ -74,6 +75,7 @@ function ModalDetailProduct(props) {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi muốn xóa',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function getModeration() {
@@ -148,6 +150,17 @@ function ModalDetailProduct(props) {
                                 </p>
                             </div>
                             <div className="row">
+                                <h5 className="col-sm-5">Giá khởi điểm:</h5>
+                                <p className="col-sm-7">
+                                    <NumericFormat
+                                        value={product.estimatePrice}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={' đ'}
+                                    />
+                                </p>
+                            </div>
+                            <div className="row">
                                 <h5 className="col-sm-5">Đã bán:</h5>
                                 <p className="col-sm-7">{product.sold}</p>
                             </div>
@@ -175,7 +188,7 @@ function ModalDetailProduct(props) {
                 )}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-secondary" onClick={handleCloseModeration} >
+                <Button variant="outline-secondary" onClick={handleCloseModeration}>
                     Đóng
                 </Button>
                 <Button variant="outline-danger" onClick={notifyDel}>
