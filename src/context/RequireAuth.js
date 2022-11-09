@@ -28,7 +28,7 @@ const RequireAuth = ({ allowedRoles }) => {
             await axios
             .get(`${'http://localhost:8080/api/accounts/getAccountEmail'}/${decoded.sub}`)
             .then((account) => {
-                toast.success('Kiểm tra email thành công!');
+                // toast.success('Kiểm tra email thành công!');
                 dispatch(loginStatus(true));
                 dispatch(setAccount(account.data));
             })

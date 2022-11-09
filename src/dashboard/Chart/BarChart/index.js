@@ -12,7 +12,7 @@ function BarChart() {
     const [chart, setChart] = useState([]);
     useEffect(() => {
         async function getListProduct() {
-            let listChart = await ChartService.getListChart(2022);
+            let listChart = await ChartService.getListChart('2022');
             setChart(listChart.data);
         }
         getListProduct();

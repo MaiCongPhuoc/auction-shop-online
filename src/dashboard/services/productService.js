@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import {
     ADDPRODUCT_URL,
     DATATABLEPRODUCT_URL,
@@ -37,10 +38,14 @@ class ProductService {
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${DATATABLEPRODUCT_URL}${search}?page=${currentPage}&size=${recordPerPage}`);
     }
-    static AddProduct(product) {
+    static async AddProduct(product) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
-        return axios.post(`${ADDPRODUCT_URL}`, product);
+        await axios.post(`${ADDPRODUCT_URL}`, product).then(() => {
+            toast.success('Đã thêm thành công!');
+        }).catch((error) => {
+            toast.error(error.response.data.exceptionMessage);
+        });
     }
     static EditProduct(editProduct, editProductId) {
         let cookie = this.getCookie('JWT');

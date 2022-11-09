@@ -2,6 +2,7 @@ import { Button, Modal } from 'react-bootstrap';
 import Moment from 'moment';
 import { useEffect, useState } from 'react';
 import AccountService from '../../../../../dashboard/services/AccountService';
+import { NumericFormat } from 'react-number-format';
 
 function ModalDetail(props) {
     Moment.locale('vi');
@@ -93,6 +94,17 @@ function ModalDetail(props) {
                             <div className="row">
                                 <h5 className="col-sm-6">Địa chỉ:</h5>
                                 <p className="col-sm-6">{accountDetail.locationRegion.address}</p>
+                            </div>
+                            <div className="row">
+                                <h5 className="col-sm-6">Số dư:</h5>
+                                <p className="col-sm-6">
+                                    <NumericFormat
+                                        value={accountDetail.surplus}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={' đ'}
+                                    />
+                                </p>
                             </div>
                         </div>
                     </div>

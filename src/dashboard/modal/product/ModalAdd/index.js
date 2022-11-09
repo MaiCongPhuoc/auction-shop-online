@@ -17,17 +17,17 @@ let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/
 function ModalAddProduct(props) {
     const account = useSelector(getAccount);
     const dispatch = useDispatch();
-    const notify = () =>
-        toast.success('Đã thêm thành công!', {
-            position: 'top-right',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-        });
+    // const notify = () =>
+    //     toast.success('Đã thêm thành công!', {
+    //         position: 'top-right',
+    //         autoClose: 2000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: 'colored',
+    //     });
     const { show, handleClose } = props;
     const [category, setCategory] = useState({
         loading: false,
@@ -94,11 +94,9 @@ function ModalAddProduct(props) {
                 listImg.reverse();
                 async function postData(submitFrm) {
                     setCategory({ ...category, loading: true });
-                    let createRes = await ProductService.AddProduct(submitFrm);
-                    console.log('createRes: ', createRes);
+                    await ProductService.AddProduct(submitFrm);
                 }
                 postData(submitFrm);
-                notify();
                 setCategory({ ...category, loading: false });
             } catch (error) {
                 console.log(error);
