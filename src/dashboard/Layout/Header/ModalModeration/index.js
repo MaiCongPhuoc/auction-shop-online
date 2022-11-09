@@ -150,6 +150,17 @@ function ModalDetailProduct(props) {
                                 </p>
                             </div>
                             <div className="row">
+                                <h5 className="col-sm-5">Giá khởi điểm:</h5>
+                                <p className="col-sm-7">
+                                    <NumericFormat
+                                        value={product.estimatePrice}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={' đ'}
+                                    />
+                                </p>
+                            </div>
+                            <div className="row">
                                 <h5 className="col-sm-5">Đã bán:</h5>
                                 <p className="col-sm-7">{product.sold}</p>
                             </div>

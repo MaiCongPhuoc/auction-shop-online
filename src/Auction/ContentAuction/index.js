@@ -418,7 +418,7 @@ function ContentAuctionDetail() {
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522803}>
                                         <a
-                                            href="/catalog_items/auction-limited-edition-titos-vodka-william-murray-golf-2522803"
+                                            href="#"
                                             id="item-link-2522803"
                                         >
                                             <div className="item-wrapper">
@@ -449,7 +449,7 @@ function ContentAuctionDetail() {
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522810}>
                                         <a
-                                            href="/catalog_items/auction-4-vip-red-sox-tickets-to-2023-home-game-pre-2522810"
+                                            href="#"
                                             id="item-link-2522810"
                                         >
                                             <div className="item-wrapper">
@@ -480,7 +480,7 @@ function ContentAuctionDetail() {
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522812}>
                                         <a
-                                            href="/catalog_items/auction-4-vip-club-level-seats-patriots-vs-jets-game-on-2522812"
+                                            href="#"
                                             id="item-link-2522812"
                                         >
                                             <div className="item-wrapper">
@@ -511,7 +511,7 @@ function ContentAuctionDetail() {
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522827}>
                                         <a
-                                            href="/catalog_items/auction-enjoy-round-of-golf-at-bethpage-black-course-2522827"
+                                            href="#"
                                             id="item-link-2522827"
                                         >
                                             <div className="item-wrapper">
@@ -578,7 +578,7 @@ function ContentAuctionDetail() {
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522802}>
                                         <a
-                                            href="/catalog_items/auction-3-night-stay-at-marriott-beach-resort-in-2522802"
+                                            href="#"
                                             id="item-link-2522802"
                                         >
                                             <div className="item-wrapper">
@@ -609,7 +609,7 @@ function ContentAuctionDetail() {
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2535000}>
                                         <a
-                                            href="/catalog_items/auction-2-vip-ufc-281-tickets-in-dana-whites-personal-2535000"
+                                            href="#"
                                             id="item-link-2535000"
                                         >
                                             <div className="item-wrapper">
@@ -633,7 +633,7 @@ function ContentAuctionDetail() {
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2522829}>
                                         <a
-                                            href="/catalog_items/auction-one-year-of-jetblue-mosaic-status-with-2-2522829"
+                                            href="#"
                                             id="item-link-2522829"
                                         >
                                             <div className="item-wrapper">
@@ -664,7 +664,7 @@ function ContentAuctionDetail() {
                                 <div className="individual-item-view cell medium-3">
                                     <div className="item" id={2536514}>
                                         <a
-                                            href="/catalog_items/auction-billy-gibbons-of-zz-top-signed-gibson-sg-guitar-2536514"
+                                            href="#"
                                             id="item-link-2536514"
                                         >
                                             <div className="item-wrapper">

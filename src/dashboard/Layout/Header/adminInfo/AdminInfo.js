@@ -104,7 +104,7 @@ function AdminInfo() {
                                         if (result.isDenied) {
                                             toast.success(`Đăng xuất thành công!`);
                                             dispatch(loginStatus(false));
-                                            dispatch(setAccount({}));
+                                            dispatch(setAccount({NOTFOUND: ''}));
                                             function eraseCookie(name) {
                                                 document.cookie = name + '=; Max-Age=0';
                                             }
