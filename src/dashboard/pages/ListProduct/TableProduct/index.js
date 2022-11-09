@@ -1,21 +1,13 @@
 import React from 'react';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactDOM from 'react-dom/client';
 import { useEffect, useState } from 'react';
 import ProductService from '../../../services/productService';
 import Moment from 'moment';
 import { NumericFormat } from 'react-number-format';
 import Spiner from '../../../Spiner';
 import ModalDetailProduct from '../../../modal/product/ModalDetail';
-import { Button, Modal } from 'react-bootstrap';
-import ModalAddProduct from '../../../modal/product/ModalAdd';
 import ModalEditProduct from '../../../modal/product/ModalEdit';
 import Swal from 'sweetalert2';
-import DefaultProduct from '../../../Spiner/defaultProduct';
 import '../../pages.css';
-import Pagination from '@mui/material/Pagination';
-import ProductsComponent from './ProductsComponent';
 import CategoryService from '../../../services/Category';
 import Tippy from '@tippyjs/react';
 import { toast } from 'react-toastify';
@@ -92,6 +84,7 @@ function BangSanPham() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Vâng! Tôi xóa nó',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function deleteProduct(id) {
@@ -103,7 +96,6 @@ function BangSanPham() {
                 toast.success(`Đã xóa thành công!`);
             }
         });
-
     useEffect(() => {
         try {
             setState({ ...state, loading: true });
@@ -221,6 +213,23 @@ function BangSanPham() {
         });
     };
 
+    const handleReset = () => {
+        document.querySelector('#select').value = '-1';
+        document.querySelector('#search').value = '';
+        async function getDataTable() {
+            let dataTable = await ProductService.getDataTableProduct('', 0, 5);
+            setState({
+                ...state,
+                products: dataTable.data.content,
+                totalPages: dataTable.data.totalPages,
+                totalElements: dataTable.data.totalElements,
+                currentPage: dataTable.data.number + 1,
+                search: '',
+            });
+        }
+        getDataTable();
+    };
+
     const searchBook = (currentPage) => {
         if (document.querySelector('#search').value === '') {
             document.querySelector('#select').value = '-1';
@@ -260,9 +269,9 @@ function BangSanPham() {
                             Danh sách sản phẩm
                         </h5>
                         <div className="d-flex align-items-center w-75">
-                            <p className="w-100 mb-0">Lọc theo thể loại:</p>
+                            <p className="w-25 mb-0 ">Lọc theo thể loại:</p>
                             <select
-                                className="form-select mr-3 select-bg-ori"
+                                className="form-select select-bg-ori w-25"
                                 id="select"
                                 name="search"
                                 onChange={searchBox}
@@ -271,12 +280,12 @@ function BangSanPham() {
                                     Chọn
                                 </option>
                                 {categories.map((category) => (
-                                    <option value={category.title} key={category.id}>
+                                    <option value={category.slug} key={category.id}>
                                         {category.title}
                                     </option>
                                 ))}
                             </select>
-                            <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 navbar-search ">
                                 <div className="input-group">
                                     <input
                                         style={{ marginTop: '18px' }}
@@ -297,6 +306,15 @@ function BangSanPham() {
                                             onClick={searchBook}
                                         >
                                             <i className="fas fa-search fa-sm" />
+                                        </button>
+                                        <button
+                                            style={{ marginTop: '18px' }}
+                                            className="btn btn-info ml-1"
+                                            type="button"
+                                            name="search"
+                                            onClick={handleReset}
+                                        >
+                                            Đặt lại tìm kiếm
                                         </button>
                                     </div>
                                 </div>
@@ -328,7 +346,7 @@ function BangSanPham() {
                                         tongtien += product.available * product.price;
                                         return (
                                             <tr key={product.id}>
-                                                <td>
+                                                <td className="text-center">
                                                     <button
                                                         onClick={() =>
                                                             setShowDetail({
@@ -349,17 +367,17 @@ function BangSanPham() {
                                                         />
                                                     </button>
                                                 </td>
-                                                <td>
+                                                <td className="text-center">
                                                     <strong>{product.title}</strong>
                                                 </td>
                                                 {/* <td className="text-center">{product.createdBy}</td>
                                                 <td className="text-end">
                                                     {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
                                                 </td> */}
-                                                <td>
+                                                <td className="text-center">
                                                     {product.category.deleted === true ? null : product.category.title}
                                                 </td>
-                                                <td>{product.action ? 'Đấu giá' : 'Bán'}</td>
+                                                <td className="text-center">{product.action ? 'Đấu giá' : 'Bán'}</td>
                                                 <td className="text-end">{product.available}</td>
                                                 <td className="text-end">
                                                     <NumericFormat
@@ -441,7 +459,7 @@ function BangSanPham() {
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
-                                <nav aria-label="Page navigation example">
+                                {/* <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <a
@@ -483,6 +501,66 @@ function BangSanPham() {
                                             >
                                                 <i class="fa-solid fa-forward-fast"></i>
                                             </a>
+                                        </li>
+                                    </ul>
+                                </nav> */}
+                                <nav>
+                                    <ul className="pagination">
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showPrevPage}
+                                            >
+                                                Trang đầu
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showFirstPage}
+                                            >
+                                                Lùi một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showNextPage}
+                                            >
+                                                Tiếp một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showLastPage}
+                                            >
+                                                Trang cuối
+                                            </span>
                                         </li>
                                     </ul>
                                 </nav>

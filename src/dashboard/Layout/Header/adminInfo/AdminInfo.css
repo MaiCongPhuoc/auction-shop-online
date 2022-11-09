@@ -17,7 +17,7 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: #fff;
     border-radius: 10px;
-    width: 7.5rem;
+    width: 10rem;
     display: none;
     z-index: 999;
 }
@@ -68,4 +68,14 @@
 .noteGroup li {
     list-style: number;
     margin-top: 1rem;
+}
+.sp-adminInfo:hover {
+    color: rgb(225, 75, 30);
+}
+.btn-adminInfo:hover {
+    color: rgb(166, 50, 42);
+}
+.slick-active {
+    padding: 0 20px !important;
+    display: auto !important;
 }

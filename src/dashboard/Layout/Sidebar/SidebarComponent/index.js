@@ -1,7 +1,8 @@
 import useCollapse from 'react-collapsed';
-import { faAngleRight, faAngleDown, faListDots } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faAngleDown, faListDots, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { faProductHunt } from '@fortawesome/free-brands-svg-icons';
 function SidebarComponent() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     return (
@@ -15,14 +16,12 @@ function SidebarComponent() {
                 </i>
             </p>
             <div id="collapseTwo" className="collapse" {...getCollapseProps()}>
-                <div className="bg-white py-2 collapse-inner rounded">
-                    <Link to="/list-product">
-                        <i class="fa-solid fa-file"></i> Danh sách
-                    </Link>
+                <div className="bg-white py-2 collapse-inner rounded" style={{padding: '5px'}}>
+                    <FontAwesomeIcon icon={faProductHunt} style={{marginRight: '5px'}} />
+                    <Link to="/list-product">Sản phẩm</Link>
                     <br />
-                    <Link to="/dashboard/category">
-                        <i class="fa-solid fa-rectangle-list"></i> Thể loại
-                    </Link>
+                    <FontAwesomeIcon icon={faCaretDown} style={{marginRight: '5px'}} />
+                    <Link to="/dashboard/category">Thể loại</Link>
                 </div>
             </div>
         </li>

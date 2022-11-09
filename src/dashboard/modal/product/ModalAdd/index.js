@@ -5,15 +5,12 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
 import FileService from '../../../services/FileService';
-import ProductMediaService from '../../../services/ProductImageService';
 import '../../modal.css';
 import 'react-toastify/dist/ReactToastify.css';
 import ProductService from '../../../services/productService';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccount, getShowAddProduct } from '../../../../products/redux/selector';
 import { setShowAddProduct } from '../../../../products/redux/actions';
-// import { withSwal } from 'react-sweetalert2';
-
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
@@ -23,7 +20,7 @@ function ModalAddProduct(props) {
     const notify = () =>
         toast.success('Đã thêm thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -88,6 +85,9 @@ function ModalAddProduct(props) {
             setCategory({ ...categorys, errorMessage: error.message, loading: false });
         }
     }, []);
+
+    //here
+
     useEffect(() => {
         if (flag) {
             try {
@@ -98,19 +98,6 @@ function ModalAddProduct(props) {
                     console.log('createRes: ', createRes);
                 }
                 postData(submitFrm);
-                // async function saveAvatar() {
-                //     for (let i = 0; i < listImg.length; i++) {
-                //         console.log("here");
-                //         let img = {
-                //             id: 0,
-                //             fileUrl: listImg[i],
-                //         };
-
-                //         await ProductMediaService.AddMedia(img);
-                //     }
-                //     listImg = [];
-                // }
-                // saveAvatar();
                 notify();
                 setCategory({ ...category, loading: false });
             } catch (error) {
@@ -148,36 +135,41 @@ function ModalAddProduct(props) {
             },
             description: '',
             countday: '0',
+            cheatMoney: 0,
             images: ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'],
             createdBy: '',
         },
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'tên sản phẩm nhỏ nhất là 5 kí tự!')
-                .max(25, 'tên sản phẩm nhỏ nhất là 25 kí tự!')
+                .min(5, 'Tên sản phẩm tối thiểu là 5 kí tự!')
+                .max(25, 'Tên sản phẩm tối đa là 25 kí tự!')
                 .required('Bạn phải nhập tên sản phẩm vào!'),
             price: yup
                 .number('Vui lòng nhập số!')
-                .min(10000, 'Vui lòng nhập giá trên 10000 VNĐ!')
-                .max(999900000, 'Vui lòng nhập giá dưới 999900000 VNĐ!')
-                .required('Vui lòng nhập giá!'),
+                .required('Vui lòng nhập giá!')
+                .moreThan(99999, 'Sản phẩm có giá nhỏ nhất là: 100.000 đ'),
             estimatePrice: yup.number('Vui lòng nhập số!'),
             // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
             // .max(999900000, 'Vui lòng nhập giá ước tính dưới 999900000 VNĐ!'),
             // .required('Vui lòng nhập giá ước tính!'),
-            available: radio ? null :
-                yup
-                    .number('Vui lòng nhập số!')
-                    .min(1, 'Số lượng nhỏ nhất là 1!')
-                    .max(200, 'Số lượng lớn nhất là 200!')
-                    .required('Vui lòng nhập số lượng!'),
+            available: radio
+                ? null
+                : yup
+                      .number('Vui lòng nhập số!')
+                      .required('Vui lòng nhập số lượng!')
+                      .moreThan(9, 'Số lượng nhỏ nhất là 10')
+                      .lessThan(199, 'Số lượng lớn nhất là 200'),
             action: yup.string(),
             image: yup.mixed(),
             description: yup.string(),
+            cheatMoney: yup
+                .number()
+                .required('vui lòng nhập tiền quỵ')
+                .moreThan(499999, 'Tiền quỵ nhỏ nhất là 500.000'),
         }),
         onSubmit: (product) => {
-            product.createdBy = account.username;
+            product.createdBy = account.email;
             if (radio) {
                 product.action = radio;
                 product.available = 1;
@@ -186,7 +178,7 @@ function ModalAddProduct(props) {
                 product.images = listImg;
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
-                // product.estimatePrice = document.querySelector('#countday').value;
+                product.estimatePrice = document.querySelector('#estimatePrice').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             } else {
@@ -208,7 +200,7 @@ function ModalAddProduct(props) {
     return (
         <Modal show={showAddProduct} onHide={handleCloseAddProduct} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Add Product</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Thêm mới sản phẩm</Modal.Title>
             </Modal.Header>
             {loading ? (
                 <span className="spinner-border text-warning"></span>
@@ -235,6 +227,9 @@ function ModalAddProduct(props) {
                                 )}
                                 {formik.errors.estimatePrice && formik.touched.estimatePrice && (
                                     <li className="error">{formik.errors.estimatePrice}</li>
+                                )}
+                                {formik.errors.cheatMoney && formik.touched.cheatMoney && (
+                                    <li className="error">{formik.errors.cheatMoney}</li>
                                 )}
                             </ul>
                         </div>
@@ -290,7 +285,7 @@ function ModalAddProduct(props) {
                                                 type="number"
                                                 className="form-control"
                                                 name="estimatePrice"
-                                                id="addTitle"
+                                                id="estimatePrice"
                                                 placeholder="Vui lòng nhập giá ước tính..."
                                                 value={formik.values.estimatePrice}
                                                 onChange={formik.handleChange}
@@ -466,9 +461,9 @@ function ModalAddProduct(props) {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="mb-3 col-12">
+                                <div className="mb-3 col-6">
                                     <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
-                                        Images
+                                        Ảnh{' '}
                                     </label>
                                     <input
                                         type="file"
@@ -480,18 +475,34 @@ function ModalAddProduct(props) {
                                         placeholder="Vui lòng chọn file..."
                                         onInput={handleUpload}
                                     />
-                                    <div className="row d-flex justify-content-around">
-                                        {listImg.map((image, index) => (
-                                            <div className="col-3 imgAdd" key={index} style={{ height: '200px' }}>
-                                                <img
-                                                    src={image}
-                                                    alt=""
-                                                    onClick={() => document.querySelector('#image').click()}
-                                                    className="imgproduct"
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
+                                </div>
+                                <div className="mb-3 col-6">
+                                    <label htmlFor="cheatMoney" className="form-label text-dark font-weight-bold ml-2">
+                                        Tiền quỵ:
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        value={formik.values.cheatMoney}
+                                        onChange={formik.handleChange}
+                                        name="cheatMoney"
+                                        id="cheatMoney"
+                                        placeholder="Vui lòng nhập số lượng..."
+                                    />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="row d-flex justify-content-around">
+                                    {listImg.map((image, index) => (
+                                        <div className="col-3 imgAdd" key={index} style={{ height: '200px' }}>
+                                            <img
+                                                src={image}
+                                                alt=""
+                                                onClick={() => document.querySelector('#image').click()}
+                                                className="imgproduct"
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                             <div className="row">
@@ -512,7 +523,7 @@ function ModalAddProduct(props) {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type="reset" variant="secondary w-auto" className="" onClick={handleCloseAddProduct}>
-                            Close
+                            Đóng
                         </Button>
                         {stateImg ? (
                             <Button type="submit" className="btn btn-primary">
@@ -520,10 +531,10 @@ function ModalAddProduct(props) {
                             </Button>
                         ) : (
                             <Button type="submit" className="btn btn-primary">
-                                Create
+                                Thêm
                             </Button>
                         )}
-                        <ToastContainer autoClose={1500}/>
+                        <ToastContainer autoClose={1500} />
                     </Modal.Footer>
                 </form>
             )}

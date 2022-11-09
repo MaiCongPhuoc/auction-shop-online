@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import './styles.css';
 import './asset/css/login.css';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+// import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 export default function Google() {
     const [name, setName] = useState('');
@@ -10,19 +10,19 @@ export default function Google() {
     const [loginStatus, setLoginStatus] = useState(false);
 
     const responseGoogle = (response) => {
-        console.log(response);
+        // console.log(response);
         setName(response.profileObj.name);
         setEmail(response.profileObj.email);
         setUrl(response.profileObj.imageUrl);
         setLoginStatus(true);
     };
     const logout = () => {
-        console.log('logout');
+        // console.log('logout');
         setLoginStatus(false);
     };
     return (
         <div className="App">
-            {!loginStatus && (
+            {/* {!loginStatus && (
                 <GoogleLogin
                     clientId="671348139606-906f7lcl8vk6l26hivc1ka0hk2teuvb1.apps.googleusercontent.com"
                     buttonText="Đăng nhập với Google"
@@ -43,7 +43,7 @@ export default function Google() {
                         onLogoutSuccess={logout}
                     />
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

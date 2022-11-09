@@ -13,7 +13,7 @@ function ModalAddCategory(props) {
     const notify = () =>
         toast.success('Đã thêm thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -33,18 +33,22 @@ function ModalAddCategory(props) {
         title: '',
     });
     useEffect(() => {
-        try {
-            async function postData() {
-                let createRes = await CategoryService.addCategory(submitFrm);
+        if (flag) {
+            try {
+                async function postData() {
+                    let createRes = await CategoryService.addCategory(submitFrm);
+                }
+                postData(submitFrm);
+                setCategory({ ...category, loading: false });
+                flag = false;
+            } catch (error) {
+                console.log(error);
             }
-            postData(submitFrm);
-            setCategory({ ...category, loading: false });
-        } catch (error) {
-            console.log(error);
         }
     }, [submitFrm]);
     const handleReset = () => {
         formik.handleReset();
+        handleClose();
         notify();
     };
     const formik = useFormik({
@@ -55,9 +59,9 @@ function ModalAddCategory(props) {
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'Tên ngắn nhất là 5 kí tự!')
-                .max(25, 'Tên dài nhất là 25 kí tự!')
-                .required('Tên không được để trống!'),
+                .min(3, 'Tên thể loại tối thiểu là 3 kí tự!')
+                .max(20, 'Tên thể loại tối đa là 20 kí tự!')
+                .required('Tên thể loại không được để trống!'),
 
             // .test(
             //     'title',
@@ -76,6 +80,7 @@ function ModalAddCategory(props) {
         onSubmit: (product) => {
             setSubmitFrm(product);
             handleReset();
+            flag = true;
         },
     });
 
@@ -84,7 +89,7 @@ function ModalAddCategory(props) {
     return (
         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Add Category</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Thêm mới thể loại</Modal.Title>
             </Modal.Header>
             {loading ? (
                 <span className="spinner-border text-warning"></span>
@@ -102,7 +107,7 @@ function ModalAddCategory(props) {
                             <div className="row">
                                 <div className="mb-3">
                                     <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
-                                        Tên sản phẩm
+                                        Tên thể loại
                                     </label>
                                     <input
                                         type="text"
@@ -119,11 +124,11 @@ function ModalAddCategory(props) {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type="reset" variant="secondary w-auto" className="" onClick={handleClose}>
-                            Close
+                            Đóng
                         </Button>
 
                         <Button type="submit" className="btn btn-primary">
-                            Create
+                            Thêm
                         </Button>
 
                         <ToastContainer />

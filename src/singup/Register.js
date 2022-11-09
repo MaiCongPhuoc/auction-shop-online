@@ -11,12 +11,20 @@ import { Provider } from 'react-redux';
 import store from '../products/redux/store';
 import Header from '../products/components/Header/Header';
 import ContenRegister from './ContenRegister';
+import Footer from '../products/components/Footer/Footer';
 
 const Register = () => {
     return (
         <Provider store={store}>
             <Header className="product-client" />
             <ContenRegister className="product-client" />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            {/* <Footer /> */}
         </Provider>
     );
 };

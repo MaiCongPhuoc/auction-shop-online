@@ -22,7 +22,6 @@ function AccountAdmin() {
         async function getListProduct() {
             let listProduct = await ProductService.getProductsModeration();
             setShowModerationProduct({ ...showModalModeration, products: listProduct.data });
-            console.log('listProduct.data: ', listProduct.data);
         }
         getListProduct();
     }, [showModal]);
@@ -147,18 +146,13 @@ function AccountAdmin() {
                 <Tippy placement="bottom-end" interactive content={renderThongBao()} hideOnClick={true} trigger="click">
                     <a className="nav-link dropdown-toggle" href="#" id="alertsDropdown">
                         <i className="fas fa-bell fa-fw" />
-                        {/* Counter - Alerts */}
                         <span className="badge badge-danger badge-counter">{products.length}</span>
                     </a>
                 </Tippy>
-
-                {/* Dropdown - Alerts */}
             </li>
             {/* Nav Item - Messages */}
-            <li className="nav-item dropdown no-arrow mx-1">
+            {/* <li className="nav-item dropdown no-arrow mx-1">
                 <Tippy
-                    // delay={[0, 700]}
-                    // offset={[15, 8]}
                     placement="bottom-end"
                     interactive
                     content={renderTinNhan()}
@@ -175,12 +169,10 @@ function AccountAdmin() {
                         aria-expanded="false"
                     >
                         <i className="fas fa-envelope fa-fw" />
-                        {/* Counter - Messages */}
                         <span className="badge badge-danger badge-counter">7</span>
                     </a>
                 </Tippy>
-                {/* Dropdown - Messages */}
-            </li>
+            </li> */}
             <div className="topbar-divider d-none d-sm-block" />
             {/* Nav Item - User Information */}
             <li className="nav-item dropdown no-arrow">

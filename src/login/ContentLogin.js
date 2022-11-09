@@ -1,23 +1,32 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import GoogleAndFacebook from './GoogleAndFacebook';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import Swal from 'sweetalert2';
 import './asset/css/content.css';
 import './asset/css/login.css';
-import AccountService from '../dashboard/services/AccountService';
-import axios from 'axios';
+// import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import AuthService from '../dashboard/services/AuthService';
+import { useCookies } from 'react-cookie';
+import useAuth from '../hooks/useAuth';
+import AccountService from '../dashboard/services/AccountService';
 
 let flag = false;
 const ContentLogin = () => {
-    const dispatch = useDispatch();
+    const { setAuth } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    // const from = location.state?.from?.pathname || '/';
+    // const fromm = location.state?.from?.pathname || '/dashboard';
+
+    const dispatch = useDispatch();
+
+    const [cookies, setCookie] = useCookies(['JWT', 'Username']);
+
     const [user, setUser] = useState({
         email: '',
         password: '',
@@ -28,16 +37,32 @@ const ContentLogin = () => {
             try {
                 async function login() {
                     let userLogin = await AuthService.postLogin(user);
+                    let account = await AccountService.getAccountById(userLogin.data.id);
                     setUser(userLogin.data);
-                    console.log('userLogin.data: ', userLogin.data.roles[0].authority);
+                    let u = userLogin.data;
+                    let email = userLogin.data.name;
+                    let username = userLogin.data.username;
+                    let token = userLogin.data.token;
+                    let roles = userLogin.data.roles;
+                    // console.log('userLogin.data: ', userLogin.data);
                     dispatch(loginStatus(true));
-                    dispatch(setAccount(userLogin.data));
+                    dispatch(setAccount(account.data));
+                    setCookie('JWT', userLogin.data.token, { path: '/' });
+
+                    setAuth({ u, email, username, token, roles });
+                    if (userLogin.data.roles[0].authority === 'USER') {
+                        setTimeout(() => {
+                            navigate('/product', { replace: true });
+                        }, 2000);
+                    } else {
+                        setTimeout(() => {
+                            navigate('/dashboard', { replace: true });
+                        }, 2000);
+                    }
                     toast.success(`Đăng nhập thành công!`);
-                    // navigate('/dashboard', { replace: true });
                 }
                 login();
                 flag = false;
-                console.log('user: ', user);
             } catch (error) {}
         }
     }, [user]);
@@ -52,20 +77,21 @@ const ContentLogin = () => {
             password: '',
         },
         validationSchema: yup.object({
-            email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
+            email: yup.string().email('Vui lòng nhập đúng định dạng email!').required('Vui lòng nhập email!'),
             password: yup
                 .string()
-                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .min(8, 'Mật khẩu tối thiểu là 8 kí tự!')
                 .max(20, 'Mật khẩu tối đa là 20 kí tự!')
                 .required('Vui lòng nhập mật khẩu!'),
         }),
         onSubmit: (account) => {
             flag = true;
             setUser(account);
-            console.log('add count: ', account);
+            // console.log('add count: ', account);
             handleReset();
         },
     });
+
     return (
         <div className="base-width main-yield">
             <div className="login" data-pages-shell>
@@ -77,7 +103,7 @@ const ContentLogin = () => {
                                     <div className="loginNav">
                                         <h1>Đăng nhập tài khoản của bạn để trải nghiệm!</h1>
                                     </div>
-
+                                    <br />
                                     {/* <form onSubmit={loginHandler} readOnly> */}
                                     <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                                         <div className="frmError">
@@ -118,6 +144,7 @@ const ContentLogin = () => {
                                                     <Facebook />
                                                 </div>
                                             </div> */}
+
                                         <button type="submit" className="loginBtn">
                                             Đăng Nhập
                                         </button>
@@ -128,7 +155,9 @@ const ContentLogin = () => {
                                             {/* <button className="forgetPass" onClick={forgetPass}>
                                                 Quên Mật Khẩu?
                                             </button> */}
-                                            <button className="forgetPass">Quên Mật Khẩu?</button>
+                                            <Link to={'/restartPassword'} className="forgetPass">
+                                                Quên Mật Khẩu?
+                                            </Link>
                                         </div>
                                     </form>
                                 </div>

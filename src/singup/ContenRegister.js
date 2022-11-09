@@ -1,25 +1,23 @@
 import React from 'react';
-import AccountInfo from './AccountInfo';
-import './asset/css/content.css';
-import AccountSingupPhone from './AccountSingupPhone';
-import AccountSingupInfo from './AccountSingupInfo';
-import AccountLocation from './AccountLocation';
 import { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 import axios from './../login/api';
 import AccountService from '../dashboard/services/AccountService';
 import FileService from './../dashboard/services/FileService';
 import { useFormik } from 'formik';
+=======
+>>>>>>> development
 import { toast, ToastContainer } from 'react-toastify';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { loginStatus, setShowSignupInfo } from './../products/redux/actions';
+import './asset/css/content.css';
+import AccountService from '../dashboard/services/AccountService';
+import FileService from './../dashboard/services/FileService';
 import AuthService from '../dashboard/services/AuthService';
 
 let flag = false;
 const ContenRegister = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [stateImg, setStateImg] = useState(false);
     const [img, setImg] = useState(
         'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
@@ -40,6 +38,9 @@ const ContenRegister = () => {
                 await AuthService.postRegister(accountFrm);
             }
             register();
+            flag = false;
+            try {
+            } catch (error) {}
         }
     }, [accountFrm]);
 
@@ -132,6 +133,7 @@ const ContenRegister = () => {
             repassword: '',
             phone: '',
             blocked: 0,
+            surplus: 0,
             avatar: 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
             role: {
                 id: 2,
@@ -150,15 +152,15 @@ const ContenRegister = () => {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(8, 'Tên của bạn ít nhất là 8 kí tự!')
-                .max(20, 'Tên của bạn tối đa nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên vào!'),
+                .min(8, 'Tên của bạn tối thiểu là 8 kí tự!')
+                .max(20, 'Tên của bạn tối đa là 20 kí tự!')
+                .required('Vui lòng nhập họ và tên đầy đủ!'),
             username: yup
                 .string()
-                .min(8, 'Tên sản phẩm nhỏ nhất là 8 kí tự!')
-                .max(20, 'Tên sản phẩm nhỏ nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên sản phẩm vào!'),
-            email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
+                .min(8, 'Tên đăng nhập tối thiếu là 8 kí tự!')
+                .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
+                .required('Vui lòng nhập tên đăng nhập!'),
+            email: yup.string().email('Vui lòng nhập đúng định dạng email!').required('Vui lòng nhập địa chỉ email!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             password: yup
                 .string()
@@ -169,10 +171,11 @@ const ContenRegister = () => {
                 .string()
                 .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
                 .required('Vui lòng nhập lại mật khẩu!'),
+            surplus: yup.number('Bạn phải nhập số!'),
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
             locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
-            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng Nhập địa chỉ!') }),
+            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng nhập địa chỉ!') }),
         }),
         onSubmit: (account) => {
             let provinceId = document.querySelector('#province').value;
@@ -187,7 +190,6 @@ const ContenRegister = () => {
             let war = document.querySelector('#ward').options.selectedIndex;
             let currentWard = document.querySelector('#ward').options[war].text;
 
-            flag = true;
             account.avatar = img;
             account.locationRegion.provinceId = provinceId;
             account.locationRegion.provinceName = currentProvince;
@@ -195,30 +197,19 @@ const ContenRegister = () => {
             account.locationRegion.districtName = currentDistrict;
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
-            console.log('add count: ', account);
             flag = true;
             setAccountFrm(account);
             handleReset();
-            notify();
+            console.log('add count: ', account);
         },
     });
-
-    const notify = () =>
-        toast.success('Đăng ký thành công!', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-        });
     return (
         <>
             <form className="alo" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <div className="base-width-reg main-yield" style={{ maxWidth: '96%' }}>
-                    <h3 style={{ color: 'yellow' }}>ĐĂNG KÝ THÔNG TIN TÀI KHOẢN</h3>
+                    <h3 style={{ color: 'yellow', textAlign: 'center', paddingTop: '50px' }}>
+                        ĐĂNG KÝ THÔNG TIN TÀI KHOẢN
+                    </h3>
                     <hr />
                     <div className="modal-body">
                         <div className="frmError row">
@@ -239,7 +230,7 @@ const ContenRegister = () => {
                                     <li className="error">{formik.errors.phone}</li>
                                 )}
 
-                                {formik.errors.locationRegionDistrictId && formik.errors.locationRegionDistrictId && (
+                                {/* {formik.errors.locationRegionDistrictId && formik.errors.locationRegionDistrictId && (
                                     <li className="error">{formik.errors.locationRegionDistrictId}</li>
                                 )}
                                 {formik.errors.locationRegionWardId && formik.errors.locationRegionWardId && (
@@ -248,12 +239,15 @@ const ContenRegister = () => {
                                 {formik.errors.locationRegionProvinceId && formik.errors.locationRegionProvinceId && (
                                     <li className="error">{formik.errors.locationRegionProvinceId}</li>
                                 )}
-                                {formik.errors.locationRegionAddress && formik.errors.locationRegionAddress && (
+                                {formik.errors.locationRegionAddress && formik.errors.locationRegion.address && (
                                     <li className="error">{formik.errors.locationRegionAddress}</li>
-                                )}
+                                )} */}
 
                                 {formik.errors.username && formik.errors.username && (
                                     <li className="error">{formik.errors.username}</li>
+                                )}
+                                {formik.errors.surplus && formik.errors.surplus && (
+                                    <li className="error">{formik.errors.surplus}</li>
                                 )}
                             </ul>
                         </div>
@@ -430,7 +424,7 @@ const ContenRegister = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="mb-2 col-6">
+                            <div className="mb-2 col-4">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Ảnh:
                                 </label>
@@ -445,7 +439,7 @@ const ContenRegister = () => {
                                     onInput={handleUpload}
                                 />
                             </div>
-                            <div className="mb-2 col-6">
+                            <div className="mb-2 col-4">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Địa chỉ:
                                 </label>
@@ -460,8 +454,26 @@ const ContenRegister = () => {
                                     onChange={formik.handleChange}
                                 />
                             </div>
+                            <div className="mb-2 col-4">
+                                <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
+                                    Nạp tiền:
+                                </label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="surplus"
+                                    name="surplus"
+                                    placeholder="Vui lòng nhập số tiền muốn nạp..."
+                                    value={formik.values.surplus}
+                                    onChange={formik.handleChange}
+                                />
+                            </div>
                         </div>
-                        <button type="submit" className="signinBtn btn btn-primary">
+                        <button
+                            type="submit"
+                            className="signinBtn btn btn-primary"
+                            style={{ display: 'block', margin: '0 auto', textAlign: 'center' }}
+                        >
                             ĐĂNG KÝ
                         </button>
                     </div>

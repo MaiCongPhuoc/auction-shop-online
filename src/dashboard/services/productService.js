@@ -10,29 +10,56 @@ import {
     REMOVEPRODUCT_URL,
 } from './Commom';
 
+
 class ProductService {
+
+    static getCookie(name) {
+        let cookie = {};
+        document.cookie.split(';').forEach(function (el) {
+            let [k, v] = el.split('=');
+            cookie[k.trim()] = v;
+        });
+        return cookie[name];
+    }
+
     static getProducts() {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(PRODUCT_URL);
     }
     static getProductsModeration() {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(PRODUCTMODERATION_URL);
     }
     static getDataTableProduct(search, currentPage, recordPerPage) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${DATATABLEPRODUCT_URL}${search}?page=${currentPage}&size=${recordPerPage}`);
     }
     static AddProduct(product) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.post(`${ADDPRODUCT_URL}`, product);
     }
     static EditProduct(editProduct, editProductId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.put(`${EDITPRODUCT_URL}/${editProductId}`, editProduct);
     }
     static ModerationProduct(editProductId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.put(`${PRODUCTMODERATIONBYID_URL}/${editProductId}`);
     }
     static ProductById(editProductId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${PRODUCTBYID_URL}/` + editProductId);
     }
     static DeleteProduct(productId) {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.put(`${REMOVEPRODUCT_URL}/${productId}`);
     }
 }

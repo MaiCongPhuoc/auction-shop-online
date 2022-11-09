@@ -5,14 +5,15 @@ import { getAccount, getAllCartItems, getShowAddProduct, getReloadCartItem } fro
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react';
 import ModalAdd from '../../../../dashboard/modal/product/ModalAdd';
 import CartItemService from '../../../service/CartItem/CartItemService';
-import { Swal } from 'sweetalert2';
 import { ToastContainer } from 'react-toastify';
 import AdminInfo from './../../../../dashboard/Layout/Header/adminInfo/AdminInfo';
+import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
+import { width } from '@mui/system';
+import Notification from '../Notification/Notification.js';
+import ClientInfo from './../ClientInfo/ClientInfo';
 
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
@@ -23,6 +24,9 @@ const HeaderAfterLogin = () => {
     };
 
     const [cartItems, setListCartItems] = useState([]);
+    const [orderDetails, setOrderDetails] = useState([]);
+    const [myOrderDetails, setMyOrderDetails] = useState([]);
+    const [waitingLists, setWaitingLists] = useState([]);
 
     const reloadCartItem = useSelector(getReloadCartItem);
 
@@ -30,14 +34,24 @@ const HeaderAfterLogin = () => {
         try {
             async function getCartItems() {
                 const allCartItems = await CartItemService.getCartItems(account.email);
+                const allOrderDetails = await OrdersDetailService.getAllOrdersDetail(account.email);
+                const myOrderDetailsRes = await OrdersDetailService.getOrdersDetailByProductCreatedBy(account.email);
                 setListCartItems(allCartItems.data);
+                setOrderDetails(allOrderDetails.data);
+                setWaitingLists(getWaitingLists(allOrderDetails.data));
+                setMyOrderDetails(getWaitingLists(myOrderDetailsRes.data));
             }
             getCartItems();
         } catch (error) {
-            console.log(error);
+            console.log('header after login', error);
         }
     }, [reloadCartItem]);
 
+    const getWaitingLists = (orderDetails) => {
+        return orderDetails.filter((orderDetail) => {
+            return orderDetail.status.id === 7 || orderDetail.status.id === 8 || orderDetail.status.id === 9;
+        });
+    };
     const handleShowModalAddProduct = () => {
         dispatch(setShowAddProduct(true));
     };
@@ -49,7 +63,13 @@ const HeaderAfterLogin = () => {
                     <FontAwesomeIcon icon={faPlus} className="pr-2" />
                     Add product
                 </a> */}
-                <a title="Thêm mới" type="button" className="btn btn-success" onClick={handleShowModalAddProduct}>
+                <a
+                    title="Thêm mới"
+                    type="button"
+                    className="btn btn-success"
+                    style={{ width: '180px' }}
+                    onClick={handleShowModalAddProduct}
+                >
                     <i className="fa-solid fa-plus me-2" title="Thêm mới"></i>Tạo sản phẩm
                 </a>
             </div>
@@ -59,59 +79,45 @@ const HeaderAfterLogin = () => {
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
-                <Link to={`/product/cart/${account.email}`} style={{ fontSize: '14px' }}>
+                <Link to={'/product/cart'} style={{ fontSize: '14px' }}>
                     <i
                         style={{ position: 'relative' }}
                         className="fa-brands fa-opencart fa-2x ic-cart me-3"
                         aria-hidden="true"
                     >
-                        <span
-                            style={{
-                                textAlign: 'center',
-                                position: 'absolute',
-                                border: '0.5px solid white',
-                                width: 'auto',
-                                height: '20px',
-                                borderRadius: '10px',
-                                backgroundColor: 'red',
-                                color: 'white',
-                                fontSize: '12px',
-                                left: '30px',
-                                bottom: '15px',
-                                padding: '3px',
-                            }}
-                        >
-                            {cartItems.length}
-                        </span>
+                        {cartItems.length === 0 ? null : (
+                            <span
+                                style={{
+                                    textAlign: 'center',
+                                    position: 'absolute',
+                                    border: '0.5px solid white',
+                                    width: 'auto',
+                                    height: '20px',
+                                    borderRadius: '10px',
+                                    backgroundColor: 'red',
+                                    color: 'white',
+                                    fontSize: '12px',
+                                    left: '30px',
+                                    bottom: '15px',
+                                    padding: '3px',
+                                }}
+                            >
+                                {cartItems.length}
+                            </span>
+                        )}
                     </i>
                 </Link>
+                <div className="widget-notif-wrapper mx-2">
+                    <div>
+                        <div className="ic-notif-num">
+                            <Notification countOrder={waitingLists.length} myOrderDetails={myOrderDetails.length} />
+                            {/* <Notification countOrder={orderDetails.length} /> */}
+                        </div>
+                    </div>
+                </div>
                 <div className="widget-notif-wrapper">
                     <div>
                         <div className="ic-notif-num">
-                            <i
-                                style={{ position: 'relative' }}
-                                className="fa-regular fa-bell fa-2x ic-notif "
-                                aria-hidden="true"
-                            >
-                                <span
-                                    style={{
-                                        textAlign: 'center',
-                                        position: 'absolute',
-                                        border: '0.5px solid white',
-                                        width: 'auto',
-                                        height: '20px',
-                                        borderRadius: '10px',
-                                        backgroundColor: 'red',
-                                        color: 'white',
-                                        fontSize: '12px',
-                                        left: '15px',
-                                        bottom: '15px',
-                                        padding: '3px',
-                                    }}
-                                >
-                                    1
-                                </span>
-                            </i>
                             <Tippy
                                 placement="bottom-end"
                                 interactive
@@ -120,14 +126,14 @@ const HeaderAfterLogin = () => {
                                 trigger="click"
                             >
                                 <button className="logged_in_name mx-3" href="#">
-                                    THAO TÁC THÊM
+                                    ĐĂNG SẢN PHẨM
                                 </button>
                             </Tippy>
                         </div>
                     </div>
                 </div>
             </div>
-            <AdminInfo />
+            <ClientInfo />
             <ModalAdd />
             <ToastContainer autoClose={1500} />
         </div>

@@ -109,6 +109,12 @@ export const typeFiltersChange = (text) => {
         payload: text,
     };
 };
+export const sortFiltersChange = (text) => {
+    return {
+        type: 'filters/sortFiltersChange',
+        payload: text,
+    };
+};
 
 export const categoryFiltersChange = (arr) => {
     return {
@@ -184,15 +190,83 @@ export const setShowCartModalCheckout = (boolean) => {
 export const setReloadCartItem = (boolean) => {
     return {
         type: 'cartItems/setReloadCartItem',
-        payload: boolean
-    }
-}
-
+        payload: boolean,
+    };
+};
 
 // Order
 export const setCheckPayment = (boolean) => {
     return {
         type: 'orders/setCheckPayment',
         payload: boolean,
+    };
+};
+
+// Order detail
+export const setOrderDetails = (arr) => {
+    return {
+        type: 'orderDetails/setOrderDetails',
+        payload: arr,
+    };
+};
+export const setReloadOrder = (boolean) => {
+    return {
+        type: 'orderDetails/setReloadOrder',
+        payload: boolean,
+    };
+};
+
+// Watch List
+export const setWatchLists = (arr) => {
+    return {
+        type: 'watchLists/setWatchLists',
+        payload: arr,
+    };
+};
+export const setReloadWatchList = (boolean) => {
+    return {
+        type: 'watchLists/setReloadWatchList',
+        payload: boolean,
+    };
+};
+
+// My Shop
+export const setOpenSidebar = (boolean) => {
+    return {
+        type: 'myShops/setOpenSidebar',
+        payload: boolean,
+    };
+};
+export const setMenu = (string) => {
+    return {
+        type: 'myShops/setMenu',
+        payload: string,
+    };
+};
+
+// Reviews
+export const setReviews = (arr) => {
+    return {
+        type: 'reviews/setReviews',
+        payload: arr,
+    };
+};
+export const setReviewId = (int) => {
+    return {
+        type: 'reviews/setReviewId',
+        payload: int,
+    };
+};
+
+export const setReloadReviews = (boolean) => {
+    return {
+        type: 'reviews/setReloadReviews',
+        payload: boolean,
+    };
+};
+export const setRating = (int) => {
+    return {
+        type: 'reviews/setRating',
+        payload: int,
     };
 };

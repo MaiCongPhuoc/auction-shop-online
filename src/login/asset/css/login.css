@@ -93,3 +93,9 @@
 .loginGG {
     display: flex;
 }
+.forgot-pass {
+    width: 400px;
+    height: 200px;
+    margin-top: 20px;
+    justify-items: center;
+}

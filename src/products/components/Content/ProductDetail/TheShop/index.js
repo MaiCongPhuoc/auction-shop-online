@@ -10,10 +10,10 @@ function TheShop() {
     // const { auctionId } = useParams();
     // console.log('auctionId: ', auctionId);
     return (
-        <Provider store={store}>
+        <>
             <Header className="product-client" />
             <TheShopDetail />
-        </Provider>
+        </>
     );
 }
 

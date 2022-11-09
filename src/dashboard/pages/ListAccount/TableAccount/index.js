@@ -1,4 +1,4 @@
-import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import AccountService from '../../../services/AccountService';
@@ -6,11 +6,9 @@ import Spiner from '../../../Spiner';
 import ModalDetailAccount from '../../../modal/account/ModalDetail';
 import ModalAddAccount from '../../../modal/account/ModalAdd';
 import ModalEditAccount from '../../../modal/account/ModalEdit';
-import ModalRestartPassword from '../../../modal/account/ModalRestartPassWord';
 import Swal from 'sweetalert2';
 import '../../pages.css';
 import Tippy from '@tippyjs/react';
-import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 
 function BangTaiKhoan() {
@@ -45,19 +43,16 @@ function BangTaiKhoan() {
     });
     const hanldeCloseEditAccount = () => setShowEdit(false);
 
-    //modal restartPassword
-    const [showRestart, setShowRestart] = useState(false);
-    const hanldCloseRestartPassword = () => setShowRestart(false);
-
-    const notify = (id) =>
+    const deleAccount = (id) =>
         Swal.fire({
-            title: 'Bạn chắc không?',
+            title: 'Bạn có chắc xóa chứ?',
             text: 'Bạn sẽ không hoàn tác lại!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Vâng! Tôi xóa nó',
+            confirmButtonText: 'Vâng! Tôi xóa',
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 async function daleteAcount() {
@@ -66,7 +61,46 @@ function BangTaiKhoan() {
                 }
                 daleteAcount();
                 Swal.fire('</br> Đã xóa!', 'Bạn đã xóa người dùng này.', 'Thành công!');
-                // toast.success(`Đã xóa thành công!`);
+            }
+        });
+    const lockAccount = (id) =>
+        Swal.fire({
+            title: 'Bạn có chắc muốn khóa tài khoản này?',
+            text: 'Bạn hãy xem xét lựa chọn của mình!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vâng! Tôi muốn khóa',
+            cancelButtonText: 'Không',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                async function daleteAcount() {
+                    await AccountService.patchLockAccount(id);
+                    setReRender(!reRender);
+                }
+                daleteAcount();
+                Swal.fire('</br> Đã khóa!', 'Bạn đã khóa người dùng này.', 'Thành công!');
+            }
+        });
+    const unLockAccount = (id) =>
+        Swal.fire({
+            title: 'Bạn có chắc muốn mở khóa tài khoản này?',
+            text: 'Bạn hãy xem xét lựa chọn của mình!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Vâng! Tôi muốn mở khóa',
+            cancelButtonText: 'Không',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                async function daleteAcount() {
+                    await AccountService.patchUnLockAccount(id);
+                    setReRender(!reRender);
+                }
+                daleteAcount();
+                Swal.fire('</br> Đã mở khóa!', 'Bạn đã mở khóa người dùng này.', 'Thành công!');
             }
         });
 
@@ -94,7 +128,6 @@ function BangTaiKhoan() {
 
     // data table
     async function getProductsByPagination(currentPage) {
-        console.log('currentPage: ', currentPage);
         state.currentPage = currentPage - 1;
         let accountData = await AccountService.getDataTableAccount(
             state.search,
@@ -169,6 +202,8 @@ function BangTaiKhoan() {
         });
     };
     const handleReset = () => {
+        document.querySelector('#select').value = '-1';
+        document.querySelector('#search').value = '';
         async function getDataTable() {
             let dataTable = await AccountService.getDataTableAccount('', 0, 5);
             setState({
@@ -177,6 +212,7 @@ function BangTaiKhoan() {
                 totalPages: dataTable.data.totalPages,
                 totalElements: dataTable.data.totalElements,
                 currentPage: dataTable.data.number + 1,
+                search: '',
             });
         }
         getDataTable();
@@ -201,6 +237,7 @@ function BangTaiKhoan() {
         getDataTable();
     };
 
+    console.log('account: ', state.accounts);
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
     const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, roles } = state;
@@ -211,9 +248,7 @@ function BangTaiKhoan() {
                 <Spiner />
             ) : (
                 <div className="shadow mb-4 cur-div" style={{ cursor: 'auto !important' }}>
-                    <div
-                        className="card-header d-flex justify-content-between"
-                    >
+                    <div className="card-header d-flex justify-content-between">
                         <h5 className="font-weight-bold text-primary" style={{ marginTop: '18px' }}>
                             Danh sách tài khoản
                         </h5>
@@ -263,7 +298,7 @@ function BangTaiKhoan() {
                                             name="search"
                                             onClick={handleReset}
                                         >
-                                            reset search
+                                            Đặt lại tìm kiếm
                                         </button>
                                     </div>
                                 </div>
@@ -284,10 +319,8 @@ function BangTaiKhoan() {
                             <table className="table table-hover" id="dataTable" width="100%" cellSpacing={0}>
                                 <thead>
                                     <tr>
-                                        <th className="text-center">Avatar</th>
+                                        <th className="text-center">Ảnh</th>
                                         <th className="text-center">Tên đầy đủ</th>
-                                        {/* <th className="text-center">Email</th> */}
-                                        {/* <th className="text-center">Số điện thoại</th> */}
                                         <th className="text-center">Quyền</th>
                                         <th className="text-center">Tỉnh/Thành Phố</th>
                                         <th className="text-center">Quận/Huyện</th>
@@ -300,7 +333,7 @@ function BangTaiKhoan() {
                                         ? ''
                                         : accounts.map((account) => (
                                               <tr key={account.id}>
-                                                  <td>
+                                                  <td className="text-center">
                                                       <button
                                                           onClick={() =>
                                                               setShowDetail({
@@ -318,15 +351,13 @@ function BangTaiKhoan() {
                                                           />
                                                       </button>
                                                   </td>
-                                                  <td>
+                                                  <td className="text-center">
                                                       <strong>{account.fullName}</strong>
                                                   </td>
-                                                  {/* <td>{account.email}</td> */}
-                                                  {/* <td className="text-end">{account.phone}</td> */}
-                                                  <td>{account.role.code}</td>
-                                                  <td>{account.locationRegion.provinceName}</td>
-                                                  <td>{account.locationRegion.districtName}</td>
-                                                  <td>{account.locationRegion.wardName}</td>
+                                                  <td className="text-center">{account.role.code}</td>
+                                                  <td className="text-center">{account.locationRegion.provinceName}</td>
+                                                  <td className="text-center">{account.locationRegion.districtName}</td>
+                                                  <td className="text-center">{account.locationRegion.wardName}</td>
                                                   <td className="text-center">
                                                       <Tippy
                                                           delay={[0, 0]}
@@ -359,25 +390,40 @@ function BangTaiKhoan() {
                                                       >
                                                           <button
                                                               className="btn btn-outline-danger ml-2"
-                                                              onClick={() => notify(account.id)}
+                                                              onClick={() => deleAccount(account.id)}
                                                           >
                                                               <i className="fa-solid fa-trash danger" title="Xóa"></i>
                                                           </button>
                                                       </Tippy>
-                                                      <Tippy
-                                                          delay={[0, 0]}
-                                                          // offset={[15, 8]}
-                                                          placement="top"
-                                                          content="Đổi mật khẩu"
-                                                      >
-                                                          <button
-                                                              className="btn btn-outline-info ml-2"
-                                                              data-bs-toggle="modal"
-                                                              data-bs-target="#btnDoiMK"
+                                                      {account.blocked ? (
+                                                          <Tippy
+                                                              delay={[0, 0]}
+                                                              // offset={[15, 8]}
+                                                              placement="top"
+                                                              content="Khóa"
                                                           >
-                                                              <i class="fa-solid fa-key" title="Đổi mật khẩu"></i>
-                                                          </button>
-                                                      </Tippy>
+                                                              <button
+                                                                  className="btn btn-outline-warning ml-2"
+                                                                  onClick={() => unLockAccount(account.id)}
+                                                              >
+                                                                  <FontAwesomeIcon icon={faLock} />
+                                                              </button>
+                                                          </Tippy>
+                                                      ) : (
+                                                          <Tippy
+                                                              delay={[0, 0]}
+                                                              // offset={[15, 8]}
+                                                              placement="top"
+                                                              content="Khóa"
+                                                          >
+                                                              <button
+                                                                  className="btn btn-outline-warning ml-2"
+                                                                  onClick={() => lockAccount(account.id)}
+                                                              >
+                                                                  <FontAwesomeIcon icon={faUnlockKeyhole} />
+                                                              </button>
+                                                          </Tippy>
+                                                      )}
                                                   </td>
                                               </tr>
                                           ))}
@@ -394,7 +440,7 @@ function BangTaiKhoan() {
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
-                                <nav aria-label="Page navigation example">
+                                {/* <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <a
@@ -437,6 +483,66 @@ function BangTaiKhoan() {
                                             </a>
                                         </li>
                                     </ul>
+                                </nav> */}
+                                <nav>
+                                    <ul className="pagination">
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showPrevPage}
+                                            >
+                                                Trang đầu
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showFirstPage}
+                                            >
+                                                Lùi một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showNextPage}
+                                            >
+                                                Tiếp một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showLastPage}
+                                            >
+                                                Trang cuối
+                                            </span>
+                                        </li>
+                                    </ul>
                                 </nav>
                             </div>
                         </div>
@@ -455,8 +561,6 @@ function BangTaiKhoan() {
             {/*==================== Modal Add ===========================*/}
             <ModalAddAccount showAdd={showAdd} onCloseAddAccount={hanldeCloseAddAccount} />
 
-            {/* ====================== Modal RestartPassword ======================== */}
-            <ModalRestartPassword showRestart={showRestart} onCloseRestarPassword={hanldCloseRestartPassword} />
             {/* ======================= Modal detail ======================= */}
             <ModalDetailAccount
                 showDetail={showdetail}

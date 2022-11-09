@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -12,7 +12,7 @@ function ModalEditCategory(props) {
     const notify1 = () =>
         toast.success('Đã sửa thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -67,6 +67,7 @@ function ModalEditCategory(props) {
 
     const handleCloseEditProduct = () => {
         formik.handleReset();
+        handleCloseEditProduct();
         handleCloseEdit();
     };
 
@@ -78,9 +79,9 @@ function ModalEditCategory(props) {
         validationSchema: yup.object({
             title: yup
                 .string()
-                .min(5, 'Tên ngắn nhất là 5 kí tự!')
-                .max(25, 'Tên dài nhất là 25 kí tự!')
-                .required('Tên không được để trống!'),
+                .min(3, 'Tên thể loại tối thiểu là 3 kí tự!')
+                .max(20, 'Tên thể loại tối đa là 20 kí tự!')
+                .required('Tên thể loại không được để trống!'),
             // .test(
             //     'title',
             //     'Tên đã tồn tại! Vui lòng nhập tên khác!',
@@ -98,7 +99,7 @@ function ModalEditCategory(props) {
     return (
         <Modal show={showedit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Edit Category</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Cập nhật thể loại</Modal.Title>
             </Modal.Header>
             <form multiple="multiple" onSubmit={formik.handleSubmit}>
                 <Modal.Body>
@@ -113,7 +114,7 @@ function ModalEditCategory(props) {
                         <div className="row">
                             <div className="mb-3">
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
-                                    Title
+                                    Tên thể loại
                                 </label>
                                 <input
                                     type="text"
@@ -121,7 +122,7 @@ function ModalEditCategory(props) {
                                     name="title"
                                     id="addTitle"
                                     placeholder="Vui lòng nhập tên sản phẩm..."
-                                    value={formik.values.title || categorys.title}
+                                    value={formik.values.title || categorys.title || ''}
                                     onChange={formik.handleChange}
                                 />
                             </div>
@@ -130,10 +131,10 @@ function ModalEditCategory(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button type="reset" variant="secondary w-auto" onClick={handleCloseEdit}>
-                        Close
+                        Đóng
                     </Button>
                     <Button type="submit" className="btn btn-primary">
-                        Save
+                        Cập nhật
                     </Button>
                     <ToastContainer />
                 </Modal.Footer>

@@ -15,8 +15,12 @@ export const ACCOUNT_URL = 'http://localhost:8080/api/accounts';
 export const ADDACCOUNT_URL = 'http://localhost:8080/api/accounts/create';
 export const EDITACCOUNT_URL = 'http://localhost:8080/api/accounts/update';
 export const DELETEACCOUNT_URL = 'http://localhost:8080/api/accounts/delete';
+export const LOCKACCOUNT_URL = 'http://localhost:8080/api/accounts/block';
+export const UNLOCKACCOUNT_URL = 'http://localhost:8080/api/accounts/unblock';
 export const ACCOUNTBYID_URL = 'http://localhost:8080/api/accounts/getAccount/account';
 export const DATATABLEACCOUNT_URL = 'http://localhost:8080/api/accounts/p/';
+export const ACCOUNTBYEMAIL_URL = 'http://localhost:8080/api/accounts/getAccountEmail';
+export const RESTARTPASSWORD_URL = 'http://localhost:8080/api/accounts/restartPassword';
 
 export const ROLES_URL = 'http://localhost:8080/api/roles';
 
@@ -35,6 +39,10 @@ export const BID_URL = 'http://localhost:8080/api/bids/create';
 export const LISTBID_URL = 'http://localhost:8080/api/bids/auction';
 
 export const BARCHART_URL = 'http://localhost:8080/api/orders-detail/chart';
+export const TURNOVERBYMONTH_URL = 'http://localhost:8080/api/orders-detail/turnoverByMonth';
 
 export const REGISTER_URL = 'http://localhost:8080/api/auth/register';
 export const LOGIN_URL = 'http://localhost:8080/api/auth/login';
+
+// edit-password
+export const EDIT_PASSWORD_ACCOUNT_URL = 'http://localhost:8080/api/accounts/update/password';

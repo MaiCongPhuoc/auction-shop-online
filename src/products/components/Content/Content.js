@@ -8,10 +8,15 @@ import ContentTheShop from './ContentTheShop/ContentTheShop';
 import './content.css';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { getAccount, getCheckProduct, getType, getAllCartItems, getShowCart } from '../../redux/selector';
-import { getSearchingFilters, getShowInfoProduct, getLoginStatus } from './../../redux/selector';
+import { getSearchingFilters, getShowInfoProduct, getLoginStatus, getReloadWatchList } from './../../redux/selector';
 import ContentResultFilters from './ContentResultFilters/ContentResultFilters';
-import { setCartItems, setCheckProduct, setShowCart } from './../../redux/actions';
-import CartItemService from './../../service/CartItem/CartItemService';
+import { setCategories, setLoadData, setProducts, setWatchLists } from './../../redux/actions';
+import ProductService from '../../service/Product/ProductService';
+import CategoriesService from '../../service/Categories/CategoriesService';
+import WatchListsService from '../../service/WatchList/WatchListService';
+import TopProducts from './HeaderTopProduct/TopProducts';
+import PagingProducts from './ContentAll/index';
+import PagingResultFilters from './ContentResultFilters/index';
 
 const Content = () => {
     const dispatch = useDispatch();
@@ -20,38 +25,47 @@ const Content = () => {
 
     const searchStatus = useSelector(getSearchingFilters);
 
-    const showInfoProduct = useSelector(getShowInfoProduct);
-
     const loginStatus = useSelector(getLoginStatus);
 
     const account = useSelector(getAccount);
 
-    useEffect(() => {
-        if (showInfoProduct) {
-            dispatch(setCheckProduct(true));
-        } else {
-            dispatch(setCheckProduct(false));
-        }
+    const reloadWatchList = useSelector(getReloadWatchList);
 
-        // if (loginStatus) {
-        //     try {
-        //         async function getCartItems() {
-        //             const cartItemsRes = await CartItemService.getCartItems(account.email);
-        //             dispatch(setCartItems(cartItemsRes.data));
-        //         }
-        //         getCartItems();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
-    }, [
-        showInfoProduct
-        // , loginStatus
-    ]);
+    useEffect(() => {
+        try {
+            WatchListsService.getWatchListByAccountId(account.id)
+                .then((res) => {
+                    dispatch(setWatchLists(res.data));
+                })
+                .catch((resp) => {
+                    console.log(resp);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    }, [reloadWatchList]);
+
+    useEffect(() => {
+        try {
+            dispatch(setLoadData(true));
+            async function getData() {
+                let productsRes = await ProductService.getAllProducts();
+                let categoriesRes = await CategoriesService.getAllCategories();
+
+                dispatch(setProducts(productsRes.data));
+                dispatch(setCategories(categoriesRes.data));
+                dispatch(setLoadData(false));
+            }
+            getData();
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
     return (
         <>
             <div className="base-width main-yield" id="client-content" style={{ maxWidth: '96%' }}>
+                <TopProducts />
                 <div className="pages" data-pages-shell="">
                     <div id="homepage-lot">
                         <div
@@ -65,13 +79,13 @@ const Content = () => {
                                         <div>
                                             <ContentLotType />
                                             {searchStatus ? (
-                                                <ContentResultFilters />
+                                                <PagingResultFilters />
                                             ) : type === 'Đấu giá' ? (
                                                 <ContentAuction />
                                             ) : type === 'Cửa hàng' ? (
                                                 <ContentTheShop />
                                             ) : (
-                                                <ContentAll />
+                                                <PagingProducts />
                                             )}
                                         </div>
                                     </div>

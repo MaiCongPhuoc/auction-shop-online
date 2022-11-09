@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { compareValues } from './../Hooks/Hooks';
 //login
 export const getLoginStatus = (state) => state.login.login;
 export const getShowSignupInfo = (state) => state.login.showSignupInfo;
@@ -40,6 +41,10 @@ export const getReloadCartItem = (state) => state.cartItems.reloadCartItem;
 // Order
 export const getCheckPayment = (state) => state.orders.checkPayment;
 
+// Order details
+export const getAllOrderDetails = (state) => state.orderDetails.orderDetails;
+export const getReloadOrder = (state) => state.orderDetails.reloadOrder;
+
 // Filters
 export const searchTextSelector = (state) => state.filters.search;
 
@@ -48,6 +53,8 @@ export const getResultsFiltersChange = (state) => state.filters.results;
 export const getSearchingFilters = (state) => state.filters.searching;
 
 export const getTypeFiltersChange = (state) => state.filters.type;
+
+export const getSortFiltersChange = (state) => state.filters.sort;
 
 export const getCategoriesFiltersChange = (state) => state.filters.categories;
 
@@ -117,6 +124,15 @@ export const productsRemainingCategorySelector = createSelector(
     },
 );
 
+export const productsRemainingSortSelector = createSelector(
+    productsRemainingCategorySelector,
+    getSortFiltersChange,
+    (products, sortChange) => {
+        return products.sort(compareValues('price', sortChange));
+    },
+);
+
+
 // Modals
 
 export const getShowInfoProduct = (state) => state.modals.showInfoProduct;
@@ -126,3 +142,17 @@ export const getShowAddProduct = (state) => state.modals.showAddProduct;
 export const getShowEditProduct = (state) => state.modals.showEditProduct;
 
 export const getShowModerationProduct = (state) => state.modals.showModerationProduct;
+
+// Watch List
+export const getWatchLists = (state) => state.watchLists.watchLists;
+export const getReloadWatchList = (state) => state.watchLists.reloadWatchList;
+
+// My Shop
+export const getOpenSidebar = (state) => state.myShops.openSidebar;
+export const getMenu = (state) => state.myShops.menu;
+
+//Reviews
+export const getReviews = (state) => state.reviews.reviews;
+export const getReviewId = (state) => state.reviews.idReview;
+export const getReloadReviews = (state) => state.reviews.reloadReviews;
+export const getRating = (state) => state.reviews.rating;

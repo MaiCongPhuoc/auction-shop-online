@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { getAccount, getReloadCartItem } from '../../../../redux/selector';
+import { getAccount, getReloadCartItem, getReloadWatchList } from '../../../../redux/selector';
 import { FormatMoney, isNumber } from './../../../../Hooks/Hooks';
 import CartItemService from './../../../../service/CartItem/CartItemService';
 import ValidationQuantity from '../../../../utils/ValidationQuantity';
-import { setCart, setReloadCartItem } from '../../../../redux/actions';
+import { setCart, setReloadCartItem, setReloadWatchList } from '../../../../redux/actions';
+import WatchListsService from '../../../../service/WatchList/WatchListService';
+import ReactTooltip from 'react-tooltip';
 
 const BuyComponent = ({ product }) => {
     const dispatch = useDispatch();
@@ -22,6 +24,52 @@ const BuyComponent = ({ product }) => {
     const [newTotalPrice, setNewTotalPrice] = useState(product.price);
 
     const [quantity, setQuantity] = useState(1);
+
+    const [checkWatchList, setCheckWatchList] = useState(false);
+    const [loadCheckWatchList, setLoadCheckWatchList] = useState(false);
+
+    const reloadWatchList = useSelector(getReloadWatchList);
+    const notify = (title) =>
+        toast.success(`Đã thêm ${title} vào giỏ hàng của bạn!`, {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
+    const notifyWarn = (err) =>
+        toast.warn(`${err}`, {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
+
+    useEffect(() => {
+        setLoadCheckWatchList(true);
+        try {
+            WatchListsService.checkProductInWatchListByAccountId(account.id, product).then((res) => {
+                if (res.data) {
+                    setCheckWatchList(true);
+                    setLoadCheckWatchList(false);
+                    return;
+                }
+                setCheckWatchList(false);
+                setLoadCheckWatchList(false);
+            }).catch((resp) => {
+                console.log("catch", resp);
+            });
+        } catch (error) {
+            console.log("err", error);
+        }
+    }, []);
 
     useEffect(() => {
         if (!isNumber(quantity)) {
@@ -72,14 +120,40 @@ const BuyComponent = ({ product }) => {
                     dispatch(setCart(res.data.cart.id))
                     dispatch(setReloadCartItem(!reloadCartItem));
                     setLoading(false);
-                    toast.success(`Đã thêm ${product.title} vào giỏ hàng của bạn`);
-                }).catch((res) => {
-                    console.log('err', res);
+                    notify(product.title);
+                }).catch((resp) => {
+                    if (resp.response) {
+                        setLoading(false);
+
+                        notifyWarn(resp.response.data.message);
+
+                        // toast.warn(resp.response.data.message);
+
+                    }
                 });
             }
             postData();
         } catch (error) {
             toast.error(error.message);
+        }
+    };
+
+    const handleAddWatchList = (product) => {
+        try {
+            async function addWatchList() {
+                WatchListsService.addWatchList(account.id, product).then((res) => {
+                    setCheckWatchList(true);
+                    dispatch(setReloadWatchList(!reloadWatchList))
+                    toast.info(`Đã thêm ${product.title} vào danh sách yêu thích`)
+                }).catch((err) => {
+                    if (err.response.data) {
+                        toast.error(err.response.data);
+                    }
+                });
+            }
+            addWatchList();
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -118,7 +192,8 @@ const BuyComponent = ({ product }) => {
                                     <div className="bb-item-qty" style={{ width: '30%', display: 'inline-block' }}>
                                         <label htmlFor='quantity' className="bid-box-label" style={{ color: '#333', fontWeight: 600, padding: '3px 0px' }}>Số lượng</label>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <div id='reduce-quantity' onClick={reduceQuantity}>
+                                            <div id='reduce-quantity' data-tip="Giảm số lượng" onClick={reduceQuantity}>
+                                                <ReactTooltip />
                                                 <i
                                                     className="fa fa-window-minimize"
                                                 >
@@ -133,7 +208,8 @@ const BuyComponent = ({ product }) => {
                                                 value={quantity}
                                                 style={{ lineHeight: '30px', width: '50px' }}>
                                             </input>
-                                            <div id='increasing-quantity' onClick={increasingQuantity}>
+                                            <div id='increasing-quantity' data-tip="Tăng số lượng" onClick={increasingQuantity}>
+                                                <ReactTooltip />
                                                 <i
                                                     className="fa fa-plus"
                                                 >
@@ -142,14 +218,14 @@ const BuyComponent = ({ product }) => {
                                         </div>
                                     </div>
                                     {loading ? (
-                                        <div className="me-1" style={{ width: '150px' ,marginTop: '46px', float: 'right' }}>
-                                            <button className="btn btn-primary" style={{borderRadius: '5px'}} type="button" disabled>
+                                        <div className="me-1" style={{ width: '150px', marginTop: '46px', float: 'right' }}>
+                                            <button className="btn btn-primary" style={{ borderRadius: '5px' }} type="button" disabled>
                                                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                 Đang mua...
                                             </button>
                                         </div>
                                     ) : (
-                                        <div className="ms-1" style={{width: '150px' ,marginTop: '46px', float: 'right' }}>
+                                        <div className="ms-1" style={{ width: '150px', marginTop: '46px', float: 'right' }}>
                                             <span className="current-bid bid-box-label" style={{ color: '#788088', fontWeight: 600, fontSize: '11pt', padding: '3px 0px' }}>&nbsp;</span>
                                             <a className="btn btn-primary me-4" onClick={handleAddCartItem}>Mua ngay</a>
                                         </div>
@@ -164,16 +240,31 @@ const BuyComponent = ({ product }) => {
                 </div>
                 <div className="mt-4">
                     <div className="watchlist-action">
-                        <div className="watcher-btn text-center">
-                            <a className="watch-button" href="#" style={{ border: 'none !important' }}>
-                                <div className="relative-wrapper watch-wrapper btn">
-                                    <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
-                                        <i className="fa-regular fa-heart"></i>
-                                        <span className="watch-type"> Thêm vào danh sách yêu thích</span>
+                        {loadCheckWatchList ? null : (
+                            <>
+                                {checkWatchList ? (
+                                    <div className="watcher-btn text-center" style={{ width: 'auto' }}
+                                    // onClick={() => handleAddWatchList(product)}
+                                    >
+                                        <div className="relative-wrapper watch-wrapper btn">
+                                            <div className="watching-favorite" style={{ color: 'red', fontStyle: 'normal', display: 'block !important' }}>
+                                                <i className="fa-regular fa-heart"></i>
+                                                <span className="watch-type"> Yêu thích</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
+                                ) : (
+                                    <div className="watcher-btn text-center" style={{ width: 'auto' }} onClick={() => handleAddWatchList(product)}>
+                                        <div className="relative-wrapper watch-wrapper btn">
+                                            <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
+                                                <i className="fa-regular fa-heart"></i>
+                                                <span className="watch-type"> Thêm vào danh sách yêu thích</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </>
+                        )}
                     </div>
                     <div className="viewers text-center mt-2" style={{ fontSize: '14px' }}><b>30</b> người đang theo dõi sản phẩm này</div>
                     <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>

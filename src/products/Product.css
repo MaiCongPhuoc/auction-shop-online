@@ -279,3 +279,9 @@ height: 50px;
 .info-payment-amount div {
     font-size: smaller;
 }
+
+#fullNameRecipient, #phoneRecipient, #emailRecipient {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}

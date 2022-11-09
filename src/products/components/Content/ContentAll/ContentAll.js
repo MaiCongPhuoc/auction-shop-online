@@ -3,30 +3,32 @@ import ProductService from './../../../service/Product/ProductService';
 import CategoriesService from './../../../service/Categories/CategoriesService';
 import LoadData from '../../Loading/LoadData';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { getAllProducts, getLoadData } from '../../../redux/selector';
-import { setCategories, setProducts, setLoadData, setShowInfoProduct, setProduct } from '../../../redux/actions';
+import { getAccount, getAllProducts, getLoadData, getWatchLists } from '../../../redux/selector';
+import { setShowInfoProduct, setProduct } from '../../../redux/actions';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 
 const ContentAll = () => {
     const dispatch = useDispatch();
+    // const [watchLists, setWatchLists] = useState([]);
+
+    const account = useSelector(getAccount);
+    const [watchLists, setWatchLists] = useState([]);
+
+    const currentWatchLists = useSelector(getWatchLists);
 
     useEffect(() => {
-        try {
-            dispatch(setLoadData(true));
-            async function getData() {
-                let productsRes = await ProductService.getAllProducts();
-                let categoriesRes = await CategoriesService.getAllCategories();
-
-                dispatch(setProducts(productsRes.data));
-                dispatch(setCategories(categoriesRes.data));
-                dispatch(setLoadData(false));
+        async function checkWatchList() {
+            if (currentWatchLists.length > 0) {
+                setWatchLists(currentWatchLists);
+                return
+            } else {
+                console.log('watch list', currentWatchLists.length);
             }
-            getData();
-        } catch (error) {
-            console.log(error);
         }
-    }, []);
+        checkWatchList();
+    }, [currentWatchLists]);
 
     const handleShowInfoProduct = (product) => {
         dispatch(setShowInfoProduct(true));
@@ -38,20 +40,30 @@ const ContentAll = () => {
 
     return (
         <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? <LoadData /> : (
-                products.map(product => (
-                    <div key={product.id} className="card small-12 medium-6 cell" style={{ transform: 'none' }} 
-                    onClick={() => handleShowInfoProduct(product)}
+            {loadData ? (
+                <LoadData />
+            ) : (
+                products.map((product) => (
+                    <div
+                        key={product.id}
+                        className="card small-12 medium-6 cell"
+                        style={{ transform: 'none' }}
+                        onClick={() => handleShowInfoProduct(product)}
                     >
                         {product.action ? (
-                            <Link to={`/auction/${product.id}`} style={{color: '#333'}}>
+                            <Link to={`/auction/${product.id}`} style={{ color: '#333' }}>
                                 <figure className="card__image">
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
-                                    <div className="add-to-watchlist">
-                                        <span className="ico-circle" ico_action="fav">
-                                            <i className="fa-regular fa-heart"></i>
-                                        </span>
-                                    </div>
+
+                                    {watchLists.forEach((item) => (
+                                        <div key={item.id} className="add-to-watchlist">
+                                            {item.product.id === product.id ? (
+                                                <span className="ico-circle" ico_action="fav">
+                                                    <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    ))}
                                 </figure>
                                 <div className="card__info-container">
                                     <div className="info-container__label">
@@ -73,7 +85,7 @@ const ContentAll = () => {
                                             <b>Theo dõi:</b> 34
                                         </div>
                                         <div className="stats-group__stat">
-                                            <b>Giá ước tính:</b> $15,000
+                                            <b>Giá ước tính:</b> {FormatMoney(product.estimatePrice)} ₫
                                         </div>
                                         <div className="stats-group__stat">
                                             <b>Giá khởi điểm:</b>
@@ -90,14 +102,19 @@ const ContentAll = () => {
                                 </div>
                             </Link>
                         ) : (
-                            <Link to={`/product/the-shop/${product.slug}`} style={{color: '#333'}}>
+                            <Link to={`/product/the-shop/${product.slug}`} style={{ color: '#333' }}>
                                 <figure className="card__image">
                                     <img src={product.image} alt="" style={{ transform: 'none' }} />
-                                    <div className="add-to-watchlist">
-                                        <span className="ico-circle" ico_action="fav">
-                                            <i className="fa-regular fa-heart"></i>
-                                        </span>
-                                    </div>
+                                    {watchLists.map((item) => (
+                                        <div key={item.id} className="add-to-watchlist">
+                                            {item.product.id === product.id ? (
+                                                <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
+                                                    <ReactTooltip />
+                                                    <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    ))}
                                 </figure>
                                 <div className="card__info-container">
                                     <div className="info-container__label">
@@ -133,7 +150,6 @@ const ContentAll = () => {
                     </div>
                 ))
             )}
-
         </div>
     );
 };

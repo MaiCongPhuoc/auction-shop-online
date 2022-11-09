@@ -6,7 +6,7 @@ import AccountService from '../../../services/AccountService';
 function ModalDetail(props) {
     Moment.locale('vi');
     const { accountId, showDetail, onCloseDetailAccount } = props;
-    console.log('props: ', accountId);
+    console.log('accountId: ', accountId);
     const [accountDetail, setAccountDetail] = useState({});
     useEffect(() => {
         if (accountId !== 0 && accountId !== undefined) {
@@ -14,7 +14,6 @@ function ModalDetail(props) {
                 async function getaccountDetail() {
                     let account = await AccountService.getAccountById(accountId);
                     setAccountDetail({ ...accountDetail, ...account.data });
-                    console.log('vao day');
                 }
                 getaccountDetail();
             } catch (error) {
@@ -25,7 +24,7 @@ function ModalDetail(props) {
     return (
         <Modal show={showDetail} onHide={onCloseDetailAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title>Chi tiết về tài khoản</Modal.Title>
+                <Modal.Title>Thông tin tài khoản</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {Object.getOwnPropertyNames(accountDetail).length === 0 ? (
@@ -37,72 +36,72 @@ function ModalDetail(props) {
                         </div>
                         <div className="col-md-8 ml-5">
                             <div className="row">
-                                <h5 className="col-sm-3">Tên đầy đủ:</h5>
-                                <p className="col-sm-9">{accountDetail.fullName}</p>
+                                <h5 className="col-sm-6">Tên đầy đủ:</h5>
+                                <p className="col-sm-6">{accountDetail.fullName}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Ngày Tạo:</h5>
-                                <p className="col-sm-9">
+                                <h5 className="col-sm-6">Ngày Tạo:</h5>
+                                <p className="col-sm-6">
                                     {Moment(accountDetail.createdAt).format('DD-MM-yyyy hh:mm:ss')}
                                 </p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Người tạo:</h5>
-                                <p className="col-sm-9">{accountDetail.createdBy}</p>
+                                <h5 className="col-sm-6">Người tạo:</h5>
+                                <p className="col-sm-6">{accountDetail.createdBy}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Ngày Sửa Đổi Gần Nhất:</h5>
-                                <p className="col-sm-9">
+                                <h5 className="col-sm-6">Ngày Sửa Đổi Gần Nhất:</h5>
+                                <p className="col-sm-6">
                                     {Moment(accountDetail.updateAt).format('DD-MM-yyyy hh:mm:ss')}
                                 </p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Người Sửa Đổi:</h5>
-                                <p className="col-sm-9">{accountDetail.updateBy}</p>
+                                <h5 className="col-sm-6">Người Sửa Đổi:</h5>
+                                <p className="col-sm-6">{accountDetail.updateBy}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Tên đăng nhập:</h5>
-                                <p className="col-sm-9">{accountDetail.username}</p>
+                                <h5 className="col-sm-6">Tên đăng nhập:</h5>
+                                <p className="col-sm-6">{accountDetail.username}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Email:</h5>
-                                <p className="col-sm-9">{accountDetail.email}</p>
+                                <h5 className="col-sm-6">Email:</h5>
+                                <p className="col-sm-6">{accountDetail.email}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Số điện thoại:</h5>
-                                <p className="col-sm-9">{accountDetail.phone}</p>
+                                <h5 className="col-sm-6">Số điện thoại:</h5>
+                                <p className="col-sm-6">{accountDetail.phone}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Tình trạng:</h5>
-                                <p className="col-sm-9">{accountDetail.blocked ? 'đã bị khóa' : 'chưa khóa'}</p>
+                                <h5 className="col-sm-6">Tình trạng:</h5>
+                                <p className="col-sm-6">{accountDetail.blocked ? 'đã bị khóa' : 'chưa khóa'}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Quyền hạn:</h5>
-                                <p className="col-sm-9">{accountDetail.role.code}</p>
+                                <h5 className="col-sm-6">Quyền hạn:</h5>
+                                <p className="col-sm-6">{accountDetail.role.code}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Tỉnh / thành phố:</h5>
-                                <p className="col-sm-9">{accountDetail.locationRegion.provinceName}</p>
+                                <h5 className="col-sm-6">Tỉnh / thành phố:</h5>
+                                <p className="col-sm-6">{accountDetail.locationRegion.provinceName}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Quận / huyện:</h5>
-                                <p className="col-sm-9">{accountDetail.locationRegion.districtName}</p>
+                                <h5 className="col-sm-6">Quận / huyện:</h5>
+                                <p className="col-sm-6">{accountDetail.locationRegion.districtName}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Thôn / xã:</h5>
-                                <p className="col-sm-9">{accountDetail.locationRegion.wardName}</p>
+                                <h5 className="col-sm-6">Thôn / xã:</h5>
+                                <p className="col-sm-6">{accountDetail.locationRegion.wardName}</p>
                             </div>
                             <div className="row">
-                                <h5 className="col-sm-3">Địa chỉ:</h5>
-                                <p className="col-sm-9">{accountDetail.locationRegion.address}</p>
+                                <h5 className="col-sm-6">Địa chỉ:</h5>
+                                <p className="col-sm-6">{accountDetail.locationRegion.address}</p>
                             </div>
                         </div>
                     </div>
                 )}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onCloseDetailAccount}>
-                    Close
+                <Button className="btn btn-primary" onClick={onCloseDetailAccount}>
+                    Đóng
                 </Button>
             </Modal.Footer>
         </Modal>

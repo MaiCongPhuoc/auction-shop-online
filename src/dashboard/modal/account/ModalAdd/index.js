@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import AccountService from '../../../services/AccountService';
 import { useFormik } from 'formik';
@@ -11,9 +11,9 @@ import 'react-toastify/dist/ReactToastify.css';
 let flag = false;
 function ModalDetailAccount(props) {
     const notify = () =>
-        toast.success('Wow so easy!', {
+        toast.success('Thêm mới thành công!', {
             position: 'top-right',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -53,10 +53,11 @@ function ModalDetailAccount(props) {
         if (flag) {
             try {
                 async function postData() {
-                    let createRes =  await AccountService.getAddAccount(accountFrm);
+                    let createRes = await AccountService.getAddAccount(accountFrm);
                     console.log('createRes: ', createRes.data);
                 }
                 postData();
+                flag = false;
             } catch (error) {
                 console.log(error);
             }
@@ -113,21 +114,28 @@ function ModalDetailAccount(props) {
         });
     };
 
-    const handleUpload = (e) => {
-        async function uploadAvatar() {
-            for (let i = 0; i < e.target.files.length; i++) {
-                setStateImg(true);
-                let uploadResult = await FileService.Upload(e.target.files[0]);
-                setImg(uploadResult.data.url);
-                console.log(uploadResult.data);
-                setStateImg(false);
-            }
-        }
-        uploadAvatar();
+    const handleUpload = async (e) => {
+        // console.log(e.target.files[0]);
+        // async function uploadAvatar() {
+        //     for (let i = 0; i < e.target.files.length; i++) {
+        //         setStateImg(true);
+        //         let uploadResult = await FileService.Upload(e.target.files[0]);
+        //         setImg(uploadResult.data.url);
+        //         console.log(uploadResult.data);
+        //         setStateImg(false);
+        //     }
+        // }
+        // uploadAvatar();
+        setStateImg(true);
+        let uploadResult = await FileService.Upload(e.target.files[0]);
+        console.log(uploadResult.data);
+        setImg(uploadResult.data.url);
+        setStateImg(false);
     };
     const handleReset = () => {
         document.querySelector('#image').value = '';
         formik.handleReset();
+        onCloseAddAccount();
     };
 
     const handleSubmit = async () => {
@@ -148,6 +156,7 @@ function ModalDetailAccount(props) {
             password: '',
             repassword: '',
             blocked: 0,
+            surplus: 0,
             avatar: 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png',
             role: {
                 id: 0,
@@ -166,30 +175,31 @@ function ModalDetailAccount(props) {
         validationSchema: yup.object({
             fullName: yup
                 .string()
-                .min(8, 'tên của bạn ít nhất là 8 kí tự!')
-                .max(20, 'tên của bạn tối đa nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên đầy đủ vào!'),
+                .min(8, 'Tên của bạn tối thiểu là 8 kí tự!')
+                .max(20, 'Tên của bạn tối đa là 20 kí tự!')
+                .required('Vui lòng nhập họ và tên đầy đủ!'),
             username: yup
                 .string()
-                .min(8, 'tên sản phẩm nhỏ nhất là 8 kí tự!')
-                .max(20, 'tên sản phẩm nhỏ nhất là 20 kí tự!')
-                .required('Vui lòng nhập tên đăng nhập vào!'),
-            email: yup.string().email().required('Vui lòng nhập tên sản phẩm vào!'),
+                .min(8, 'Tên đăng nhập tối thiểu là 8 kí tự!')
+                .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
+                .required('Vui lòng nhập tên đăng nhập!'),
+            email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập địa chỉ email!'),
             phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             password: yup
                 .string()
-                .min(8, 'Mật Khẩu ít nhất là 8 kí tự!')
+                .min(8, 'Mật khẩu tối thiểu là 8 kí tự!')
                 .max(20, 'Mật khẩu tối đa là 20 kí tự!')
                 .required('Vui lòng nhập mật khẩu!'),
             repassword: yup
                 .string()
                 .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
                 .required('Vui lòng nhập lại mật khẩu!'),
+            surplus: yup.number('Bạn phải nhập số!'),
             role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyển hạn!') }),
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
             locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
-            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng Nhập địa chỉ!') }),
+            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng nhập địa chỉ!') }),
         }),
         onSubmit: (account) => {
             let provinceId = document.querySelector('#province').value;
@@ -216,8 +226,8 @@ function ModalDetailAccount(props) {
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
             console.log('add count: ', account);
-            handleReset();
             setAccountFrm(account);
+            handleReset();
             notify();
         },
     });
@@ -229,7 +239,7 @@ function ModalDetailAccount(props) {
     return (
         <Modal show={showAdd} onHide={onCloseAddAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
-                <Modal.Title style={{ color: 'black' }}>Add Account</Modal.Title>
+                <Modal.Title style={{ color: 'black' }}>Thêm mới tài khoản</Modal.Title>
             </Modal.Header>
             <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                 <Modal.Body>
@@ -264,6 +274,9 @@ function ModalDetailAccount(props) {
                             )}
                             {formik.errors.username && formik.errors.username && (
                                 <li className="error">{formik.errors.username}</li>
+                            )}
+                            {formik.errors.surplus && formik.errors.surplus && (
+                                <li className="error">{formik.errors.surplus}</li>
                             )}
                         </ul>
                     </div>
@@ -318,7 +331,7 @@ function ModalDetailAccount(props) {
                                     Mật khẩu:
                                 </label>
                                 <input
-                                    type="text"
+                                    type="password"
                                     className="form-control"
                                     name="password"
                                     id="password"
@@ -332,7 +345,7 @@ function ModalDetailAccount(props) {
                                     Nhập lại mật khẩu:
                                 </label>
                                 <input
-                                    type="text"
+                                    type="password"
                                     className="form-control"
                                     name="repassword"
                                     id="repassword"
@@ -424,7 +437,7 @@ function ModalDetailAccount(props) {
                                         ''
                                     ) : (
                                         <option value={-1} key={-1} defaultValue disabled>
-                                            Chọn tỉnh / Thành phố:
+                                            Tỉnh / Thành phố:
                                         </option>
                                     )}
                                     {districts.map((district) => (
@@ -436,12 +449,12 @@ function ModalDetailAccount(props) {
                             </div>
                             <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
-                                    Thôn / Thị xã:
+                                    Thị trấn / Xã:
                                 </label>
                                 <select
-                                    className="form-select select"
+                                    className="form-select select select-bg-ori"
                                     id="ward"
-                                    name="locationRegion.wardId select-bg-ori"
+                                    name="locationRegion.wardId"
                                     value={formik.values.locationRegion.wardId}
                                     onChange={formik.handleChange}
                                     onInput={handleWard}
@@ -462,22 +475,21 @@ function ModalDetailAccount(props) {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="mb-3 col-6">
+                            <div className="mb-3 col-4">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Ảnh:
                                 </label>
                                 <input
                                     type="file"
                                     className="form-control"
-                                    multiple="multiple"
                                     accept="image/*"
                                     id="image"
                                     name="avatar"
                                     placeholder="Vui lòng chọn file..."
-                                    onInput={handleUpload}
+                                    onChange={handleUpload}
                                 />
                             </div>
-                            <div className="mb-3 col-6">
+                            <div className="mb-3 col-4">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
                                     Địa chỉ:
                                 </label>
@@ -491,12 +503,26 @@ function ModalDetailAccount(props) {
                                     onChange={formik.handleChange}
                                 />
                             </div>
+                            <div className="mb-3 col-4">
+                                <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
+                                    Nạp tiền:
+                                </label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="surplus"
+                                    name="surplus"
+                                    placeholder="Vui lòng nhập địa chỉ..."
+                                    value={formik.values.surplus}
+                                    onChange={formik.handleChange}
+                                />
+                            </div>
                         </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button type="reset" variant="secondary w-auto" onClick={onCloseAddAccount}>
-                        Close
+                        Đóng
                     </Button>
                     {stateImg ? (
                         <Button type="submit" className="btn btn-primary">
@@ -504,7 +530,7 @@ function ModalDetailAccount(props) {
                         </Button>
                     ) : (
                         <Button type="submit" className="btn btn-primary">
-                            Create
+                            Thêm
                         </Button>
                     )}
                     <ToastContainer />

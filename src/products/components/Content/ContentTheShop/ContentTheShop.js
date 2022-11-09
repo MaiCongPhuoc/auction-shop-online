@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getLoadData, getProductsAction } from "../../../redux/selector";
-import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
+import { getLoadData, getProductsAction, getWatchLists } from '../../../redux/selector';
+import { setLoadData, setShowInfoProduct } from '../../../redux/actions';
 import LoadData from './../../Loading/LoadData';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import { setProduct } from './../../../redux/actions';
@@ -9,10 +9,26 @@ import { Link } from 'react-router-dom';
 
 const ContentTheShop = () => {
     const dispatch = useDispatch();
+
+    const [watchLists, setWatchLists] = useState([]);
+
+    const currentWatchLists = useSelector(getWatchLists);
+
+    useEffect(() => {
+        async function checkWatchList() {
+            if (currentWatchLists.length > 0) {
+                setWatchLists(currentWatchLists);
+                return;
+            } else {
+                console.log('watch list', currentWatchLists.length);
+            }
+        }
+        checkWatchList();
+    }, [currentWatchLists]);
+
     useEffect(() => {
         try {
             dispatch(setLoadData(false));
-
         } catch (error) {
             console.log(error);
         }
@@ -32,7 +48,7 @@ const ContentTheShop = () => {
 
     return (
         <div className="lot-cards grid-x grid-margin-x">
-            {loadData ? <LoadData /> :
+            {loadData ? <LoadData /> : (
                 productsAuction.map(product => (
                     <div className="card small-12 medium-6 cell" onClick={() => handleShowInfoProduct(product)} style={{ transform: 'none' }} key={product.id}>
                         <Link to={`/product/the-shop/${product.slug}`} style={{color: '#333'}}>
@@ -49,7 +65,6 @@ const ContentTheShop = () => {
                                         <i className="fas fa-tag"></i>
                                     </span>
                                     <span className="label__main"> Cửa hàng </span>
-
                                 </div>
                                 <h3 className="card__title">
                                     <span>{product.title}</span>
@@ -66,8 +81,7 @@ const ContentTheShop = () => {
                                     </div>
                                     <div className="ItemCard-module__marketPrice___3E7JK">
                                         <b>Đã bán: </b>
-                                        <span className="ItemCard-module__lineThrough___3xq25">100
-                                        </span>
+                                        <span className="ItemCard-module__lineThrough___3xq25">100</span>
                                     </div>
                                 </div>
                                 <div className="card__tertiary-container">
@@ -76,12 +90,10 @@ const ContentTheShop = () => {
                             </div>
                         </Link>
                     </div>
-
-                ))}
-
-
+                ))
+            )}
         </div>
     );
-}
+};
 
 export default ContentTheShop;

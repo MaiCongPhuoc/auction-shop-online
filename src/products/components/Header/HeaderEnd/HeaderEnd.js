@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
 
 const HeaderEnd = () => {
-   
     return (
         <div className="main-nav-div">
             <ul className="navigation">
                 <li className="left">
-                    <a className="home" href="/product">
+                    <Link className="home" to={"/"}>
                         Trang chủ
-                    </a>
+                    </Link>
                 </li>
                 <li className="left">
                     <Link to={'/product/the-shop'} className="nav-explore drop-category">
@@ -16,20 +15,20 @@ const HeaderEnd = () => {
                     </Link>
                 </li>
                 <li className="left">
-                    <Link className="btn-bin" to="/product/auction">
+                    <Link className="btn-bin" to={"/product/auction"}>
                         Đấu giá
                     </Link>
                 </li>
                 <li className="left">
-                    <a className="contact" href="#">
-                        Liên hệ
-                    </a>
+                    <Link className="contact" to="/contact">
+                        Liên hệ & Hợp tác cùng chúng tôi
+                    </Link>
                 </li>
-                <li className="left">
+                {/* <li className="left">
                     <a className="contact" href="#">
                         Hợp tác cùng chúng tôi
                     </a>
-                </li>
+                </li> */}
             </ul>
             <div className="charity-wrappper">
                 <div className="depth-bg-wrapper">

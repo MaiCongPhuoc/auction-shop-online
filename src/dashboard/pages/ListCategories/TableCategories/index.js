@@ -163,10 +163,26 @@ function TableCategories() {
         });
     };
 
-    const searchBook = (currentPage) => {
-        if (document.querySelector('#search').value === '') {
-            document.querySelector('#select').value = '-1';
+    const handleReset = () => {
+        document.querySelector('#search').value = '';
+        async function getDataTable() {
+            let dataTable = await CategoryService.getDataTableCategory('', 0, 5);
+            setState({
+                ...state,
+                categorys: dataTable.data.content,
+                totalPages: dataTable.data.totalPages,
+                totalElements: dataTable.data.totalElements,
+                currentPage: dataTable.data.number + 1,
+                search: '',
+            });
         }
+        getDataTable();
+    };
+
+    const searchBook = (currentPage) => {
+        // if (document.querySelector('#search').value === '') {
+        //     document.querySelector('#select').value = '-1';
+        // }
         currentPage = currentPage - 1;
         async function getDataTable() {
             let dataTable = await CategoryService.getDataTableCategory(state.search, currentPage, state.recordPerPage);
@@ -190,27 +206,35 @@ function TableCategories() {
 
     return (
         <div className="container-fluid">
-            <div className="d-flex justify-content-between">
+            {/* <div className="d-flex justify-content-between">
                 <h2>DANH SÁCH THỂ LOẠI</h2>
                 <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search"></div>
-            </div>
+            </div> */}
             {loading ? (
                 <Spiner />
             ) : (
                 <div className="shadow mb-4 cur-div">
-                    <div className="card-header py-3 d-flex justify-content-between">
+                    <div className="card-header d-flex justify-content-between">
+                        <h5 className="font-weight-bold text-primary w-25" style={{ marginTop: '18px' }}>
+                            Danh sách thể loại
+                        </h5>
+                        {/* <div className="d-flex align-items-center w-75"> */}
+                        {/* <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search"> */}
                         <div className="input-group">
+                            <div className="col-3"></div>
                             <input
+                                style={{ marginTop: '18px' }}
                                 type="text"
                                 id="search"
                                 name="search"
-                                size="50"
+                                size="75"
                                 className="form-control bg-light small"
-                                placeholder="Tìm kiếm theo tên"
+                                placeholder="Tìm kiếm thể loại..."
                                 onChange={searchBox}
                             />
                             <div className="input-group-append">
                                 <button
+                                    style={{ marginTop: '18px' }}
                                     className="btn btn-primary ml-1"
                                     type="button"
                                     name="search"
@@ -218,14 +242,33 @@ function TableCategories() {
                                 >
                                     <i className="fas fa-search fa-sm" />
                                 </button>
+                                <button
+                                    style={{ marginTop: '18px' }}
+                                    className="btn btn-info ml-1"
+                                    type="button"
+                                    name="search"
+                                    onClick={handleReset}
+                                >
+                                    Đặt lại tìm kiếm
+                                </button>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="d-flex align-items-end">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-success"
+                                    onClick={() => setShowAdd(true)}
+                                >
+                                    <i className="fa-solid fa-plus me-2" title="Tạo"></i>Tạo
+                                </button>
                             </div>
                         </div>
-                        <div className="col-3"></div>
-                        <div className="d-flex align-items-center w-50">
-                            <button type="button" className="btn btn-outline-success" onClick={() => setShowAdd(true)}>
-                                <i className="fa-solid fa-plus me-2" title="Tạo"></i>Tạo danh mục
-                            </button>
-                        </div>
+                        {/* </div> */}
+                        {/* Button trigger modal */}
+                        {/* <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
+                                Tạo
+                            </Button> */}
+                        {/* </div> */}
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
@@ -233,7 +276,7 @@ function TableCategories() {
                                 <thead>
                                     <tr>
                                         <th className="text-center">#</th>
-                                        <th className="text-center">Tên</th>
+                                        <th className="text-center">Tên thể loại</th>
                                         <th className="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -277,7 +320,7 @@ function TableCategories() {
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
-                                <nav aria-label="Page navigation example">
+                                {/* <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <a
@@ -318,6 +361,50 @@ function TableCategories() {
                                             >
                                                 <i class="fa-solid fa-forward-fast"></i>
                                             </a>
+                                        </li>
+                                    </ul>
+                                </nav> */}
+                                <nav>
+                                    <ul className="pagination">
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showPrevPage}
+                                            >
+                                                Trang đầu
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === 1 ? true : false}
+                                                onClick={showFirstPage}
+                                            >
+                                                Lùi một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showNextPage}
+                                            >
+                                                Tiếp một trang
+                                            </span>
+                                        </li>
+                                        <li className="page-item">
+                                            <span
+                                                className="page-link"
+                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                disabled={currentPage === totalPages ? true : false}
+                                                onClick={showLastPage}
+                                            >
+                                                Trang cuối
+                                            </span>
                                         </li>
                                     </ul>
                                 </nav>

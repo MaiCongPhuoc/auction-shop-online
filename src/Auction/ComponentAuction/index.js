@@ -7,7 +7,7 @@ import { isNumber } from '../../products/Hooks/Hooks';
 import ValidationQuantity from '../../products/utils/ValidationQuantity';
 import BidService from '../../dashboard/services/BidService';
 import { Link, useParams } from 'react-router-dom';
-import AuctionService from '../../dashboard/services/AuctionService';
+import AuctionService from '../../dashboard/services/AuctionService';   
 import { useSelector } from 'react-redux';
 import { getAccount } from '../../products/redux/selector';
 import { toast, ToastContainer } from 'react-toastify';
@@ -48,22 +48,19 @@ function ComponentAuction(props) {
     let minutes = (hours % 1) * 60;
     let secs = (minutes % 1) * 60;
     setTimeout(() => {
-        if (
-            Math.floor(days) == 0 &&
-            Math.floor(hours) == 0 &&
-            Math.floor(minutes) == 0 &&
-            Math.floor(secs) == 0
-        ) {
+        if (Math.floor(days) == 0 && Math.floor(hours) == 0 && Math.floor(minutes) == 0 && Math.floor(secs) == 0) {
             setCloseAction(true);
             // setDiffTime(0);
         } else {
             setTimeAuction([
-                Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)
+                Math.floor(days),
+                Math.floor(hours),
+                Math.floor(minutes),
+                Math.floor(secs),
                 // Math.floor(0), Math.floor(0), Math.floor(0), Math.floor(0)
             ]);
         }
     }, 1000);
-
 
     useEffect(() => {
         if (!isNumber(Price)) {
@@ -86,11 +83,13 @@ function ComponentAuction(props) {
     useEffect(() => {
         async function getListBid() {
             if (rerender) {
-                BidService.postCreateBid(bid).then((res) => {
-                    toast.success("Đặt giá thành công")
-                }).catch((res) => {
-                    toast.warn(res.response.data.exceptionMessage)
-                });
+                BidService.postCreateBid(bid)
+                    .then((res) => {
+                        toast.success('Đặt giá thành công');
+                    })
+                    .catch((res) => {
+                        toast.warn(res.response.data.exceptionMessage);
+                    });
             }
             let AuctionAPI = await AuctionService.getAuctionById(auctionId);
             let listBid = await BidService.getBidByAuctionId(auction.id);
@@ -101,11 +100,12 @@ function ComponentAuction(props) {
     }, [rerender]);
 
     const handleMinAuction = () => {
-        let priceAuction = (state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed();
+        let priceAuction = Math.ceil((state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed() / 1000) * 1000;
         setPrice(priceAuction);
     };
 
     const handleBid = () => {
+        let priceAuction = Math.ceil((state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed() / 1000) * 1000;
         let bidPrice = Number(document.querySelector('#bid').value);
         if (!isNumber(bidPrice)) {
             setErrorMess('Giá phải là một số nguyên');
@@ -113,9 +113,15 @@ function ComponentAuction(props) {
         }
         if (Price < (state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12).toFixed()) {
             setCheckPrice(false);
-            setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12% đ`);
+            setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12% với giá tiền hiện tại`);
             return;
         }
+        if (bidPrice > (priceAuction + 500000)) {
+            setCheckPrice(false);
+            setErrorMess(`Giá thầu hiện tại không được quá lớn! (bé hơn 500.000 đ)`);
+            return;
+        }
+        bidPrice = Math.ceil(bidPrice / 1000) * 1000;
         let subBid = { ...bid, bidPrice: bidPrice, estimatePrice: state.bids[0].estimatePrice };
         setBid({ ...subBid });
         setRerender(true);
@@ -133,7 +139,9 @@ function ComponentAuction(props) {
                     {closeAction ? (
                         <div className="bb-panel-header warning">Closing Soon</div>
                     ) : (
-                        <div className="bb-panel-header success bg-success" style={{color: '#fff'}}>Going on</div>
+                        <div className="bb-panel-header success bg-success" style={{ color: '#fff' }}>
+                            Phiên đấu giá
+                        </div>
                     )}
                     <div className="bb-row bb-time exp-1 warning">
                         <div className="bb-icon">
@@ -147,13 +155,11 @@ function ComponentAuction(props) {
                                 <div className="bb-counter bid-closing-soon">
                                     <div className="closeness-wrapper exp-1">
                                         {closeAction ? (
-                                            <span>
-                                                Phiên đấu giá đã kết thúc
-                                            </span>
+                                            <span>Phiên đấu giá đã kết thúc</span>
                                         ) : (
                                             <span>
-                                                {timeAuction[0]}d : {timeAuction[1]}h : {timeAuction[2]}m : {timeAuction[3]}
-                                                s
+                                                {timeAuction[0]}d : {timeAuction[1]}h : {timeAuction[2]}m :{' '}
+                                                {timeAuction[3]}s
                                             </span>
                                         )}
                                     </div>
@@ -297,7 +303,7 @@ function ComponentAuction(props) {
                                     style={{ margin: 0 }}
                                     id="new_bid"
                                     acceptCharset="UTF-8"
-                                // method="post"
+                                    // method="post"
                                 >
                                     <div className="bid-wrapper">
                                         <div className="bid-box grid-x" id="bid-box">
@@ -325,7 +331,7 @@ function ComponentAuction(props) {
                                                     className="button next-min-bid-flag"
                                                     onClick={handleMinAuction}
                                                 >
-                                                    <span>ĐẤU THẦU NHỎ NHẤT</span>
+                                                    <span>ĐẤU GIÁ NHỎ NHẤT</span>
                                                 </button>
                                             </div>
                                             {checkPrice ? null : <ValidationQuantity message={errorMess} />}
@@ -351,7 +357,7 @@ function ComponentAuction(props) {
                                             type="button"
                                             onClick={handleBid}
                                         >
-                                            ĐẤU GÍA
+                                            ĐẤU GIÁ
                                         </button>
                                     </div>
                                     <div className="bid-pending-icon">
@@ -365,7 +371,7 @@ function ComponentAuction(props) {
                 <div className="bidding-box-confirm bidding-box-overlay exp-1">
                     <div className="close-btn">x</div>
                     <div className="your-bid">
-                        <div className="title">ĐẤU THẦU CỦA BẠN</div>
+                        <div className="title">ĐẤU GIÁ CỦA BẠN</div>
                         <div className="amount exp-1" />
                     </div>
                     <div className="confirm-bid-msg">
@@ -528,7 +534,7 @@ function ComponentAuction(props) {
                     </div> */}
                 </div>
             </div>
-            <ToastContainer autoClose={1500}/>
+            <ToastContainer autoClose={1500} />
         </div>
     );
 }
