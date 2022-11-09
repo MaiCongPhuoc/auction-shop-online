@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { getAccount } from '../products/redux/selector';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import AccountService from '../dashboard/services/AccountService';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const RequireAuth = ({ allowedRoles }) => {
     const dispatch = useDispatch();
@@ -23,9 +25,16 @@ const RequireAuth = ({ allowedRoles }) => {
     console.log('account: ', account);
     if (Object.keys(account).length === 0) {
         async function getAccoun() {
-            let account = await AccountService.getEmail(decoded.sub);
-            dispatch(loginStatus(true));
-            dispatch(setAccount(account.data));
+            await axios
+            .get(`${'http://localhost:8080/api/accounts/getAccountEmail'}/${decoded.sub}`)
+            .then((account) => {
+                toast.success('Kiểm tra email thành công');
+                dispatch(loginStatus(true));
+                dispatch(setAccount(account.data));
+            })
+            .catch((error) => {
+                console.log('error: ', error);
+            });
         }
         getAccoun();
     }
