@@ -406,7 +406,7 @@ function BangTaiKhoan() {
                                                                   className="btn btn-outline-warning ml-2"
                                                                   onClick={() => unLockAccount(account.id)}
                                                               >
-                                                                  <FontAwesomeIcon icon={faUnlockKeyhole} />
+                                                                  <FontAwesomeIcon icon={faLock} />
                                                               </button>
                                                           </Tippy>
                                                       ) : (
@@ -420,7 +420,7 @@ function BangTaiKhoan() {
                                                                   className="btn btn-outline-warning ml-2"
                                                                   onClick={() => lockAccount(account.id)}
                                                               >
-                                                                  <FontAwesomeIcon icon={faLock} />
+                                                                  <FontAwesomeIcon icon={faUnlockKeyhole} />
                                                               </button>
                                                           </Tippy>
                                                       )}
