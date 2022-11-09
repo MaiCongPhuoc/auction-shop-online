@@ -20,15 +20,15 @@ const RequireAuth = ({ allowedRoles }) => {
         return cookie[name];
     };
     const token = getCookie('JWT');
-    const decoded = jwt_decode(token);
+    let decoded = jwt_decode(token);
     const account = useSelector(getAccount);
     console.log('account: ', account);
-    if (Object.keys(account).length === 0) {
+    if (Object.keys(account).length === 0 && token) {
         async function getAccoun() {
             await axios
             .get(`${'http://localhost:8080/api/accounts/getAccountEmail'}/${decoded.sub}`)
             .then((account) => {
-                toast.success('Kiểm tra email thành công');
+                toast.success('Kiểm tra email thành công!');
                 dispatch(loginStatus(true));
                 dispatch(setAccount(account.data));
             })

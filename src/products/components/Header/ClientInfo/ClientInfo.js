@@ -107,7 +107,7 @@ function ClientInfo() {
                                         if (result.isDenied) {
                                             toast.success(`Đăng xuất thành công!`);
                                             dispatch(loginStatus(false));
-                                            dispatch(setAccount({ NOTFOUND: '' }));
+                                            dispatch(setAccount({NOTFOUND: ''}));
                                             function eraseCookie(name) {
                                                 document.cookie = name + '=; Max-Age=0';
                                             }

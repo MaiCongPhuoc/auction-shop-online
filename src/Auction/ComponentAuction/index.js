@@ -88,7 +88,8 @@ function ComponentAuction(props) {
                         toast.success('Đặt giá thành công');
                     })
                     .catch((res) => {
-                        toast.warn(res.response.data.exceptionMessage);
+                        console.log(res);
+                        toast.warn(res.response.data.message);
                     });
             }
             let AuctionAPI = await AuctionService.getAuctionById(auctionId);

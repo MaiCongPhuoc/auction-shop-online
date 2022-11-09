@@ -92,19 +92,19 @@ class AccountService {
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.get(`${WARD_URL}/${idDistrict}`);
     }
-    static async getEmail(email) {
-        let cookie = this.getCookie('JWT');
-        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
-        return await axios
-            .get(`${ACCOUNTBYEMAIL_URL}/${email}`)
-            .then((res) => {
-                toast.success('Kiểm tra email thành công');
-                document.querySelector('#email').disabled = true;
-            })
-            .catch((error) => {
-                console.log('error: ', error);
-            });
-    }
+    // static async getEmail(email) {
+    //     let cookie = this.getCookie('JWT');
+    //     axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+    //     return await axios
+    //         .get(`${ACCOUNTBYEMAIL_URL}/${email}`)
+    //         .then((res) => {
+    //             toast.success('Kiểm tra email thành công');
+    //             document.querySelector('#email').disabled = true;
+    //         })
+    //         .catch((error) => {
+    //             console.log('error: ', error);
+    //         });
+    // }
     static postRestartPassword(account) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
