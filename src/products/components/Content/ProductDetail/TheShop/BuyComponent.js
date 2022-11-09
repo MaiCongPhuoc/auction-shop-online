@@ -8,6 +8,7 @@ import ValidationQuantity from '../../../../utils/ValidationQuantity';
 import { setCart, setReloadCartItem, setReloadWatchList } from '../../../../redux/actions';
 import WatchListsService from '../../../../service/WatchList/WatchListService';
 import ReactTooltip from 'react-tooltip';
+import { Link } from 'react-router-dom';
 
 const BuyComponent = ({ product }) => {
     const dispatch = useDispatch();
@@ -124,12 +125,9 @@ const BuyComponent = ({ product }) => {
                 }).catch((resp) => {
                     if (resp.response) {
                         setLoading(false);
-
-                        notifyWarn(resp.response.data.message);
-
-                        // toast.warn(resp.response.data.message);
-
+                        notifyWarn(resp.response.data.message ?? 'Hãy đăng nhập để thực hiện thao tác này');
                     }
+
                 });
             }
             postData();
@@ -161,10 +159,12 @@ const BuyComponent = ({ product }) => {
         <div className="buy-tool" style={{ width: '22%', margin: '50px auto' }}>
             <div className="bb-rows-wrapper">
                 <div className="bb-row bb-current-buy">
-                    <div className="bb-row title-buy text-center">
-                        <i className="fa fa-info-circle me-2" aria-hidden="true" style={{ color: '#0e78cf' }} />
-                        <span>Xem thêm nhều sản phẩm khác trong <b>Cửa hàng</b></span>
-                    </div>
+                    <Link to={'/product/the-shop'}>
+                        <div className="bb-row title-buy text-center">
+                            <i className="fa fa-info-circle me-2" aria-hidden="true" style={{ color: '#0e78cf' }} />
+                            <span>Xem thêm nhều sản phẩm khác trong <b>Cửa hàng</b></span>
+                        </div>
+                    </Link>
                     <div className="bb-item my-3" style={{ paddingLeft: '15px' }}>
                         <div className="current-bidder">
                             <div className="bb-title is-label text-start">

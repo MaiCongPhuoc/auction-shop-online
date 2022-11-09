@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductService from '../../../service/Product/ProductService';
+import Slideshow from './Slideshow';
 
 const TopProducts = () => {
     const [topProduct, setTopProduct] = useState({
@@ -11,7 +12,11 @@ const TopProducts = () => {
         try {
             async function postData() {
                 let getTop = await ProductService.getTopProductBySold();
-                console.log('logGetTOP: ', getTop.data);
+                console.log("getTop", getTop.data);
+                setTopProduct({
+                    ...topProduct,
+                    products: getTop.data
+                })
             }
             postData();
             setTopProduct({ ...topProduct, loading: false });
@@ -20,7 +25,11 @@ const TopProducts = () => {
         }
     }, []);
 
-    return <div>Hello</div>;
+    return (
+        <div>
+            <Slideshow products={topProduct.products} />
+        </div>
+    );
 };
 
 export default TopProducts;

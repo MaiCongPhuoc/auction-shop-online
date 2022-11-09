@@ -238,7 +238,7 @@ const CartItem = () => {
                             listCartItems.map((cartItem) => (
                                 <div
                                     // title="Nhấn hai lần để chọn"
-                                    className="row col-12 cart-item"
+                                    className="row col-12"
                                     key={cartItem.id}
                                     // onDoubleClick={() => handleChoiceByDbClick(cartItem)}
                                 >

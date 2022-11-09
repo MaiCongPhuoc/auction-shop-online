@@ -63,24 +63,21 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
                 <Route path="/product" element={<Product />} />
             </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
                 <Route path="/product/auction" element={<ShowPageAuction />} />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            {/* </Route> */}
+            {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
                 <Route path="/bid/:auctionId" element={<ListBidAuction />} />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            {/* </Route> */}
+            {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
                 <Route path="/auction/:auctionId" element={<Auction />} />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
-                <Route path="/bid/:auctionId" element={<ListBidAuction />} />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            {/* </Route> */}
+            {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
                 <Route path="/product/the-shop/:slug" element={<TheShop />} />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            {/* </Route> */}
+            {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
                 <Route path="/product/the-shop" element={<ShowPageTheShop />} />
-            </Route>
+            {/* </Route> */}
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
                 <Route path="/product/order" element={<ShowOrderDetail />} />
             </Route>
@@ -90,12 +87,9 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
                 <Route path="/product/my-shop" element={<ShowMyShop />} />
             </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
+            {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
                 <Route path="/contact" element={<Contact />} />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
-                <Route path="/page-product" element={<PagingProducts />} />
-            </Route>
+            {/* </Route> */}
         </Routes>
         // </Router>
     );

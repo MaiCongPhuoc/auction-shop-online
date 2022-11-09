@@ -77,7 +77,7 @@ const ShowFilters = () => {
                         <Radio value='Cửa hàng'>Cửa hàng</Radio>
                     </Radio.Group>
                 </Col>
-                <Col sm={24}>
+                {/* <Col sm={24}>
                     <Typography.Paragraph
                         style={{ fontWeight: 'bold', marginBottom: 3, marginTop: 10 }}
                     >
@@ -87,7 +87,7 @@ const ShowFilters = () => {
                         <Radio value='asc'>Tăng dần</Radio>
                         <Radio value='desc'>Giảm dần</Radio>
                     </Radio.Group>
-                </Col>
+                </Col> */}
                 <Col sm={24}>
                     <Typography.Paragraph
                         style={{ fontWeight: 'bold', marginBottom: 3, marginTop: 10 }}

@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { getAccount } from '../../../../redux/selector';
 import { useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 
 let flag = false;
 function ReviewsProductShop({ product }) {
@@ -58,9 +59,12 @@ function ReviewsProductShop({ product }) {
             try {
                 console.log('form: ', submitFrm);
                 async function postData() {
-                    await ReviewService.addReview(submitFrm);
-                    setReloadReview(!reloadReview);
-                    setState({ ...state, loading: false });
+                    await ReviewService.addReview(submitFrm).then((res) => {
+                        setReloadReview(!reloadReview);
+                        setState({ ...state, loading: false });
+                    }).catch((resp) => {
+                        toast.warn(resp.response.data.message);
+                    });
                 }
                 postData();
                 flag = false;
@@ -144,6 +148,7 @@ function ReviewsProductShop({ product }) {
                     ) : null}
                 </div>
             ))}
+            <ToastContainer autoClose={1500}/>
         </>
     );
 }
