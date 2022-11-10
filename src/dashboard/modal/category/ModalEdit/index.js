@@ -38,7 +38,14 @@ function ModalEditCategory(props) {
             try {
                 async function postData() {
                     setCategory({ ...category, loading: true });
-                    await CategoryService.editCategory(submitFrm, categoryEditId);
+                    await CategoryService.editCategory(submitFrm, categoryEditId)
+                        .then((res) => {
+                            handleCloseEditProduct();
+                            notify1();
+                        })
+                        .catch((resp) => {
+                            toast.warn(resp.response.data.message);
+                        });
                 }
 
                 postData();
@@ -67,7 +74,6 @@ function ModalEditCategory(props) {
 
     const handleCloseEditProduct = () => {
         formik.handleReset();
-        handleCloseEditProduct();
         handleCloseEdit();
     };
 
@@ -92,7 +98,6 @@ function ModalEditCategory(props) {
             flag = true;
             setSubmitFrm(category);
             // handleReset();
-            notify1();
         },
     });
 
@@ -136,7 +141,7 @@ function ModalEditCategory(props) {
                     <Button type="submit" className="btn btn-primary">
                         Cập nhật
                     </Button>
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                 </Modal.Footer>
             </form>
         </Modal>

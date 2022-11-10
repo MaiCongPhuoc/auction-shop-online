@@ -25,7 +25,7 @@ const ModalClientDeposit = (props) => {
                         handleReset();
                     })
                     .catch(() => {
-                        toast.error('Bạn đã nạp tiền thật bại vui lòng nhập nạp lại!');
+                        toast.error('Bạn đã nạp tiền thất bại, vui lòng nhập nạp lại!');
                     });
                 flag = false;
             } catch (error) {
@@ -56,7 +56,7 @@ const ModalClientDeposit = (props) => {
         <div>
             <Modal show={false} onHide={onCloseDeposit} backdrop="static" keyboard={false} size="lg">
                 <Modal.Header closeButton>
-                    <Modal.Title style={{ color: 'black' }}>Cập nhật mật khẩu</Modal.Title>
+                    <Modal.Title style={{ color: 'black' }}>Nạp tiền</Modal.Title>
                 </Modal.Header>
                 <form multiple="multiple" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                     <Modal.Body>
@@ -71,7 +71,7 @@ const ModalClientDeposit = (props) => {
                                     className="form-control"
                                     name="surplus"
                                     id="surplus"
-                                    placeholder="Vui lòng nhập mật khẩu mới..."
+                                    placeholder="Vui lòng nhập số tiền cần nạp..."
                                     value={formik.values.surplus}
                                     onChange={formik.handleChange}
                                 />
