@@ -152,7 +152,7 @@ const ContentLogin = () => {
                                         </button>
                                         <br />
                                         <br />
-                                        <GoogleAndFacebook />
+                                        {/* <GoogleAndFacebook /> */}
                                         <div className="loginFooter">
                                             {/* <button className="forgetPass" onClick={forgetPass}>
                                                 Quên Mật Khẩu?
