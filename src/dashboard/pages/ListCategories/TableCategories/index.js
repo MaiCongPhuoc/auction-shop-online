@@ -369,7 +369,11 @@ function TableCategories() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showPrevPage}
                                             >
@@ -379,7 +383,11 @@ function TableCategories() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === 1 ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === 1
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === 1 ? true : false}
                                                 onClick={showFirstPage}
                                             >
@@ -389,7 +397,11 @@ function TableCategories() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showNextPage}
                                             >
@@ -399,7 +411,11 @@ function TableCategories() {
                                         <li className="page-item">
                                             <span
                                                 className="page-link"
-                                                style={currentPage === totalPages ? {opacity: '0.4'} : {opacity: '1', cursor: 'pointer'}}
+                                                style={
+                                                    currentPage === totalPages
+                                                        ? { opacity: '0.4' }
+                                                        : { opacity: '1', cursor: 'pointer' }
+                                                }
                                                 disabled={currentPage === totalPages ? true : false}
                                                 onClick={showLastPage}
                                             >

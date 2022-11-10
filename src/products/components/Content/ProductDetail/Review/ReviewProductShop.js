@@ -59,12 +59,14 @@ function ReviewsProductShop({ product }) {
             try {
                 console.log('form: ', submitFrm);
                 async function postData() {
-                    await ReviewService.addReview(submitFrm).then((res) => {
-                        setReloadReview(!reloadReview);
-                        setState({ ...state, loading: false });
-                    }).catch((resp) => {
-                        toast.warn(resp.response.data.message);
-                    });
+                    await ReviewService.addReview(submitFrm)
+                        .then((res) => {
+                            setReloadReview(!reloadReview);
+                            setState({ ...state, loading: false });
+                        })
+                        .catch((resp) => {
+                            toast.warn(resp.response.data.message);
+                        });
                 }
                 postData();
                 flag = false;
@@ -140,7 +142,7 @@ function ReviewsProductShop({ product }) {
                             <div>
                                 {review.account.avatar} {review.account.username}{' '}
                             </div>
-                            <Rating disabled name="simple-controlled" value={review.vote} />
+                            <Rating readOnly name="simple-controlled" value={review.vote} />
                             <div>
                                 {review.review} {review.createdAt}
                             </div>
@@ -148,7 +150,7 @@ function ReviewsProductShop({ product }) {
                     ) : null}
                 </div>
             ))}
-            <ToastContainer autoClose={1500}/>
+            <ToastContainer autoClose={1500} />
         </>
     );
 }

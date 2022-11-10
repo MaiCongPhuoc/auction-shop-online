@@ -8,6 +8,7 @@ import OverviewDashboard from './OverviewDashboard';
 import './OverviewDashboard/dashboard.css';
 import { useSelector } from 'react-redux';
 import { getShowModerationProduct } from '../../../products/redux/selector';
+import ChartStart from './ChartStar/Chart';
 
 function Dashboard() {
     const showModerationProduct = useSelector(getShowModerationProduct);
@@ -35,18 +36,17 @@ function Dashboard() {
                                 <h1 className="h3 mb-0 text-gray-800" style={{ fontWeight: 'bold' }}>
                                     {/* Dashboard */}
                                 </h1>
-                                <p></p>
                             </div>
                             {/* Content Row */}
                             <OverviewDashboard />
                             {/* Content Row */}
-
                             <div className="row dashboard">
                                 <TurnoverYear />
                                 {/* <TurnoverMonth /> */}
                             </div>
                         </div>
                     </div>
+                    {/* <ChartStart /> */}
                     {/* <Footer /> */}
                 </div>
             </div>
