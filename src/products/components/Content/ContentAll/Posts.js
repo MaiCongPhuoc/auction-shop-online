@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import LoadCart from './../../Loading/LoadCart';
 
-const Posts = ({ products, loading }) => {
+const Posts = ({ products    }) => {
     const dispatch = useDispatch();
     const [watchLists, setWatchLists] = useState([]);
 
@@ -36,7 +36,6 @@ const Posts = ({ products, loading }) => {
     return (
         <>
             {loadData ? <LoadCart /> : (
-
                 <div className="lot-cards grid-x grid-margin-x">
                     {
                         products.map((product) => (
@@ -56,7 +55,7 @@ const Posts = ({ products, loading }) => {
                                                     {
                                                         item.product.id === product.id ? (
                                                             <span className="ico-circle" ico_action="fav">
-                                                                <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                                <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
                                                             </span>
                                                         ) : null
                                                     }
@@ -107,7 +106,7 @@ const Posts = ({ products, loading }) => {
                                                     {
                                                         item.product.id === product.id ? (
                                                             <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
-                                                                <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                                <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
                                                             </span>
                                                         ) : null
                                                     }

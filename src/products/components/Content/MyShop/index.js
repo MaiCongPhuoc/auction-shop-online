@@ -9,7 +9,6 @@ import MyProduct from "./MyProduct";
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { getMenu } from './../../../redux/selector';
 import MyNotification from "./MyNotification";
-import EmptyOrder from './../../Loading/EmptyOrder';
 import LoadCart from "../../Loading/LoadCart";
 
 function ShowMyShop() {
@@ -22,7 +21,15 @@ function ShowMyShop() {
 
     const menu = useSelector(getMenu);
 
+    const [waitingLists, setWaitingLists] = useState([]);
+
     const reLoadOrder = useSelector(getReloadOrder);
+
+    const getWaitingLists = (orderDetails) => {
+        return orderDetails.filter((orderDetail) => {
+            return orderDetail.status.id === 7;
+        });
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -42,6 +49,7 @@ function ShowMyShop() {
 
             OrdersDetailService.getOrdersDetailByProductCreatedBy(account.email).then((res) => {
                 setOrderDetails(res.data);
+                setWaitingLists(getWaitingLists(res.data));
             }).catch((resp) => {
                 toast.warn(resp.data.message);
             });
@@ -53,9 +61,9 @@ function ShowMyShop() {
     return (
         <>
             <Header className="product-client" />
-            <SideBar orderDetails={orderDetails} />
+            <SideBar orderDetails={waitingLists} />
             {menu === 'myProduct' ? (
-                (loading) ? <LoadCart /> : <MyProduct products={products}/>
+                (loading) ? <LoadCart /> : <MyProduct products={products} />
             ) : (
                 <MyNotification />
             )}

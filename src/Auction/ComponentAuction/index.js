@@ -1,23 +1,30 @@
 import { faCheck, faCircleInfo, faClock, faDollar, faHeart, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import Moment from 'moment';
 import { NumericFormat } from 'react-number-format';
 import { isNumber } from '../../products/Hooks/Hooks';
 import ValidationQuantity from '../../products/utils/ValidationQuantity';
 import BidService from '../../dashboard/services/BidService';
 import { Link, useParams } from 'react-router-dom';
-import AuctionService from '../../dashboard/services/AuctionService';   
-import { useSelector } from 'react-redux';
-import { getAccount } from '../../products/redux/selector';
+import AuctionService from '../../dashboard/services/AuctionService';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAccount, getReloadCartItem, getReloadWatchList } from '../../products/redux/selector';
 import { toast, ToastContainer } from 'react-toastify';
+import WatchListsService from '../../products/service/WatchList/WatchListService';
+import { setCart, setReloadCartItem, setReloadWatchList } from '../../products/redux/actions';
+import moment from 'moment';
+import CartItemService from '../../products/service/CartItem/CartItemService';
+import Swal from 'sweetalert2';
 
 function ComponentAuction(props) {
-    Moment.locale('vi');
+    const dispatch = useDispatch();
+    moment.locale('vi');
+
+    const reloadCartItem = useSelector(getReloadCartItem);
+
     const { auction } = props;
 
     const product = { ...auction.product };
-    // const account = { ...auction.account };
 
     const account = useSelector(getAccount);
 
@@ -29,6 +36,20 @@ function ComponentAuction(props) {
     const [state, setState] = useState({ bids: [], auction: {} });
     const [rerender, setRerender] = useState(false);
     const [closeAction, setCloseAction] = useState(false);
+    const [checkWatchList, setCheckWatchList] = useState(false);
+    const [loadCheckWatchList, setLoadCheckWatchList] = useState(false);
+    const [loadBids, setLoadBids] = useState(false);
+
+
+    const reloadWatchList = useSelector(getReloadWatchList);
+
+    const cartItem = {
+        product: product
+        ,
+        title: product.title,
+        price: 0,
+        quantity: 1
+    };
 
     const { auctionId } = useParams();
     const [bid, setBid] = useState({
@@ -41,26 +62,84 @@ function ComponentAuction(props) {
         estimatePrice: 0,
     });
 
-    let diffTime = Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf());
-    // const [diffTime, setDiffTime] = useState(Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf()));
-    let days = diffTime / (24 * 60 * 60 * 1000);
-    let hours = (days % 1) * 24;
-    let minutes = (hours % 1) * 60;
-    let secs = (minutes % 1) * 60;
-    setTimeout(() => {
-        if (Math.floor(days) == 0 && Math.floor(hours) == 0 && Math.floor(minutes) == 0 && Math.floor(secs) == 0) {
-            setCloseAction(true);
-            // setDiffTime(0);
+
+
+    useEffect(() => {
+        if (Date(auction.auctionEndTime).valueOf() > new Date().valueOf()) {
+            let diffTime = Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf());
+            let days = diffTime / (24 * 60 * 60 * 1000);
+            let hours = (days % 1) * 24;
+            let minutes = (hours % 1) * 60;
+            let secs = (minutes % 1) * 60;
+            setTimeout(() => {
+                if (Math.floor(days) == 0 && Math.floor(hours) == 0 && Math.floor(minutes) == 0 && Math.floor(secs) == 0) {
+                    cartItem.price = state.bids[0].bidPrice;
+                    CartItemService.addCartItem(state.bids[0].account.id, cartItem).then((res) => {
+                        if (account.id === state.bids[0].account.id) {
+                            Swal.fire({
+                                title: '<strong>Chúc mừng!</strong>',
+                                icon: 'info',
+                                html:
+                                  `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
+                                  '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
+                                //   'and other HTML tags',
+                                showCloseButton: true,
+                                showCancelButton: true,
+                                focusConfirm: false,
+                                confirmButtonText:
+                                  '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
+                                cancelButtonText:
+                                  'Quay lại',
+                              })
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: `Chúc mừng ${state.bids[0].account.fullName}! Đã chiến thắng phiên đấu giá và sở hữu sản phẩm ${product.title}`,
+                                showCloseButton: true,
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                        dispatch(setReloadCartItem(!reloadCartItem));
+                    }).catch((resp) => {
+
+                    });
+                    setCloseAction(true);
+                } else {
+                    setTimeAuction([
+                        Math.floor(days),
+                        Math.floor(hours),
+                        Math.floor(minutes),
+                        Math.floor(secs),
+                    ]);
+                }
+            }, 1000);
         } else {
-            setTimeAuction([
-                Math.floor(days),
-                Math.floor(hours),
-                Math.floor(minutes),
-                Math.floor(secs),
-                // Math.floor(0), Math.floor(0), Math.floor(0), Math.floor(0)
-            ]);
+            setCloseAction(true);
         }
-    }, 1000);
+    });
+
+
+    
+    useEffect(() => {
+        setLoadCheckWatchList(true);
+        try {
+            console.log("account.id", account.id);
+            WatchListsService.checkProductInWatchListByAccountId(account.id, product).then((res) => {
+                if (res.data) {
+                    setCheckWatchList(true);
+                    setLoadCheckWatchList(false);
+                    return;
+                }
+                setCheckWatchList(false);
+                setLoadCheckWatchList(false);
+            }).catch((resp) => {
+                console.log("catch", resp);
+            });
+        } catch (error) {
+            console.log("err", error);
+        }
+    }, []);
 
     useEffect(() => {
         if (!isNumber(Price)) {
@@ -83,12 +162,15 @@ function ComponentAuction(props) {
     useEffect(() => {
         async function getListBid() {
             if (rerender) {
+                setLoadBids(true);
                 BidService.postCreateBid(bid)
                     .then((res) => {
+                        setLoadBids(true);
                         toast.success('Đặt giá thành công');
                     })
                     .catch((res) => {
                         console.log(res);
+                        setLoadBids(false);
                         toast.warn(res.response.data.message);
                     });
             }
@@ -128,6 +210,26 @@ function ComponentAuction(props) {
         setRerender(true);
         setPrice(0);
     };
+
+    const handleAddWatchList = (product) => {
+        try {
+            async function addWatchList() {
+                WatchListsService.addWatchList(account.id, product).then((res) => {
+                    setCheckWatchList(true);
+                    dispatch(setReloadWatchList(!reloadWatchList))
+                    toast.info(`Đã thêm ${product.title} vào danh sách yêu thích`)
+                }).catch((err) => {
+                    if (err.response.data) {
+                        toast.error(err.response.data);
+                    }
+                });
+            }
+            addWatchList();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="medium-5 medium-large-4 cell right-col">
             <div className="bidding-tool">
@@ -168,7 +270,8 @@ function ComponentAuction(props) {
                                 <div className="bb-datetime exp-1">
                                     <p>Thời gian kết thúc:</p>
                                     <span className="time-left-close-date">
-                                        {Moment(state.auction.auctionEndTime).format('DD-MM-YYYY HH:MM:SS')}
+                                        {/* {Moment(state.auction.auctionEndTime).format('DD-MM-YYYY HH:MM:SS')} */}
+                                        {moment(state.auction.auctionEndTime).format('LTS DD-MM-YYYY')}
                                     </span>
                                 </div>
                             </div>
@@ -304,7 +407,7 @@ function ComponentAuction(props) {
                                     style={{ margin: 0 }}
                                     id="new_bid"
                                     acceptCharset="UTF-8"
-                                    // method="post"
+                                // method="post"
                                 >
                                     <div className="bid-wrapper">
                                         <div className="bid-box grid-x" id="bid-box">
@@ -352,14 +455,22 @@ function ComponentAuction(props) {
                                         />
                                     </div>
                                     <div className="bid-animation-wrapper relative-wrapper overflow-hidden">
-                                        <button
-                                            className="float-center button expanded bid-button exp-1"
-                                            id="bid-button"
-                                            type="button"
-                                            onClick={handleBid}
-                                        >
-                                            ĐẤU GIÁ
-                                        </button>
+                                        {loadBids ? (
+                                            <button className="float-center button expanded bid-button exp-1" type="button" disabled>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                Đang đặt giá...
+                                            </button>
+                                        ) : (
+
+                                            <button
+                                                className="float-center button expanded bid-button exp-1"
+                                                id="bid-button"
+                                                type="button"
+                                                onClick={handleBid}
+                                            >
+                                                ĐẤU GIÁ
+                                            </button>
+                                        )}
                                     </div>
                                     <div className="bid-pending-icon">
                                         <i className="icon-spin icon-spinner" />
@@ -369,170 +480,32 @@ function ComponentAuction(props) {
                         </div>
                     </div>
                 </div>
-                <div className="bidding-box-confirm bidding-box-overlay exp-1">
-                    <div className="close-btn">x</div>
-                    <div className="your-bid">
-                        <div className="title">ĐẤU GIÁ CỦA BẠN</div>
-                        <div className="amount exp-1" />
-                    </div>
-                    <div className="confirm-bid-msg">
-                        By clicking <b>Confirm Bid</b> you commit to <br />
-                        purchase this lot if you are the winning bidder.
-                    </div>
-                    <div className="confirm-bid-btn" id="confirm-bid">
-                        <button className="button success expanded float-center confirm-button" id="confirm-button">
-                            CONFIRM BID
-                        </button>
-                    </div>
-                </div>
-                <div className="bidding-box-impact bidding-box-overlay">
-                    <div className="bb-impact-title-row text-center">
-                        <i className="fal fa-info-circle" aria-hidden="true" />
-                        <span>
-                            Learn more about <b>The Shop</b>
-                        </span>
-                    </div>
-                    <div className="impact-desc">
-                        When purchasing items like this from The Shop, there is no bidding. Get what you want, when you
-                        want it.
-                    </div>
-                    <div className="close-impact-box-btn">
-                        <button className="button info expanded float-center confirm-button">GOT IT!</button>
-                    </div>
-                </div>
-                <div className="bidding-box-raisebid bidding-box-overlay exp-1">
-                    <div className="close-btn">x</div>
-                    <div className="winning-title">
-                        You increased
-                        <br />
-                        your max bid!
-                    </div>
-                    <div className="winning-icon">
-                        {/* <i className="icon icon-ok-sign" /> */}
-                        <FontAwesomeIcon icon={faCheck} />
-                    </div>
-                </div>
-                <div className="bidding-box-outbid bidding-box-overlay exp-1">
-                    <div className="close-btn">x</div>
-                    <div className="outbid-title">You were outbid!</div>
-                    <div className="outbid-icon">
-                        <i className="icon icon-exclamation-sign" />
-                    </div>
-                    <div className="outbid-switch-regular">
-                        <div className="outbid-msg">
-                            Bidders can set a Max Bid that will automatically
-                            <br />
-                            place bids for them up to their designated amount.
-                        </div>
-                        <div className="outbid-learnmore">
-                            <a href="/faqs#faq-max-bid">Learn more about max bids</a>
-                        </div>
-                    </div>
-                    <div className="outbid-switch-reserve" style={{ display: 'none' }}>
-                        <div className="outbid-msg">
-                            This lot has a reserve amount bidding
-                            <br />
-                            much reach in order to be won.
-                        </div>
-                        <div className="outbid-learnmore">
-                            <a href="/faqs#faq-reserve-bid">Learn more about Reserve bids</a>
-                            <br />
-                        </div>
-                    </div>
-                    <div className="bb-row bb-place-bid">
-                        <div className="bb-icon" />
-                        <div className="bb-item bid-box-wrapper">
-                            <h3 className="bad-auth" style={{ display: 'none' }} />
-                            <div className="bid-wrapper">
-                                <div className="bid-box">
-                                    <span className="icon-wrapper">
-                                        <i className="icon icon-dollar" />
-                                    </span>
-                                    <input
-                                        type="text"
-                                        name="amount"
-                                        defaultValue
-                                        autoComplete="off"
-                                        data-min-bid
-                                        className="bid-input-field exp-1 bid-input-field-dup big-numbers"
-                                        pattern="[0-9]*"
-                                        placeholder="2,500 or more"
-                                    />
+                <div className="bidding-actions mt-3">
+                    {loadCheckWatchList ? null : (
+                        <>
+                            {checkWatchList ? (
+                                <div className="watcher-btn text-center" style={{ width: 'auto' }}
+                                >
+                                    <div className="relative-wrapper watch-wrapper btn">
+                                        <div className="watching-favorite" style={{ color: 'red', fontStyle: 'normal', display: 'block !important' }}>
+                                            <i className="fa-regular fa-heart"></i>
+                                            <span className="watch-type"> Yêu thích</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="bid-next-min-exp exp-1">
-                                    <span className="next-min-bid-label">Giá thầu tối thiểu tiếp theo: &nbsp;</span>
-                                    <span className="next-min-bid" data-view="minimum-bid">
-                                        2,500 đ
-                                    </span>
+                            ) : (
+                                <div className="watcher-btn text-center" style={{ width: 'auto' }} onClick={() => handleAddWatchList(product)}>
+                                    <div className="relative-wrapper watch-wrapper btn">
+                                        <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
+                                            <i className="fa-regular fa-heart"></i>import {Swal} from 'sweetalert2';
+
+                                            <span className="watch-type"> Thêm vào danh sách yêu thích</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="bid-animation-wrapper relative-wrapper overflow-hidden">
-                                <button className="button expanded float-center bid-button bid-button-dup exp-1">
-                                    ĐẤU THẦU
-                                </button>
-                            </div>
-                            <div className="bid-pending-icon">
-                                <i className="icon-spin icon-spinner" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="bidding-actions">
-                    {/* <div className="watching">
-                        <b>41</b>
-                        <span>people watching</span>
-                    </div> */}
-                    <div id="your-impact">
-                        <div className="center-me">
-                            <div className="your-impact-msg" />
-                        </div>
-                    </div>
-                    <div className="watchlist-action exp-1">
-                        {/* <div className="watcher-btn"> */}
-                        <a
-                            className="watch-button watcher-btn Add-to-Watchlist"
-                            style={{ border: 'none' }}
-                            href="/catalog_items/2522828/toggle_watch"
-                        >
-                            <div className="relative-wrapper watch-wrapper Add-to-Watchlist">
-                                <FontAwesomeIcon icon={faHeart} />
-                                {/* </b> */}
-                            </div>
-                            <span className="watch-type Add-to-Watchlist">THÊM VÀO DANH SÁCH THEO DÕI</span>
-                        </a>
-                        {/* </div> */}
-                    </div>
-                    {/* <div className="social-network-action">
-                        <div id="share-this-lot">
-                            <ul id="social-shares">
-                                <li className="twitter-share">
-                                    <a href="https://twitter.com/intent/tweet?text=Enjoy a Round of Golf at Bethpage B...&url=https://www.charitybuzz.com/catalog_items/auction-enjoy-round-of-golf-at-bethpage-black-course-2522828">
-                                        <i className="icon-twitter" />
-                                        <FontAwesomeIcon icon={faTextWidth} />
-                                    </a>
-                                </li>
-                                <li className="facebook-share">
-                                    <div id="fb-root" />
-                                    <a
-                                        data-fb-url="https://www.charitybuzz.com/catalog_items/auction-enjoy-round-of-golf-at-bethpage-black-course-2522828"
-                                        href="#"
-                                    >
-                                        <i className="icon-facebook" />
-                                    </a>
-                                </li>
-                                <li className="email-share">
-                                    <a
-                                        className="twitter addthis_button_email  emailShare opacHover"
-                                        href="http://www.addthis.com/bookmark.php"
-                                        target="_blank"
-                                        title="Email"
-                                    >
-                                        <i className="icon-envelope" />
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div> */}
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
             <ToastContainer autoClose={1500} />

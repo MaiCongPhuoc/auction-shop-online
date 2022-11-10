@@ -169,21 +169,6 @@ const CartItem = () => {
         });
     };
 
-    const handleChoiceByDbClick = (cartItem) => {
-        if (document.querySelector(`#choice_${cartItem.id}`).hasAttribute('checked')) {
-            document.querySelector(`#choice_${cartItem.id}`).removeAttribute('checked');
-        } else {
-            document.querySelector(`#choice_${cartItem.id}`).setAttribute('checked', 'checked');
-        }
-        setChoiceItems((prev) => {
-            if (choiceItems.includes(cartItem)) {
-                return choiceItems.filter((item) => item !== cartItem);
-            } else {
-                return [...prev, cartItem];
-            }
-        });
-    };
-
     const handleChoiceAll = () => {
         if (choiceItems == listCartItems) {
             setChoiceAll(false);
@@ -236,120 +221,186 @@ const CartItem = () => {
                             <LoadCart />
                         ) : (
                             listCartItems.map((cartItem) => (
-                                <div
-                                    // title="Nhấn hai lần để chọn"
-                                    className="row col-12"
-                                    key={cartItem.id}
-                                    // onDoubleClick={() => handleChoiceByDbClick(cartItem)}
-                                >
-                                    <span
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                        }}
-                                        className="col-6"
+                                cartItem.product.action ? (
+                                    <div
+                                        className="row col-12"
+                                        key={cartItem.id}
                                     >
-                                        {choiceAll ? (
-                                            <label className="container-check-cart">
-                                                <input type="checkbox" checked />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                        ) : (
-                                            <label className="container-check-cart">
-                                                <input
-                                                    type="checkbox"
-                                                    id={`choice_${cartItem.id}`}
-                                                    onClick={() => handleChoice(cartItem)}
+                                        <span
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                            }}
+                                            className="col-6"
+                                        >
+                                            {choiceAll ? (
+                                                <label className="container-check-cart">
+                                                    <input type="checkbox" checked />
+                                                    <span className="checkmark"></span>
+                                                </label>
+                                            ) : (
+                                                <label className="container-check-cart">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`choice_${cartItem.id}`}
+                                                        onClick={() => handleChoice(cartItem)}
+                                                    />
+                                                    <span className="checkmark"></span>
+                                                </label>
+                                            )}
+                                            <div className="col-3">
+                                                <img
+                                                    style={{
+                                                        padding: '5px',
+                                                        width: '100px',
+                                                        height: '120px',
+                                                    }}
+                                                    src={cartItem.product.image}
+                                                    alt=""
                                                 />
-                                                <span className="checkmark"></span>
-                                            </label>
-                                        )}
-                                        <div className="col-3">
-                                            <img
-                                                style={{
-                                                    padding: '5px',
-                                                    width: '100px',
-                                                    height: '120px',
-                                                }}
-                                                src={cartItem.product.image}
-                                                alt=""
-                                            />
-                                        </div>
-                                        <Link className="col-9" to={`/product/the-shop/${cartItem.product.slug}`}>
-                                            <div className="text-start mx-2 col-12">
-                                                <div>{cartItem.product.title}</div>
-                                                <div style={{ fontSize: 'smaller', color: 'blue' }}>
-                                                    {cartItem.product.description}
-                                                </div>
-                                                <div style={{ fontSize: 'small', color: 'blue' }}>
-                                                    Sản phẩm: {cartItem.product.action ? 'Đấu giá' : 'Cửa hàng'}
-                                                </div>
-                                                <div style={{ fontSize: 'small', color: 'red' }}>
-                                                    Còn lại <b>{cartItem.product.available}</b>
-                                                </div>
                                             </div>
-                                        </Link>
-                                    </span>
-                                    <span className="text-end col-2 fw-bold">{FormatMoney(cartItem.price)} ₫</span>
-                                    <span
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-evenly',
-                                        }}
-                                        className="text-center col-2"
+                                            <Link className="col-9" to={`/product/the-shop/${cartItem.product.slug}`}>
+                                                <div className="text-start mx-2 col-12">
+                                                    <div>{cartItem.product.title}</div>
+                                                    <div style={{ fontSize: 'smaller', color: 'blue' }}>
+                                                        {cartItem.product.description}
+                                                    </div>
+                                                    <div style={{ fontSize: 'small', color: 'blue' }}>
+                                                        Sản phẩm: Đấu giá
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </span>
+                                        <span className="text-end col-2 fw-bold">{FormatMoney(cartItem.price)} ₫</span>
+                                        <span
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-evenly',
+                                            }}
+                                            className="text-center col-2"
+                                        >
+                                            {cartItem.quantity}
+                                        </span>
+    
+                                        <span className="text-end col-2 fw-bold">
+                                            {FormatMoney(cartItem.amountTransaction)} ₫
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <div
+                                        className="row col-12"
+                                        key={cartItem.id}
                                     >
-                                        <div
-                                            className="change-quantity show"
-                                            data-tip="Giảm số lượng"
-                                            id={`reduce_${cartItem.id}`}
-                                            onClick={() => handleReduceQuantity(cartItem)}
+                                        <span
                                             style={{
-                                                fontSize: '36px',
-                                                height: '38px',
-                                                lineHeight: '30px',
-                                                cursor: 'pointer',
-                                                marginLeft: 'auto',
+                                                display: 'flex',
+                                                alignItems: 'center',
                                             }}
+                                            className="col-6"
                                         >
-                                            -
-                                        </div>
-                                        <input
-                                            className="mx-1"
+                                            {choiceAll ? (
+                                                <label className="container-check-cart">
+                                                    <input type="checkbox" checked />
+                                                    <span className="checkmark"></span>
+                                                </label>
+                                            ) : (
+                                                <label className="container-check-cart">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`choice_${cartItem.id}`}
+                                                        onClick={() => handleChoice(cartItem)}
+                                                    />
+                                                    <span className="checkmark"></span>
+                                                </label>
+                                            )}
+                                            <div className="col-3">
+                                                <img
+                                                    style={{
+                                                        padding: '5px',
+                                                        width: '100px',
+                                                        height: '120px',
+                                                    }}
+                                                    src={cartItem.product.image}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <Link className="col-9" to={`/product/the-shop/${cartItem.product.slug}`}>
+                                                <div className="text-start mx-2 col-12">
+                                                    <div>{cartItem.product.title}</div>
+                                                    <div style={{ fontSize: 'smaller', color: 'blue' }}>
+                                                        {cartItem.product.description}
+                                                    </div>
+                                                    <div style={{ fontSize: 'small', color: 'blue' }}>
+                                                        Sản phẩm: {cartItem.product.action ? 'Đấu giá' : 'Cửa hàng'}
+                                                    </div>
+                                                    <div style={{ fontSize: 'small', color: 'red' }}>
+                                                        Còn lại <b>{cartItem.product.available}</b>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </span>
+                                        <span className="text-end col-2 fw-bold">{FormatMoney(cartItem.price)} ₫</span>
+                                        <span
                                             style={{
-                                                width: '50px',
-                                                margin: '0',
-                                                border: 'none',
-                                                textAlign: 'center',
-                                                borderRadius: '20px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-evenly',
                                             }}
-                                            type="text"
-                                            value={cartItem.quantity}
-                                            // disabled={idCartItem === cartItem.id ? loadQuantity : null}
-                                            disabled
-                                        />
-                                        <div
-                                            className="change-quantity show"
-                                            data-tip="Tăng số lượng"
-                                            id={`increasing_${cartItem.id}`}
-                                            onClick={() => handleIncreasingQuantity(cartItem)}
-                                            style={{
-                                                fontSize: '28px',
-                                                height: '38px',
-                                                lineHeight: '30px',
-                                                cursor: 'pointer',
-                                                marginRight: 'auto',
-                                            }}
+                                            className="text-center col-2"
                                         >
-                                            +
-                                        </div>
-                                        <ReactTooltip />
-                                    </span>
-
-                                    <span className="text-end col-2 fw-bold">
-                                        {FormatMoney(cartItem.amountTransaction)} ₫
-                                    </span>
-                                </div>
+                                            <div
+                                                className="change-quantity show"
+                                                data-tip="Giảm số lượng"
+                                                id={`reduce_${cartItem.id}`}
+                                                onClick={() => handleReduceQuantity(cartItem)}
+                                                style={{
+                                                    fontSize: '36px',
+                                                    height: '38px',
+                                                    lineHeight: '30px',
+                                                    cursor: 'pointer',
+                                                    marginLeft: 'auto',
+                                                }}
+                                            >
+                                                -
+                                            </div>
+                                            <input
+                                                className="mx-1"
+                                                style={{
+                                                    width: '50px',
+                                                    margin: '0',
+                                                    border: 'none',
+                                                    textAlign: 'center',
+                                                    borderRadius: '20px',
+                                                }}
+                                                type="text"
+                                                value={cartItem.quantity}
+                                                // disabled={idCartItem === cartItem.id ? loadQuantity : null}
+                                                disabled
+                                            />
+                                            <div
+                                                className="change-quantity show"
+                                                data-tip="Tăng số lượng"
+                                                id={`increasing_${cartItem.id}`}
+                                                onClick={() => handleIncreasingQuantity(cartItem)}
+                                                style={{
+                                                    fontSize: '28px',
+                                                    height: '38px',
+                                                    lineHeight: '30px',
+                                                    cursor: 'pointer',
+                                                    marginRight: 'auto',
+                                                }}
+                                            >
+                                                +
+                                            </div>
+                                            <ReactTooltip />
+                                        </span>
+    
+                                        <span className="text-end col-2 fw-bold">
+                                            {FormatMoney(cartItem.amountTransaction)} ₫
+                                        </span>
+                                    </div>
+                                )
                             ))
                         )}
                     </div>

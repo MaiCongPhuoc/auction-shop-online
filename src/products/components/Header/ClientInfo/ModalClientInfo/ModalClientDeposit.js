@@ -54,7 +54,7 @@ const ModalClientDeposit = (props) => {
     };
     return (
         <div>
-            <Modal show={showeDeposit} onHide={onCloseDeposit} backdrop="static" keyboard={false} size="lg">
+            <Modal show={false} onHide={onCloseDeposit} backdrop="static" keyboard={false} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title style={{ color: 'black' }}>Cập nhật mật khẩu</Modal.Title>
                 </Modal.Header>

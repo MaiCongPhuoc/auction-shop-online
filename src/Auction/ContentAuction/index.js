@@ -24,6 +24,7 @@ function ContentAuctionDetail() {
     });
     useEffect(() => {
         try {
+            window.scrollTo(0, 0);
             setAuctionProduct({ ...AuctionProduct, loading: true });
             async function getproduct() {
                 let productAuction = await ProductService.ProductById(auctionId);
@@ -35,7 +36,7 @@ function ContentAuctionDetail() {
                     imageProductAuctions: productImageAuction.data,
                     loading: false,
                     auction: AuctionAPI.data,
-                });
+                });    
             }
             getproduct();
         } catch (error) {}

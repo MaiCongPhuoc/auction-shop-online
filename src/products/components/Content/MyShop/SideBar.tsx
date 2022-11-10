@@ -104,10 +104,6 @@ export default function MiniDrawer({ orderDetails }) {
 
   const menu = useSelector(getMenu);
 
-  const [waitingLists, setWaitingLists] = React.useState([]);
-
-
-
   const handleDrawerOpen = () => {
     setOpen(true);
     dispatch(setOpenSidebar(true));
