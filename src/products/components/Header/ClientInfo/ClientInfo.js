@@ -11,6 +11,10 @@ import ModalDetail from './ModalClientInfo/ModalClientInfo';
 import { loginStatus, setAccount } from '../../../../products/redux/actions';
 import ModalClientResetPassword from './ModalClientInfo/ModalClientResetPassword';
 import ModalEditClient from './ModalClientInfo/ModalEditClient';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMonero } from '@fortawesome/free-brands-svg-icons';
+import { faMoneyBill1 } from '@fortawesome/free-regular-svg-icons';
+import ModalClientDeposit from './ModalClientInfo/ModalClientDeposit';
 
 function ClientInfo() {
     const dispatch = useDispatch();
@@ -38,6 +42,13 @@ function ClientInfo() {
         showeditpassword: false,
     });
     const { accountEditPasswordId, showeditpassword } = showEditPassword;
+    //modal edit pass
+    const hanldeCloseDeposit = () => setShowDeposit(false);
+    const [showDeposit, setShowDeposit] = useState({
+        accountDepositId: 0,
+        showeDeposit: false,
+    });
+    const { accountDepositId, showeDeposit } = showEditPassword;
     // modal detail
     const [showDetail, setShowDetail] = useState({
         showdetail: false,
@@ -91,37 +102,50 @@ function ClientInfo() {
                                 >
                                     <i className="fa-solid fa-key"></i> Đổi mật khẩu
                                 </button>
-                            </li>
-                            <button
-                                className="btn-clientInfo"
-                                onClick={function () {
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: '<br/> Bạn có chắc đăng xuất không?',
-                                        showDenyButton: true,
-                                        showCancelButton: true,
-                                        showConfirmButton: false,
-                                        denyButtonText: `Đăng xuất`,
-                                        cancelButtonText: 'Không',
-                                    }).then((result) => {
-                                        if (result.isDenied) {
-                                            toast.success(`Đăng xuất thành công!`);
-                                            dispatch(loginStatus(false));
-                                            dispatch(setAccount({NOTFOUND: ''}));
-                                            function eraseCookie(name) {
-                                                document.cookie = name + '=; Max-Age=0';
+                                <br />
+                                <button
+                                    className="btn-clientInfo"
+                                    onClick={() =>
+                                        setShowDeposit({
+                                            accountDepositId: account.id,
+                                            showeDeposit: true,
+                                        })
+                                    }
+                                >
+                                    <FontAwesomeIcon icon={faMoneyBill1} /> Nạp tiền
+                                </button>
+                                <br />
+                                <button
+                                    className="btn-clientInfo"
+                                    onClick={function () {
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: '<br/> Bạn có chắc đăng xuất không?',
+                                            showDenyButton: true,
+                                            showCancelButton: true,
+                                            showConfirmButton: false,
+                                            denyButtonText: `Đăng xuất`,
+                                            cancelButtonText: 'Không',
+                                        }).then((result) => {
+                                            if (result.isDenied) {
+                                                toast.success(`Đăng xuất thành công!`);
+                                                dispatch(loginStatus(false));
+                                                dispatch(setAccount({ NOTFOUND: '' }));
+                                                function eraseCookie(name) {
+                                                    document.cookie = name + '=; Max-Age=0';
+                                                }
+                                                setTimeout(() => {
+                                                    eraseCookie('JWT');
+                                                    navigate('/login');
+                                                    logout();
+                                                }, 2000);
                                             }
-                                            setTimeout(() => {
-                                                eraseCookie('JWT');
-                                                navigate('/login');
-                                                logout();
-                                            }, 2000);
-                                        }
-                                    });
-                                }}
-                            >
-                                <i className="fa-solid fa-right-from-bracket"></i> Đăng Xuất
-                            </button>
+                                        });
+                                    }}
+                                >
+                                    <i className="fa-solid fa-right-from-bracket"></i> Đăng Xuất
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -141,6 +165,11 @@ function ClientInfo() {
                     showEditPassword={showeditpassword}
                     accountEditPasswordId={accountEditPasswordId}
                     onCloseEditPasswordAccount={hanldeCloseEditPasswordAccount}
+                />
+                <ModalClientDeposit 
+                    accountDepositId={accountDepositId}
+                    showeDeposit={showDeposit}
+                    onCloseDeposit={hanldeCloseDeposit}
                 />
             </div>
         </>

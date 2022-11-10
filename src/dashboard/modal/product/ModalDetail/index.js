@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Moment from 'moment';
+import { NumericFormat } from 'react-number-format';
 
 function ModalDetailProduct(props) {
     Moment.locale('vi');
@@ -87,7 +88,14 @@ function ModalDetailProduct(props) {
                         </div>
                         <div className="row">
                             <h5 className="col-sm-6">Giá:</h5>
-                            <p className="col-sm-6">{product.price}</p>
+                            <p className="col-sm-6">
+                                <NumericFormat
+                                    value={product.price}
+                                    displayType={'text'}
+                                    thousandSeparator={true}
+                                    suffix={' đ'}
+                                />
+                            </p>
                         </div>
                         <div className="row">
                             <h5 className="col-sm-6">Đã bán:</h5>
