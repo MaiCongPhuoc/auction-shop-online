@@ -33,6 +33,7 @@ function PagingProducts() {
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
     const paginate = (pageNumber) => {
+        window.scrollTo(0, 400);
         setCurrentPage(pageNumber);
     };
 

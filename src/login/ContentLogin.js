@@ -45,17 +45,19 @@ const ContentLogin = () => {
                     let token = userLogin.data.token;
                     let roles = userLogin.data.roles;
                     // console.log('userLogin.data: ', userLogin.data);
-                    dispatch(loginStatus(true));
+                    // dispatch(loginStatus(true));
                     dispatch(setAccount(account.data));
                     setCookie('JWT', userLogin.data.token, { path: '/' });
 
                     setAuth({ u, email, username, token, roles });
                     if (userLogin.data.roles[0].authority === 'USER') {
                         setTimeout(() => {
+                            dispatch(loginStatus(true));
                             navigate('/product', { replace: true });
                         }, 2000);
                     } else {
                         setTimeout(() => {
+                            dispatch(loginStatus(true));
                             navigate('/dashboard', { replace: true });
                         }, 2000);
                     }

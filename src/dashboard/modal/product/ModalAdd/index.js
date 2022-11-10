@@ -95,10 +95,11 @@ function ModalAddProduct(props) {
                 async function postData(submitFrm) {
                     setCategory({ ...category, loading: true });
                     let createRes = await ProductService.AddProduct(submitFrm);
+                    notify();
                     console.log('createRes: ', createRes);
                 }
                 postData(submitFrm);
-                notify();
+                // notify();
                 setCategory({ ...category, loading: false });
             } catch (error) {
                 console.log(error);
@@ -156,10 +157,10 @@ function ModalAddProduct(props) {
             available: radio
                 ? null
                 : yup
-                      .number('Vui lòng nhập số!')
-                      .required('Vui lòng nhập số lượng!')
-                      .moreThan(9, 'Số lượng nhỏ nhất là 10')
-                      .lessThan(199, 'Số lượng lớn nhất là 200'),
+                    .number('Vui lòng nhập số!')
+                    .required('Vui lòng nhập số lượng!')
+                    .moreThan(9, 'Số lượng nhỏ nhất là 10')
+                    .lessThan(199, 'Số lượng lớn nhất là 200'),
             action: yup.string(),
             image: yup.mixed(),
             description: yup.string(),

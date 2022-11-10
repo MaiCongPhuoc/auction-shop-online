@@ -142,7 +142,7 @@ const CartItem = () => {
             async function removeCartItems() {
                 const newCartItems = await CartItemService.getRemoveCartItems(account.email, items);
                 // setListCartItems(newCartItems.data);
-                toast.error(`Đã xóa ${choiceItems.length} sản phẩm ra khỏi giỏ hàng`);
+                toast.warning(`Đã xóa ${choiceItems.length} sản phẩm ra khỏi giỏ hàng`);
                 setChoiceItems([]);
                 setLoadDataCart(false);
                 setRemoveCart(false);
@@ -427,7 +427,7 @@ const CartItem = () => {
                     </footer>
                 </div>
             )}
-            <ToastContainer autoClose={1000} />
+            {/* <ToastContainer autoClose={1000} /> */}
             <StyledEngineProvider injectFirst>
                 <Checkout items={choiceItems} />
             </StyledEngineProvider>

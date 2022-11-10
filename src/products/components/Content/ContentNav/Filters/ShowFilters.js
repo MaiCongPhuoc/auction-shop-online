@@ -42,7 +42,6 @@ const ShowFilters = () => {
         dispatch(setSearchingFilters(true));
     }, [searchText, type, sort])
 
-    console.log("sort", sort);
     const categories = useSelector(getAllCategories);
 
     const colorCategories = ['blue', 'red', 'green', 'yellow']

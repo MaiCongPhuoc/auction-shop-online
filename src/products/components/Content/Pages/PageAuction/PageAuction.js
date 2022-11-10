@@ -15,6 +15,7 @@ const PageAuction = () => {
                 let dataRes = await ProductService.getAllProductAuctions();
                 setProductsAuction(dataRes.data);
                 setLoading(false);
+                window.scrollTo(0, 0);
             }
             getAuctionProducts();
         } catch (error) {

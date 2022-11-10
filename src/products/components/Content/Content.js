@@ -64,7 +64,7 @@ const Content = () => {
 
     return (
         <>
-            <div className="base-width main-yield" id="client-content" style={{ maxWidth: '96%' }}>
+            <div className="base-width main-yield" id="client-content" style={{ maxWidth: '96%',margin: '30px' }}>
                 <TopProducts />
                 <div className="pages" data-pages-shell="">
                     <div id="homepage-lot">

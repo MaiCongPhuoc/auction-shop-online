@@ -75,7 +75,7 @@ const BuyComponent = ({ product }) => {
     useEffect(() => {
         if (!isNumber(quantity)) {
             setCheckQuantity(false);
-            setErrorMess('Số lượng phải là một số nguyên');
+            setErrorMess('Số lượng không hợp lệ');
             return;
         }
 
