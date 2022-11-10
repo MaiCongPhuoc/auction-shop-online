@@ -49,7 +49,7 @@ const ContentRestartPassword = () => {
         axios
             .get('http://localhost:8080/api/accounts/getAccountEmail/' + email)
             .then((account) => {
-                toast.success('Kiểm tra email thành công');
+                toast.success('Kiểm tra email thành công!');
                 document.querySelector('#email').disabled = true;
                 setCheckError(false);
                 setAccountFrm({ ...account.data });
@@ -139,7 +139,7 @@ const ContentRestartPassword = () => {
                         <div className="row">
                             <div className="mb-2 col-6">
                                 <label htmlFor="password" className="form-label text-dark font-weight-bold ml-2">
-                                    Nhập Mật khẩu:
+                                    Nhập mật khẩu:
                                 </label>
                                 {/* <p style={{ color: 'red' }}>{formErrors.password}</p> */}
                                 <input

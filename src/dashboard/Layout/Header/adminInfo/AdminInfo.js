@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { loginStatus, setAccount } from '../../../../products/redux/actions';
 import ModalAccountResetPassword from './modalAccountInfo/ModalAccountResetPassword';
+import ModalDetailAccountInfo from './modalAccountInfo/ModalAccountInfo';
 
 function AdminInfo() {
     const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function AdminInfo() {
                     <div className="adminInfo-dropdown">
                         <ul>
                             <li>
-                                {/* <button
+                                <button
                                     className="btn-adminInfo"
                                     onClick={() =>
                                         setShowDetail({
@@ -64,7 +65,7 @@ function AdminInfo() {
                                 >
                                     <i className="fa-solid fa-user-tie"></i> Hồ sơ
                                 </button>
-                                <br /> */}
+                                <br />
                                 {/* <button
                                     className="btn-adminInfo"
                                     onClick={() =>
@@ -104,7 +105,7 @@ function AdminInfo() {
                                         if (result.isDenied) {
                                             toast.success(`Đăng xuất thành công!`);
                                             dispatch(loginStatus(false));
-                                            dispatch(setAccount({NOTFOUND: ''}));
+                                            dispatch(setAccount({ NOTFOUND: '' }));
                                             function eraseCookie(name) {
                                                 document.cookie = name + '=; Max-Age=0';
                                             }
@@ -127,6 +128,12 @@ function AdminInfo() {
                     showEditPassword={showeditpassword}
                     accountEditPasswordId={accountEditPasswordId}
                     onCloseEditPasswordAccount={hanldeCloseEditPasswordAccount}
+                />
+                <ModalDetailAccountInfo
+                    showDetail={showdetail}
+                    accountId={accountId}
+                    account={account}
+                    onCloseDetailAccount={handleCloseDetailAccount}
                 />
             </div>
         </>

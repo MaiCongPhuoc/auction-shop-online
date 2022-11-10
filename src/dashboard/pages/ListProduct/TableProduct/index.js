@@ -387,7 +387,7 @@ function BangSanPham() {
                                                     />
                                                 </td>
                                                 <td className="text-center">
-                                                    <Tippy
+                                                    {/* <Tippy
                                                         delay={[20, 20]}
                                                         // offset={[15, 8]}
                                                         placement="top"
@@ -409,7 +409,7 @@ function BangSanPham() {
                                                                 title="Cập nhật"
                                                             ></i>
                                                         </button>
-                                                    </Tippy>
+                                                    </Tippy> */}
                                                     <Tippy
                                                         delay={[0, 0]}
                                                         // offset={[15, 8]}

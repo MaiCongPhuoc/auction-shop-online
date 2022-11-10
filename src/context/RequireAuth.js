@@ -26,26 +26,24 @@ const RequireAuth = ({ allowedRoles }) => {
     if (Object.keys(account).length === 0 && token) {
         async function getAccoun() {
             await axios
-            .get(`${'http://localhost:8080/api/accounts/getAccountEmail'}/${decoded.sub}`)
-            .then((account) => {
-                toast.success('Kiểm tra email thành công!');
-                dispatch(loginStatus(true));
-                dispatch(setAccount(account.data));
-            })
-            .catch((error) => {
-                console.log('error: ', error);
-            });
+                .get(`${'http://localhost:8080/api/accounts/getAccountEmail'}/${decoded.sub}`)
+                .then((account) => {
+                    // toast.success('Kiểm tra email thành công!');
+                    dispatch(loginStatus(true));
+                    dispatch(setAccount(account.data));
+                })
+                .catch((error) => {
+                    console.log('error: ', error);
+                });
         }
         getAccoun();
     }
 
     const location = useLocation();
-    return (
-        decoded.role.find((role) => allowedRoles?.includes(role.authority)) ? (
-            <Outlet />
-        ) : (
-            <Navigate to="/unauthorized" state={{ from: location }} replace />
-        )
+    return decoded.role.find((role) => allowedRoles?.includes(role.authority)) ? (
+        <Outlet />
+    ) : (
+        <Navigate to="/unauthorized" state={{ from: location }} replace />
     );
 };
 export default RequireAuth;
