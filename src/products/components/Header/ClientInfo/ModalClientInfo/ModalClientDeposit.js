@@ -11,6 +11,7 @@ import axios from 'axios';
 let flag = false;
 const ModalClientDeposit = (props) => {
     const { showeDeposit, onCloseDeposit, accountDepositId } = props;
+    console.log('props: ', props);
     const [submitFrm, setSubmitFrm] = useState({
         surplus: '',
     });
@@ -45,7 +46,6 @@ const ModalClientDeposit = (props) => {
         onSubmit: (account) => {
             flag = true;
             setSubmitFrm({ ...submitFrm, id: account_login.id, surplus: account.surplus });
-            console.log('account: ', account);
         },
     });
     const handleReset = () => {

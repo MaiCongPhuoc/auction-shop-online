@@ -156,6 +156,7 @@ function ModalAddProduct(props) {
                 : yup
                       .number('Vui lòng nhập số!')
                       .required('Vui lòng nhập số lượng!')
+                      .moreThan(1, 'Số lượng sản phẩm nhỏ nhất là 1')
                       .lessThan(199, 'Số lượng lớn nhất là 200'),
             action: yup.string(),
             image: yup.mixed(),
@@ -185,7 +186,7 @@ function ModalAddProduct(props) {
                 product.images = listImg;
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
-                // product.estimatePrice = document.querySelector('#countday').value;
+                product.estimatePrice = document.querySelector('#countday').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             }
