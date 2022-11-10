@@ -14,7 +14,8 @@ const PageTheShop = () => {
                 let dataRes = await ProductService.getAllProductTheShops();
                 setProductsTheShop(dataRes.data);
                 setLoading(false);
-                console.log(dataRes.data);
+                // console.log(dataRes.data);
+                window.scrollTo(0, 0);
             }
             getTheShopProducts();
         } catch (error) {

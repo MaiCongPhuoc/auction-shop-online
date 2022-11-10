@@ -36,8 +36,16 @@ function ModalAddCategory(props) {
         if (flag) {
             try {
                 async function postData() {
-                    let createRes = await CategoryService.addCategory(submitFrm);
+                    await CategoryService.addCategory(submitFrm)
+                        .then((res) => {
+                            notify();
+                            handleClose();
+                        })
+                        .catch((resp) => {
+                            toast.warn(resp.response.data.message);
+                        });
                 }
+
                 postData(submitFrm);
                 setCategory({ ...category, loading: false });
                 flag = false;
@@ -49,7 +57,6 @@ function ModalAddCategory(props) {
     const handleReset = () => {
         formik.handleReset();
         handleClose();
-        notify();
     };
     const formik = useFormik({
         initialValues: {
@@ -79,7 +86,7 @@ function ModalAddCategory(props) {
         }),
         onSubmit: (product) => {
             setSubmitFrm(product);
-            handleReset();
+            // handleReset();
             flag = true;
         },
     });
@@ -131,7 +138,7 @@ function ModalAddCategory(props) {
                             Thêm
                         </Button>
 
-                        <ToastContainer />
+                        {/* <ToastContainer /> */}
                     </Modal.Footer>
                 </form>
             )}

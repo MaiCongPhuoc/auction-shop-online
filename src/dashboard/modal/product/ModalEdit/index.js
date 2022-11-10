@@ -147,8 +147,8 @@ function ModalEditProduct(props) {
             available: yup
                 .number('Vui lòng nhập số!')
                 .required('Vui lòng nhập số lượng!')
-                .moreThan(1, 'Số lượng sản phẩm nhỏ nhất là 1')
-                .lessThan(199, 'Số lượng lớn nhất là 200'),
+                .moreThan(1, 'Số lượng nhỏ nhất là 1!')
+                .lessThan(199, 'Số lượng lớn nhất là 200!'),
             action: yup.string(),
             image: yup.mixed(),
             description: yup.string().required('Vui lòng sửa lại mô tả!'),

@@ -6,12 +6,13 @@ import Posts from './Posts';
 import Pagination from './Pagination';
 import { useSelector } from 'react-redux';
 import { getResultsFiltersChange } from '../../../redux/selector';
+import { productsRemainingCategorySelector } from './../../../redux/selector';
 
 function PagingResultFilters() {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(10);
-    const products = useSelector(getResultsFiltersChange);
+    const products = useSelector(productsRemainingCategorySelector);
 
 
     useEffect(() => {

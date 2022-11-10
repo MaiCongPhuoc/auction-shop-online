@@ -75,7 +75,7 @@ const BuyComponent = ({ product }) => {
     useEffect(() => {
         if (!isNumber(quantity)) {
             setCheckQuantity(false);
-            setErrorMess('Số lượng phải là một số nguyên');
+            setErrorMess('Số lượng không hợp lệ');
             return;
         }
 
@@ -244,7 +244,6 @@ const BuyComponent = ({ product }) => {
                             <>
                                 {checkWatchList ? (
                                     <div className="watcher-btn text-center" style={{ width: 'auto' }}
-                                    // onClick={() => handleAddWatchList(product)}
                                     >
                                         <div className="relative-wrapper watch-wrapper btn">
                                             <div className="watching-favorite" style={{ color: 'red', fontStyle: 'normal', display: 'block !important' }}>
@@ -270,7 +269,7 @@ const BuyComponent = ({ product }) => {
                     <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>
                 </div>
             </div>
-            <ToastContainer autoClose={1000} />
+            {/* <ToastContainer autoClose={1000} /> */}
         </div>
     );
 }

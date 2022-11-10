@@ -30,7 +30,7 @@ function TongQuanDashboard() {
     }, []);
     return (
         <div className="row dashboard">
-            <TurnoverInMonth turnoverByMonth={state.turnover.turnoverMonth}/>
+            <TurnoverInMonth turnoverByMonth={state.turnover.turnoverMonth} />
 
             <TurnoverInYear turnoverByYear={state.turnover.turnoverYear} />
 

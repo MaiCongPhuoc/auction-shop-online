@@ -12,7 +12,6 @@ const TopProducts = () => {
         try {
             async function postData() {
                 let getTop = await ProductService.getTopProductBySold();
-                console.log("getTop", getTop.data);
                 setTopProduct({
                     ...topProduct,
                     products: getTop.data

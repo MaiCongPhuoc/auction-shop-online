@@ -59,12 +59,14 @@ function ReviewsProductShop({ product }) {
             try {
                 console.log('form: ', submitFrm);
                 async function postData() {
-                    await ReviewService.addReview(submitFrm).then((res) => {
-                        setReloadReview(!reloadReview);
-                        setState({ ...state, loading: false });
-                    }).catch((resp) => {
-                        toast.warn(resp.response.data.message);
-                    });
+                    await ReviewService.addReview(submitFrm)
+                        .then((res) => {
+                            setReloadReview(!reloadReview);
+                            setState({ ...state, loading: false });
+                        })
+                        .catch((resp) => {
+                            toast.warn(resp.response.data.message);
+                        });
                 }
                 postData();
                 flag = false;
@@ -136,19 +138,20 @@ function ReviewsProductShop({ product }) {
             {reviews.sort(compareValues('id', 'desc')).map((review) => (
                 <div className="" key={review.id}>
                     {review.product.id === product.id ? (
-                        <p>
+                        <div className='ms-2' style={{display: 'flex', justifyContent: 'space-between'}}>
                             <div>
-                                {review.account.avatar} {review.account.username}{' '}
+                                <div>
+                                    <img src={review.account.avatar} width={50} alt="" /> {review.account.username}{' '}
+                                </div>
+                                <Rating readOnly name="simple-controlled" value={review.vote} /> {review.createdAt}
                             </div>
-                            <Rating disabled name="simple-controlled" value={review.vote} />
-                            <div>
-                                {review.review} {review.createdAt}
+                            <div className='me-3'>
+                                {review.review}
                             </div>
-                        </p>
+                        </div>
                     ) : null}
                 </div>
             ))}
-            <ToastContainer autoClose={1500}/>
         </>
     );
 }
