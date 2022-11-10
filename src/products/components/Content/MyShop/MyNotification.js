@@ -198,7 +198,7 @@ function MyNotification() {
                         ))}
                     </div>
                     <hr />
-                    <div className="row col-12 my-3" style={{ height: '50px' }}>
+                    <div className="row col-12 my-3" style={{ height: '50px', maxWidth: 'none', marginLeft: '0', marginRight: '0' }}>
                         <span className="text-center col-4" id="image-order"> Sản phẩm</span>
                         <span className="text-center col-2" id="date-item-order">Thời gian mua</span>
                         <span className="text-center col-2" id="price-item-order">Số lượng</span>
@@ -448,9 +448,9 @@ function MyNotification() {
                                                     <div className="action-group">
                                                         <div className="ms-3 action-item fw-bold" style={{ color: '#26cf8e' }}>
                                                             <i className="fa-solid fa-circle-check"></i> {orderDetail.status.name}
+                                                            <span className="ms-2">{orderDetail.updatedAt}</span>
                                                         </div>
                                                     </div>
-                                                    <span className="ms-2">{orderDetail.updatedAt}</span>
                                                     <div className="action-group">
                                                         <div className="ms-3 action-item fw-bold" style={{ color: '#ff523d' }}>
                                                             Thông tin người nhận

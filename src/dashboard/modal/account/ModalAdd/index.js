@@ -184,7 +184,7 @@ function ModalDetailAccount(props) {
                 .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
                 .required('Vui lòng nhập tên đăng nhập!'),
             email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập địa chỉ email!'),
-            phone: yup.string().moreThan(0, 'Vui lòng nhập số lơn hơn 0!').required('Vui lòng nhập số điện thoại!'),
+            phone: yup.string().required('Vui lòng nhập số điện thoại!'),
             password: yup
                 .string()
                 .min(8, 'Mật khẩu tối thiểu là 8 kí tự!')
