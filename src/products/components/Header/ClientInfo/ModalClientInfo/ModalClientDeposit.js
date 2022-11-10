@@ -40,7 +40,7 @@ const ModalClientDeposit = (props) => {
             surplus: '',
         },
         validationSchema: yup.object({
-            surplus: yup.number().required('Vui lòng không được để trống!'),
+            surplus: yup.number().moreThan(0, 'Vui lòng nhập số lơn hơn 0!').required('Vui lòng không được để trống!'),
         }),
         onSubmit: (account) => {
             flag = true;
