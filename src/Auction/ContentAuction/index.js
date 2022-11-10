@@ -15,7 +15,6 @@ import ReviewsProductShop from '../../products/components/Content/ProductDetail/
 import LoadCart from '../../products/components/Loading/LoadCart';
 function ContentAuctionDetail() {
     const { auctionId } = useParams();
-    console.log('auctionId content: ', auctionId);
     const [AuctionProduct, setAuctionProduct] = useState({
         Product: {},
         imageProductAuctions: [],
@@ -170,7 +169,6 @@ function ContentAuctionDetail() {
                                                                 data-allow-html="true"
                                                                 data-position="left"
                                                                 data-tooltip2
-                                                                title
                                                                 data-title="<div class='title-block'><b>About Current Bid</b></div> <div class='text-block'>The “Current Bid” is the current winning bid placed by an auction participant.</div> <div class='text-block'>If the auction closes at this price, this bid amount does not reflect additional taxes, shipping, or buyer’s premium. Please see the Conditions of Sale for details.</div>"
                                                             >
                                                                 GIÁ HIỆN TẠI: <FontAwesomeIcon icon={faCircleInfo} />
@@ -693,7 +691,7 @@ function ContentAuctionDetail() {
                                         data-view="more-lots-button"
                                         style={{ display: 'none' }}
                                     >
-                                        <a className="more-items animated pulse" rel="next" href>
+                                        <a className="more-items animated pulse" rel="next">
                                             <span className="loading-appended-items">
                                                 <i className="icon-spin icon-spinner">&nbsp;</i>
                                             </span>
@@ -729,7 +727,7 @@ function ContentAuctionDetail() {
                                         data-view="more-lots-button"
                                         style={{ display: 'none' }}
                                     >
-                                        <a className="more-items animated pulse" rel="next" href>
+                                        <a className="more-items animated pulse" rel="next">
                                             <span className="loading-appended-items">
                                                 <i className="icon-spin icon-spinner">&nbsp;</i>
                                             </span>

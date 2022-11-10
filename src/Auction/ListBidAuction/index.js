@@ -20,25 +20,6 @@ function ListBidAuction() {
         getListBid();
     }, []);
 
-    // let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
-    // let days = diffTime / (24 * 60 * 60 * 1000);
-    // let hours = (days % 1) * 24;
-    // let minutes = (hours % 1) * 60;
-    // let secs = (minutes % 1) * 60;
-    // setTimeout(() => {
-    //     if (Math.floor(days) === 0 && Math.floor(hours) === 0 && Math.floor(minutes) === 0 && Math.floor(secs) === 0) {
-    //         setCloseAction(true);
-    //         // setDiffTime(0);
-    //     } else {
-    //         setTimeAuction([
-    //             Math.floor(days),
-    //             Math.floor(hours),
-    //             Math.floor(minutes),
-    //             Math.floor(secs),
-    //             // Math.floor(0), Math.floor(0), Math.floor(0), Math.floor(0)
-    //         ]);
-    //     }
-    // }, 1000);
     setTimeout(() => {
         let diffTime = Math.abs(new Date(bids[0].auction.auctionEndTime).valueOf() - new Date().valueOf());
         let days = diffTime / (24 * 60 * 60 * 1000);
@@ -49,14 +30,12 @@ function ListBidAuction() {
         if (Math.floor(days) === 0 && Math.floor(hours) === 0 && Math.floor(minutes) === 0 && Math.floor(secs) === 0) {
             setCloseAction(true);
             clearTimeout();
-            // setDiffTime(0);
         } else {
             setTimeAuction([
                 Math.floor(days),
                 Math.floor(hours),
                 Math.floor(minutes),
                 Math.floor(secs),
-                // Math.floor(0), Math.floor(0), Math.floor(0), Math.floor(0)
             ]);
         }
     }, 1000);

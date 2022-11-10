@@ -41,6 +41,7 @@ function ComponentAuction(props) {
     const [loadBids, setLoadBids] = useState(false);
 
 
+
     const reloadWatchList = useSelector(getReloadWatchList);
 
     const cartItem = {
@@ -65,7 +66,7 @@ function ComponentAuction(props) {
 
 
     useEffect(() => {
-        if (Date(auction.auctionEndTime).valueOf() > new Date().valueOf()) {
+        if (new Date(auction.auctionEndTime).valueOf() > new Date().valueOf()) {
             let diffTime = Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf());
             let days = diffTime / (24 * 60 * 60 * 1000);
             let hours = (days % 1) * 24;
@@ -80,17 +81,17 @@ function ComponentAuction(props) {
                                 title: '<strong>Chúc mừng!</strong>',
                                 icon: 'info',
                                 html:
-                                  `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
-                                  '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
+                                    `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
+                                    '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
                                 //   'and other HTML tags',
                                 showCloseButton: true,
                                 showCancelButton: true,
                                 focusConfirm: false,
                                 confirmButtonText:
-                                  '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
+                                    '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
                                 cancelButtonText:
-                                  'Quay lại',
-                              })
+                                    'Quay lại',
+                            })
                         } else {
                             Swal.fire({
                                 icon: 'success',
@@ -120,7 +121,7 @@ function ComponentAuction(props) {
     });
 
 
-    
+
     useEffect(() => {
         setLoadCheckWatchList(true);
         try {
@@ -159,6 +160,10 @@ function ComponentAuction(props) {
         setCheckPrice(true);
     }, [Price]);
 
+    console.log("auction: ", auction);
+    console.log("list bids: ", state.bids);
+
+
     useEffect(() => {
         async function getListBid() {
             if (rerender) {
@@ -174,9 +179,11 @@ function ComponentAuction(props) {
                         toast.warn(res.response.data.message);
                     });
             }
-            let AuctionAPI = await AuctionService.getAuctionById(auctionId);
-            let listBid = await BidService.getBidByAuctionId(auction.id);
-            setState({ ...state, bids: listBid.data, auction: AuctionAPI.data });
+            AuctionService.getAuctionById(auctionId).then((res) => {
+                BidService.getBidByAuctionId(auction.id).then((restBid) => {
+                    setState({ ...state, bids: restBid.data, auction: res.data });
+                });
+            });
         }
         getListBid();
         setRerender(false);
@@ -230,6 +237,7 @@ function ComponentAuction(props) {
         }
     };
 
+
     return (
         <div className="medium-5 medium-large-4 cell right-col">
             <div className="bidding-tool">
@@ -240,7 +248,7 @@ function ComponentAuction(props) {
                 </div>
                 <div className="bidding-box exp-1 ">
                     {closeAction ? (
-                        <div className="bb-panel-header warning">Closing Soon</div>
+                        <div className="bb-panel-header warning">Đã kết thúc</div>
                     ) : (
                         <div className="bb-panel-header success bg-success" style={{ color: '#fff' }}>
                             Phiên đấu giá
@@ -298,9 +306,6 @@ function ComponentAuction(props) {
                                         </span>
                                     </div>
                                     <div className="bb-content">
-                                        <div className="first-to-bid exp-1" style={{ display: 'none' }}>
-                                            Hãy là người đầu tiên đấu giá:
-                                        </div>
                                         <div className="has-bids" style={{ display: 'block' }}>
                                             <div className="bid-data">
                                                 <div
@@ -329,15 +334,10 @@ function ComponentAuction(props) {
                                                     <Link
                                                         to={`/bid/${auction.id}`}
                                                         className="bid-box-bid-count"
-                                                        href="#"
                                                     >
                                                         {state.bids.length} Giá thầu
                                                     </Link>
                                                 </div>
-                                                <div className="reserve-max-bid" style={{ display: 'none' }}>
-                                                    Reserve not met
-                                                </div>
-                                                <div className="clear" />
                                             </div>
                                             <div className="max-bid" data-max>
                                                 <div className="thirteen-font medium-gray max-bid-label">
@@ -354,129 +354,119 @@ function ComponentAuction(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="bb-row bb-next-bid exp-1">
-                            <div className="bb-icon">
-                                <i className="icon icon-plus-sign-alt" />
-                            </div>
-                            <div className="bb-item">
-                                <div className="bb-title">
-                                    <span>GIÁ THẦU TỐI THIỂU TIẾP THEO</span>
+                        {closeAction ? (
+                            null
+                        ) : (
+                            <div className="bb-row bb-est-val exp-1">
+                                <div className="bb-icon">
+                                    {/* <i className="icon icon-tag" /> */}
+                                    <FontAwesomeIcon icon={faTag} />
                                 </div>
-                                <div className="bb-content">
-                                    <div className="next-min-bid" data-view="minimum-bid">
-                                        2,500 đ
+                                <div className="bb-item">
+                                    <div className="bb-title">
+                                        <span
+                                            aria-haspopup="true"
+                                            data-allow-html="true"
+                                            data-position="left"
+                                            data-tooltip2
+                                            data-title="<div class='title-block'><b>About Estimates</b></div> <div class='text-block'>Estimate is based on various factors which may include past or expected sale prices of similar items in other auctions. Any listed estimate is not a guarantee of the actual selling price of this auction, or a representation of actual retail or other value.</div>"
+                                        >
+                                            GIÁ ƯỚC TÍNH:
+                                        </span>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bb-row bb-est-val exp-1">
-                            <div className="bb-icon">
-                                {/* <i className="icon icon-tag" /> */}
-                                <FontAwesomeIcon icon={faTag} />
-                            </div>
-                            <div className="bb-item">
-                                <div className="bb-title">
-                                    <span
-                                        aria-haspopup="true"
-                                        data-allow-html="true"
-                                        data-position="left"
-                                        data-tooltip2
-                                        title
-                                        data-title="<div class='title-block'><b>About Estimates</b></div> <div class='text-block'>Estimate is based on various factors which may include past or expected sale prices of similar items in other auctions. Any listed estimate is not a guarantee of the actual selling price of this auction, or a representation of actual retail or other value.</div>"
-                                    >
-                                        GIÁ ƯỚC TÍNH:
-                                    </span>
-                                </div>
-                                <div className="bb-content">
-                                    <div className="est-val">
-                                        <NumericFormat
-                                            value={state.bids.length === 0 ? '' : state.bids[0].estimatePrice}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            suffix={' đ'}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bb-row bb-place-bid bb-desktop">
-                            <div className="bb-item" id="bid-box-wrapper">
-                                <h3 className="bad-auth" style={{ display: 'none' }} />
-                                <form
-                                    className="lot-form"
-                                    style={{ margin: 0 }}
-                                    id="new_bid"
-                                    acceptCharset="UTF-8"
-                                // method="post"
-                                >
-                                    <div className="bid-wrapper">
-                                        <div className="bid-box grid-x" id="bid-box">
-                                            <div className="icon-cell cell small-1">
-                                                {/* <div className="icon-wrapper icon-dollar-sign"> */}
-                                                {/* <i className="icon icon-dollar" /> */}
-                                                <FontAwesomeIcon icon={faDollar} className="iconDollar" />
-                                                {/* </div> */}
-                                            </div>
-                                            <div className="bid-amt cell small-7">
-                                                <input
-                                                    id="bid"
-                                                    onChange={(e) => {
-                                                        setPrice(e.target.value);
-                                                    }}
-                                                    value={Price}
-                                                    className="bid-input-field big-numbers exp-1"
-                                                    name="bid"
-                                                    placeholder="Vui lòng nhập giá thầu..."
-                                                />
-                                            </div>
-                                            <div className="bid-min-btn cell small-4">
-                                                <button
-                                                    type="button"
-                                                    className="button next-min-bid-flag"
-                                                    onClick={handleMinAuction}
-                                                >
-                                                    <span>ĐẤU GIÁ NHỎ NHẤT</span>
-                                                </button>
-                                            </div>
-                                            {checkPrice ? null : <ValidationQuantity message={errorMess} />}
-                                            <input
-                                                autoComplete="off"
-                                                id="paid_entry_lot_id"
-                                                type="hidden"
-                                                name="bid[paid_entry_lot_id]"
+                                    <div className="bb-content">
+                                        <div className="est-val">
+                                            <NumericFormat
+                                                value={state.bids.length === 0 ? '' : state.bids[0].estimatePrice}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                suffix={' đ'}
                                             />
                                         </div>
-                                        <div
-                                            className="careted-flag"
-                                            data-js-behavior="has-tooltipish"
-                                            id="next-min-bid-flag"
-                                            style={{ display: 'none' }}
-                                            title="Click to bid next increment"
-                                        />
                                     </div>
-                                    <div className="bid-animation-wrapper relative-wrapper overflow-hidden">
-                                        {loadBids ? (
-                                            <button className="float-center button expanded bid-button exp-1" type="button" disabled>
-                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                Đang đặt giá...
-                                            </button>
-                                        ) : (
-
-                                            <button
-                                                className="float-center button expanded bid-button exp-1"
-                                                id="bid-button"
-                                                type="button"
-                                                onClick={handleBid}
-                                            >
-                                                ĐẤU GIÁ
-                                            </button>
-                                        )}
-                                    </div>
-                                    <div className="bid-pending-icon">
-                                        <i className="icon-spin icon-spinner" />
-                                    </div>
-                                </form>
+                                </div>
                             </div>
+                        )}
+                        <div className="bb-row bb-place-bid bb-desktop">
+                            {closeAction ? null : (
+                                <div className="bb-item" id="bid-box-wrapper">
+                                    <h3 className="bad-auth" style={{ display: 'none' }} />
+                                    <form
+                                        className="lot-form"
+                                        style={{ margin: 0 }}
+                                        id="new_bid"
+                                        acceptCharset="UTF-8"
+                                    // method="post"
+                                    >
+                                        <div className="bid-wrapper">
+                                            <div className="bid-box grid-x" id="bid-box">
+                                                <div className="icon-cell cell small-1">
+                                                    {/* <div className="icon-wrapper icon-dollar-sign"> */}
+                                                    {/* <i className="icon icon-dollar" /> */}
+                                                    <FontAwesomeIcon icon={faDollar} className="iconDollar" />
+                                                    {/* </div> */}
+                                                </div>
+                                                <div className="bid-amt cell small-7">
+                                                    <input
+                                                        id="bid"
+                                                        onChange={(e) => {
+                                                            setPrice(e.target.value);
+                                                        }}
+                                                        value={Price}
+                                                        className="bid-input-field big-numbers exp-1"
+                                                        name="bid"
+                                                        placeholder="Vui lòng nhập giá thầu..."
+                                                    />
+                                                </div>
+                                                <div className="bid-min-btn cell small-4">
+                                                    <button
+                                                        type="button"
+                                                        className="button next-min-bid-flag"
+                                                        onClick={handleMinAuction}
+                                                    >
+                                                        <span>ĐẤU GIÁ NHỎ NHẤT</span>
+                                                    </button>
+                                                </div>
+                                                {checkPrice ? null : <ValidationQuantity message={errorMess} />}
+                                                <input
+                                                    autoComplete="off"
+                                                    id="paid_entry_lot_id"
+                                                    type="hidden"
+                                                    name="bid[paid_entry_lot_id]"
+                                                />
+                                            </div>
+                                            <div
+                                                className="careted-flag"
+                                                data-js-behavior="has-tooltipish"
+                                                id="next-min-bid-flag"
+                                                style={{ display: 'none' }}
+                                                title="Click to bid next increment"
+                                            />
+                                        </div>
+                                        <div className="bid-animation-wrapper relative-wrapper overflow-hidden">
+                                            {loadBids ? (
+                                                <button className="float-center button expanded bid-button exp-1" type="button" disabled>
+                                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                    Đang đặt giá...
+                                                </button>
+                                            ) : (
+
+                                                <button
+                                                    className="float-center button expanded bid-button exp-1"
+                                                    id="bid-button"
+                                                    type="button"
+                                                    onClick={handleBid}
+                                                >
+                                                    ĐẤU GIÁ
+                                                </button>
+                                            )}
+                                        </div>
+                                        <div className="bid-pending-icon">
+                                            <i className="icon-spin icon-spinner" />
+                                        </div>
+                                    </form>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -497,8 +487,7 @@ function ComponentAuction(props) {
                                 <div className="watcher-btn text-center" style={{ width: 'auto' }} onClick={() => handleAddWatchList(product)}>
                                     <div className="relative-wrapper watch-wrapper btn">
                                         <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
-                                            <i className="fa-regular fa-heart"></i>import {Swal} from 'sweetalert2';
-
+                                            <i className="fa-regular fa-heart"></i>
                                             <span className="watch-type"> Thêm vào danh sách yêu thích</span>
                                         </div>
                                     </div>
