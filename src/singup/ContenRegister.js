@@ -163,7 +163,7 @@ const ContenRegister = () => {
                 .string()
                 .oneOf([yup.ref('password')], 'Mật khẩu phải trùng nhau!')
                 .required('Vui lòng nhập lại mật khẩu!'),
-            surplus: yup.number('Bạn phải nhập số!'),
+            surplus: yup.number('Bạn phải nhập số!').moreThan(49000, 'Vui lòng nhập số lơn hơn 50.000!'),
             locationRegion: yup.object().shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
             locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),

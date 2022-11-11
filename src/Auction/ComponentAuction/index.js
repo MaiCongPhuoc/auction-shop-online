@@ -168,7 +168,6 @@ function ComponentAuction(props) {
                 .catch((resp) => {});
         }
     }, [addToCart]);
-    console.log(addToCart);
 
     useEffect(() => {
         setLoadCheckWatchList(true);
@@ -588,7 +587,6 @@ function ComponentAuction(props) {
                                             style={{ fontStyle: 'normal', display: 'block !important' }}
                                         >
                                             <i className="fa-regular fa-heart"></i>
-
                                             <span className="watch-type"> Thêm vào danh sách yêu thích</span>
                                         </div>
                                     </div>

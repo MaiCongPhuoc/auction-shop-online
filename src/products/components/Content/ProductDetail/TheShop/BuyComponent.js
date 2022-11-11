@@ -110,6 +110,10 @@ const BuyComponent = ({ product }) => {
 
     const handleAddCartItem = () => {
         try {
+            if (account.email === undefined) {
+                notifyWarn('Hãy đăng nhập để thực hiện thao tác này');
+                return;
+            }
             if (!checkQuantity) {
                 setErrorMess('Hãy chọn số lượng hợp lệ');
                 return;
@@ -124,6 +128,7 @@ const BuyComponent = ({ product }) => {
                     notify(product.title);
                 }).catch((resp) => {
                     if (resp.response) {
+                        console.log(resp);
                         setLoading(false);
                         notifyWarn(resp.response.data.message ?? 'Hãy đăng nhập để thực hiện thao tác này');
                     }
@@ -269,7 +274,7 @@ const BuyComponent = ({ product }) => {
                     <div className="cs-action text-center" style={{ fontSize: '14px' }}><b>{product.sold}</b> sản phẩm đã bán</div>
                 </div>
             </div>
-            {/* <ToastContainer autoClose={1000} /> */}
+            <ToastContainer autoClose={1000} />
         </div>
     );
 }
