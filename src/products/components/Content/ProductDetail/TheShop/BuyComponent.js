@@ -130,7 +130,7 @@ const BuyComponent = ({ product }) => {
                     if (resp.response) {
                         console.log(resp);
                         setLoading(false);
-                        notifyWarn(resp.response.data.message ?? 'Hãy đăng nhập để thực hiện thao tác này');
+                        notifyWarn(resp.response.data.message);
                     }
 
                 });
