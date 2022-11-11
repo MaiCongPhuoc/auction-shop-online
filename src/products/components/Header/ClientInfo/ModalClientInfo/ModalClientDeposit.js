@@ -41,7 +41,7 @@ const ModalClientDeposit = (props) => {
             surplus: '',
         },
         validationSchema: yup.object({
-            surplus: yup.number().moreThan(0, 'Vui lòng nhập số lơn hơn 0!').required('Vui lòng không được để trống!'),
+            surplus: yup.number().moreThan(49000, 'Vui lòng nhập số lơn hơn 50.000!').required('Vui lòng không được để trống!'),
         }),
         onSubmit: (account) => {
             flag = true;
@@ -54,7 +54,7 @@ const ModalClientDeposit = (props) => {
     };
     return (
         <div>
-            <Modal show={false} onHide={onCloseDeposit} backdrop="static" keyboard={false} size="lg">
+            <Modal show={showeDeposit} onHide={onCloseDeposit} backdrop="static" keyboard={false} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title style={{ color: 'black' }}>Nạp tiền</Modal.Title>
                 </Modal.Header>

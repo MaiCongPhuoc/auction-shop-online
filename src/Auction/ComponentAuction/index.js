@@ -169,7 +169,6 @@ function ComponentAuction(props) {
             });
         }
     }, [addToCart]);
-    console.log(addToCart);
 
     useEffect(() => {
         setLoadCheckWatchList(true);
