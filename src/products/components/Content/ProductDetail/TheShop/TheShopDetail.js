@@ -6,6 +6,7 @@ import { Carousel, FormatMoney } from '../../../../Hooks/Hooks';
 import BuyComponent from './BuyComponent';
 import ReviewProductShop from '../Review/ReviewProductShop';
 import LoadCart from './../../../Loading/LoadCart';
+import NotFound from './../../../Loading/NotFound';
 
 function TheShopDetail() {
     const productSlug = useParams();
@@ -124,70 +125,74 @@ function TheShopDetail() {
 
                     {/* more */}
                     <div id="related-lots" style={{ clear: 'both' }}>
-                        <div>
-                            <div id="related-lots-title">
-                                <h2>SẢN PHẨM TƯƠNG TỰ</h2>
-                            </div>
-                            <div className="lots-wrapper mt-4" style={{ display: 'flex' }}>
-                                {productsByCategory.map((product) => (
-                                    (product.action) ? null :
-                                        (product.id === theShop.product.id) ? null :
-                                            <Link to={`/product/the-shop/${product.slug}`} key={product.id} className="individual-item-view cell medium-3">
-                                                <div className="item">
-                                                    <div>
-                                                        <div className="item-wrapper">
-                                                            <div className="catalog-item-image">
-                                                                <img
-                                                                    src={product.image}
-                                                                    alt=""
-                                                                    style={{ height: '200px' }}
-                                                                />
-                                                            </div>
-                                                            <div className="catalog-item-info">
-                                                                <span className="title">
-                                                                    {product.title}
-                                                                </span>
-                                                                <span className="price">Giá sản phẩm: {FormatMoney(product.price)} ₫</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                ))}
-                            </div>
-                        </div>
-                        <div>
+                        {productsByCategory.length === 0 ? null : (
                             <div>
-                                <h2>SẢN PHẨM CÙNG NGƯỜI ĐĂNG</h2>
-                            </div>
-                            <div className="lots-wrapper mt-4" style={{ display: 'flex' }}>
-                                {productsByCreatedBy.map((product) => (
-                                    (product.action) ? null :
-                                        (product.id === theShop.product.id) ? null :
-                                            <Link to={`/product/the-shop/${product.slug}`} key={product.id} className="individual-item-view cell medium-3">
-                                                <div className="item">
-                                                    <div>
-                                                        <div className="item-wrapper">
-                                                            <div className="catalog-item-image">
-                                                                <img
-                                                                    src={product.image}
-                                                                    alt=""
-                                                                    style={{ height: '200px' }}
-                                                                />
-                                                            </div>
-                                                            <div className="catalog-item-info">
-                                                                <span className="title">
-                                                                    {product.title}
-                                                                </span>
-                                                                <span className="price">Giá sản phẩm: {FormatMoney(product.price)} ₫</span>
+                                <div id="related-lots-title">
+                                    <h2>SẢN PHẨM TƯƠNG TỰ</h2>
+                                </div>
+                                <div className="lots-wrapper mt-4" style={{ display: 'flex' }}>
+                                    {productsByCategory.map((product) => (
+                                        (product.action) ? null :
+                                            (product.id === theShop.product.id) ? null :
+                                                <Link to={`/product/the-shop/${product.slug}`} key={product.id} className="individual-item-view cell medium-3">
+                                                    <div className="item">
+                                                        <div>
+                                                            <div className="item-wrapper">
+                                                                <div className="catalog-item-image">
+                                                                    <img
+                                                                        src={product.image}
+                                                                        alt=""
+                                                                        style={{ height: '200px' }}
+                                                                    />
+                                                                </div>
+                                                                <div className="catalog-item-info">
+                                                                    <span className="title">
+                                                                        {product.title}
+                                                                    </span>
+                                                                    <span className="price">Giá sản phẩm: {FormatMoney(product.price)} ₫</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </Link>
-                                ))}
+                                                </Link>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
+                        {productsByCreatedBy.length > 0 ? (
+                            <div>
+                                <div>
+                                    <h2>SẢN PHẨM CÙNG NGƯỜI ĐĂNG</h2>
+                                </div>
+                                <div className="lots-wrapper mt-4" style={{ display: 'flex' }}>
+                                    {productsByCreatedBy.map((product) => (
+                                        (product.action) ? null :
+                                            (product.id === theShop.product.id) ? null :
+                                                <Link to={`/product/the-shop/${product.slug}`} key={product.id} className="individual-item-view cell medium-3">
+                                                    <div className="item">
+                                                        <div>
+                                                            <div className="item-wrapper">
+                                                                <div className="catalog-item-image">
+                                                                    <img
+                                                                        src={product.image}
+                                                                        alt=""
+                                                                        style={{ height: '200px' }}
+                                                                    />
+                                                                </div>
+                                                                <div className="catalog-item-info">
+                                                                    <span className="title">
+                                                                        {product.title}
+                                                                    </span>
+                                                                    <span className="price">Giá sản phẩm: {FormatMoney(product.price)} ₫</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
             )}

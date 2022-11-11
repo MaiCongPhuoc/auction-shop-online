@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import '../../pages.css';
 import Tippy from '@tippyjs/react';
 import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function BangTaiKhoan() {
     const [state, setState] = useState({
@@ -58,9 +59,10 @@ function BangTaiKhoan() {
                 async function daleteAcount() {
                     await AccountService.getDeleteAccount(id);
                     setReRender(!reRender);
+                    toast.success(`Đã xóa thành công!`);
                 }
                 daleteAcount();
-                Swal.fire('</br> Đã xóa!', 'Bạn đã xóa người dùng này.', 'Thành công!');
+                // Swal.fire('</br> Đã xóa!', 'Bạn đã xóa người dùng này.', 'Thành công!');
             }
         });
     const lockAccount = (id) =>
@@ -80,7 +82,8 @@ function BangTaiKhoan() {
                     setReRender(!reRender);
                 }
                 daleteAcount();
-                Swal.fire('</br> Đã khóa!', 'Bạn đã khóa người dùng này.', 'Thành công!');
+                // Swal.fire('</br> Đã khóa!', 'Bạn đã khóa người dùng này.', 'Thành công!');
+                toast.success(`Đã khóa người dùng thành công!`);
             }
         });
     const unLockAccount = (id) =>
@@ -100,7 +103,8 @@ function BangTaiKhoan() {
                     setReRender(!reRender);
                 }
                 daleteAcount();
-                Swal.fire('</br> Đã mở khóa!', 'Bạn đã mở khóa người dùng này.', 'Thành công!');
+                // Swal.fire('</br> Đã mở khóa!', 'Bạn đã mở khóa người dùng này.', 'Thành công!');
+                toast.success(`Đã mở khóa người dùng thành công!`);
             }
         });
 
@@ -248,7 +252,7 @@ function BangTaiKhoan() {
                 <Spiner />
             ) : (
                 <div className="shadow mb-4 cur-div" style={{ cursor: 'auto !important' }}>
-                    <div className="card-header d-flex justify-content-between">
+                    <div className="card-header d-flex justify-content-betweeimport">
                         <h5 className="font-weight-bold text-primary" style={{ marginTop: '18px' }}>
                             Danh sách tài khoản
                         </h5>
@@ -359,7 +363,7 @@ function BangTaiKhoan() {
                                                   <td className="text-center">{account.locationRegion.districtName}</td>
                                                   <td className="text-center">{account.locationRegion.wardName}</td>
                                                   <td className="text-center">
-                                                      <Tippy
+                                                      {/* <Tippy
                                                           delay={[0, 0]}
                                                           // offset={[15, 8]}
                                                           placement="top"
@@ -381,7 +385,7 @@ function BangTaiKhoan() {
                                                                   title="Cập nhật"
                                                               ></i>
                                                           </button>
-                                                      </Tippy>
+                                                      </Tippy> */}
                                                       <Tippy
                                                           delay={[0, 0]}
                                                           // offset={[15, 8]}
@@ -568,6 +572,7 @@ function BangTaiKhoan() {
                 account={account}
                 onCloseDetailAccount={handleCloseDetailAccount}
             />
+            <ToastContainer autoClose={2000} />
         </div>
     );
 }

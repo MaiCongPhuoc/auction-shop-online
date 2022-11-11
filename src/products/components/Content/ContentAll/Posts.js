@@ -3,12 +3,11 @@ import { FormatMoney } from '../../../Hooks/Hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { setProduct, setShowInfoProduct } from '../../../redux/actions';
 import { getLoadData, getWatchLists } from '../../../redux/selector';
-import LoadData from '../../Loading/LoadData';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import LoadCart from './../../Loading/LoadCart';
 
-const Posts = ({ products, loading }) => {
+const Posts = ({ products }) => {
     const dispatch = useDispatch();
     const [watchLists, setWatchLists] = useState([]);
 
@@ -33,11 +32,11 @@ const Posts = ({ products, loading }) => {
     }, [currentWatchLists]);
 
     const loadData = useSelector(getLoadData);
-    
+   
+    console.log("currentWatchLists", currentWatchLists);
     return (
         <>
             {loadData ? <LoadCart /> : (
-
                 <div className="lot-cards grid-x grid-margin-x">
                     {
                         products.map((product) => (
@@ -57,12 +56,9 @@ const Posts = ({ products, loading }) => {
                                                     {
                                                         item.product.id === product.id ? (
                                                             <span className="ico-circle" ico_action="fav">
-                                                                <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                                <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
                                                             </span>
                                                         ) : null
-                                                        // <span className="ico-circle" ico_action="fav">
-                                                        //     <i className="fa-regular fa-heart"></i>
-                                                        // </span>
                                                     }
                                                 </div>
                                             ))}
@@ -70,7 +66,6 @@ const Posts = ({ products, loading }) => {
                                         <div className="card__info-container">
                                             <div className="info-container__label">
                                                 <span className="ico-circle c-bid">
-                                                    {/* <i class="fa-solid fa-tag"></i> */}
                                                     <i className="fas fa-gavel"></i>
                                                 </span>
                                                 <span className="label__main"> Đấu giá </span>
@@ -93,10 +88,10 @@ const Posts = ({ products, loading }) => {
                                                     <b>Giá khởi điểm:</b>
                                                     <div className="stat__price">{FormatMoney(product.price)} ₫</div>
                                                 </div>
-                                                <div className="stats-group__stat">
+                                                {/* <div className="stats-group__stat">
                                                     <b>Giá hiện tại:</b>
                                                     <div className="stat__price">4,600</div>
-                                                </div>
+                                                </div> */}
                                             </div>
                                             <div className="card__tertiary-container">
                                                 <span className="tertiary-container__optional-group" />
@@ -112,12 +107,9 @@ const Posts = ({ products, loading }) => {
                                                     {
                                                         item.product.id === product.id ? (
                                                             <span className="ico-circle" ico_action="fav" data-tip="Yêu thích">
-                                                                <i style={{ color: 'red' }} className="fa-regular fa-heart"></i>
+                                                                <i style={{ color: 'red' }} className="fa-solid fa-heart"></i>
                                                             </span>
                                                         ) : null
-                                                        // <span className="ico-circle" ico_action="fav">
-                                                        //     <i className="fa-regular fa-heart"></i>
-                                                        // </span>
                                                     }
                                                 </div>
                                             ))}

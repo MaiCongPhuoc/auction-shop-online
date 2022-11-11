@@ -348,7 +348,7 @@ const ContenRegister = () => {
                         <div className="row mb-2 ">
                             <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
-                                    Tỉnh / Thành phố:
+                                    Thành phố / Tỉnh:
                                 </label>
                                 <select
                                     className="form-select select select-bg-ori"
@@ -398,7 +398,7 @@ const ContenRegister = () => {
                             </div>
                             <div className="col-4">
                                 <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
-                                    Thôn / Thị xã:
+                                    Phường / Xã:
                                 </label>
                                 <select
                                     className="form-select select select-bg-ori"

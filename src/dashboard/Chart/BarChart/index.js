@@ -7,22 +7,22 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 function BarChart() {
     // const month = new Date();
-    let buyChart = []
-    let auctionChart = []
+    let buyChart = [];
+    let auctionChart = [];
     const [chart, setChart] = useState([]);
     useEffect(() => {
         async function getListProduct() {
-            let listChart = await ChartService.getListChart(2022);
+            let listChart = await ChartService.getListChart('2022');
             setChart(listChart.data);
         }
         getListProduct();
     }, []);
 
     for (let i = 0; i < chart.length; i++) {
-        buyChart.push(chart[i].buy);        
+        buyChart.push(chart[i].buy);
     }
     for (let i = 0; i < chart.length; i++) {
-        auctionChart.push(chart[i].auction);        
+        auctionChart.push(chart[i].auction);
     }
 
     const options = {
@@ -56,9 +56,7 @@ function BarChart() {
         datasets: [
             {
                 label: 'Bán ra',
-                data: [
-                    ...buyChart
-                ],
+                data: [...buyChart],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

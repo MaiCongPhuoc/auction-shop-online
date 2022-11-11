@@ -11,11 +11,9 @@ import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { DateRangePicker } from 'rsuite';
 
-function MyNotification() {
+function MyNotification({account}) {
     const dispatch = useDispatch();
     const openSidebar = useSelector(getOpenSidebar);
-    const account = useSelector(getAccount);
-
 
     const [orderDetails, setOrderDetails] = useState([]);
 
@@ -39,10 +37,9 @@ function MyNotification() {
     const [confirmLists, setConfirmLists] = useState([]);
     const [completedLists, setCompletedLists] = useState([]);
     const [canceledLists, setCanceledLists] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
 
     const [dateRanger, setDateRanger] = useState([]);
-
-
 
     const notifySuccess = (text) =>
         toast.success(`Đã thay đổi trạng thái đơn hàng thành ${text}`, {
@@ -103,8 +100,6 @@ function MyNotification() {
     const getCompletedListsBetween = (orderDetails, startDate, endDate) => {
         let date1 = new Date(startDate);
         let date2 = new Date(endDate);
-        console.log("date1: ", date1);
-        console.log("date2: ", date2);
         return orderDetails.filter((orderDetail) => {
             return orderDetail.updatedAt >= date1 && orderDetail.updatedAt <= date2;
         });
@@ -112,10 +107,17 @@ function MyNotification() {
 
 
     useEffect(() => {
+        let total = 0;
+        let cplList = getCompletedLists(orderDetails);
         setWaitingLists(getWaitingLists(orderDetails));
         setConfirmLists(getConfirmLists(orderDetails));
         setCompletedLists(getCompletedLists(orderDetails));
         setCanceledLists(getCanceledLists(orderDetails));
+        for (let index = 0; index < cplList.length; index++) {
+            total += cplList[index].amountTransaction;
+        }
+
+        setTotalAmount(total);
     }, [orderDetails]);
 
     useEffect(() => {
@@ -179,13 +181,6 @@ function MyNotification() {
     const handleChangDate = (value) => {
         setCompletedLists(getCompletedListsBetween(completedLists, value[0], value[1]));
     };
-    
-    // console.log("statusId: ", status.id);
-    // console.log("orderDetails: ", orderDetails);
-    // console.log("orderDetail: ", orderChoice);
-    // console.log("changeStatus: ", changeStatus);
-    // console.log('value', dateRanger);
-    // console.log('completedLists', completedLists);
 
     return (
         <>
@@ -201,7 +196,7 @@ function MyNotification() {
                         ))}
                     </div>
                     <hr />
-                    <div className="row col-12 my-3" style={{ height: '50px' }}>
+                    <div className="row col-12 my-3" style={{ height: '50px', maxWidth: 'none', marginLeft: '0', marginRight: '0' }}>
                         <span className="text-center col-4" id="image-order"> Sản phẩm</span>
                         <span className="text-center col-2" id="date-item-order">Thời gian mua</span>
                         <span className="text-center col-2" id="price-item-order">Số lượng</span>
@@ -413,90 +408,94 @@ function MyNotification() {
                                 )) : <EmptyOrder />) :
                             typeList === 'completed' ? (
                                 completedLists.length > 0 ?
-                                    completedLists.map((orderDetail, index) => (
-                                        <div key={index}>
-                                            <div
-                                                className="col-12 order-item mt-2"
-                                                onClick={() => handleShowInfo(orderDetail)}
-                                                data-tip="Nhấn để xem thông tin đơn hàng"
-                                                id={`order-detail-${orderDetail.id}`}
-                                            >
-                                                <Link className="col-4" to={`/product/the-shop/${orderDetail.product.slug}`}>
-                                                    <span
-                                                        style={{
-                                                            display: 'flex',
-                                                            alignItems: 'center'
-                                                        }}
-                                                    >
-                                                        <div className="col-4">
-                                                            <img style={{
-                                                                padding: '5px',
-                                                                width: '100px',
-                                                                height: '120px'
-                                                            }} src={orderDetail.product.image} alt="" />
-                                                        </div>
-                                                        <div className="text-start mx-2 col-9">
-                                                            <div>{orderDetail.product.title}</div>
-                                                            <div style={{ fontSize: 'small', color: 'blue' }}>Sản phẩm: {orderDetail.product.action ? 'Đấu giá' : 'Cửa hàng'}</div>
-                                                        </div>
-                                                    </span>
-                                                </Link>
-                                                <span className="text-center col-2 fw-bold">{orderDetail.createdAt}</span>
-                                                <span className="text-center col-2 fw-bold">{orderDetail.quantity}</span>
-                                                <span className="text-end col-2 fw-bold">{FormatMoney(orderDetail.amountTransaction)} ₫</span>
-                                                <span className="text-center col-2 fw-bold">{orderDetail.order.account.fullName}</span>
-                                            </div>
-                                            <div className="order-item my-order-action-dropdown hide" id={`info_my_order_${orderDetail.id}`}>
-                                                <div className="action-group">
-                                                    <div className="ms-3 action-item fw-bold" style={{ color: '#26cf8e' }}>
-                                                        <i className="fa-solid fa-circle-check"></i> {orderDetail.status.name}
-                                                    </div>
+                                    <>
+                                        {completedLists.map((orderDetail, index) => (
+                                            <div key={index}>
+                                                <div
+                                                    className="col-12 order-item mt-2"
+                                                    onClick={() => handleShowInfo(orderDetail)}
+                                                    data-tip="Nhấn để xem thông tin đơn hàng"
+                                                    id={`order-detail-${orderDetail.id}`}
+                                                >
+                                                    <Link className="col-4" to={`/product/the-shop/${orderDetail.product.slug}`}>
+                                                        <span
+                                                            style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center'
+                                                            }}
+                                                        >
+                                                            <div className="col-4">
+                                                                <img style={{
+                                                                    padding: '5px',
+                                                                    width: '100px',
+                                                                    height: '120px'
+                                                                }} src={orderDetail.product.image} alt="" />
+                                                            </div>
+                                                            <div className="text-start mx-2 col-9">
+                                                                <div>{orderDetail.product.title}</div>
+                                                                <div style={{ fontSize: 'small', color: 'blue' }}>Sản phẩm: {orderDetail.product.action ? 'Đấu giá' : 'Cửa hàng'}</div>
+                                                            </div>
+                                                        </span>
+                                                    </Link>
+                                                    <span className="text-center col-2 fw-bold">{orderDetail.createdAt}</span>
+                                                    <span className="text-center col-2 fw-bold">{orderDetail.quantity}</span>
+                                                    <span className="text-end col-2 fw-bold">{FormatMoney(orderDetail.amountTransaction)} ₫</span>
+                                                    <span className="text-center col-2 fw-bold">{orderDetail.order.account.fullName}</span>
                                                 </div>
-                                                  <span className="ms-2">{orderDetail.updatedAt}</span>
-                                                <div className="action-group">
-                                                    <div className="ms-3 action-item fw-bold" style={{ color: '#ff523d' }}>
-                                                        Thông tin người nhận
-                                                    </div>
-                                                    <div className="action-item col-9" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                        <div>Họ và tên: {orderDetail.order.fullName}</div>
-                                                        <div>Số điện thoại: {orderDetail.order.phone}</div>
-                                                        <div>Email: {orderDetail.order.email}</div>
-                                                    </div>
-                                                </div>
-                                                <div className="action-group">
-                                                    <div className="ms-3 action-item fw-bold" style={{ color: '#ff523d' }}>
-                                                        Địa chỉ giao hàng
-                                                    </div>
-                                                    <div className="action-item col-9" style={{ display: 'flex' }}>
-                                                        <div>{orderDetail.order.locationRegion.address},
-                                                            {" "}{orderDetail.order.locationRegion.wardName},
-                                                            {" "}{orderDetail.order.locationRegion.districtName},
-                                                            {" "}{orderDetail.order.locationRegion.provinceName}
+                                                <div className="order-item my-order-action-dropdown hide" id={`info_my_order_${orderDetail.id}`}>
+                                                    <div className="action-group">
+                                                        <div className="ms-3 action-item fw-bold" style={{ color: '#26cf8e' }}>
+                                                            <i className="fa-solid fa-circle-check"></i> {orderDetail.status.name}
+                                                            <span className="ms-2">{orderDetail.updatedAt}</span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                {orderDetail.order.description ? (
                                                     <div className="action-group">
                                                         <div className="ms-3 action-item fw-bold" style={{ color: '#ff523d' }}>
-                                                            Lời nhắn
+                                                            Thông tin người nhận
+                                                        </div>
+                                                        <div className="action-item col-9" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                            <div>Họ và tên: {orderDetail.order.fullName}</div>
+                                                            <div>Số điện thoại: {orderDetail.order.phone}</div>
+                                                            <div>Email: {orderDetail.order.email}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="action-group">
+                                                        <div className="ms-3 action-item fw-bold" style={{ color: '#ff523d' }}>
+                                                            Địa chỉ giao hàng
                                                         </div>
                                                         <div className="action-item col-9" style={{ display: 'flex' }}>
-                                                            <div>
-                                                                {orderDetail.order.description}
+                                                            <div>{orderDetail.order.locationRegion.address},
+                                                                {" "}{orderDetail.order.locationRegion.wardName},
+                                                                {" "}{orderDetail.order.locationRegion.districtName},
+                                                                {" "}{orderDetail.order.locationRegion.provinceName}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                ) : null}
-                                            </div>
-                                            <div className="col-12 order-item mt-5" style={{ justifyContent: 'flex-end' }}>
-                                                <div className="me-2">
-                                                    <DateRangePicker showOneCalendar onChange={handleChangDate} />
+                                                    {orderDetail.order.description ? (
+                                                        <div className="action-group">
+                                                            <div className="ms-3 action-item fw-bold" style={{ color: '#ff523d' }}>
+                                                                Lời nhắn
+                                                            </div>
+                                                            <div className="action-item col-9" style={{ display: 'flex' }}>
+                                                                <div>
+                                                                    {orderDetail.order.description}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ) : null}
                                                 </div>
-                                                <div className="me-2">Tổng tiền:</div>
-                                                <div className="fw-bold">10000</div>
+
                                             </div>
+                                        ))}
+                                        <div className="col-12 order-item mt-5" style={{ justifyContent: 'flex-end' }}>
+                                            <div className="me-2">
+                                                {/* <DateRangePicker showOneCalendar onChange={handleChangDate} /> */}
+                                            </div>
+                                            <div className="me-2">Tổng tiền:</div>
+                                            <div className="fw-bold">{FormatMoney(totalAmount)} ₫</div>
                                         </div>
-                                    )) : <EmptyOrder />
+                                    </>
+                                    : <EmptyOrder />
                             ) : (canceledLists.length > 0 ?
                                 canceledLists.map((orderDetail, index) => (
                                     <div key={index}>

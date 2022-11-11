@@ -172,21 +172,21 @@ function ModalEditProduct(props) {
                 .string()
                 .min(8, 'Tên của bạn tối thiểu là 8 kí tự!')
                 .max(20, 'Tên của bạn tối đa là 20 kí tự!')
-                .required('Vui lòng nhập họ và tên đầy đủ!'),
+                .required('Vui lòng thay đổi họ và tên đầy đủ!'),
             username: yup
                 .string()
                 .min(8, 'Tên đăng nhập tối thiểu là 8 kí tự!')
                 .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
-                .required('Vui lòng nhập tên đăng nhập!'),
+                .required('Vui lòng thay đổi tên đăng nhập!'),
             email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập email vào!'),
-            phone: yup.string().required('Vui lòng nhập số điện thoại!'),
+            phone: yup.string().required('Vui lòng thay đổi số điện thoại!'),
             role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyền hạn!') }),
             locationRegion: yup
                 .object()
                 .shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh / Thành phố!') }),
             locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
             locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
-            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng nhập địa chỉ!') }),
+            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng thay đổi địa chỉ!') }),
         }),
         onSubmit: (account) => {
             let provinceId = document.querySelector('#province').value;

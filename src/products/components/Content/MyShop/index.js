@@ -9,39 +9,30 @@ import MyProduct from "./MyProduct";
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { getMenu } from './../../../redux/selector';
 import MyNotification from "./MyNotification";
-import EmptyOrder from './../../Loading/EmptyOrder';
 import LoadCart from "../../Loading/LoadCart";
 
 function ShowMyShop() {
     const account = useSelector(getAccount);
 
-    const [products, setProducts] = useState([]);
     const [orderDetails, setOrderDetails] = useState([]);
-
-    const [loading, setLoading] = useState(false);
 
     const menu = useSelector(getMenu);
 
+    const [waitingLists, setWaitingLists] = useState([]);
+
     const reLoadOrder = useSelector(getReloadOrder);
 
-    useEffect(() => {
-        setLoading(true);
-        try {
-            ProductService.getProductsModeratedByCreatedBy(account.email).then((res) => {
-                if (res.data.length > 0) {
-                    setProducts(res.data);
-                    setLoading(false);
-                } else {
-                    toast.warn(res.data.message);
-                    setLoading(false);
-                }
-            }).catch((resp) => {
-                toast.warn(resp.data.message);
-                setLoading(false);
-            });
+    const getWaitingLists = (orderDetails) => {
+        return orderDetails.filter((orderDetail) => {
+            return orderDetail.status.id === 7;
+        });
+    };
 
+    useEffect(() => {
+        try {
             OrdersDetailService.getOrdersDetailByProductCreatedBy(account.email).then((res) => {
                 setOrderDetails(res.data);
+                setWaitingLists(getWaitingLists(res.data));
             }).catch((resp) => {
                 toast.warn(resp.data.message);
             });
@@ -53,11 +44,13 @@ function ShowMyShop() {
     return (
         <>
             <Header className="product-client" />
-            <SideBar orderDetails={orderDetails} />
+            {account.email === undefined ? (null) : (
+                <SideBar orderDetails={waitingLists} account={account} />
+            )}
             {menu === 'myProduct' ? (
-                (loading) ? <LoadCart /> : <MyProduct products={products}/>
+                account.email === undefined ? null : <MyProduct account={account} />
             ) : (
-                <MyNotification />
+                account.email === undefined ? null : <MyNotification account={account}/>
             )}
             <ToastContainer />
         </>

@@ -146,9 +146,9 @@ function ModalEditProduct(props) {
                 .moreThan(99999, 'Sản phẩm có giá nhỏ nhất là: 100.000 đ'),
             available: yup
                 .number('Vui lòng nhập số!')
-                .min(10, 'Số lượng tối thiểu là 10!')
-                .max(200, 'Số lượng tối đa là 200!')
-                .required('Vui lòng đổi số lượng!'),
+                .required('Vui lòng nhập số lượng!')
+                .moreThan(1, 'Số lượng nhỏ nhất là 1!')
+                .lessThan(199, 'Số lượng lớn nhất là 200!'),
             action: yup.string(),
             image: yup.mixed(),
             description: yup.string().required('Vui lòng sửa lại mô tả!'),
@@ -166,11 +166,8 @@ function ModalEditProduct(props) {
             handleReset();
             notify();
         },
-        onReset: (product) => {
-            console.log('onReset 2: ', product);
-        },
+        onReset: (product) => {},
     });
-    console.log('product: ', product);
 
     return (
         <Modal show={showEdit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="xl">

@@ -1,13 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { FormatMoney } from "../../../Hooks/Hooks";
 import { useSelector } from "react-redux";
 import { getOpenSidebar } from "../../../redux/selector";
 import LoadCart from "../../Loading/LoadCart";
 import EmptyOrder from "../../Loading/EmptyOrder";
+import ProductService from "../../../service/Product/ProductService";
+import { toast } from 'react-toastify';
 
-function MyProduct({ products, }) {
+function MyProduct({ account }) {
     const openSidebar = useSelector(getOpenSidebar);
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        try {
+            ProductService.getProductsModeratedByCreatedBy(account.email).then((res) => {
+                if (res.data.length > 0) {
+                    setProducts(res.data);
+                } else {
+                    toast.warn(res.data.message);
+                }
+            }).catch((resp) => {
+                toast.warn(resp.data.message);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
     useEffect(() => {
         if (openSidebar) {
@@ -38,10 +58,9 @@ function MyProduct({ products, }) {
     let moderatedList = moderationList(products);
     let nonModeratedList = nonModerationList(products);
 
-    console.log(products.length > 0);
     return (
         <>
-            <div className="moderation-list" style={{display: 'flex'}}>
+            <div className="moderation-list" style={{ display: 'flex' }}>
                 <h2>Đã kiểm duyệt &gt;&gt;</h2>
                 <div className="ms-5"><b>{moderatedList.length}</b> sản phẩm</div>
             </div>
