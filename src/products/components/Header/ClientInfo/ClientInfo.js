@@ -42,13 +42,13 @@ function ClientInfo() {
         showeditpassword: false,
     });
     const { accountEditPasswordId, showeditpassword } = showEditPassword;
-    //modal edit pass
+    //modal deposit
     const hanldeCloseDeposit = () => setShowDeposit(false);
     const [showDeposit, setShowDeposit] = useState({
         accountDepositId: 0,
         showeDeposit: false,
     });
-    const { accountDepositId, showeDeposit } = showEditPassword;
+    const { accountDepositId, showeDeposit } = showDeposit;
     // modal detail
     const [showDetail, setShowDetail] = useState({
         showdetail: false,
@@ -151,11 +151,14 @@ function ClientInfo() {
                     </div>
                 </div>
                 <ToastContainer autoClose={1500} />
-                <ModalEditClient
-                    showEdit={showedit}
-                    accountEditId={accountEditId}
-                    onCloseEditAccount={hanldeCloseEditAccount}
-                />
+                {account.email === undefined ? null : (
+                    <ModalEditClient
+                        showEdit={showedit}
+                        accountEditId={accountEditId}
+                        onCloseEditAccount={hanldeCloseEditAccount}
+                        account={account}
+                    />
+                )}
                 <ModalDetail
                     showDetail={showdetail}
                     accountId={accountId}
@@ -167,9 +170,9 @@ function ClientInfo() {
                     accountEditPasswordId={accountEditPasswordId}
                     onCloseEditPasswordAccount={hanldeCloseEditPasswordAccount}
                 />
-                <ModalClientDeposit 
+                <ModalClientDeposit
                     accountDepositId={accountDepositId}
-                    showeDeposit={showDeposit}
+                    showeDeposit={showeDeposit}
                     onCloseDeposit={hanldeCloseDeposit}
                 />
             </div>

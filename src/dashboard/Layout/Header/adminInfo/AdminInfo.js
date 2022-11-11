@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { loginStatus, setAccount } from '../../../../products/redux/actions';
 import ModalAccountResetPassword from './modalAccountInfo/ModalAccountResetPassword';
 import ModalDetailAccountInfo from './modalAccountInfo/ModalAccountInfo';
+import ModalEditAccount from './modalAccountInfo/ModalEditAccount';
 
 function AdminInfo() {
     const dispatch = useDispatch();
@@ -66,7 +67,7 @@ function AdminInfo() {
                                     <i className="fa-solid fa-user-tie"></i> Hồ sơ
                                 </button>
                                 <br />
-                                {/* <button
+                                <button
                                     className="btn-adminInfo"
                                     onClick={() =>
                                         setShowEdit({
@@ -77,7 +78,7 @@ function AdminInfo() {
                                 >
                                     <i className="fa-solid fa-user-pen"></i> Cập nhật
                                 </button>
-                                <br /> */}
+                                <br />
                                 <button
                                     className="btn-adminInfo"
                                     onClick={() =>
@@ -135,6 +136,14 @@ function AdminInfo() {
                     account={account}
                     onCloseDetailAccount={handleCloseDetailAccount}
                 />
+                {account.email === undefined ? null : (
+                    <ModalEditAccount
+                        showEdit={showedit}
+                        accountEditId={accountEditId}
+                        onCloseEditAccount={hanldeCloseEditAccount}
+                        account={account}
+                    />
+                )}
             </div>
         </>
     );

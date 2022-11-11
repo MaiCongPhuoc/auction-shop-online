@@ -150,17 +150,17 @@ const ContentLogin = () => {
                                         <button type="submit" className="loginBtn">
                                             Đăng Nhập
                                         </button>
+                                        {/* <br />
                                         <br />
-                                        <br />
-                                        {/* <GoogleAndFacebook /> */}
+                                        <GoogleAndFacebook />
                                         <div className="loginFooter">
-                                            {/* <button className="forgetPass" onClick={forgetPass}>
+                                            <button className="forgetPass" onClick={forgetPass}>
                                                 Quên Mật Khẩu?
-                                            </button> */}
+                                            </button>
                                             <Link to={'/restartPassword'} className="forgetPass">
                                                 Quên Mật Khẩu?
                                             </Link>
-                                        </div>
+                                        </div> */}
                                     </form>
                                 </div>
                             </div>
