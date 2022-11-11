@@ -8,7 +8,7 @@ import rank4 from './../../../asset/images/rank4.png';
 import rank5 from './../../../asset/images/rank5.png';
 
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "black", "white"];
-const delay = 100000;
+const delay = 2500;
 
 function Slideshow({ products }) {
     const [index, setIndex] = React.useState(0);
