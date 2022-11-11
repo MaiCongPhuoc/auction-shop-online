@@ -561,7 +561,7 @@ function ComponentAuction(props) {
                                 <div className="watcher-btn text-center" style={{ width: 'auto' }} onClick={() => handleAddWatchList(product)}>
                                     <div className="relative-wrapper watch-wrapper btn">
                                         <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
-                                            <i className="fa-regular fa-heart"></i>import EmailService from './../../products/service/Email/EmailService';
+                                            <i className="fa-regular fa-heart"></i>
 
                                             <span className="watch-type"> Thêm vào danh sách yêu thích</span>
                                         </div>
