@@ -4,12 +4,11 @@ import AccountService from '../../../../../dashboard/services/AccountService';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import FileService from '../../../../../dashboard/services/FileService';
-// import '../../modal.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 let flag = false;
-let img = 'https://freepngimg.com/thumb/youtube/62644-profile-account-google-icons-computer-user-iconfinder.png';
+let img = undefined;
 function ModalEditClient(props) {
     const notify = () =>
         toast.success('Cập nhật thành công!', {
@@ -22,10 +21,9 @@ function ModalEditClient(props) {
             progress: undefined,
             theme: 'colored',
         });
-    const { showEdit, onCloseEditAccount, accountEditId } = props;
+    const { showEdit, onCloseEditAccount, accountEditId, account } = props;
     const [stateImg, setStateImg] = useState(false);
     const [state, setState] = useState({
-        roles: [],
         provinces: [],
     });
     const [accountById, setAccountById] = useState({});
@@ -37,20 +35,24 @@ function ModalEditClient(props) {
     });
 
     useEffect(() => {
-        if (accountEditId !== 0 && accountEditId !== undefined) {
-            try {
-                async function getAddAccount() {
-                    let role = await AccountService.getRoles();
-                    let Province = await AccountService.getProvinces();
-                    let accountEdit = await AccountService.getAccountById(accountEditId);
-                    setAccountById({ ...accountEdit.data });
-                    setState({ ...state, roles: role.data, provinces: Province.data.results });
-                }
-                getAddAccount();
-            } catch (error) {
-                console.log(error);
+        // if (accountEditId !== 0 && accountEditId !== undefined) {
+        try {
+            async function getAddAccount() {
+                let role = await AccountService.getRoles();
+                let Province = await AccountService.getProvinces();
+                let districtsRes = await AccountService.getDistrict(account.locationRegion.provinceId);
+                let wardsRes = await AccountService.getWard(account.locationRegion.districtId);
+                let accountEdit = await AccountService.getAccountById(accountEditId);
+
+                setAccountById({ ...accountEdit.data });
+                setState({ ...state, roles: role.data, provinces: Province.data.results });
+                setLocation({ ...location, districts: districtsRes.data.results, wards: wardsRes.data.results });
             }
+            getAddAccount();
+        } catch (error) {
+            console.log(error);
         }
+        // }
     }, [showEdit]);
 
     useEffect(() => {
@@ -169,23 +171,25 @@ function ModalEditClient(props) {
                 .string()
                 .min(8, 'Tên của bạn tối thiểu là 8 kí tự!')
                 .max(20, 'Tên của bạn tối đa là 20 kí tự!')
-                .required('Vui lòng nhập họ và tên đầy đủ!'),
+                .required('Vui lòng thay đổi họ và tên đầy đủ!'),
             username: yup
                 .string()
                 .min(8, 'Tên đăng nhập tối thiểu là 8 kí tự!')
                 .max(20, 'Tên đăng nhập tối đa là 20 kí tự!')
-                .required('Vui lòng nhập tên đăng nhập!'),
-            email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng nhập email vào!'),
-            phone: yup.string().required('Vui lòng nhập số điện thoại!'),
-            // role: yup.object().shape({ id: yup.string().required('Vui lòng chọn quyền hạn!') }),
+                .required('Vui lòng thay đổi tên đăng nhập!'),
+            email: yup.string().email('Nhập địa chỉ Email hợp lệ!').required('Vui lòng thay đổi email vào!'),
+            phone: yup.string().required('Vui lòng thay đổi số điện thoại!'),
             locationRegion: yup
                 .object()
-                .shape({ provinceId: yup.string().required('Vui lòng chọn Tỉnh / Thành phố!') }),
-            locationRegion: yup.object().shape({ districtId: yup.string().required('Vui lòng chọn Quận / huyện!') }),
-            locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng chọn Thôn / xã!') }),
-            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng nhập địa chỉ!') }),
+                .shape({ provinceId: yup.string().required('Vui lòng thay đổi Tỉnh / Thành phố!') }),
+            locationRegion: yup
+                .object()
+                .shape({ districtId: yup.string().required('Vui lòng thay đổi Quận / huyện!') }),
+            locationRegion: yup.object().shape({ wardId: yup.string().required('Vui lòng thay đổi Thôn / xã!') }),
+            locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng thay đổi địa chỉ!') }),
         }),
         onSubmit: (account) => {
+            console.log('abc');
             let provinceId = document.querySelector('#province').value;
             let prov = document.querySelector('#province').options.selectedIndex;
             let currentProvince = document.querySelector('#province').options[prov].text;
@@ -198,11 +202,8 @@ function ModalEditClient(props) {
             let war = document.querySelector('#ward').options.selectedIndex;
             let currentWard = document.querySelector('#ward').options[war].text;
 
-            // let roleId = Number(document.querySelector('#role').value);
-
             flag = true;
             account.avatar = img;
-            // account.role.id = roleId;
             account.blocked = accountById.blocked;
             account.locationRegion.id = accountById.locationRegion.id;
             account.locationRegion.provinceId = provinceId;
@@ -211,7 +212,6 @@ function ModalEditClient(props) {
             account.locationRegion.districtName = currentDistrict;
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
-            console.log('account1: ', account);
             setAccountFrm({ ...account });
             notify();
         },
@@ -219,7 +219,6 @@ function ModalEditClient(props) {
 
     const { provinces } = state;
     const { districts, wards } = location;
-    console.log('accountById: ', accountById);
     return (
         <Modal show={showEdit} onHide={onCloseEditAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
@@ -238,13 +237,9 @@ function ModalEditClient(props) {
                             {formik.errors.username && formik.errors.username && (
                                 <li className="error">{formik.errors.username}</li>
                             )}
-
                             {formik.errors.phone && formik.errors.phone && (
                                 <li className="error">{formik.errors.phone}</li>
                             )}
-                            {/* {formik.errors.role && formik.errors.role && (
-                                <li className="error">{formik.errors.role}</li>
-                            )} */}
                             {formik.errors.districtname && formik.errors.districtname && (
                                 <li className="error">{formik.errors.districtname}</li>
                             )}
@@ -316,24 +311,6 @@ function ModalEditClient(props) {
                                     placeholder="Vui lòng nhập số điện thoại..."
                                 />
                             </div>
-                            {/* <div className="col-4">
-                                <label htmlFor="addAction" className="form-label text-dark font-weight-bold ml-2">
-                                    Quyền hạn:
-                                </label>
-                                <select
-                                    className="form-select select select-bg-ori"
-                                    id="role"
-                                    name="role.id"
-                                    value={formik.values.role.id}
-                                    onChange={formik.handleChange}
-                                >
-                                    {roles.map((role) => (
-                                        <option value={role.id} key={role.id}>
-                                            {role.code}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div> */}
                         </div>
                         <div className="row mb-3 ">
                             <div className="col-4">
@@ -344,12 +321,12 @@ function ModalEditClient(props) {
                                     className="form-select select select-bg-ori"
                                     id="province"
                                     name="locationRegion.provinceId"
-                                    value={formik.values.locationRegion.provinceId}
+                                    value={formik.values.locationRegion.provinceId ?? account.locationRegion.provinceId}
                                     onChange={formik.handleChange}
                                     onInput={handleProvince}
                                 >
                                     {provinces && (
-                                        <option value={-1} key={-1} selected disabled>
+                                        <option value={-1} key={-1} selected>
                                             Chọn
                                         </option>
                                     )}
@@ -368,14 +345,14 @@ function ModalEditClient(props) {
                                     className="form-select select select-bg-ori"
                                     id="district"
                                     name="locationRegion.districtId"
-                                    value={formik.values.locationRegion.districtId}
+                                    value={formik.values.locationRegion.districtId ?? account.locationRegion.districtId}
                                     onChange={formik.handleChange}
                                     onInput={handleDistrict}
                                 >
                                     {districts ? (
                                         ''
                                     ) : (
-                                        <option value={-1} key={-1} defaultValue disabled>
+                                        <option value={-1} key={-1} disabled>
                                             Chọn tỉnh / Thành phố:
                                         </option>
                                     )}
@@ -394,14 +371,14 @@ function ModalEditClient(props) {
                                     className="form-select select select-bg-ori"
                                     id="ward"
                                     name="locationRegion.wardId"
-                                    value={formik.values.locationRegion.wardId}
+                                    value={formik.values.locationRegion.wardId ?? account.locationRegion.wardId}
                                     onChange={formik.handleChange}
                                     onInput={handleWard}
                                 >
                                     {wards ? (
                                         ''
                                     ) : (
-                                        <option value={-1} key={-1} defaultValue disabled>
+                                        <option value={-1} key={-1} disabled>
                                             Chọn tỉnh / Thành phố:
                                         </option>
                                     )}
@@ -428,6 +405,7 @@ function ModalEditClient(props) {
                                     placeholder="Vui lòng chọn file..."
                                     onInput={handleUpload}
                                 />
+                                <img src={img ?? account.avatar} width={100} alt="" />
                             </div>
                             <div className="mb-3 col-6">
                                 <label htmlFor="addImage" className="form-label text-dark font-weight-bold ml-2">
@@ -439,7 +417,7 @@ function ModalEditClient(props) {
                                     id="address"
                                     name="locationRegion.address"
                                     placeholder="Vui lòng nhập địa chỉ..."
-                                    value={formik.values.locationRegion.address}
+                                    value={formik.values.locationRegion.address ?? account.locationRegion.address}
                                     onChange={formik.handleChange}
                                 />
                             </div>

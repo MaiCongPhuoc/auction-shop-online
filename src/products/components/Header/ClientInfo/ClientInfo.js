@@ -150,11 +150,14 @@ function ClientInfo() {
                     </div>
                 </div>
                 <ToastContainer autoClose={1500} />
-                <ModalEditClient
-                    showEdit={showedit}
-                    accountEditId={accountEditId}
-                    onCloseEditAccount={hanldeCloseEditAccount}
-                />
+                {account.email === undefined ? null : (
+                    <ModalEditClient
+                        showEdit={showedit}
+                        accountEditId={accountEditId}
+                        onCloseEditAccount={hanldeCloseEditAccount}
+                        account={account}
+                    />
+                )}
                 <ModalDetail
                     showDetail={showdetail}
                     accountId={accountId}
@@ -166,7 +169,7 @@ function ClientInfo() {
                     accountEditPasswordId={accountEditPasswordId}
                     onCloseEditPasswordAccount={hanldeCloseEditPasswordAccount}
                 />
-                <ModalClientDeposit 
+                <ModalClientDeposit
                     accountDepositId={accountDepositId}
                     showeDeposit={showeDeposit}
                     onCloseDeposit={hanldeCloseDeposit}
