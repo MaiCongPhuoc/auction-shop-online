@@ -44,8 +44,6 @@ function ComponentAuction(props) {
     const [showListBids, setShowListBids] = useState(false);
     const [addToCart, setAddToCart] = useState(false);
 
-
-
     const reloadWatchList = useSelector(getReloadWatchList);
 
     const changeShowListBids = (boo) => {
@@ -53,11 +51,10 @@ function ComponentAuction(props) {
     };
 
     const cartItem = {
-        product: product
-        ,
+        product: product,
         title: product.title,
         price: 0,
-        quantity: 1
+        quantity: 1,
     };
 
     const { auctionId } = useParams();
@@ -71,7 +68,6 @@ function ComponentAuction(props) {
         estimatePrice: 0,
     });
 
-
     useEffect(() => {
         if (new Date(auction.auctionEndTime).valueOf() > new Date().valueOf()) {
             let diffTime = Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf());
@@ -80,7 +76,12 @@ function ComponentAuction(props) {
             let minutes = (hours % 1) * 60;
             let secs = (minutes % 1) * 60;
             setTimeout(() => {
-                if (Math.floor(days) == 0 && Math.floor(hours) == 0 && Math.floor(minutes) == 0 && Math.floor(secs) == 0) {
+                if (
+                    Math.floor(days) == 0 &&
+                    Math.floor(hours) == 0 &&
+                    Math.floor(minutes) == 0 &&
+                    Math.floor(secs) == 0
+                ) {
                     // cartItem.price = state.bids[0].bidPrice;
                     // CartItemService.addCartItem(state.bids[0].account.id, cartItem).then((res) => {
                     //     if (account.id === state.bids[0].account.id) {
@@ -116,12 +117,7 @@ function ComponentAuction(props) {
                     setAddToCart(true);
                     setCloseAction(true);
                 } else {
-                    setTimeAuction([
-                        Math.floor(days),
-                        Math.floor(hours),
-                        Math.floor(minutes),
-                        Math.floor(secs),
-                    ]);
+                    setTimeAuction([Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]);
                 }
             }, 1000);
         } else {
@@ -132,41 +128,44 @@ function ComponentAuction(props) {
     useEffect(() => {
         if (addToCart) {
             cartItem.price = state.bids[0].bidPrice;
-            CartItemService.addCartItem(state.bids[0].account.id, cartItem).then((res) => {
-                if (account.id === state.bids[0].account.id) {
-                    Swal.fire({
-                        title: '<strong>Chúc mừng!</strong>',
-                        icon: 'success',
-                        html:
-                            `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
-                            '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
-                        //   'and other HTML tags',
-                        showCloseButton: true,
-                        showCancelButton: true,
-                        focusConfirm: false,
-                        confirmButtonText:
-                            '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
-                        cancelButtonText:
-                            'Quay lại',
-                    })
-                } else {
-                    Swal.fire({
-                        icon: 'info',
-                        html: `Chúc mừng <b>${state.bids[0].account.fullName}</b>!</br>` +
-                            `Đã chiến thắng phiên đấu giá và sở hữu sản phẩm <b>${product.title}</b>`,
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                        timer: 2500
-                    })
-                };
-                EmailService.auctionsSuccessSendEmail(state.bids[0].account.email, product).then((res) => {
-                    console.log(res);
-                }).catch((resp) => {
-                    console.log(resp);
-                });
-                dispatch(setReloadCartItem(!reloadCartItem));
-            }).catch((resp) => {
-            });
+            CartItemService.addCartItem(state.bids[0].account.id, cartItem)
+                .then((res) => {
+                    if (account.id === state.bids[0].account.id) {
+                        Swal.fire({
+                            title: '<strong>Chúc mừng!</strong>',
+                            icon: 'success',
+                            html:
+                                `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
+                                '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
+                            //   'and other HTML tags',
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText:
+                                '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
+                            cancelButtonText: 'Quay lại',
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'info',
+                            html:
+                                `Chúc mừng <b>${state.bids[0].account.fullName}</b>!</br>` +
+                                `Đã chiến thắng phiên đấu giá và sở hữu sản phẩm <b>${product.title}</b>`,
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                            timer: 2500,
+                        });
+                    }
+                    EmailService.auctionsSuccessSendEmail(state.bids[0].account.email, product)
+                        .then((res) => {
+                            console.log(res);
+                        })
+                        .catch((resp) => {
+                            console.log(resp);
+                        });
+                    dispatch(setReloadCartItem(!reloadCartItem));
+                })
+                .catch((resp) => {});
         }
     }, [addToCart]);
     console.log(addToCart);
@@ -174,20 +173,22 @@ function ComponentAuction(props) {
     useEffect(() => {
         setLoadCheckWatchList(true);
         try {
-            console.log("account.id", account.id);
-            WatchListsService.checkProductInWatchListByAccountId(account.id, product).then((res) => {
-                if (res.data) {
-                    setCheckWatchList(true);
+            console.log('account.id', account.id);
+            WatchListsService.checkProductInWatchListByAccountId(account.id, product)
+                .then((res) => {
+                    if (res.data) {
+                        setCheckWatchList(true);
+                        setLoadCheckWatchList(false);
+                        return;
+                    }
+                    setCheckWatchList(false);
                     setLoadCheckWatchList(false);
-                    return;
-                }
-                setCheckWatchList(false);
-                setLoadCheckWatchList(false);
-            }).catch((resp) => {
-                console.log("catch", resp);
-            });
+                })
+                .catch((resp) => {
+                    console.log('catch', resp);
+                });
         } catch (error) {
-            console.log("err", error);
+            console.log('err', error);
         }
     }, []);
 
@@ -235,12 +236,14 @@ function ComponentAuction(props) {
     }, [rerender]);
 
     const handleMinAuction = () => {
-        let priceAuction = Math.ceil((state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed() / 1000) * 1000;
+        let priceAuction =
+            Math.ceil((state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed() / 1000) * 1000;
         setPrice(priceAuction);
     };
 
     const handleBid = () => {
-        let priceAuction = Math.ceil((state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed() / 1000) * 1000;
+        let priceAuction =
+            Math.ceil((state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12001).toFixed() / 1000) * 1000;
         let bidPrice = Number(document.querySelector('#bid').value);
         if (!isNumber(bidPrice)) {
             setErrorMess('Giá phải là một số nguyên');
@@ -251,7 +254,7 @@ function ComponentAuction(props) {
             setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12% với giá tiền hiện tại`);
             return;
         }
-        if (bidPrice > (priceAuction + 500000)) {
+        if (bidPrice > priceAuction + 500000) {
             setCheckPrice(false);
             setErrorMess(`Giá thầu hiện tại không được quá lớn! (bé hơn 500.000 đ)`);
             return;
@@ -266,15 +269,17 @@ function ComponentAuction(props) {
     const handleAddWatchList = (product) => {
         try {
             async function addWatchList() {
-                WatchListsService.addWatchList(account.id, product).then((res) => {
-                    setCheckWatchList(true);
-                    dispatch(setReloadWatchList(!reloadWatchList))
-                    toast.info(`Đã thêm ${product.title} vào danh sách yêu thích`)
-                }).catch((err) => {
-                    if (err.response.data) {
-                        toast.error(err.response.data);
-                    }
-                });
+                WatchListsService.addWatchList(account.id, product)
+                    .then((res) => {
+                        setCheckWatchList(true);
+                        dispatch(setReloadWatchList(!reloadWatchList));
+                        toast.info(`Đã thêm ${product.title} vào danh sách yêu thích`);
+                    })
+                    .catch((err) => {
+                        if (err.response.data) {
+                            toast.error(err.response.data);
+                        }
+                    });
             }
             addWatchList();
         } catch (error) {
@@ -398,19 +403,26 @@ function ComponentAuction(props) {
                                                     {closeAction ? (
                                                         <div
                                                             className="bid-box-bid-count"
-                                                            style={{ fontSize: 'large', cursor: 'pointer', color: '#b86c17' }}
+                                                            style={{
+                                                                fontSize: 'large',
+                                                                cursor: 'pointer',
+                                                                color: '#b86c17',
+                                                            }}
                                                         >
                                                             Lịch sử đấu giá
                                                         </div>
                                                     ) : (
                                                         <div
                                                             className="bid-box-bid-count"
-                                                            style={{ fontSize: 'large', cursor: 'pointer', color: '#198553' }}
+                                                            style={{
+                                                                fontSize: 'large',
+                                                                cursor: 'pointer',
+                                                                color: '#198553',
+                                                            }}
                                                         >
                                                             Danh sách đấu giá
                                                         </div>
                                                     )}
-
                                                 </div>
                                             </div>
                                             <div className="max-bid" data-max>
@@ -428,9 +440,7 @@ function ComponentAuction(props) {
                                 </div>
                             </div>
                         </div>
-                        {closeAction ? (
-                            null
-                        ) : (
+                        {closeAction ? null : (
                             <div className="bb-row bb-est-val exp-1">
                                 <div className="bb-icon">
                                     {/* <i className="icon icon-tag" /> */}
@@ -470,7 +480,7 @@ function ComponentAuction(props) {
                                         style={{ margin: 0 }}
                                         id="new_bid"
                                         acceptCharset="UTF-8"
-                                    // method="post"
+                                        // method="post"
                                     >
                                         <div className="bid-wrapper">
                                             <div className="bid-box grid-x" id="bid-box">
@@ -519,12 +529,19 @@ function ComponentAuction(props) {
                                         </div>
                                         <div className="bid-animation-wrapper relative-wrapper overflow-hidden">
                                             {loadBids ? (
-                                                <button className="float-center button expanded bid-button exp-1" type="button" disabled>
-                                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                <button
+                                                    className="float-center button expanded bid-button exp-1"
+                                                    type="button"
+                                                    disabled
+                                                >
+                                                    <span
+                                                        className="spinner-border spinner-border-sm"
+                                                        role="status"
+                                                        aria-hidden="true"
+                                                    ></span>
                                                     Đang đặt giá...
                                                 </button>
                                             ) : (
-
                                                 <button
                                                     className="float-center button expanded bid-button exp-1"
                                                     id="bid-button"
@@ -548,20 +565,29 @@ function ComponentAuction(props) {
                     {loadCheckWatchList ? null : (
                         <>
                             {checkWatchList ? (
-                                <div className="watcher-btn text-center" style={{ width: 'auto' }}
-                                >
+                                <div className="watcher-btn text-center" style={{ width: 'auto' }}>
                                     <div className="relative-wrapper watch-wrapper btn">
-                                        <div className="watching-favorite" style={{ color: 'red', fontStyle: 'normal', display: 'block !important' }}>
+                                        <div
+                                            className="watching-favorite"
+                                            style={{ color: 'red', fontStyle: 'normal', display: 'block !important' }}
+                                        >
                                             <i className="fa-regular fa-heart"></i>
                                             <span className="watch-type"> Yêu thích</span>
                                         </div>
                                     </div>
                                 </div>
                             ) : (
-                                <div className="watcher-btn text-center" style={{ width: 'auto' }} onClick={() => handleAddWatchList(product)}>
+                                <div
+                                    className="watcher-btn text-center"
+                                    style={{ width: 'auto' }}
+                                    onClick={() => handleAddWatchList(product)}
+                                >
                                     <div className="relative-wrapper watch-wrapper btn">
-                                        <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
-                                            <i className="fa-regular fa-heart"></i>import EmailService from './../../products/service/Email/EmailService';
+                                        <div
+                                            className="watching-plus"
+                                            style={{ fontStyle: 'normal', display: 'block !important' }}
+                                        >
+                                            <i className="fa-regular fa-heart"></i>
 
                                             <span className="watch-type"> Thêm vào danh sách yêu thích</span>
                                         </div>
@@ -572,7 +598,13 @@ function ComponentAuction(props) {
                     )}
                 </div>
             </div>
-            <ListBids showListBids={showListBids} bids={state.bids} closeAction={closeAction} timeAuction={timeAuction} changeShowListBids={changeShowListBids} />
+            <ListBids
+                showListBids={showListBids}
+                bids={state.bids}
+                closeAction={closeAction}
+                timeAuction={timeAuction}
+                changeShowListBids={changeShowListBids}
+            />
             <ToastContainer autoClose={1500} />
         </div>
     );
