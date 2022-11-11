@@ -94,13 +94,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer({ orderDetails }) {
+export default function MiniDrawer({ orderDetails, account }) {
 
   const dispatch = useDispatch();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
-  const account = useSelector(getAccount);
 
   const menu = useSelector(getMenu);
 

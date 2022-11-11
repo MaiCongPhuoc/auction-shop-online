@@ -1,4 +1,6 @@
 import React from "react";
+import logo from './../../../asset/images/logo-removebg.png';
+import { Link } from 'react-router-dom';
 
 const HeaderSearch = () => {
   return (
@@ -8,11 +10,9 @@ const HeaderSearch = () => {
           <div className="search-bar grid-x">
             <div className="cell small-12">
               <div className="search-query input-group">
-                {/* <button className="search-icon input-group-label off">
-                  <i className="fa-solid fa-magnifying-glass"></i><span className="search-label show-for-large"> Tìm kiếm</span>
-                </button>
-                <div className="input-group-field off"><input className="search-input off" placeholder="Search for experiences, items, and charities" />
-                </div> */}
+                <Link to={'/'}>
+                  <img src={logo} width={100} alt="" />
+                </Link>
               </div>
             </div>
           </div>

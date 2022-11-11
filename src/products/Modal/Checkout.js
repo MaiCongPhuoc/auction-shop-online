@@ -8,9 +8,7 @@ import { FormControl, InputLabel, Select, MenuItem, Box, TextField } from '@mui/
 import LocationService from './../service/LocationService/LocationService';
 import OrderService from './../service/Order/OrderService';
 import PaymentComponent from './PaymentComponent';
-import LoadData from './../components/Loading/LoadData';
 import Loading from '../components/Loading/Loading';
-import AccountService from '../../dashboard/services/AccountService';
 
 const Checkout = ({ items }) => {
     let amount = 0;
@@ -59,7 +57,6 @@ const Checkout = ({ items }) => {
 
     const addresses = ['provinceId', 'districtId', 'wardId'];
 
-    console.log(account);
 
     useEffect(() => {
         try {

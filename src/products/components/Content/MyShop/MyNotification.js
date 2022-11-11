@@ -11,11 +11,9 @@ import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { DateRangePicker } from 'rsuite';
 
-function MyNotification() {
+function MyNotification({account}) {
     const dispatch = useDispatch();
     const openSidebar = useSelector(getOpenSidebar);
-    const account = useSelector(getAccount);
-
 
     const [orderDetails, setOrderDetails] = useState([]);
 

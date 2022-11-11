@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { GET_PRODUCTS_AUCTIONS } from '../../products/service/API';
 import {
     ADDPRODUCT_URL,
     DATATABLEPRODUCT_URL,
@@ -66,6 +67,12 @@ class ProductService {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
         return axios.put(`${REMOVEPRODUCT_URL}/${productId}`);
+    }
+
+    static getAllProductAuctions() {
+        let cookie = this.getCookie('JWT');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+        return axios.get(GET_PRODUCTS_AUCTIONS);
     }
 }
 

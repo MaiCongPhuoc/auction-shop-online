@@ -9,13 +9,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import Checkout from './../../../Modal/Checkout';
 import EmptyCart from '../../Loading/EmptyCart';
 import LoadCart from './../../Loading/LoadCart';
-import LoadQuantity from './../../Loading/LoadQuantity';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
-const CartItem = () => {
+const CartItem = ({account}) => {
     const dispatch = useDispatch();
-    const account = useSelector(getAccount);
+    // const account = useSelector(getAccount);
 
     const [loadDataCart, setLoadDataCart] = useState(false);
 
@@ -39,7 +38,10 @@ const CartItem = () => {
 
     const [choiceItems, setChoiceItems] = useState([]);
 
+
+
     useEffect(() => {
+        // console.log('account.email', account.email);
         try {
             setLoadDataCart(true);
             async function getCartItems() {
@@ -57,6 +59,7 @@ const CartItem = () => {
         } catch (error) {
             console.log(error);
         }
+
     }, [reloadCartItem]);
 
     useEffect(() => {
@@ -282,7 +285,7 @@ const CartItem = () => {
                                         >
                                             {cartItem.quantity}
                                         </span>
-    
+
                                         <span className="text-end col-2 fw-bold">
                                             {FormatMoney(cartItem.amountTransaction)} ₫
                                         </span>
@@ -395,7 +398,7 @@ const CartItem = () => {
                                             </div>
                                             <ReactTooltip />
                                         </span>
-    
+
                                         <span className="text-end col-2 fw-bold">
                                             {FormatMoney(cartItem.amountTransaction)} ₫
                                         </span>

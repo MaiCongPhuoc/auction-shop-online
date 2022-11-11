@@ -10,7 +10,6 @@ import ListProduct from './dashboard/pages/ListProduct';
 import ListAccount from './dashboard/pages/ListAccount';
 import Auction from './Auction';
 import ListCategories from './dashboard/pages/ListCategories/index';
-import ListBidAuction from './Auction/ListBidAuction';
 import ShowCartItem from './products/components/Content/CartItem/index';
 import Register from './singup/Register';
 import RestartPassword from './RestartPassword';
@@ -24,7 +23,6 @@ import NotFound from './NotFound';
 import Contact from './contact/Contact.js';
 import ShowOrderDetail from './products/components/Content/OrderDetail';
 import ShowMyShop from './products/components/Content/MyShop';
-import PagingProducts from './products/components/Content/ContentAll/index';
 
 // export default App;
 
@@ -67,7 +65,7 @@ function App() {
                 <Route path="/product/auction" element={<ShowPageAuction />} />
             {/* </Route> */}
             {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
-                <Route path="/bid/:auctionId" element={<ListBidAuction />} />
+                {/* <Route path="/bid/:auctionId" element={<ListBidAuction />} /> */}
             {/* </Route> */}
             {/* <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}> */}
                 <Route path="/auction/:auctionId" element={<Auction />} />

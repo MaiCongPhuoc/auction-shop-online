@@ -125,7 +125,7 @@ function TheShopDetail() {
 
                     {/* more */}
                     <div id="related-lots" style={{ clear: 'both' }}>
-                        {productsByCategory.length > 0 ? (
+                        {productsByCategory.length === 0 ? null : (
                             <div>
                                 <div id="related-lots-title">
                                     <h2>SẢN PHẨM TƯƠNG TỰ</h2>
@@ -158,7 +158,7 @@ function TheShopDetail() {
                                     ))}
                                 </div>
                             </div>
-                        ) : null}
+                        )}
                         {productsByCreatedBy.length > 0 ? (
                             <div>
                                 <div>

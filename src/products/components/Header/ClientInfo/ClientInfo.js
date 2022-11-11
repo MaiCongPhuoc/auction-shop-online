@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import ModalDetail from './ModalClientInfo/ModalClientInfo';
-import { loginStatus, setAccount } from '../../../../products/redux/actions';
+import { loginStatus, setAccount, setWatchLists } from '../../../../products/redux/actions';
 import ModalClientResetPassword from './ModalClientInfo/ModalClientResetPassword';
 import ModalEditClient from './ModalClientInfo/ModalEditClient';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -131,6 +131,7 @@ function ClientInfo() {
                                                 toast.success(`Đăng xuất thành công!`);
                                                 dispatch(loginStatus(false));
                                                 dispatch(setAccount({ NOTFOUND: '' }));
+                                                dispatch(setWatchLists([]));
                                                 function eraseCookie(name) {
                                                     document.cookie = name + '=; Max-Age=0';
                                                 }

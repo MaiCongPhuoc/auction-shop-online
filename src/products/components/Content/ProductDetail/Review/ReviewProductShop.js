@@ -141,7 +141,7 @@ function ReviewsProductShop({ product }) {
                         <div className='ms-2' style={{display: 'flex', justifyContent: 'space-between'}}>
                             <div>
                                 <div>
-                                    <img src={review.account.avatar} width={50} alt="" /> {review.account.username}{' '}
+                                    <img className='rounded-circle' src={review.account.avatar} width={60} alt="" /> {review.account.username}{' '}
                                 </div>
                                 <Rating readOnly name="simple-controlled" value={review.vote} /> {review.createdAt}
                             </div>

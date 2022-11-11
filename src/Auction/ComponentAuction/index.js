@@ -15,6 +15,8 @@ import { setCart, setReloadCartItem, setReloadWatchList } from '../../products/r
 import moment from 'moment';
 import CartItemService from '../../products/service/CartItem/CartItemService';
 import Swal from 'sweetalert2';
+import ListBids from '../ListBidAuction/listBids';
+import EmailService from '../../products/service/Email/EmailService';
 
 function ComponentAuction(props) {
     const dispatch = useDispatch();
@@ -39,10 +41,16 @@ function ComponentAuction(props) {
     const [checkWatchList, setCheckWatchList] = useState(false);
     const [loadCheckWatchList, setLoadCheckWatchList] = useState(false);
     const [loadBids, setLoadBids] = useState(false);
+    const [showListBids, setShowListBids] = useState(false);
+    const [addToCart, setAddToCart] = useState(false);
 
 
 
     const reloadWatchList = useSelector(getReloadWatchList);
+
+    const changeShowListBids = (boo) => {
+        setShowListBids(boo);
+    };
 
     const cartItem = {
         product: product
@@ -64,7 +72,6 @@ function ComponentAuction(props) {
     });
 
 
-
     useEffect(() => {
         if (new Date(auction.auctionEndTime).valueOf() > new Date().valueOf()) {
             let diffTime = Math.abs(new Date(auction.auctionEndTime).valueOf() - new Date().valueOf());
@@ -74,37 +81,39 @@ function ComponentAuction(props) {
             let secs = (minutes % 1) * 60;
             setTimeout(() => {
                 if (Math.floor(days) == 0 && Math.floor(hours) == 0 && Math.floor(minutes) == 0 && Math.floor(secs) == 0) {
-                    cartItem.price = state.bids[0].bidPrice;
-                    CartItemService.addCartItem(state.bids[0].account.id, cartItem).then((res) => {
-                        if (account.id === state.bids[0].account.id) {
-                            Swal.fire({
-                                title: '<strong>Chúc mừng!</strong>',
-                                icon: 'info',
-                                html:
-                                    `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
-                                    '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
-                                //   'and other HTML tags',
-                                showCloseButton: true,
-                                showCancelButton: true,
-                                focusConfirm: false,
-                                confirmButtonText:
-                                    '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
-                                cancelButtonText:
-                                    'Quay lại',
-                            })
-                        } else {
-                            Swal.fire({
-                                icon: 'success',
-                                title: `Chúc mừng ${state.bids[0].account.fullName}! Đã chiến thắng phiên đấu giá và sở hữu sản phẩm ${product.title}`,
-                                showCloseButton: true,
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                        }
-                        dispatch(setReloadCartItem(!reloadCartItem));
-                    }).catch((resp) => {
+                    // cartItem.price = state.bids[0].bidPrice;
+                    // CartItemService.addCartItem(state.bids[0].account.id, cartItem).then((res) => {
+                    //     if (account.id === state.bids[0].account.id) {
+                    //         Swal.fire({
+                    //             title: '<strong>Chúc mừng!</strong>',
+                    //             icon: 'success',
+                    //             html:
+                    //                 `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
+                    //                 '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
+                    //             //   'and other HTML tags',
+                    //             showCloseButton: true,
+                    //             showCancelButton: true,
+                    //             focusConfirm: false,
+                    //             confirmButtonText:
+                    //                 '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
+                    //             cancelButtonText:
+                    //                 'Quay lại',
+                    //         })
+                    //     } else {
+                    //         Swal.fire({
+                    //             icon: 'info',
+                    //             html: `Chúc mừng <b>${state.bids[0].account.fullName}</b>!</br>` +
+                    //                 `Đã chiến thắng phiên đấu giá và sở hữu sản phẩm <b>${product.title}</b>`,
+                    //             showCloseButton: true,
+                    //             showConfirmButton: false,
+                    //             timer: 2500
+                    //         })
+                    //     }
+                    //     dispatch(setReloadCartItem(!reloadCartItem));
+                    // }).catch((resp) => {
 
-                    });
+                    // });
+                    setAddToCart(true);
                     setCloseAction(true);
                 } else {
                     setTimeAuction([
@@ -120,7 +129,47 @@ function ComponentAuction(props) {
         }
     });
 
-
+    useEffect(() => {
+        if (addToCart) {
+            cartItem.price = state.bids[0].bidPrice;
+            CartItemService.addCartItem(state.bids[0].account.id, cartItem).then((res) => {
+                if (account.id === state.bids[0].account.id) {
+                    Swal.fire({
+                        title: '<strong>Chúc mừng!</strong>',
+                        icon: 'success',
+                        html:
+                            `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
+                            '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
+                        //   'and other HTML tags',
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        focusConfirm: false,
+                        confirmButtonText:
+                            '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
+                        cancelButtonText:
+                            'Quay lại',
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'info',
+                        html: `Chúc mừng <b>${state.bids[0].account.fullName}</b>!</br>` +
+                            `Đã chiến thắng phiên đấu giá và sở hữu sản phẩm <b>${product.title}</b>`,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                        timer: 2500
+                    })
+                };
+                EmailService.auctionsSuccessSendEmail(state.bids[0].account.email, product).then((res) => {
+                    console.log(res);
+                }).catch((resp) => {
+                    console.log(resp);
+                });
+                dispatch(setReloadCartItem(!reloadCartItem));
+            }).catch((resp) => {
+            });
+        }
+    }, [addToCart]);
+    console.log(addToCart);
 
     useEffect(() => {
         setLoadCheckWatchList(true);
@@ -159,10 +208,6 @@ function ComponentAuction(props) {
 
         setCheckPrice(true);
     }, [Price]);
-
-    console.log("auction: ", auction);
-    console.log("list bids: ", state.bids);
-
 
     useEffect(() => {
         async function getListBid() {
@@ -237,6 +282,9 @@ function ComponentAuction(props) {
         }
     };
 
+    const handleShowListBids = () => {
+        setShowListBids(true);
+    };
 
     return (
         <div className="medium-5 medium-large-4 cell right-col">
@@ -293,18 +341,33 @@ function ComponentAuction(props) {
                             </div>
                             <div className="bb-item">
                                 <div className="current-bidder">
-                                    <div className="bb-title is-label">
-                                        <span
-                                            aria-haspopup="true"
-                                            className="current-bid bid-box-label"
-                                            data-allow-html="true"
-                                            data-position="left"
-                                            data-tooltip2
-                                            data-title="<div class='title-block'><b>About Current Bid</b></div> <div class='text-block'>The “Current Bid” is the current winning bid placed by an auction participant.</div> <div class='text-block'>If the auction closes at this price, this bid amount does not reflect additional taxes, shipping, or buyer’s premium. Please see the Conditions of Sale for details.</div>"
-                                        >
-                                            GIÁ HIỆN TẠI: <FontAwesomeIcon icon={faCircleInfo} />
-                                        </span>
-                                    </div>
+                                    {closeAction ? (
+                                        <div className="bb-title is-label">
+                                            <span
+                                                aria-haspopup="true"
+                                                className="current-bid bid-box-label"
+                                                data-allow-html="true"
+                                                data-position="left"
+                                                data-tooltip2
+                                                data-title="<div class='title-block'><b>About Current Bid</b></div> <div class='text-block'>The “Current Bid” is the current winning bid placed by an auction participant.</div> <div class='text-block'>If the auction closes at this price, this bid amount does not reflect additional taxes, shipping, or buyer’s premium. Please see the Conditions of Sale for details.</div>"
+                                            >
+                                                GIÁ KẾT THÚC: <FontAwesomeIcon icon={faCircleInfo} />
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <div className="bb-title is-label">
+                                            <span
+                                                aria-haspopup="true"
+                                                className="current-bid bid-box-label"
+                                                data-allow-html="true"
+                                                data-position="left"
+                                                data-tooltip2
+                                                data-title="<div class='title-block'><b>About Current Bid</b></div> <div class='text-block'>The “Current Bid” is the current winning bid placed by an auction participant.</div> <div class='text-block'>If the auction closes at this price, this bid amount does not reflect additional taxes, shipping, or buyer’s premium. Please see the Conditions of Sale for details.</div>"
+                                            >
+                                                GIÁ HIỆN TẠI: <FontAwesomeIcon icon={faCircleInfo} />
+                                            </span>
+                                        </div>
+                                    )}
                                     <div className="bb-content">
                                         <div className="has-bids" style={{ display: 'block' }}>
                                             <div className="bid-data">
@@ -330,13 +393,24 @@ function ComponentAuction(props) {
                                                 <div
                                                     className="bid-link exp-1"
                                                     style={{ lineHeight: 1, paddingTop: 0 }}
+                                                    onClick={handleShowListBids}
                                                 >
-                                                    <Link
-                                                        to={`/bid/${auction.id}`}
-                                                        className="bid-box-bid-count"
-                                                    >
-                                                        {state.bids.length} Giá thầu
-                                                    </Link>
+                                                    {closeAction ? (
+                                                        <div
+                                                            className="bid-box-bid-count"
+                                                            style={{ fontSize: 'large', cursor: 'pointer', color: '#b86c17' }}
+                                                        >
+                                                            Lịch sử đấu giá
+                                                        </div>
+                                                    ) : (
+                                                        <div
+                                                            className="bid-box-bid-count"
+                                                            style={{ fontSize: 'large', cursor: 'pointer', color: '#198553' }}
+                                                        >
+                                                            Danh sách đấu giá
+                                                        </div>
+                                                    )}
+
                                                 </div>
                                             </div>
                                             <div className="max-bid" data-max>
@@ -487,7 +561,8 @@ function ComponentAuction(props) {
                                 <div className="watcher-btn text-center" style={{ width: 'auto' }} onClick={() => handleAddWatchList(product)}>
                                     <div className="relative-wrapper watch-wrapper btn">
                                         <div className="watching-plus" style={{ fontStyle: 'normal', display: 'block !important' }}>
-                                            <i className="fa-regular fa-heart"></i>
+                                            <i className="fa-regular fa-heart"></i>import EmailService from './../../products/service/Email/EmailService';
+
                                             <span className="watch-type"> Thêm vào danh sách yêu thích</span>
                                         </div>
                                     </div>
@@ -497,6 +572,7 @@ function ComponentAuction(props) {
                     )}
                 </div>
             </div>
+            <ListBids showListBids={showListBids} bids={state.bids} closeAction={closeAction} timeAuction={timeAuction} changeShowListBids={changeShowListBids} />
             <ToastContainer autoClose={1500} />
         </div>
     );

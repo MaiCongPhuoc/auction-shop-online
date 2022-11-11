@@ -11,9 +11,8 @@ import EmptyOrder from './../../Loading/EmptyOrder';
 import Swal from "sweetalert2";
 import Load3 from "../../Loading/Load3";
 
-const OrderDetail = () => {
+const OrderDetail = ({account}) => {
     const dispatch = useDispatch();
-    const account = useSelector(getAccount);
     const typeLists = ['ordered', 'completed', 'canceled'];
     const [typeList, setTypeList] = useState('ordered');
 
@@ -58,13 +57,13 @@ const OrderDetail = () => {
 
     const getWaitingLists = (orderDetails) => {
         return orderDetails.filter((orderDetail) => {
-            return orderDetail.status.id === 7 || orderDetail.status.id === 8 || orderDetail.status.id === 9;
+            return orderDetail.status.id === 7 || orderDetail.status.id === 8;
         });
     };
 
     const getCompletedLists = (orderDetails) => {
         return orderDetails.filter((orderDetail) => {
-            return orderDetail.status.id === 5;
+            return orderDetail.status.id === 5 || orderDetail.status.id === 9;
         });
     };
     const getCanceledLists = (orderDetails) => {

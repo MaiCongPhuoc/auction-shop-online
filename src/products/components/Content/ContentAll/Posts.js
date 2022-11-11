@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import LoadCart from './../../Loading/LoadCart';
 
-const Posts = ({ products    }) => {
+const Posts = ({ products }) => {
     const dispatch = useDispatch();
     const [watchLists, setWatchLists] = useState([]);
 
@@ -32,7 +32,8 @@ const Posts = ({ products    }) => {
     }, [currentWatchLists]);
 
     const loadData = useSelector(getLoadData);
-    
+   
+    console.log("currentWatchLists", currentWatchLists);
     return (
         <>
             {loadData ? <LoadCart /> : (

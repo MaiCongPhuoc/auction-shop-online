@@ -54,3 +54,7 @@ export const REVIEW_GET_BY_ID_URL = 'http://localhost:8080/api/reviews';
 export const REVIEW_ADD_URL = 'http://localhost:8080/api/reviews/create';
 export const REVIEW_DELETE_URL = 'http://localhost:8080/api/reviews/delete-soft';
 export const REVIEW_EDIT_URL = 'http://localhost:8080/api/reviews/edit';
+
+// Send Email
+export const SEND_EMAIL = 'http://localhost:8080/api/emails';
+export const SEND_EMAIL_AUCTIONS_SUCCESS = SEND_EMAIL + '/auctions-success';
