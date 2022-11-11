@@ -35,8 +35,6 @@ function Slideshow({ products }) {
         };
     }, [index]);
 
-    console.log("product", products);
-
     return (
         <div className="slideshow">
             <div
