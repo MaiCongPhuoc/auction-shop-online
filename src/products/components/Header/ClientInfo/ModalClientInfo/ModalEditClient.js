@@ -25,7 +25,7 @@ function ModalEditClient(props) {
     const { showEdit, onCloseEditAccount, accountEditId } = props;
     const [stateImg, setStateImg] = useState(false);
     const [state, setState] = useState({
-        // roles: [],
+        roles: [],
         provinces: [],
     });
     const [accountById, setAccountById] = useState({});

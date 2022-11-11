@@ -42,13 +42,13 @@ function ClientInfo() {
         showeditpassword: false,
     });
     const { accountEditPasswordId, showeditpassword } = showEditPassword;
-    //modal edit pass
+    //modal deposit
     const hanldeCloseDeposit = () => setShowDeposit(false);
     const [showDeposit, setShowDeposit] = useState({
         accountDepositId: 0,
         showeDeposit: false,
     });
-    const { accountDepositId, showeDeposit } = showEditPassword;
+    const { accountDepositId, showeDeposit } = showDeposit;
     // modal detail
     const [showDetail, setShowDetail] = useState({
         showdetail: false,
@@ -168,7 +168,7 @@ function ClientInfo() {
                 />
                 <ModalClientDeposit 
                     accountDepositId={accountDepositId}
-                    showeDeposit={showDeposit}
+                    showeDeposit={showeDeposit}
                     onCloseDeposit={hanldeCloseDeposit}
                 />
             </div>

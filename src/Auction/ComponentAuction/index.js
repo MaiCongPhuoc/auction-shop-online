@@ -151,7 +151,7 @@ function ComponentAuction(props) {
         if (state.bids.length !== 0) {
             if (Price < state.bids[0].bidPrice + state.bids[0].bidPrice * 0.12) {
                 setCheckPrice(false);
-                setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12% đ`);
+                setErrorMess(`Bạn phải đấu thầu lơn hơn giá hiện tại lớn hơn 12%`);
                 return;
             }
         }

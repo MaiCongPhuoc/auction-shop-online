@@ -166,11 +166,8 @@ function ModalEditProduct(props) {
             handleReset();
             notify();
         },
-        onReset: (product) => {
-            console.log('onReset 2: ', product);
-        },
+        onReset: (product) => {},
     });
-    console.log('product: ', product);
 
     return (
         <Modal show={showEdit} onHide={handleCloseEditProduct} backdrop="static" keyboard={false} size="xl">
