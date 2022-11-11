@@ -11,7 +11,15 @@ function Sidebar() {
                     <i className="fas fa-laugh-wink" />
                 </div> */}
                 <div className="box elegant">
-                    <div className="paragraph-logo" style={{fontSize: '20px', textShadow: '-5px 5px 3px #333', color: '#d76060', fontWeight: 'bold'}}>
+                    <div
+                        className="paragraph-logo"
+                        style={{
+                            fontSize: '20px',
+                            textShadow: '-5px 5px 3px #333',
+                            color: '#d76060',
+                            fontWeight: 'bold',
+                        }}
+                    >
                         AUCTIONS SHOP
                     </div>
                 </div>

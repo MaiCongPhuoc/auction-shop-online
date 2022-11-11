@@ -50,7 +50,7 @@ const ModalAccountResetPassword = (props) => {
         onSubmit: (account) => {
             flag = true;
             setSubmitFrm({ ...submitFrm, id: account_login.id, password: account.password });
-            toast.success('Bạn đã cập nhật mật khẩu thành công!');
+            toast.success('Cập nhật mật khẩu thành công!');
             handleReset();
         },
     });
