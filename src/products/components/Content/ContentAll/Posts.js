@@ -25,15 +25,12 @@ const Posts = ({ products }) => {
                 setWatchLists(currentWatchLists);
                 return;
             } else {
-                console.log('watch list', currentWatchLists.length);
             }
         }
         checkWatchList();
     }, [currentWatchLists]);
 
     const loadData = useSelector(getLoadData);
-   
-    console.log("currentWatchLists", currentWatchLists);
     return (
         <>
             {loadData ? <LoadCart /> : (

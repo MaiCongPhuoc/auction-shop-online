@@ -154,9 +154,6 @@ const ContentLogin = () => {
                                         <br />
                                         <GoogleAndFacebook />
                                         <div className="loginFooter">
-                                            <button className="forgetPass" onClick={forgetPass}>
-                                                Quên Mật Khẩu?
-                                            </button>
                                             <Link to={'/restartPassword'} className="forgetPass">
                                                 Quên Mật Khẩu?
                                             </Link>
