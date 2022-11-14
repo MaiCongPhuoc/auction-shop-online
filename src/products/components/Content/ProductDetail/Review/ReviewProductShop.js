@@ -11,13 +11,12 @@ import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 
 let flag = false;
-function ReviewsProductShop({ product }) {
+function ReviewsProductShop({ product, account }) {
     const [state, setState] = useState({
         loading: false,
         errorMessage: '',
         reviews: [],
     });
-    const account = useSelector(getAccount);
     const [rating, setRating] = useState(0);
     const [reloadReview, setReloadReview] = useState(false);
     const [submitFrm, setSubmitFrm] = useState({

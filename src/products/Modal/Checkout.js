@@ -236,7 +236,6 @@ const Checkout = ({ items }) => {
         }
     };
 
-    console.log('errors', errors);
     return (
         <>
             <Modal size="xl" show={showModalCheckout} onHide={handleClose} backdrop="static" keyboard={false}>
@@ -248,11 +247,13 @@ const Checkout = ({ items }) => {
                         {loadSaveOrder ? (
                             <Loading />
                         ) : checkPayment ? (
+                            account.email === undefined ? null : 
                             <PaymentComponent
                                 infoRecipient={state.orders}
                                 items={items}
                                 amount={amount}
                                 newOrder={newOrder}
+                                account={account}
                             />
                         ) : (
                             <>

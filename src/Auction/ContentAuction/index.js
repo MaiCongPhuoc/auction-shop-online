@@ -9,8 +9,11 @@ import ComponentAuction from '../ComponentAuction';
 import ReviewsProductShop from '../../products/components/Content/ProductDetail/Review/ReviewProductShop';
 import LoadCart from '../../products/components/Loading/LoadCart';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux/es/exports';
+import { getAccount } from '../../products/redux/selector';
 function ContentAuctionDetail() {
     const { auctionId } = useParams();
+    const account = useSelector(getAccount)
     const [listAuctions, setListAuctions] = useState();
     const [AuctionProduct, setAuctionProduct] = useState({
         Product: {},
@@ -83,7 +86,10 @@ function ContentAuctionDetail() {
                                                 <p>{Product.description}</p>
                                             </div>
                                             <hr style={{ borderWidth: '1px' }} />
-                                            <ReviewsProductShop product={Product} />
+                                            {account.email === undefined ? null :
+                                                <ReviewsProductShop product={Product} account={account}/>
+                                            }
+                                            
                                             <hr style={{ borderWidth: '1px' }} />
                                         </div>
                                     </div>

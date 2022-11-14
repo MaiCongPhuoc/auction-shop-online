@@ -11,9 +11,8 @@ import { setShowCartModalCheckout } from './../redux/actions';
 import CartItemService from './../service/CartItem/CartItemService';
 import { getAccount, getReloadCartItem } from '../redux/selector';
 
-const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
+const PaymentComponent = ({ infoRecipient, items, amount, newOrder, account }) => {
     const dispatch = useDispatch();
-    const account = useSelector(getAccount);
     const [transportFee, getTransportFee] = useState(0);
     const reloadCartItem = useSelector(getReloadCartItem);
 
@@ -38,6 +37,7 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
         try {
             setWaitPayment(true);
             async function createOrdersDetail() {
+                console.log(items);
                 await OrdersDetailService.createOrdersDetail(newOrder.id, items);
                 let cartItemList = await CartItemService.getRemoveCartItems(account.email, items);
                 setWaitPayment(false);
@@ -65,6 +65,8 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder }) => {
             console.log(error);
         }
     };
+
+    console.log('acc', account);
 
     return (
         <>

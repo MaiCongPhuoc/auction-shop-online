@@ -7,9 +7,12 @@ import BuyComponent from './BuyComponent';
 import ReviewProductShop from '../Review/ReviewProductShop';
 import LoadCart from './../../../Loading/LoadCart';
 import NotFound from './../../../Loading/NotFound';
+import { useSelector } from 'react-redux';
+import { getAccount } from '../../../../redux/selector';
 
 function TheShopDetail() {
     const productSlug = useParams();
+    const account = useSelector(getAccount);
 
     const [products, setProducts] = useState([]);
 
@@ -110,9 +113,11 @@ function TheShopDetail() {
                                     <div className="new-terms-wrapper">
                                         <div className="new-term-item">
                                             <br />
-                                            <div className="new-terms-detail">
-                                                <ReviewProductShop product={product} />
-                                            </div>
+                                            {account.email === undefined ? null :
+                                                <div className="new-terms-detail">
+                                                    <ReviewProductShop product={product} account={account} />
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
