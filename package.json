@@ -2,7 +2,7 @@
     "name": "auction-shop-online",
     "version": "0.1.0",
     "private": true,
-    "proxy": "http://localhost:8080/api/products",
+    "homepage": "https://maicongphuoc.github.io/auction-shop/",
     "dependencies": {
         "@babel/runtime": "^7.8.4",
         "@coreui/coreui": "^4.2.2",
@@ -72,11 +72,14 @@
     "devDependencies": {
         "babel-plugin-module-resolver": "^4.1.0",
         "customize-cra": "^1.0.0",
+        "gh-pages": "^4.0.0",
         "http-proxy-middleware": "^2.0.6",
         "react-app-rewired": "^2.2.1",
         "sass": "^1.51.0"
     },
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",

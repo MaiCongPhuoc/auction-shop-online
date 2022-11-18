@@ -119,7 +119,7 @@ function ModalAddProduct(props) {
     const formik = useFormik({
         initialValues: {
             action: radio,
-            available: 0,
+            available: 1,
             image: 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg',
             moderation: true,
             price: 0,
@@ -177,6 +177,7 @@ function ModalAddProduct(props) {
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
                 product.estimatePrice = document.querySelector('#estimatePrice').value;
+                product.estimatePrice = document.querySelector('#countday').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             } else {
@@ -186,7 +187,6 @@ function ModalAddProduct(props) {
                 product.images = listImg;
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
-                product.estimatePrice = document.querySelector('#countday').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             }
