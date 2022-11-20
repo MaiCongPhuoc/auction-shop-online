@@ -215,7 +215,7 @@ function ComponentAuction(props) {
                 setLoadBids(true);
                 BidService.postCreateBid(bid)
                     .then((res) => {
-                        setLoadBids(true);
+                        setLoadBids(false);
                         toast.success('Đặt giá thành công');
                     })
                     .catch((res) => {
