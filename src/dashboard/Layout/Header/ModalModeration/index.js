@@ -26,7 +26,6 @@ function ModalDetailProduct(props) {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
-    // console.log('imageProduct: ', imageProduct);
 
     useEffect(() => {
         if (showModal) {
@@ -57,8 +56,7 @@ function ModalDetailProduct(props) {
         }).then((result) => {
             if (result.isConfirmed) {
                 async function getModeration() {
-                    let moderation = await ProductService.ModerationProduct(idProduct);
-                    console.log('moderation.data: ', moderation.data);
+                    await ProductService.ModerationProduct(idProduct);
                 }
                 getModeration();
                 Swal.fire('<br/> Đã kiểm duyệt!', 'Bạn đã kiểm duyệt sản phẩm này.', 'Thành công!').then(() =>
@@ -80,7 +78,6 @@ function ModalDetailProduct(props) {
             if (result.isConfirmed) {
                 async function getModeration() {
                     let moderation = await ProductService.DeleteProduct(idProduct);
-                    console.log('moderation.data: ', moderation.data);
                 }
                 getModeration();
                 Swal.fire('<br/> Đã xóa!', 'Bạn đã xóa sản phẩm này.', 'Thành công!').then(() =>
@@ -88,7 +85,6 @@ function ModalDetailProduct(props) {
                 );
             }
         });
-    console.log('moderation: ', product);
     return (
         <Modal show={showModal} onHide={handleCloseModeration} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
@@ -99,7 +95,6 @@ function ModalDetailProduct(props) {
                     ''
                 ) : (
                     <div className="row g-0">
-                        {/* image */}
                         <div className="col-md-4 ">
                             <Slider {...settings}>
                                 {imageProduct.map((image) => (

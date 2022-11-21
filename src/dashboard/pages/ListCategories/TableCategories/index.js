@@ -21,58 +21,21 @@ function TableCategories() {
         totalPages: 0,
     });
     const [reRender, setReRender] = useState(false);
-    //modal add
     const [showAdd, setShowAdd] = useState(false);
     const handCloseAdd = () => setShowAdd(false);
 
-    //modal edit
     const [showEdit, setShowEdit] = useState({
         categoryEditId: 0,
         showedit: false,
     });
     const { categoryEditId, showedit } = showEdit;
     const handleCloseEdit = () => setShowEdit({ ...showEdit, showedit: false });
-    // const handleCloseEdit = () => setShowEdit(false);
-
-    const notify = (id) =>
-        Swal.fire({
-            title: 'Bạn có chắc không?',
-            text: 'Bạn sẽ không thể hoàn lại thao tác này!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Vâng, Tôi xóa nó!',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                async function deleteCategory(id) {
-                    await CategoryService.deleteCategory(id);
-                    setReRender(!reRender);
-                }
-                deleteCategory(id);
-                Swal.fire('Đã xóa Thành công!', 'Sản phẩm của bạn đã bị xóa!', 'success');
-            }
-        });
-
-    // useEffect(() => {
-    //     try {
-    //         setState({ ...state, loading: true });
-    //         getCategoryByPagination(state.currentPage);
-    //     } catch (error) {
-    //         setState({
-    //             ...state,
-    //             loading: false,
-    //             errorMessage: error.message,
-    //         });
-    //     }
-    // }, [showAdd, showEdit, reRender]);
 
     useEffect(() => {
         try {
             setState({ ...state, loading: true });
             async function getData() {
                 let category = await CategoryService.getCategory();
-                // console.log('category.data useEffect: ', category.data);
                 setState({
                     ...state,
                     categorys: category.data,
@@ -180,9 +143,6 @@ function TableCategories() {
     };
 
     const searchBook = (currentPage) => {
-        // if (document.querySelector('#search').value === '') {
-        //     document.querySelector('#select').value = '-1';
-        // }
         currentPage = currentPage - 1;
         async function getDataTable() {
             let dataTable = await CategoryService.getDataTableCategory(state.search, currentPage, state.recordPerPage);
@@ -202,14 +162,10 @@ function TableCategories() {
         getCategoryByPagination(state.currentPage);
     };
 
-    const { loading, categorys, currentPage, recordPerPage, search, errorMessage, totalPages } = state;
+    const { loading, categorys, currentPage, totalPages } = state;
 
     return (
         <div className="container-fluid">
-            {/* <div className="d-flex justify-content-between">
-                <h2>DANH SÁCH THỂ LOẠI</h2>
-                <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search"></div>
-            </div> */}
             {loading ? (
                 <Spiner />
             ) : (
@@ -218,8 +174,6 @@ function TableCategories() {
                         <h5 className="font-weight-bold text-primary w-25" style={{ marginTop: '18px' }}>
                             Danh sách thể loại
                         </h5>
-                        {/* <div className="d-flex align-items-center w-75"> */}
-                        {/* <div className="d-none d-sm-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search"> */}
                         <div className="input-group">
                             <div className="col-3"></div>
                             <input
@@ -263,12 +217,6 @@ function TableCategories() {
                                 </button>
                             </div>
                         </div>
-                        {/* </div> */}
-                        {/* Button trigger modal */}
-                        {/* <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
-                                Tạo
-                            </Button> */}
-                        {/* </div> */}
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
@@ -298,12 +246,6 @@ function TableCategories() {
                                                 >
                                                     <i className="fa-solid fa-pen-to-square" title="Cập nhật"></i>
                                                 </button>
-                                                {/* <button
-                                                    className="btn btn-outline-danger ml-2"
-                                                    onClick={() => notify(cate.id)}
-                                                >
-                                                    <i className="fa-solid fa-trash danger" title="Delete"></i>
-                                                </button> */}
                                             </td>
                                         </tr>
                                     ))}
@@ -320,50 +262,7 @@ function TableCategories() {
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
-                                {/* <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === 1 ? true : false}
-                                                onClick={showPrevPage}
-                                            >
-                                                <i class="fa-solid fa-backward-fast"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === 1 ? true : false}
-                                                onClick={showFirstPage}
-                                            >
-                                                <i class="fa-solid fa-backward-step"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === totalPages ? true : false}
-                                                onClick={showNextPage}
-                                            >
-                                                <i class="fa-solid fa-forward-step"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === totalPages ? true : false}
-                                                onClick={showLastPage}
-                                            >
-                                                <i class="fa-solid fa-forward-fast"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav> */}
+                                
                                 <nav>
                                     <ul className="pagination">
                                         <li className="page-item">

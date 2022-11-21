@@ -2,7 +2,7 @@ import TurnoverInYear from './TurnoverInYear';
 import TurnoverInMonth from './TurnoverInMonth';
 import Product from './Product';
 import Account from './Account';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import productService from '../../../services/productService';
 import AccountService from '../../../services/AccountService';
 import ChartService from '../../../services/ChartService';

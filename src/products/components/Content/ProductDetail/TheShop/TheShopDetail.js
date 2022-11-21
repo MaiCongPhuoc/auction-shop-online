@@ -1,15 +1,16 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ProductService from './../../../../service/Product/ProductService';
 import { Carousel, FormatMoney } from '../../../../Hooks/Hooks';
 import BuyComponent from './BuyComponent';
 import ReviewProductShop from '../Review/ReviewProductShop';
 import LoadCart from './../../../Loading/LoadCart';
-import NotFound from './../../../Loading/NotFound';
+import { useSelector } from 'react-redux';
+import { getAccount } from '../../../../redux/selector';
 
 function TheShopDetail() {
     const productSlug = useParams();
+    const account = useSelector(getAccount);
 
     const [products, setProducts] = useState([]);
 
@@ -90,12 +91,6 @@ function TheShopDetail() {
                                         <div className="lot-tab-item" tab="lot-overview">
                                             Tổng quan
                                         </div>
-                                        {/* <div className="lot-tab-item" tab="lot-rules">
-                                            Điều kiện bán hàng
-                                        </div>
-                                        <div className="lot-tab-item" tab="lot-shipping">
-                                            Giao hàng &amp; Đổi trả
-                                        </div> */}
                                     </div>
                                     <div className="ms-5 lot-content">
                                         <div className="item-lot-overview active">
@@ -110,9 +105,11 @@ function TheShopDetail() {
                                     <div className="new-terms-wrapper">
                                         <div className="new-term-item">
                                             <br />
-                                            <div className="new-terms-detail">
-                                                <ReviewProductShop product={product} />
-                                            </div>
+                                            {account.email === undefined ? null :
+                                                <div className="new-terms-detail">
+                                                    <ReviewProductShop product={product} account={account} />
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -120,10 +117,7 @@ function TheShopDetail() {
                         </div>
 
                         <BuyComponent product={product} />
-                        {/* Them component BUY */}
                     </div>
-
-                    {/* more */}
                     <div id="related-lots" style={{ clear: 'both' }}>
                         {productsByCategory.length === 0 ? null : (
                             <div>

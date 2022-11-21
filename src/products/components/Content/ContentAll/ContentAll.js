@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ProductService from './../../../service/Product/ProductService';
-import CategoriesService from './../../../service/Categories/CategoriesService';
 import LoadData from '../../Loading/LoadData';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAccount, getAllProducts, getLoadData, getWatchLists } from '../../../redux/selector';
@@ -11,9 +9,7 @@ import ReactTooltip from 'react-tooltip';
 
 const ContentAll = () => {
     const dispatch = useDispatch();
-    // const [watchLists, setWatchLists] = useState([]);
 
-    const account = useSelector(getAccount);
     const [watchLists, setWatchLists] = useState([]);
 
     const currentWatchLists = useSelector(getWatchLists);
@@ -23,8 +19,6 @@ const ContentAll = () => {
             if (currentWatchLists.length > 0) {
                 setWatchLists(currentWatchLists);
                 return
-            } else {
-                console.log('watch list', currentWatchLists.length);
             }
         }
         checkWatchList();
@@ -68,7 +62,6 @@ const ContentAll = () => {
                                 <div className="card__info-container">
                                     <div className="info-container__label">
                                         <span className="ico-circle c-bid">
-                                            {/* <i class="fa-solid fa-tag"></i> */}
                                             <i className="fas fa-gavel"></i>
                                         </span>
                                         <span className="label__main"> Đấu giá </span>

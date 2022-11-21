@@ -5,13 +5,11 @@ import { useSelector } from 'react-redux';
 import { getAccount } from '../../../../redux/selector';
 import { toast } from 'react-toastify';
 import { Button, Modal } from 'react-bootstrap';
-import AccountService from '../../../../../dashboard/services/AccountService';
 import axios from 'axios';
 
 let flag = false;
 const ModalClientDeposit = (props) => {
-    const { showeDeposit, onCloseDeposit, accountDepositId } = props;
-    console.log('props: ', props);
+    const { showeDeposit, onCloseDeposit } = props;
     const [submitFrm, setSubmitFrm] = useState({
         surplus: '',
     });

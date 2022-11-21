@@ -80,39 +80,7 @@ function ComponentAuction(props) {
             let minutes = (hours % 1) * 60;
             let secs = (minutes % 1) * 60;
             setTimeout(() => {
-                if (Math.floor(days) == 0 && Math.floor(hours) == 0 && Math.floor(minutes) == 0 && Math.floor(secs) == 0) {
-                    // cartItem.price = state.bids[0].bidPrice;
-                    // CartItemService.addCartItem(state.bids[0].account.id, cartItem).then((res) => {
-                    //     if (account.id === state.bids[0].account.id) {
-                    //         Swal.fire({
-                    //             title: '<strong>Chúc mừng!</strong>',
-                    //             icon: 'success',
-                    //             html:
-                    //                 `<p>Bạn là người chiến thắng phiên đấu giá <b>${product.title}</b></p>` +
-                    //                 '<p>Hãy vào giỏ hàng của bạn để hoàn tất thanh toán</p> ',
-                    //             //   'and other HTML tags',
-                    //             showCloseButton: true,
-                    //             showCancelButton: true,
-                    //             focusConfirm: false,
-                    //             confirmButtonText:
-                    //                 '<a href="/product/cart" style="color: #fff; text-decoration: none;">Giỏ hàng</a>',
-                    //             cancelButtonText:
-                    //                 'Quay lại',
-                    //         })
-                    //     } else {
-                    //         Swal.fire({
-                    //             icon: 'info',
-                    //             html: `Chúc mừng <b>${state.bids[0].account.fullName}</b>!</br>` +
-                    //                 `Đã chiến thắng phiên đấu giá và sở hữu sản phẩm <b>${product.title}</b>`,
-                    //             showCloseButton: true,
-                    //             showConfirmButton: false,
-                    //             timer: 2500
-                    //         })
-                    //     }
-                    //     dispatch(setReloadCartItem(!reloadCartItem));
-                    // }).catch((resp) => {
-
-                    // });
+                if (Math.floor(days) === 0 && Math.floor(hours) === 0 && Math.floor(minutes) === 0 && Math.floor(secs) === 0) {
                     setAddToCart(true);
                     setCloseAction(true);
                 } else {
@@ -160,7 +128,6 @@ function ComponentAuction(props) {
                     })
                 };
                 EmailService.auctionsSuccessSendEmail(state.bids[0].account.email, product).then((res) => {
-                    console.log(res);
                 }).catch((resp) => {
                     console.log(resp);
                 });
@@ -173,7 +140,6 @@ function ComponentAuction(props) {
     useEffect(() => {
         setLoadCheckWatchList(true);
         try {
-            console.log("account.id", account.id);
             WatchListsService.checkProductInWatchListByAccountId(account.id, product).then((res) => {
                 if (res.data) {
                     setCheckWatchList(true);
@@ -183,7 +149,6 @@ function ComponentAuction(props) {
                 setCheckWatchList(false);
                 setLoadCheckWatchList(false);
             }).catch((resp) => {
-                console.log("catch", resp);
             });
         } catch (error) {
             console.log("err", error);
@@ -214,11 +179,10 @@ function ComponentAuction(props) {
                 setLoadBids(true);
                 BidService.postCreateBid(bid)
                     .then((res) => {
-                        setLoadBids(true);
+                        setLoadBids(false);
                         toast.success('Đặt giá thành công');
                     })
                     .catch((res) => {
-                        console.log(res);
                         setLoadBids(false);
                         toast.warn(res.response.data.message);
                     });
@@ -325,7 +289,6 @@ function ComponentAuction(props) {
                                 <div className="bb-datetime exp-1">
                                     <p>Thời gian kết thúc:</p>
                                     <span className="time-left-close-date">
-                                        {/* {Moment(state.auction.auctionEndTime).format('DD-MM-YYYY HH:MM:SS')} */}
                                         {moment(state.auction.auctionEndTime).format('LTS DD-MM-YYYY')}
                                     </span>
                                 </div>
@@ -335,7 +298,6 @@ function ComponentAuction(props) {
                     <div className="bb-rows-wrapper">
                         <div className="bb-row bb-current-bid exp-1">
                             <div className="bb-icon">
-                                {/* <i className="icon icon-ok-sign" /> */}
                                 <FontAwesomeIcon icon={faCheck} />
                             </div>
                             <div className="bb-item">
@@ -432,7 +394,6 @@ function ComponentAuction(props) {
                         ) : (
                             <div className="bb-row bb-est-val exp-1">
                                 <div className="bb-icon">
-                                    {/* <i className="icon icon-tag" /> */}
                                     <FontAwesomeIcon icon={faTag} />
                                 </div>
                                 <div className="bb-item">
@@ -469,15 +430,11 @@ function ComponentAuction(props) {
                                         style={{ margin: 0 }}
                                         id="new_bid"
                                         acceptCharset="UTF-8"
-                                    // method="post"
                                     >
                                         <div className="bid-wrapper">
                                             <div className="bid-box grid-x" id="bid-box">
                                                 <div className="icon-cell cell small-1">
-                                                    {/* <div className="icon-wrapper icon-dollar-sign"> */}
-                                                    {/* <i className="icon icon-dollar" /> */}
                                                     <FontAwesomeIcon icon={faDollar} className="iconDollar" />
-                                                    {/* </div> */}
                                                 </div>
                                                 <div className="bid-amt cell small-7">
                                                     <input

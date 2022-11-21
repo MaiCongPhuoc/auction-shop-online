@@ -14,9 +14,6 @@ class AuthService {
             progress: undefined,
             theme: 'colored',
         });
-        // setTimeout(() => {
-        //     useNavigate('/login', { replace: true });
-        // }, 2000);
     }
     static notifyError(error) {
         toast.error(error, {

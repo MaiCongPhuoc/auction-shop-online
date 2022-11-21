@@ -1,6 +1,6 @@
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
+import React from 'react';
+import { Modal, Container, Row, Col } from 'react-bootstrap';
 import { NumericFormat } from 'react-number-format';
 
 
@@ -14,7 +14,6 @@ const ListBids = ({ showListBids, bids, closeAction, timeAuction, changeShowList
             <Modal size="xl"
                 show={showListBids}
                 onHide={handleClose}
-                // backdrop="static" 
                 keyboard={false}
             >
                 <Modal.Header closeButton style={closeAction ? {border: '2px solid #b86c17' , backgroundColor: '#f8e6d3', borderBlockColor: '#b86c17' } : { backgroundColor: '#198553' }}>
@@ -99,7 +98,6 @@ const ListBids = ({ showListBids, bids, closeAction, timeAuction, changeShowList
                                                             value={bid.bidPrice}
                                                             displayType={'text'}
                                                             thousandSeparator={true}
-                                                        // suffix={' đ'}
                                                         />
                                                     </div>
                                                 </div>

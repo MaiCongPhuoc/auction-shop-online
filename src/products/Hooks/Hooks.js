@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import nextImage from './../asset/images/next.png';
 import prevImage from './../asset/images/prev.png';
 
-// Format money
 export const FormatMoney = (money) => {
     let str = money.toString();
     return str.split('').reverse().reduce((prev, next, index) => {
@@ -10,7 +9,6 @@ export const FormatMoney = (money) => {
     });
 }
 
-// Check object
 export const isEmpty = (obj) => {
     for (var prop in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, prop)) {
@@ -21,7 +19,6 @@ export const isEmpty = (obj) => {
     return JSON.stringify(obj) === JSON.stringify({});
 }
 
-// Slide Image
 export const Carousel = ({ children, maxVisibility }) => {
 
     const [active, setActive] = useState(0);
@@ -63,16 +60,13 @@ export const Carousel = ({ children, maxVisibility }) => {
     );
 };
 
-// Typeof Number
 export const isNumber = (value) => {
     return /^[\d]+(?:e-?\d+)?$/.test(value);
 }
 
-// Sort 
 export const compareValues = (key, order = 'asc') => {
     return function(a, b) {
       if(!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-        // nếu không tồn tại
         return 0;
       }
   
@@ -88,7 +82,7 @@ export const compareValues = (key, order = 'asc') => {
         comparison = -1;
       }
       return (
-        (order == 'desc') ? (comparison * -1) : comparison
+        (order === 'desc') ? (comparison * -1) : comparison
       );
     };
   }

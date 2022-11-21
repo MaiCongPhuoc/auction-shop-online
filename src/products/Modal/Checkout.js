@@ -76,7 +76,6 @@ const Checkout = ({ items }) => {
                         phone: account.phone,
                         email: account.email,
                         locationRegion: {
-                            // id: state.orders.locationRegion.provinceId ?? account.locationRegion.id,
                             provinceId: state.orders.locationRegion.provinceId ?? account.locationRegion.provinceId,
                             provinceName:
                                 state.orders.locationRegion.provinceName ?? account.locationRegion.provinceName,
@@ -236,7 +235,6 @@ const Checkout = ({ items }) => {
         }
     };
 
-    console.log('errors', errors);
     return (
         <>
             <Modal size="xl" show={showModalCheckout} onHide={handleClose} backdrop="static" keyboard={false}>
@@ -248,11 +246,13 @@ const Checkout = ({ items }) => {
                         {loadSaveOrder ? (
                             <Loading />
                         ) : checkPayment ? (
+                            account.email === undefined ? null : 
                             <PaymentComponent
                                 infoRecipient={state.orders}
                                 items={items}
                                 amount={amount}
                                 newOrder={newOrder}
+                                account={account}
                             />
                         ) : (
                             <>

@@ -10,9 +10,6 @@ class CartService {
         });
         return cookie[name];
     }
-    // static createCart(){
-    //     return axios.post(CREATE_CART);
-    // }
     static getCartByAccountId(accountId) {
         let cookie = this.getCookie('JWT');
         axios.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;

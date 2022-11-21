@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 import Posts from './Posts';
@@ -22,13 +21,10 @@ function PagingProducts() {
         fetchPosts();
     }, []);
 
-    // console.log(posts);
 
     const indexOfLastPost = currentPage * postsPerPage;
-    // console.log("indexOfLastPost: ", indexOfLastPost);
 
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    // console.log("indexOfFirstPost: ", indexOfFirstPost);
 
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 

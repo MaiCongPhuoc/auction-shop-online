@@ -29,7 +29,6 @@ function BangSanPham() {
 
     const [reRender, setReRender] = useState(false);
 
-    // modal detail
     const [showDetail, setShowDetail] = useState({
         product: {},
         showdetail: false,
@@ -40,40 +39,14 @@ function BangSanPham() {
 
     const handleCloseDetail = () => setShowDetail({ ...showDetail, showdetail: false });
 
-    //modal add
     const [showAdd, setShowAdd] = useState(false);
-    // const handCloseAdd = () => setShowAdd(false);
 
-    //modal edit
     const [showEdit, setShowEdit] = useState({
         productEditId: 0,
         showedit: false,
     });
     const { productEditId, showedit } = showEdit;
     const handleCloseEdit = () => setShowEdit(false);
-
-    // function handleClick(id) {
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         type: 'warning',
-    //         text: "You won't be able to revert this!",
-    //         footer: '',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, delete it!',
-    //     }).then((result) => {
-    //         if (result.value) {
-    //             async function deleteProduct(id) {
-    //                 await ProductService.DeleteProduct(id);
-    //                 setReRender(!reRender);
-    //             }
-    //             deleteProduct(id);
-    //             console.log('result.value');
-    //             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-    //         }
-    //     });
-    // }
 
     const notify = (id) =>
         Swal.fire({
@@ -92,7 +65,6 @@ function BangSanPham() {
                     setReRender(!reRender);
                 }
                 deleteProduct(id);
-                // Swal.fire('</br> Đã kiểm!', 'Bạn đã xóa sản phẩm này');
                 toast.success(`Đã xóa thành công!`);
             }
         });
@@ -101,7 +73,6 @@ function BangSanPham() {
             setState({ ...state, loading: true });
             async function getData() {
                 let category = await CategoryService.getCategory();
-                // console.log('category.data useEffect: ', category.data);
                 setState({
                     ...state,
                     categories: category.data,
@@ -118,23 +89,7 @@ function BangSanPham() {
             });
         }
     }, [showAdd, showEdit, reRender]);
-
-    // const WarningData = {
-    //     title: 'Are you sure?',
-    //     type: 'warning',
-    //     text: "You won't be able to revert this!",
-    //     footer: '',
-    // };
-
-    // const [dataTable, setDataTable] = useState({
-    //     products: [],
-    //     currentPage: 1,
-    //     recordPerPage: 5,
-    //     search: '',
-    // });
-    // const { productsData, currentPage, recordPerPage, search } = dataTable;
-
-    // data table
+    
     async function getProductsByPagination(currentPage) {
         state.currentPage = currentPage - 1;
         let productData = await ProductService.getDataTableProduct(
@@ -143,7 +98,6 @@ function BangSanPham() {
             state.recordPerPage,
         );
         let category = await CategoryService.getCategory();
-        // console.log('productData.data: ', productData.data);
         setState({
             ...state,
             products: productData.data.content,
@@ -195,7 +149,6 @@ function BangSanPham() {
     const showPrevPage = () => {
         let prevPage = 1;
         let curent = state.currentPage;
-        // console.log('curent showPrevPage: ', curent);
         if (curent > prevPage) {
             if (state.search === '') {
                 getProductsByPagination(curent - curent + 1);
@@ -208,7 +161,6 @@ function BangSanPham() {
     const searchBox = (e) => {
         setState({
             ...state,
-            //assigning value to event target
             [e.target.name]: e.target.value,
         });
     };
@@ -244,18 +196,11 @@ function BangSanPham() {
                 totalElements: dataTable.data.totalElements,
                 currentPage: dataTable.data.number + 1,
             });
-            // console.log('state: ', state);
         }
         getDataTable();
     };
 
-    const resetBook = (currentPage) => {
-        setState({ ...state, search: '' });
-        getProductsByPagination(state.currentPage);
-    };
-
-    console.log('state new: ', state);
-    const { loading, products, currentPage, recordPerPage, search, errorMessage, totalPages, categories } = state;
+    const { loading, products, currentPage, totalPages, categories } = state;
 
     return (
         <div className="container-fluid">
@@ -319,10 +264,6 @@ function BangSanPham() {
                                     </div>
                                 </div>
                             </div>
-                            {/* Button trigger modal */}
-                            {/* <Button type="button" className="btn btn-primary" onClick={() => setShowAdd(true)}>
-                                Tạo
-                            </Button> */}
                         </div>
                     </div>
                     <div className="card-body">
@@ -332,8 +273,6 @@ function BangSanPham() {
                                     <tr>
                                         <th className="text-center">Ảnh</th>
                                         <th className="text-center">Tên sản phẩm</th>
-                                        {/* <th>Người tạo</th>
-                                        <th className="text-center">Ngày tạo</th> */}
                                         <th className="text-center">Thể loại</th>
                                         <th className="text-center">Bán/Đấu giá</th>
                                         <th className="text-center">Số lượng</th>
@@ -370,10 +309,6 @@ function BangSanPham() {
                                                 <td className="text-center">
                                                     <strong>{product.title}</strong>
                                                 </td>
-                                                {/* <td className="text-center">{product.createdBy}</td>
-                                                <td className="text-end">
-                                                    {Moment(product.createdAt).format('DD-MM-yyyy hh:mm:ss')}
-                                                </td> */}
                                                 <td className="text-center">
                                                     {product.category.deleted === true ? null : product.category.title}
                                                 </td>
@@ -387,32 +322,9 @@ function BangSanPham() {
                                                     />
                                                 </td>
                                                 <td className="text-center">
-                                                    {/* <Tippy
-                                                        delay={[20, 20]}
-                                                        // offset={[15, 8]}
-                                                        placement="top"
-                                                        content="Cập nhật"
-                                                    >
-                                                        <button
-                                                            className="btn btn-outline-secondary"
-                                                            onClick={() =>
-                                                                setShowEdit({
-                                                                    ...showEdit,
-                                                                    productEditId: product.id,
-                                                                    showedit: true,
-                                                                })
-                                                            }
-                                                        >
-                                                            {' '}
-                                                            <i
-                                                                className="fa-solid fa-pen-to-square"
-                                                                title="Cập nhật"
-                                                            ></i>
-                                                        </button>
-                                                    </Tippy> */}
+                                                    
                                                     <Tippy
                                                         delay={[0, 0]}
-                                                        // offset={[15, 8]}
                                                         placement="top"
                                                         content="Xóa"
                                                     >
@@ -459,51 +371,7 @@ function BangSanPham() {
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
-                                {/* <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === 1 ? true : false}
-                                                onClick={showPrevPage}
-                                            >
-                                                <i class="fa-solid fa-backward-fast"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === 1 ? true : false}
-                                                onClick={showFirstPage}
-                                            >
-                                                {' '}
-                                                <i class="fa-solid fa-backward-step"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === totalPages ? true : false}
-                                                onClick={showNextPage}
-                                            >
-                                                <i class="fa-solid fa-forward-step"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === totalPages ? true : false}
-                                                onClick={showLastPage}
-                                            >
-                                                <i class="fa-solid fa-forward-fast"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav> */}
+                                
                                 <nav>
                                     <ul className="pagination">
                                         <li className="page-item">
@@ -567,13 +435,10 @@ function BangSanPham() {
                             </div>
                         </div>
                     </div>
-                    {/* <ProductsComponent /> */}
                 </div>
             )}
-            {/* ================== Modal Edit ================== */}
             <ModalEditProduct productEditId={productEditId} showEdit={showedit} handleCloseEdit={handleCloseEdit} />
 
-            {/* =================== Modal detail products ===================== */}
             <ModalDetailProduct
                 product={product}
                 showdetail={showdetail}
@@ -581,9 +446,6 @@ function BangSanPham() {
                 handleCloseDetail={handleCloseDetail}
             />
             <ToastContainer autoClose={1500} />
-
-            {/*==================== Modal Add ===========================*/}
-            {/* <ModalAddProduct show={showAdd} handleClose={handCloseAdd} /> */}
         </div>
     );
 }

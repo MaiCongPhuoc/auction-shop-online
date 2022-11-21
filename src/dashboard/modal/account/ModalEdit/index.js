@@ -43,9 +43,7 @@ function ModalEditProduct(props) {
                     let role = await AccountService.getRoles();
                     let Province = await AccountService.getProvinces();
                     let accountEdit = await AccountService.getAccountById(accountEditId);
-                    // let accountEdit = await AccountService.getAccountById(accountEditId);
                     setAccountById({ ...accountEdit.data });
-                    console.log('accountEdit.data: ', accountEdit.data);
                     setState({ ...state, roles: role.data, provinces: Province.data.results });
                 }
                 getAddAccount();
@@ -126,7 +124,6 @@ function ModalEditProduct(props) {
                 setStateImg(true);
                 let uploadResult = await FileService.Upload(e.target.files[0]);
                 img = uploadResult.data.url;
-                console.log(uploadResult.data);
                 setStateImg(false);
             }
         }
@@ -214,7 +211,6 @@ function ModalEditProduct(props) {
             account.locationRegion.districtName = currentDistrict;
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
-            console.log('account: ', account);
             setAccountFrm({ ...account });
             notify();
         },
@@ -222,7 +218,6 @@ function ModalEditProduct(props) {
 
     const { roles, provinces } = state;
     const { districts, wards } = location;
-    console.log('accountById: ', accountById);
     return (
         <Modal show={showEdit} onHide={onCloseEditAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
@@ -330,9 +325,6 @@ function ModalEditProduct(props) {
                                     value={formik.values.role.id}
                                     onChange={formik.handleChange}
                                 >
-                                    {/* <option value={0} key={0} defaultChecked disabled>
-                                        Chọn
-                                    </option> */}
                                     {roles.map((role) => (
                                         <option value={role.id} key={role.id}>
                                             {role.code}
@@ -363,7 +355,6 @@ function ModalEditProduct(props) {
                                         <option
                                             value={province.province_id}
                                             key={province.province_id}
-                                            // onClick={() => handleProvince(province.id)}
                                         >
                                             {province.province_name}
                                         </option>

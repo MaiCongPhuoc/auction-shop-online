@@ -14,7 +14,6 @@ const PageTheShop = () => {
                 let dataRes = await ProductService.getAllProductTheShops();
                 setProductsTheShop(dataRes.data);
                 setLoading(false);
-                // console.log(dataRes.data);
                 window.scrollTo(0, 0);
             }
             getTheShopProducts();
@@ -22,11 +21,6 @@ const PageTheShop = () => {
             console.log(error);
         }
     }, []);
-
-
-
-    // const productsAuction = useSelector(getProductsAction);
-
 
     return (
         <>
@@ -60,7 +54,7 @@ const PageTheShop = () => {
                                         </h3>
                                         <div className="card__stats-group">
                                             <div className="stats-group__stat">
-                                                <b>Số lượng còn lại:</b> 1
+                                                <b>Số lượng còn lại:</b> {product.available}
                                             </div>
                                             <div className="stats-group__stat">
                                                 <b>Giá sản phẩm:</b>
@@ -70,7 +64,7 @@ const PageTheShop = () => {
                                             </div>
                                             <div className="ItemCard-module__marketPrice___3E7JK">
                                                 <b>Đã bán: </b>
-                                                <span className="ItemCard-module__lineThrough___3xq25">100
+                                                <span className="ItemCard-module__lineThrough___3xq25">{product.sold}
                                                 </span>
                                             </div>
                                         </div>

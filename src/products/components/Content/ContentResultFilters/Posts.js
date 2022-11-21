@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormatMoney } from '../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
 import NotFound from '../../Loading/NotFound';
@@ -13,7 +13,6 @@ const Posts = ({ products }) => {
                     {
                         products.map(product => (
                             <div key={product.id} className="card small-12 medium-6 cell"
-                                // onClick={handleShowInfoProduct} 
                                 style={{ transform: 'none' }}>
                                 {product.action ? (
                                     <Link to={`/auction/${product.id}`} style={{ color: '#333' }}>

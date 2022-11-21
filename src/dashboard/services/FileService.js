@@ -5,7 +5,6 @@ class FileService {
 
     static Upload(file) {
         const CLOUD_NAME = 'com-codegym';
-        // const UPLOAD_API = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload/`;
         const UPLOAD_API = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
         const formData = new FormData();
         formData.append('file', file);

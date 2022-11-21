@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 let flag = false;
 const ModalClientResetPassword = (props) => {
-    const { showEditPassword, onCloseEditPasswordAccount, accountEditPasswordId } = props;
+    const { showEditPassword, onCloseEditPasswordAccount } = props;
     const [submitFrm, setSubmitFrm] = useState({
         password: '',
     });

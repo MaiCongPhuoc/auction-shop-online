@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import LotType from "./LotType/LotType";
 import Filters from './Filters/Filters';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
@@ -9,7 +9,6 @@ import { setSearchingFilters, setShowResultNav } from "../../../redux/actions";
 
 const ContentLotType = () => {
     const dispatch = useDispatch();
-    // const [showResults, setShowResults] = useState(false)
 
     const search = useSelector(searchTextSelector);
     const type = useSelector(getTypeFiltersChange);

@@ -121,16 +121,14 @@ const BuyComponent = ({ product }) => {
             setLoading(true);
             async function postData() {
                 await CartItemService.addCartItem(account.id, cartItem).then((res) => {
-                    console.log("cartitem", res.data);
                     dispatch(setCart(res.data.cart.id))
                     dispatch(setReloadCartItem(!reloadCartItem));
                     setLoading(false);
                     notify(product.title);
                 }).catch((resp) => {
                     if (resp.response) {
-                        console.log(resp);
                         setLoading(false);
-                        notifyWarn(resp.response.data.message ?? 'Hãy đăng nhập để thực hiện thao tác này');
+                        notifyWarn(resp.response.data.message);
                     }
 
                 });

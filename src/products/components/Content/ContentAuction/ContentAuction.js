@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getProductsAction, getLoadData, getAccount } from '../../../redux/selector';
-import { setLoadData } from '../../../redux/actions';
+import { useSelector } from 'react-redux/es/exports';
+import { getLoadData, getAccount } from '../../../redux/selector';
 import LoadData from './../../Loading/LoadData';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import { Link } from 'react-router-dom';
@@ -9,7 +8,6 @@ import { getProductsAuction } from './../../../redux/selector';
 import WatchListsService from '../../../service/WatchList/WatchListService';
 
 const ContentAuction = () => {
-    const dispatch = useDispatch();
     const [watchLists, setWatchLists] = useState([]);
 
     const account = useSelector(getAccount);
@@ -75,10 +73,6 @@ const ContentAuction = () => {
                                     <b>Giá khởi điểm:</b>
                                     <div className="stat__price">{FormatMoney(product.price)}</div>
                                 </div>
-                                {/* <div className="stats-group__stat">
-                                    <b>Giá hiện tại:</b>
-                                    <div className="stat__price">4,600</div>
-                                </div> */}
                             </div>
                             <div className="card__tertiary-container">
                                 <span className="tertiary-container__optional-group" />

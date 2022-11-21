@@ -19,8 +19,6 @@ const ContentTheShop = () => {
             if (currentWatchLists.length > 0) {
                 setWatchLists(currentWatchLists);
                 return;
-            } else {
-                console.log('watch list', currentWatchLists.length);
             }
         }
         checkWatchList();
@@ -40,8 +38,6 @@ const ContentTheShop = () => {
     };
 
     const productsAuction = useSelector(getProductsAction);
-
-    // dispatch(setLoadData(false));
 
     const loadData = useSelector(getLoadData);
 

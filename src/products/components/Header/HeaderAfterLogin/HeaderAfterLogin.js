@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { setShowCart, setShowAddProduct } from '../../../redux/actions';
-import { getAccount, getAllCartItems, getShowAddProduct, getReloadCartItem } from '../../../redux/selector';
+import { setShowAddProduct } from '../../../redux/actions';
+import { getAccount, getReloadCartItem } from '../../../redux/selector';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Tippy from '@tippyjs/react';
 import ModalAdd from '../../../../dashboard/modal/product/ModalAdd';
 import CartItemService from '../../../service/CartItem/CartItemService';
 import { ToastContainer } from 'react-toastify';
-import AdminInfo from './../../../../dashboard/Layout/Header/adminInfo/AdminInfo';
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
-import { width } from '@mui/system';
 import Notification from '../Notification/Notification.js';
 import ClientInfo from './../ClientInfo/ClientInfo';
 
 const HeaderAfterLogin = () => {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
-    const navigate = useNavigate();
-    const logout = () => {
-        localStorage.removeItem('loginUser');
-    };
 
     const [cartItems, setListCartItems] = useState([]);
     const [orderDetails, setOrderDetails] = useState([]);
@@ -59,10 +53,6 @@ const HeaderAfterLogin = () => {
     const renderAccount = () => {
         return (
             <div className="dropdown-menu-right shadow animated--grow-in accountAdmin" aria-labelledby="userDropdown">
-                {/* <a className="tippy-account p-2" href="#">
-                    <FontAwesomeIcon icon={faPlus} className="pr-2" />
-                    Add product
-                </a> */}
                 <a
                     title="Thêm mới"
                     type="button"
@@ -75,7 +65,6 @@ const HeaderAfterLogin = () => {
             </div>
         );
     };
-    const showAddProduct = useSelector(getShowAddProduct);
     return (
         <div className="main-login-div small-4">
             <div className="login-button-container">
@@ -111,7 +100,6 @@ const HeaderAfterLogin = () => {
                     <div>
                         <div className="ic-notif-num">
                             <Notification countOrder={waitingLists.length} myOrderDetails={myOrderDetails.length} />
-                            {/* <Notification countOrder={orderDetails.length} /> */}
                         </div>
                     </div>
                 </div>

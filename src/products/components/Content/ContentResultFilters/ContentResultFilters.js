@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { getLoadData, getResultsFiltersChange, productsRemainingCategorySelector, productsRemainingSortSelector } from "../../../redux/selector";
+import React from "react";
+import { getResultsFiltersChange } from "../../../redux/selector";
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { FormatMoney } from './../../../Hooks/Hooks';
 import NotFound from './../../Loading/NotFound';
-import { setLoadData, setShowInfoProduct } from "../../../redux/actions";
-import Searching from './../../Loading/Searching';
 import { Link } from 'react-router-dom';
 
 
 const ContentResultFilters = () => {
-    const dispatch = useDispatch();
 
     const products = useSelector(getResultsFiltersChange);
 
@@ -21,7 +18,6 @@ const ContentResultFilters = () => {
                     {
                         products.map(product => (
                             <div key={product.id} className="card small-12 medium-6 cell"
-                                // onClick={handleShowInfoProduct} 
                                 style={{ transform: 'none' }}>
                                 {product.action ? (
                                     <Link to={`/auction/${product.id}`} style={{ color: '#333' }}>

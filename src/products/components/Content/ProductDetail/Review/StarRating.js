@@ -1,4 +1,3 @@
-import { Rating } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
 const StarRating = ({ setNewRating }) => {
@@ -24,7 +23,6 @@ const StarRating = ({ setNewRating }) => {
                             <span className="star" style={{}}>
                                 &#9733;
                             </span>
-                            {/* <Rating name="simple-controlled" /> */}
                         </button>
                     );
                 })}

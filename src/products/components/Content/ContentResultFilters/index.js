@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
 
 import Posts from './Posts';
 import Pagination from './Pagination';
 import { useSelector } from 'react-redux';
-import { getResultsFiltersChange } from '../../../redux/selector';
 import { productsRemainingCategorySelector } from './../../../redux/selector';
 
 function PagingResultFilters() {
@@ -23,13 +20,10 @@ function PagingResultFilters() {
         fetchPosts();
     }, [products]);
 
-    // console.log(posts);
 
     const indexOfLastPost = currentPage * postsPerPage;
-    // console.log("indexOfLastPost: ", indexOfLastPost);
 
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    // console.log("indexOfFirstPost: ", indexOfFirstPost);
 
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 

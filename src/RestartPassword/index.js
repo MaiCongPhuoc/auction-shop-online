@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import store from '../products/redux/store';
 import Header from '../products/components/Header/Header';
 import ContentRestartPassword from './ContentRestartPassword';
-import Footer from '../products/components/Footer/Footer';
 
 const restartPassword = () => {
     return (
@@ -25,7 +24,6 @@ const restartPassword = () => {
             <br />
             <br />
             <br />
-            {/* <Footer /> */}
         </Provider>
     );
 };

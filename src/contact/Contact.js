@@ -2,9 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from '../products/redux/store';
 import Header from '../products/components/Header/Header';
-import Penguin from '../PenGuin/Penguin';
 import './asset/css/contact.css';
-import Footer from '../products/components/Footer/Footer.js';
 const Contact = () => {
     return (
         <Provider store={store}>
@@ -16,9 +14,6 @@ const Contact = () => {
                         <br />
                         Chúng tôi rất vui khi nghe ý kiến đóng góp của bạn!
                     </h3>
-                    {/* <hr />
-                    <Penguin />
-                    <hr /> */}
                 </div>
                 <section id="contact-detail" className="row px-4">
                     <div className="details col-sm-12 col-md-6 col-lg-6">
@@ -55,43 +50,6 @@ const Contact = () => {
                         ></iframe>
                     </div>
                 </section>
-                {/* <section id="form-details" className="row">
-                    <form action="" className="col-sm-12 col-md-8 col-lg-7">
-                        <span>ĐÓNG GÓP Ý KIẾN</span>
-                        <h2>Gửi phản hồi cho chúng tôi! </h2>
-                        <input type="text" placeholder="Tên" />
-                        <input type="text" placeholder="Email" required />
-                        <textarea placeholder="Ý Kiến Của Bạn" name="" id="" cols="30" rows="3"></textarea>
-                        <button className="btn btn-primary">Gửi</button>
-                    </form>
-                    <div className="people col-sm-12 col-md-4 col-lg-5">
-                        <div>
-                            <img src={require('./asset/img/kid10.jpg')} alt="" />
-                            <p>
-                                <span>Trần Ngọc Trung</span> <strong>Chủ Tịch Hội Đồng Quản Trị</strong> <br />
-                                Số điện thoại: 0999999999 <br />
-                                Email: trung@gmail.com
-                            </p>
-                        </div>
-                        <div>
-                            <img src={require('./asset/img/3.png')} alt="" />
-                            <p>
-                                <span>Mai Công Phước</span> <strong> Giám Đốc Điều Hành</strong> <br />
-                                Số điện thoại: 0999999998 <br />
-                                Email: phuoc@gmail.com
-                            </p>
-                        </div>
-                        <div>
-                            <img src={require('./asset/img/anhbo.jpg')} alt="" />
-                            <p>
-                                <span>Trần Hồng Phong</span> <strong> CEO</strong> <br />
-                                Phone: 0999999997 <br />
-                                Email: phong@gmail.com
-                            </p>
-                        </div>
-                    </div>
-                </section> */}
-                {/* <Footer /> */}
             </div>
         </Provider>
     );

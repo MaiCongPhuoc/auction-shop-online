@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import StarRating from './StarRating';
 import './Review.css';
 import ReviewService from './../../../../service/Reviews/ReviewService';
@@ -6,18 +6,15 @@ import { compareValues } from './../../../../Hooks/Hooks';
 import { Rating } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { getAccount } from '../../../../redux/selector';
-import { useSelector } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 let flag = false;
-function ReviewsProductShop({ product }) {
+function ReviewsProductShop({ product, account }) {
     const [state, setState] = useState({
         loading: false,
         errorMessage: '',
         reviews: [],
     });
-    const account = useSelector(getAccount);
     const [rating, setRating] = useState(0);
     const [reloadReview, setReloadReview] = useState(false);
     const [submitFrm, setSubmitFrm] = useState({
@@ -29,7 +26,7 @@ function ReviewsProductShop({ product }) {
     const handleSetRating = (int) => {
         setRating(int);
     };
-    const { loading, reviews, errorMessage } = state;
+    const { reviews } = state;
     const handleReset = () => {
         formik.handleReset();
     };
