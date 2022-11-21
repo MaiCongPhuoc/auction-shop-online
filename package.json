@@ -2,7 +2,7 @@
     "name": "auction-shop-online",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://maicongphuoc.github.io/auction-shop/",
+    "homepage": "https://maicongphuoc.github.io/auction-shop-online/",
     "dependencies": {
         "@babel/runtime": "^7.8.4",
         "@coreui/coreui": "^4.2.2",

@@ -23,7 +23,7 @@ const RequireAuth = ({ allowedRoles }) => {
     if (Object.keys(account).length === 0 && token) {
         async function getAccoun() {
             await axios
-                .get(`${'http://localhost:8080/api/accounts/getAccountEmail'}/${decoded.sub}`)
+                .get(`${'https://api.auctionshop.tk/api/accounts/getAccountEmail'}/${decoded.sub}`)
                 .then((account) => {
                     // toast.success('Kiểm tra email thành công!');
                     dispatch(loginStatus(true));
