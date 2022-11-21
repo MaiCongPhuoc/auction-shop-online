@@ -33,10 +33,10 @@ const Content = () => {
                     dispatch(setWatchLists(res.data));
                 })
                 .catch((resp) => {
-                    console.log(resp);
+                    // console.log(resp);
                 });
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }, [reloadWatchList]);
 
