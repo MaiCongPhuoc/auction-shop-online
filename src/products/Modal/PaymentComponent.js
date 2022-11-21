@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Row, Col, Button } from 'react-bootstrap';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCheckPayment, setReloadCartItem } from '../redux/actions';
 import { setShowCartModalCheckout } from './../redux/actions';
 import CartItemService from './../service/CartItem/CartItemService';
-import { getAccount, getReloadCartItem } from '../redux/selector';
+import { getReloadCartItem } from '../redux/selector';
 
 const PaymentComponent = ({ infoRecipient, items, amount, newOrder, account }) => {
     const dispatch = useDispatch();
@@ -37,9 +37,8 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder, account }) =
         try {
             setWaitPayment(true);
             async function createOrdersDetail() {
-                console.log(items);
                 await OrdersDetailService.createOrdersDetail(newOrder.id, items);
-                let cartItemList = await CartItemService.getRemoveCartItems(account.email, items);
+                await CartItemService.getRemoveCartItems(account.email, items);
                 setWaitPayment(false);
                 dispatch(setShowCartModalCheckout(false));
                 dispatch(setReloadCartItem(!reloadCartItem));
@@ -55,7 +54,7 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder, account }) =
         try {
             setRemoveOrder(true);
             async function removeOrders() {
-                let results = await OrderService.removeOrder(order.id);
+                await OrderService.removeOrder(order.id);
                 dispatch(setShowCartModalCheckout(false));
                 dispatch(setCheckPayment(false));
                 setRemoveOrder(false);
@@ -66,7 +65,6 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder, account }) =
         }
     };
 
-    console.log('acc', account);
 
     return (
         <>
@@ -127,9 +125,6 @@ const PaymentComponent = ({ infoRecipient, items, amount, newOrder, account }) =
                                     value={state.payment}
                                     onChange={handleChangeMethod}
                                 >
-                                    {/* {state.methods.map((method) => (
-                                        <FormControlLabel key={method} value={method} control={<Radio />} label={method}/>
-                                    ))} */}
                                     <FormControlLabel value={"Thanh toán khi nhận hàng"} control={<Radio />} label={"Thanh toán khi nhận hàng"} />
                                 </RadioGroup>
                             </FormControl>

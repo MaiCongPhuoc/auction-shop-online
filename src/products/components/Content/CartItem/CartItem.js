@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormatMoney } from '../../../Hooks/Hooks';
-import { getAccount, getReloadCartItem } from '../../../redux/selector';
+import { getReloadCartItem } from '../../../redux/selector';
 import CartItemService from './../../../service/CartItem/CartItemService';
 import { setCartItems, setReloadCartItem, setShowCartModalCheckout } from './../../../redux/actions';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Checkout from './../../../Modal/Checkout';
 import EmptyCart from '../../Loading/EmptyCart';
 import LoadCart from './../../Loading/LoadCart';
@@ -14,7 +14,6 @@ import ReactTooltip from 'react-tooltip';
 
 const CartItem = ({account}) => {
     const dispatch = useDispatch();
-    // const account = useSelector(getAccount);
 
     const [loadDataCart, setLoadDataCart] = useState(false);
 
@@ -41,7 +40,6 @@ const CartItem = ({account}) => {
 
 
     useEffect(() => {
-        // console.log('account.email', account.email);
         try {
             setLoadDataCart(true);
             async function getCartItems() {
@@ -144,7 +142,6 @@ const CartItem = ({account}) => {
             setRemoveCart(true);
             async function removeCartItems() {
                 const newCartItems = await CartItemService.getRemoveCartItems(account.email, items);
-                // setListCartItems(newCartItems.data);
                 toast.warning(`Đã xóa ${choiceItems.length} sản phẩm ra khỏi giỏ hàng`);
                 setChoiceItems([]);
                 setLoadDataCart(false);
@@ -378,7 +375,6 @@ const CartItem = ({account}) => {
                                                 }}
                                                 type="text"
                                                 value={cartItem.quantity}
-                                                // disabled={idCartItem === cartItem.id ? loadQuantity : null}
                                                 disabled
                                             />
                                             <div
@@ -461,7 +457,6 @@ const CartItem = ({account}) => {
                             <div className="col-5 text-end">
                                 <div
                                     style={{
-                                        // marginLeft: '50vw',
                                         lineHeight: '100px',
                                     }}
                                 >
@@ -481,7 +476,6 @@ const CartItem = ({account}) => {
                     </footer>
                 </div>
             )}
-            {/* <ToastContainer autoClose={1000} /> */}
             <StyledEngineProvider injectFirst>
                 <Checkout items={choiceItems} />
             </StyledEngineProvider>

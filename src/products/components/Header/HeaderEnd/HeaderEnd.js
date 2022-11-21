@@ -24,11 +24,6 @@ const HeaderEnd = () => {
                         Liên hệ & Hợp tác cùng chúng tôi
                     </Link>
                 </li>
-                {/* <li className="left">
-                    <a className="contact" href="#">
-                        Hợp tác cùng chúng tôi
-                    </a>
-                </li> */}
             </ul>
             <div className="charity-wrappper">
                 <div className="depth-bg-wrapper">

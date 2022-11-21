@@ -39,26 +39,6 @@ function ModalDetail(props) {
                                 <h5 className="col-sm-6">Tên đầy đủ:</h5>
                                 <p className="col-sm-6">{accountDetail.fullName}</p>
                             </div>
-                            {/* <div className="row">
-                                <h5 className="col-sm-6">Ngày Tạo:</h5>
-                                <p className="col-sm-6">
-                                    {Moment(accountDetail.createdAt).format('DD-MM-yyyy hh:mm:ss')}
-                                </p>
-                            </div>
-                            <div className="row">
-                                <h5 className="col-sm-6">Người tạo:</h5>
-                                <p className="col-sm-6">{accountDetail.createdBy}</p>
-                            </div>
-                            <div className="row">
-                                <h5 className="col-sm-6">Ngày Sửa Đổi Gần Nhất:</h5>
-                                <p className="col-sm-6">
-                                    {Moment(accountDetail.updateAt).format('DD-MM-yyyy hh:mm:ss')}
-                                </p>
-                            </div>
-                            <div className="row">
-                                <h5 className="col-sm-6">Người Sửa Đổi:</h5>
-                                <p className="col-sm-6">{accountDetail.updateBy}</p>
-                            </div> */}
                             <div className="row">
                                 <h5 className="col-sm-6">Tên đăng nhập:</h5>
                                 <p className="col-sm-6">{accountDetail.username}</p>
@@ -75,10 +55,6 @@ function ModalDetail(props) {
                                 <h5 className="col-sm-6">Tình trạng:</h5>
                                 <p className="col-sm-6">{accountDetail.blocked ? 'đã bị khóa' : 'chưa khóa'}</p>
                             </div>
-                            {/* <div className="row">
-                                <h5 className="col-sm-6">Quyền hạn:</h5>
-                                <p className="col-sm-6">{accountDetail.role.code}</p>
-                            </div> */}
                             <div className="row">
                                 <h5 className="col-sm-6">Thành phố / tỉnh:</h5>
                                 <p className="col-sm-6">{accountDetail.locationRegion.provinceName}</p>

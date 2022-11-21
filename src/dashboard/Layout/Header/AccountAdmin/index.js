@@ -44,7 +44,6 @@ function AccountAdmin() {
                     >
                         <div className="mr-3">
                             <div className="icon-circle bg-primary">
-                                {/* <i className="fas fa-file-alt text-white" /> */}
                                 <img src={product.image} alt="" className="imgAlerts" />
                             </div>
                         </div>
@@ -127,7 +126,6 @@ function AccountAdmin() {
     };
     return (
         <ul className="navbar-nav ml-auto">
-            {/* Nav Item - Search Dropdown (Visible Only XS) */}
             <li className="nav-item dropdown no-arrow d-sm-none">
                 <a
                     className="nav-link dropdown-toggle"
@@ -141,7 +139,6 @@ function AccountAdmin() {
                     <i className="fas fa-search fa-fw" />
                 </a>
             </li>
-            {/* Nav Item - Alerts */}
             <li className="nav-item dropdown no-arrow mx-1">
                 <Tippy placement="bottom-end" interactive content={renderThongBao()} hideOnClick={true} trigger="click">
                     <a className="nav-link dropdown-toggle" href="#" id="alertsDropdown">
@@ -150,35 +147,9 @@ function AccountAdmin() {
                     </a>
                 </Tippy>
             </li>
-            {/* Nav Item - Messages */}
-            {/* <li className="nav-item dropdown no-arrow mx-1">
-                <Tippy
-                    placement="bottom-end"
-                    interactive
-                    content={renderTinNhan()}
-                    hideOnClick={true}
-                    trigger="click"
-                >
-                    <a
-                        className="nav-link dropdown-toggle"
-                        href="#"
-                        id="messagesDropdown"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
-                        <i className="fas fa-envelope fa-fw" />
-                        <span className="badge badge-danger badge-counter">7</span>
-                    </a>
-                </Tippy>
-            </li> */}
             <div className="topbar-divider d-none d-sm-block" />
-            {/* Nav Item - User Information */}
             <li className="nav-item dropdown no-arrow">
                 <Tippy
-                    // delay={[0, 700]}
-                    // offset={[15, 8]}
                     placement="bottom-end"
                     interactive
                     content={renderAccuont()}

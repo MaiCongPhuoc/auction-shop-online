@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './../../../../node_modules/bootstrap/dist/js/bootstrap.js';
 import ContentLotType from './ContentNav/ContentLotType';
-import ContentAll from './ContentAll/ContentAll';
 import ContentAuction from './ContentAuction/ContentAuction';
 import ContentTheShop from './ContentTheShop/ContentTheShop';
 import './content.css';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getAccount, getCheckProduct, getType, getAllCartItems, getShowCart } from '../../redux/selector';
-import { getSearchingFilters, getShowInfoProduct, getLoginStatus, getReloadWatchList } from './../../redux/selector';
-import ContentResultFilters from './ContentResultFilters/ContentResultFilters';
+import { getAccount, getType } from '../../redux/selector';
+import { getSearchingFilters, getReloadWatchList } from './../../redux/selector';
 import { setCategories, setLoadData, setProducts, setWatchLists } from './../../redux/actions';
 import ProductService from '../../service/Product/ProductService';
 import CategoriesService from '../../service/Categories/CategoriesService';
@@ -24,8 +21,6 @@ const Content = () => {
     const type = useSelector(getType);
 
     const searchStatus = useSelector(getSearchingFilters);
-
-    const loginStatus = useSelector(getLoginStatus);
 
     const account = useSelector(getAccount);
 

@@ -25,18 +25,15 @@ function BangTaiKhoan() {
     });
     const [reRender, setReRender] = useState(false);
 
-    //modal detail
     const [showDetail, setShowDetail] = useState({
         showdetail: false,
         accountId: 0,
     });
     const handleCloseDetailAccount = () => setShowDetail(false);
 
-    //modal add
     const [showAdd, setShowAdd] = useState(false);
     const hanldeCloseAddAccount = () => setShowAdd(false);
 
-    //modal edit
     const [showEdit, setShowEdit] = useState({
         account: {},
         accountEditId: 0,
@@ -62,7 +59,6 @@ function BangTaiKhoan() {
                     toast.success(`Đã xóa thành công!`);
                 }
                 daleteAcount();
-                // Swal.fire('</br> Đã xóa!', 'Bạn đã xóa người dùng này.', 'Thành công!');
             }
         });
     const lockAccount = (id) =>
@@ -82,7 +78,6 @@ function BangTaiKhoan() {
                     setReRender(!reRender);
                 }
                 daleteAcount();
-                // Swal.fire('</br> Đã khóa!', 'Bạn đã khóa người dùng này.', 'Thành công!');
                 toast.success(`Đã khóa người dùng thành công!`);
             }
         });
@@ -103,7 +98,6 @@ function BangTaiKhoan() {
                     setReRender(!reRender);
                 }
                 daleteAcount();
-                // Swal.fire('</br> Đã mở khóa!', 'Bạn đã mở khóa người dùng này.', 'Thành công!');
                 toast.success(`Đã mở khóa người dùng thành công!`);
             }
         });
@@ -130,7 +124,6 @@ function BangTaiKhoan() {
         }
     }, [showAdd, showEdit, reRender]);
 
-    // data table
     async function getProductsByPagination(currentPage) {
         state.currentPage = currentPage - 1;
         let accountData = await AccountService.getDataTableAccount(
@@ -241,10 +234,9 @@ function BangTaiKhoan() {
         getDataTable();
     };
 
-    console.log('account: ', state.accounts);
     const { accountEditId, showedit } = showEdit;
     const { account, showdetail, accountId } = showDetail;
-    const { loading, accounts, currentPage, recordPerPage, search, errorMessage, totalPages, roles } = state;
+    const { loading, accounts, currentPage, totalPages, roles } = state;
     return (
         <div className="container-fluid">
             <div className="d-flex justify-content-between"></div>
@@ -257,7 +249,6 @@ function BangTaiKhoan() {
                             Danh sách tài khoản
                         </h5>
                         <div className="d-flex align-items-center w-75">
-                            {/* <p>Lọc: </p> */}
                             <select
                                 className="form-select select-bg-ori col-4 mr-6"
                                 id="select"
@@ -307,7 +298,6 @@ function BangTaiKhoan() {
                                     </div>
                                 </div>
                             </div>
-                            {/* Button trigger modal */}
                             <button
                                 type="button"
                                 className="btn btn-outline-success"
@@ -363,32 +353,8 @@ function BangTaiKhoan() {
                                                   <td className="text-center">{account.locationRegion.districtName}</td>
                                                   <td className="text-center">{account.locationRegion.wardName}</td>
                                                   <td className="text-center">
-                                                      {/* <Tippy
-                                                          delay={[0, 0]}
-                                                          // offset={[15, 8]}
-                                                          placement="top"
-                                                          content="Cập nhật"
-                                                      >
-                                                          <button
-                                                              className="btn btn-outline-secondary"
-                                                              data-bs-toggle="modal"
-                                                              data-bs-target="#btnEditAccount"
-                                                              onClick={() =>
-                                                                  setShowEdit({
-                                                                      accountEditId: account.id,
-                                                                      showedit: true,
-                                                                  })
-                                                              }
-                                                          >
-                                                              <i
-                                                                  className="fa-solid fa-pen-to-square"
-                                                                  title="Cập nhật"
-                                                              ></i>
-                                                          </button>
-                                                      </Tippy> */}
                                                       <Tippy
                                                           delay={[0, 0]}
-                                                          // offset={[15, 8]}
                                                           placement="top"
                                                           content="Xóa"
                                                       >
@@ -402,7 +368,6 @@ function BangTaiKhoan() {
                                                       {account.blocked ? (
                                                           <Tippy
                                                               delay={[0, 0]}
-                                                              // offset={[15, 8]}
                                                               placement="top"
                                                               content="Khóa"
                                                           >
@@ -416,7 +381,6 @@ function BangTaiKhoan() {
                                                       ) : (
                                                           <Tippy
                                                               delay={[0, 0]}
-                                                              // offset={[15, 8]}
                                                               placement="top"
                                                               content="Khóa"
                                                           >
@@ -444,50 +408,6 @@ function BangTaiKhoan() {
                             </div>
                             <div style={{ float: 'right' }}>
                                 <div class="clearfix"></div>
-                                {/* <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === 1 ? true : false}
-                                                onClick={showPrevPage}
-                                            >
-                                                <i class="fa-solid fa-backward-fast"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === 1 ? true : false}
-                                                onClick={showFirstPage}
-                                            >
-                                                <i class="fa-solid fa-backward-step"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === totalPages ? true : false}
-                                                onClick={showNextPage}
-                                            >
-                                                <i class="fa-solid fa-forward-step"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a
-                                                type="button"
-                                                class="page-link"
-                                                disabled={currentPage === totalPages ? true : false}
-                                                onClick={showLastPage}
-                                            >
-                                                <i class="fa-solid fa-forward-fast"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav> */}
                                 <nav>
                                     <ul className="pagination">
                                         <li className="page-item">
@@ -555,17 +475,14 @@ function BangTaiKhoan() {
                 </div>
             )}
 
-            {/* ========================= Modal Edit ========================= */}
             <ModalEditAccount
                 showEdit={showedit}
                 accountEditId={accountEditId}
                 onCloseEditAccount={hanldeCloseEditAccount}
             />
 
-            {/*==================== Modal Add ===========================*/}
             <ModalAddAccount showAdd={showAdd} onCloseAddAccount={hanldeCloseAddAccount} />
 
-            {/* ======================= Modal detail ======================= */}
             <ModalDetailAccount
                 showDetail={showdetail}
                 accountId={accountId}

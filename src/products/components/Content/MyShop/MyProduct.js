@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { FormatMoney } from "../../../Hooks/Hooks";
 import { useSelector } from "react-redux";
 import { getOpenSidebar } from "../../../redux/selector";
-import LoadCart from "../../Loading/LoadCart";
 import EmptyOrder from "../../Loading/EmptyOrder";
 import ProductService from "../../../service/Product/ProductService";
 import { toast } from 'react-toastify';
@@ -68,7 +67,6 @@ function MyProduct({ account }) {
                 {moderatedList.length > 0 ?
                     moderatedList.map(product => (
                         <div key={product.id} className="card small-12 medium-6 cell" style={{ transform: 'none' }}
-                        // onClick={() => handleShowInfoProduct(product)}
                         >
                             {
                                 product.action ? (
@@ -79,7 +77,6 @@ function MyProduct({ account }) {
                                         <div className="card__info-container">
                                             <div className="info-container__label">
                                                 <span className="ico-circle c-bid">
-                                                    {/* <i class="fa-solid fa-tag"></i> */}
                                                     <i className="fas fa-gavel"></i>
                                                 </span>
                                                 <span className="label__main"> Đấu giá </span>
@@ -161,7 +158,6 @@ function MyProduct({ account }) {
                 {nonModeratedList.length > 0 ?
                     nonModeratedList.map(product => (
                         <div key={product.id} className="card small-12 medium-6 cell" style={{ transform: 'none' }}
-                        // onClick={() => handleShowInfoProduct(product)}
                         >
                             {
                                 product.action ? (
@@ -172,7 +168,6 @@ function MyProduct({ account }) {
                                         <div className="card__info-container">
                                             <div className="info-container__label">
                                                 <span className="ico-circle c-bid">
-                                                    {/* <i class="fa-solid fa-tag"></i> */}
                                                     <i className="fas fa-gavel"></i>
                                                 </span>
                                                 <span className="label__main"> Đấu giá </span>

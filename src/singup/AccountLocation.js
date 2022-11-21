@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import LocationService from '../products/service/LocationService/LocationService';
-import { Button, Container, Row, Col } from 'react-bootstrap';
 import { getAccount } from '../products/redux/selector';
 
 const AccountLocation = () => {
-    const dispatch = useDispatch();
 
     const [state, setState] = useState({
         accounts: {
@@ -35,8 +33,6 @@ const AccountLocation = () => {
         errorMessage: '',
     });
     const account = useSelector(getAccount);
-
-    const addresses = ['provinceId', 'districtId', 'wardId'];
 
     useEffect(() => {
         try {
@@ -81,107 +77,6 @@ const AccountLocation = () => {
             console.log(error);
         }
     }, [state.province_id, state.district_id]);
-
-    const handleInputValue = (e) => {
-        setState({
-            ...state,
-            accounts: {
-                ...state.accounts,
-                [e.target.name]: e.target.value,
-            },
-        });
-    };
-
-    const handleOnChangeSelect = (e) => {
-        if (e.target.name === 'provinceId') {
-            state.provinces.forEach((province) => {
-                if (province.province_id === e.target.value) {
-                    try {
-                        async function getDistrict() {
-                            let districtRes = await LocationService.getDistricts(e.target.value);
-                            let wardRes = await LocationService.getWards(districtRes.data.results[0].district_id);
-
-                            setState({
-                                ...state,
-                                accounts: {
-                                    ...state.accounts,
-                                    locationRegion: {
-                                        ...state.accounts.locationRegion,
-                                        [e.target.name]: e.target.value,
-                                        provinceName: province.province_name,
-                                        districtId: districtRes.data.results[0].district_id,
-                                        districtName: districtRes.data.results[0].district_name,
-                                        wardId: wardRes.data.results[0].ward_id,
-                                        wardName: wardRes.data.results[0].ward_name,
-                                    },
-                                },
-                                province_id: e.target.value,
-                                district_id: districtRes.data.results[0].district_id,
-                            });
-                        }
-                        getDistrict();
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
-            });
-        } else if (e.target.name === 'districtId') {
-            state.districts.forEach((district) => {
-                if (district.district_id === e.target.value) {
-                    try {
-                        async function getWards() {
-                            let wardRes = await LocationService.getWards(e.target.value);
-
-                            setState({
-                                ...state,
-                                accounts: {
-                                    ...state.accounts,
-                                    locationRegion: {
-                                        ...state.accounts.locationRegion,
-                                        [e.target.name]: e.target.value,
-                                        districtName: district.district_name,
-                                        wardId: wardRes.data.results[0].ward_id,
-                                        wardName: wardRes.data.results[0].ward_name,
-                                    },
-                                },
-                                district_id: e.target.value,
-                            });
-                        }
-                        getWards();
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
-            });
-        } else if (e.target.name === 'wardId') {
-            state.wards.forEach((ward) => {
-                if (ward.ward_id === e.target.value) {
-                    setState({
-                        ...state,
-                        accounts: {
-                            ...state.accounts,
-                            locationRegion: {
-                                ...state.accounts.locationRegion,
-                                [e.target.name]: e.target.value,
-                                wardName: ward.ward_name,
-                            },
-                        },
-                    });
-                }
-            });
-        } else {
-            setState({
-                ...state,
-                accounts: {
-                    ...state.accounts,
-                    locationRegion: {
-                        ...state.accounts.locationRegion,
-                        [e.target.name]: e.target.value,
-                    },
-                },
-            });
-        }
-    };
     return (
         <div>
             <div className="OnBoarder-module__progressionSteps___3uURC">

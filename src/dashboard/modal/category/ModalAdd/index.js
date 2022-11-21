@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import CategoryService from '../../../services/Category';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import '../../modal.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,7 +39,7 @@ function ModalAddCategory(props) {
                     await CategoryService.addCategory(submitFrm)
                         .then((res) => {
                             notify();
-                            handleClose();
+                            handleReset();
                         })
                         .catch((resp) => {
                             toast.warn(resp.response.data.message);
@@ -69,29 +69,14 @@ function ModalAddCategory(props) {
                 .min(3, 'Tên thể loại tối thiểu là 3 kí tự!')
                 .max(20, 'Tên thể loại tối đa là 20 kí tự!')
                 .required('Tên thể loại không được để trống!'),
-
-            // .test(
-            //     'title',
-            //     'Tên đã tồn tại! Vui lòng nhập tên khác!',
-            //     async (value) => (await fetch(`/validate-title/${value}`)).responseText === 'true',
-            // ),
-
-            // isEmail: Yup.boolean(),
-            // email: Yup.string().when('isEmail', {
-            //    is: true,
-            //    then: Yup.string()
-            //    .required('Enter Email ID'),
-            //    otherwise: Yup.string(),
-            // }),
         }),
         onSubmit: (product) => {
             setSubmitFrm(product);
-            // handleReset();
             flag = true;
         },
     });
 
-    const { loading, categorys, errorMessage } = category;
+    const { loading } = category;
 
     return (
         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} size="lg">
@@ -138,7 +123,6 @@ function ModalAddCategory(props) {
                             Thêm
                         </Button>
 
-                        {/* <ToastContainer /> */}
                     </Modal.Footer>
                 </form>
             )}

@@ -32,7 +32,7 @@ function ModalEditProduct(props) {
         categorys: [],
         errorMessage: '',
     });
-    const { loading, categorys, errorMessage } = category;
+    const { categorys } = category;
     const [submitFrm, setSubmitFrm] = useState({
         action: true,
         available: 0,
@@ -66,7 +66,6 @@ function ModalEditProduct(props) {
             setTimeout(() => {
                 setStateImg(false);
             }, 1000 * 2);
-            console.log('listImg: ', listImg);
         }
         uploadAvatar(productEditId);
     };
@@ -77,7 +76,6 @@ function ModalEditProduct(props) {
                 async function getCate() {
                     let category = await CategoryService.getCategory();
                     let apiProduct = await ProductService.ProductById(productEditId);
-                    console.log('product api: ', apiProduct.data);
                     setCategory({ ...categorys, categorys: category.data, loading: false });
                     setProduct({ ...apiProduct.data });
                 }
@@ -160,8 +158,6 @@ function ModalEditProduct(props) {
             product.image = listImg[0];
             product.images = listImg;
             product.category.id = Number(document.querySelector('#category').value);
-            // product.countday = document.querySelector('#countday').value;
-            console.log('product: ', product);
             setSubmitFrm(product);
             handleReset();
             notify();
@@ -174,11 +170,7 @@ function ModalEditProduct(props) {
             <Modal.Header closeButton>
                 <Modal.Title style={{ color: 'black' }}>Cập nhật sản phẩm</Modal.Title>
             </Modal.Header>
-            {/* {loading ? (
-                <span className="spinner-border text-warning"></span>
-            ) : ( */}
             <form multiple="multiple" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
-                {/* <form> */}
                 <Modal.Body>
                     <div className="frmError">
                         <ul>
@@ -370,7 +362,6 @@ function ModalEditProduct(props) {
                                             type="radio"
                                             name="action"
                                             {...(radio && 'checked')}
-                                            // onInput={handleChange}
                                             id="flexRadioDefault2"
                                             value={false}
                                             onClick={() => setRadio(false)}
@@ -462,7 +453,6 @@ function ModalEditProduct(props) {
                     )}
                 </Modal.Footer>
             </form>
-            {/* )} */}
         </Modal>
     );
 }

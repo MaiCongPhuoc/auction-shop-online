@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import GoogleAndFacebook from './GoogleAndFacebook';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import './asset/css/content.css';
 import './asset/css/login.css';
-// import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 import { loginStatus, setAccount } from '../products/redux/actions';
 import { toast } from 'react-toastify';
@@ -19,9 +17,6 @@ let flag = false;
 const ContentLogin = () => {
     const { setAuth } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
-    // const from = location.state?.from?.pathname || '/';
-    // const fromm = location.state?.from?.pathname || '/dashboard';
 
     const dispatch = useDispatch();
 
@@ -44,8 +39,6 @@ const ContentLogin = () => {
                     let username = userLogin.data.username;
                     let token = userLogin.data.token;
                     let roles = userLogin.data.roles;
-                    // console.log('userLogin.data: ', userLogin.data);
-                    // dispatch(loginStatus(true));
                     dispatch(setAccount(account.data));
                     setCookie('JWT', userLogin.data.token, { path: '/' });
 
@@ -89,7 +82,6 @@ const ContentLogin = () => {
         onSubmit: (account) => {
             flag = true;
             setUser(account);
-            // console.log('add count: ', account);
             handleReset();
         },
     });
@@ -106,7 +98,6 @@ const ContentLogin = () => {
                                         <h1>Đăng nhập tài khoản của bạn để trải nghiệm!</h1>
                                     </div>
                                     <br />
-                                    {/* <form onSubmit={loginHandler} readOnly> */}
                                     <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
                                         <div className="frmError">
                                             <ul>

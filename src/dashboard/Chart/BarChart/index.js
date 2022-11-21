@@ -6,7 +6,6 @@ import ChartService from '../../services/ChartService';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function BarChart() {
-    // const month = new Date();
     let buyChart = [];
     let auctionChart = [];
     const [chart, setChart] = useState([]);
@@ -33,7 +32,6 @@ function BarChart() {
             },
             title: {
                 display: true,
-                // text: 'Chart.js Bar Chart',
             },
         },
     };

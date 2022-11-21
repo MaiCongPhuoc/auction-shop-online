@@ -6,31 +6,22 @@ function DanhSachTaiKhoan() {
     return (
         <>
             <div id="wrapper">
-                {/* Sidebar */}
                 <Sidebar />
-                {/* End of Sidebar */}
-                {/* Content Wrapper */}
                 <div id="content-wrapper" className="d-flex flex-column">
-                    {/* Main Content */}
                     <div id="content">
-                        {/* Topbar */}
                         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                            {/* Sidebar Toggle (Topbar) */}
                             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                                 <i className="fa fa-bars" />
                             </button>
-                            {/* <Search /> */}
                             <AccountAdmin />
                         </nav>
                         <BangTaiKhoan />
                     </div>
-                    {/* <Footer /> */}
                 </div>
             </div>
             <a className="scroll-to-top rounded" href="#page-top">
                 <i className="fas fa-angle-up" />
             </a>
-            {/* Logout Modal*/}
             <div
                 className="modal fade"
                 id="logoutModal"

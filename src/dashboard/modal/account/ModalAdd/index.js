@@ -21,7 +21,7 @@ function ModalDetailAccount(props) {
             progress: undefined,
             theme: 'colored',
         });
-    const { account, showAdd, onCloseAddAccount } = props;
+    const { showAdd, onCloseAddAccount } = props;
     const [stateImg, setStateImg] = useState(false);
     const [state, setState] = useState({
         roles: [],
@@ -53,8 +53,7 @@ function ModalDetailAccount(props) {
         if (flag) {
             try {
                 async function postData() {
-                    let createRes = await AccountService.getAddAccount(accountFrm);
-                    console.log('createRes: ', createRes.data);
+                    await AccountService.getAddAccount(accountFrm);
                 }
                 postData();
                 flag = false;
@@ -115,20 +114,8 @@ function ModalDetailAccount(props) {
     };
 
     const handleUpload = async (e) => {
-        // console.log(e.target.files[0]);
-        // async function uploadAvatar() {
-        //     for (let i = 0; i < e.target.files.length; i++) {
-        //         setStateImg(true);
-        //         let uploadResult = await FileService.Upload(e.target.files[0]);
-        //         setImg(uploadResult.data.url);
-        //         console.log(uploadResult.data);
-        //         setStateImg(false);
-        //     }
-        // }
-        // uploadAvatar();
         setStateImg(true);
         let uploadResult = await FileService.Upload(e.target.files[0]);
-        console.log(uploadResult.data);
         setImg(uploadResult.data.url);
         setStateImg(false);
     };
@@ -136,10 +123,6 @@ function ModalDetailAccount(props) {
         document.querySelector('#image').value = '';
         formik.handleReset();
         onCloseAddAccount();
-    };
-
-    const handleSubmit = async () => {
-        await AccountService.getAddAccount(accountFrm);
     };
 
     const formik = useFormik({
@@ -225,7 +208,6 @@ function ModalDetailAccount(props) {
             account.locationRegion.districtName = currentDistrict;
             account.locationRegion.wardId = wardId;
             account.locationRegion.wardName = currentWard;
-            console.log('add count: ', account);
             setAccountFrm(account);
             handleReset();
             notify();
@@ -234,8 +216,6 @@ function ModalDetailAccount(props) {
 
     const { roles, provinces } = state;
     const { districts, wards } = location;
-    // console.log('accountFrm: ', accountFrm);
-    // console.log('location: ', location);
     return (
         <Modal show={showAdd} onHide={onCloseAddAccount} backdrop="static" keyboard={false} size="xl">
             <Modal.Header closeButton>
@@ -381,9 +361,6 @@ function ModalDetailAccount(props) {
                                     value={formik.values.role.id}
                                     onChange={formik.handleChange}
                                 >
-                                    {/* <option value={0} key={0} defaultChecked disabled>
-                                        Chọn
-                                    </option> */}
                                     {roles.map((role) => (
                                         <option value={role.id} key={role.id}>
                                             {role.code}
@@ -414,7 +391,6 @@ function ModalDetailAccount(props) {
                                         <option
                                             value={province.province_id}
                                             key={province.province_id}
-                                            // onClick={() => handleProvince(province.id)}
                                         >
                                             {province.province_name}
                                         </option>

@@ -61,7 +61,6 @@ const ContentRestartPassword = () => {
                 setCheckError(true);
             });
     };
-    // console.log('acoount: ', accountFrm);
 
     const formik = useFormik({
         initialValues: {
@@ -114,7 +113,6 @@ const ContentRestartPassword = () => {
                                 <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
                                     Email:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.email}</p> */}
                                 <input
                                     type="Email"
                                     className="form-control"
@@ -141,7 +139,6 @@ const ContentRestartPassword = () => {
                                 <label htmlFor="password" className="form-label text-dark font-weight-bold ml-2">
                                     Nhập mật khẩu:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.password}</p> */}
                                 <input
                                     type="password"
                                     className="form-control"
@@ -156,7 +153,6 @@ const ContentRestartPassword = () => {
                                 <label htmlFor="repassword" className="form-label text-dark font-weight-bold ml-2">
                                     Nhập lại mật khẩu:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.cpassword}</p> */}
                                 <input
                                     type="password"
                                     className="form-control"
@@ -178,16 +174,6 @@ const ContentRestartPassword = () => {
                     </div>
                 </div>
             </form>
-
-            {/* {stateImg ? (
-                <Button type="submit" className="btn btn-primary">
-                    <span className="spinner-border text-info"></span>
-                </Button>
-            ) : (
-                <Button type="submit" className="btn btn-primary">
-                    Create
-                </Button>
-            )} */}
             <ToastContainer />
         </>
     );

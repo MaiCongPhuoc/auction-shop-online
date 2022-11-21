@@ -10,7 +10,6 @@ const HeaderLogo = () => {
                         AUCTIONS SHOP
                     </div>
                 </div>
-                {/* <p className="paragraph-logo">AUCTIONS SHOP ONLINE</p> */}
             </Link>
         </div>
     );

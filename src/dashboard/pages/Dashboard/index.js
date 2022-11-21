@@ -8,46 +8,32 @@ import OverviewDashboard from './OverviewDashboard';
 import './OverviewDashboard/dashboard.css';
 import { useSelector } from 'react-redux';
 import { getShowModerationProduct } from '../../../products/redux/selector';
-import ChartStart from './ChartStar/Chart';
 
 function Dashboard() {
     const showModerationProduct = useSelector(getShowModerationProduct);
     return (
         <>
             <div id="wrapper">
-                {/* Sidebar */}
                 <Sidebar />
-                {/* End of Sidebar */}
-                {/* Content Wrapper */}
                 <div id="content-wrapper" className="d-flex flex-column">
-                    {/* Main Content */}
                     <div id="content">
-                        {/* Topbar */}
                         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                            {/* Sidebar Toggle (Topbar) */}
                             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                                 <i className="fa fa-bars" />
                             </button>
-                            {/* <Search /> */}
                             <AccountAdmin />
                         </nav>
                         <div className="container-fluid">
                             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 className="h3 mb-0 text-gray-800" style={{ fontWeight: 'bold' }}>
-                                    {/* Dashboard */}
                                 </h1>
                             </div>
-                            {/* Content Row */}
                             <OverviewDashboard />
-                            {/* Content Row */}
                             <div className="row dashboard">
                                 <TurnoverYear />
-                                {/* <TurnoverMonth /> */}
                             </div>
                         </div>
                     </div>
-                    {/* <ChartStart /> */}
-                    {/* <Footer /> */}
                 </div>
             </div>
             <a className="scroll-to-top rounded" href="#page-top">

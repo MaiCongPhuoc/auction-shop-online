@@ -35,7 +35,6 @@ function ModalEditAccount(props) {
     });
 
     useEffect(() => {
-        // if (accountEditId !== 0 && accountEditId !== undefined) {
         try {
             async function getAddAccount() {
                 let role = await AccountService.getRoles();
@@ -52,7 +51,6 @@ function ModalEditAccount(props) {
         } catch (error) {
             console.log(error);
         }
-        // }
     }, [showEdit]);
 
     useEffect(() => {
@@ -189,7 +187,6 @@ function ModalEditAccount(props) {
             locationRegion: yup.object().shape({ address: yup.string().required('Vui lòng thay đổi địa chỉ!') }),
         }),
         onSubmit: (account) => {
-            console.log('abc');
             let provinceId = document.querySelector('#province').value;
             let prov = document.querySelector('#province').options.selectedIndex;
             let currentProvince = document.querySelector('#province').options[prov].text;

@@ -8,7 +8,6 @@ function SidebarComponent() {
     return (
         <li className="nav-item">
             <p className="nav-link collapsed" href="#" {...getToggleProps()}>
-                {/* <i className="fas fa-fw fa-cog" /> */}
                 <FontAwesomeIcon className="fas fa-fw fa-cog" icon={faListDots} />
                 <span>Quản lý sản phẩm</span>
                 <i className="iconSidebar">

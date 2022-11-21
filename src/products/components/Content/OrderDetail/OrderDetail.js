@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FormatMoney } from "../../../Hooks/Hooks";
-import { getAccount } from "../../../redux/selector";
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { toast } from 'react-toastify';
 import { setOrderDetails } from "../../../redux/actions";
@@ -41,7 +40,6 @@ const OrderDetail = ({account}) => {
                         setEmptyOrderDetails(false);
                         return;
                     }
-                    // setLoadOrderDetails(false);
                     setEmptyOrderDetails(true);
 
                 }).catch((err) => {

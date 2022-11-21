@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import './asset/css/content.css';
@@ -103,7 +103,6 @@ const ContenRegister = () => {
                 setStateImg(true);
                 let uploadResult = await FileService.Upload(e.target.files[0]);
                 setImg(uploadResult.data.url);
-                console.log(uploadResult.data);
                 setStateImg(false);
             }
         }
@@ -111,7 +110,6 @@ const ContenRegister = () => {
     };
     const handleReset = () => {
         document.querySelector('#image').value = '';
-        // handleReset();
         formik.handleReset();
     };
 
@@ -192,7 +190,6 @@ const ContenRegister = () => {
             flag = true;
             setAccountFrm(account);
             handleReset();
-            console.log('add count: ', account);
         },
     });
     return (
@@ -221,20 +218,6 @@ const ContenRegister = () => {
                                 {formik.errors.phone && formik.errors.phone && (
                                     <li className="error">{formik.errors.phone}</li>
                                 )}
-
-                                {/* {formik.errors.locationRegionDistrictId && formik.errors.locationRegionDistrictId && (
-                                    <li className="error">{formik.errors.locationRegionDistrictId}</li>
-                                )}
-                                {formik.errors.locationRegionWardId && formik.errors.locationRegionWardId && (
-                                    <li className="error">{formik.errors.locationRegionWardId}</li>
-                                )}
-                                {formik.errors.locationRegionProvinceId && formik.errors.locationRegionProvinceId && (
-                                    <li className="error">{formik.errors.locationRegionProvinceId}</li>
-                                )}
-                                {formik.errors.locationRegionAddress && formik.errors.locationRegion.address && (
-                                    <li className="error">{formik.errors.locationRegionAddress}</li>
-                                )} */}
-
                                 {formik.errors.username && formik.errors.username && (
                                     <li className="error">{formik.errors.username}</li>
                                 )}
@@ -248,7 +231,6 @@ const ContenRegister = () => {
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
                                     Tên đăng nhập:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.username}</p> */}
                                 <input
                                     type="text"
                                     className="form-control"
@@ -263,7 +245,6 @@ const ContenRegister = () => {
                                 <label htmlFor="addTitle" className="form-label text-dark font-weight-bold ml-2">
                                     Tên đầy đủ:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.fullName}</p> */}
                                 <input
                                     type="text"
                                     className="form-control"
@@ -278,7 +259,6 @@ const ContenRegister = () => {
                                 <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
                                     Email:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.email}</p> */}
                                 <input
                                     type="Email"
                                     className="form-control"
@@ -295,7 +275,6 @@ const ContenRegister = () => {
                                 <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
                                     Mật khẩu:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.password}</p> */}
                                 <input
                                     type="password"
                                     className="form-control"
@@ -310,7 +289,6 @@ const ContenRegister = () => {
                                 <label htmlFor="addPrice" className="form-label text-dark font-weight-bold ml-2">
                                     Nhập lại mật khẩu:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.cpassword}</p> */}
                                 <input
                                     type="password"
                                     className="form-control"
@@ -325,7 +303,6 @@ const ContenRegister = () => {
                                 <label htmlFor="addAvailable" className="form-label text-dark font-weight-bold ml-2">
                                     Số điện thoại:
                                 </label>
-                                {/* <p style={{ color: 'red' }}>{formErrors.phone}</p> */}
                                 <input
                                     type="tel"
                                     className="form-control"
@@ -347,8 +324,6 @@ const ContenRegister = () => {
                                     id="province"
                                     name="locationRegion.provinceId"
                                     onInput={handleProvince}
-                                    // value={formik.values.locationRegion.provinceId}
-                                    // onChange={formik.handleChange}
                                 >
                                     {provinces && (
                                         <option value={-1} key={-1} selected disabled>
@@ -370,8 +345,6 @@ const ContenRegister = () => {
                                     className="form-select select select-bg-ori"
                                     id="district"
                                     name="locationRegion.districtId"
-                                    // value={formik.values.locationRegion.districtId}
-                                    // onChange={formik.handleChange}
                                     onInput={handleDistrict}
                                 >
                                     {districts ? (
@@ -396,8 +369,6 @@ const ContenRegister = () => {
                                     className="form-select select select-bg-ori"
                                     id="ward"
                                     name="locationRegion.wardId "
-                                    // value={formik.values.locationRegion.wardId}
-                                    // onChange={formik.handleChange}
                                     onInput={handleWard}
                                 >
                                     {wards ? (
@@ -471,16 +442,6 @@ const ContenRegister = () => {
                     </div>
                 </div>
             </form>
-
-            {/* {stateImg ? (
-                <Button type="submit" className="btn btn-primary">
-                    <span className="spinner-border text-info"></span>
-                </Button>
-            ) : (
-                <Button type="submit" className="btn btn-primary">
-                    Create
-                </Button>
-            )} */}
             <ToastContainer />
         </>
     );

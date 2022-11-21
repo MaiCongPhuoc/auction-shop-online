@@ -14,21 +14,9 @@ import { setShowAddProduct } from '../../../../products/redux/actions';
 let flag = false;
 let listImg = ['https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg'];
 
-function ModalAddProduct(props) {
+function ModalAddProduct() {
     const account = useSelector(getAccount);
     const dispatch = useDispatch();
-    // const notify = () =>
-    //     toast.success('Đã thêm thành công!', {
-    //         position: 'top-right',
-    //         autoClose: 2000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: true,
-    //         progress: undefined,
-    //         theme: 'colored',
-    //     });
-    const { show, handleClose } = props;
     const [category, setCategory] = useState({
         loading: false,
         categorys: [],
@@ -56,7 +44,6 @@ function ModalAddProduct(props) {
         images: [],
     });
 
-    //upload multi image cloudinary
     const handleUpload = (e) => {
         listImg.shift();
         async function uploadAvatar() {
@@ -68,7 +55,6 @@ function ModalAddProduct(props) {
             setTimeout(() => {
                 setStateImg(false);
             }, 1000 * 2);
-            console.log('listImg: ', listImg);
         }
         uploadAvatar();
     };
@@ -86,8 +72,6 @@ function ModalAddProduct(props) {
         }
     }, []);
 
-    //here
-
     useEffect(() => {
         if (flag) {
             try {
@@ -103,7 +87,6 @@ function ModalAddProduct(props) {
             }
         }
     }, [submitFrm]);
-    // Validate from add
     const handleCloseAddProduct = () => {
         dispatch(setShowAddProduct(false));
         document.querySelector('#image').value = '';
@@ -148,9 +131,6 @@ function ModalAddProduct(props) {
                 .required('Vui lòng nhập giá!')
                 .moreThan(99999, 'Sản phẩm có giá nhỏ nhất là: 100.000 đ'),
             estimatePrice: yup.number('Vui lòng nhập số!'),
-            // .min(10000, 'Vui lòng nhập giá ước tính trên 10000 VNĐ!')
-            // .max(999900000, 'Vui lòng nhập giá ước tính dưới 999900000 VNĐ!'),
-            // .required('Vui lòng nhập giá ước tính!'),
             available: radio
                 ? null
                 : yup
@@ -167,7 +147,6 @@ function ModalAddProduct(props) {
                 .moreThan(499999, 'Tiền quỵ nhỏ nhất là 500.000'),
         }),
         onSubmit: (product) => {
-            console.log('product: ', product);
             product.createdBy = account.email;
             if (radio) {
                 product.action = radio;
@@ -188,14 +167,13 @@ function ModalAddProduct(props) {
                 product.images = listImg;
                 flag = true;
                 product.category.id = Number(document.querySelector('#category').value);
-                // product.estimatePrice = document.querySelector('#countday').value;
                 setSubmitFrm(product);
                 handleResetFrom();
             }
         },
     });
 
-    const { loading, categorys, errorMessage } = category;
+    const { loading, categorys } = category;
     const showAddProduct = useSelector(getShowAddProduct);
     return (
         <Modal show={showAddProduct} onHide={handleCloseAddProduct} backdrop="static" keyboard={false} size="xl">
@@ -206,7 +184,6 @@ function ModalAddProduct(props) {
                 <span className="spinner-border text-warning"></span>
             ) : (
                 <form multiple="multiple" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
-                    {/* <form> */}
                     <Modal.Body>
                         <div className="frmError">
                             <ul>
@@ -234,7 +211,6 @@ function ModalAddProduct(props) {
                             </ul>
                         </div>
                         <div className="modal-body">
-                            {/* <div className="row"> */}
                             {radio ? (
                                 <div className="row">
                                     <div className="col-6 d-flex">

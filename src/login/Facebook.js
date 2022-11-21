@@ -11,7 +11,6 @@ export default class Facebook extends Component {
     };
 
     responseFacebook = (response) => {
-        console.log(response);
         if (response.status !== 'unknown') {
             this.setState({
                 isLoggedIn: true,
@@ -21,10 +20,6 @@ export default class Facebook extends Component {
                 picture: response.picture.data.url,
             });
         }
-    };
-
-    componentClicked = () => {
-        console.log('clicked');
     };
 
     render() {

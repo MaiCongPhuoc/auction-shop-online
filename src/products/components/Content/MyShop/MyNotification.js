@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Button, Collapse, Form, FormLabel } from "react-bootstrap";
+import { Form, FormLabel } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { FormatMoney } from "../../../Hooks/Hooks";
-import { getAccount, getOpenSidebar, getReloadOrder } from "../../../redux/selector";
+import { getOpenSidebar } from "../../../redux/selector";
 import EmptyOrder from "../../Loading/EmptyOrder";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ReactTooltip from "react-tooltip";
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
-import { DateRangePicker } from 'rsuite';
 
 function MyNotification({account}) {
-    const dispatch = useDispatch();
     const openSidebar = useSelector(getOpenSidebar);
 
     const [orderDetails, setOrderDetails] = useState([]);
@@ -38,8 +36,6 @@ function MyNotification({account}) {
     const [completedLists, setCompletedLists] = useState([]);
     const [canceledLists, setCanceledLists] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
-
-    const [dateRanger, setDateRanger] = useState([]);
 
     const notifySuccess = (text) =>
         toast.success(`Đã thay đổi trạng thái đơn hàng thành ${text}`, {
@@ -170,16 +166,12 @@ function MyNotification({account}) {
                 notifyWarn(resp.response.data);
             });
         } catch (error) {
-            console.log("Err:", error);
+            console.log("Err: ", error);
         }
     };
 
     const handleChangeTypeList = (item) => {
         setTypeList(item);
-    };
-
-    const handleChangDate = (value) => {
-        setCompletedLists(getCompletedListsBetween(completedLists, value[0], value[1]));
     };
 
     return (
@@ -351,7 +343,6 @@ function MyNotification({account}) {
                                                         value={orderChoice.id === orderDetail.id ? (status.id ?? orderDetail.status.id) : undefined}
                                                         className="me-2 select-status col-3"
                                                         aria-label="Default select example"
-                                                    // defaultValue={orderDetail.status.id}
                                                     >
                                                         <option value={7}>Đang chờ</option>
                                                         <option value={8}>Đang chuẩn bị</option>
@@ -489,7 +480,6 @@ function MyNotification({account}) {
                                         ))}
                                         <div className="col-12 order-item mt-5" style={{ justifyContent: 'flex-end' }}>
                                             <div className="me-2">
-                                                {/* <DateRangePicker showOneCalendar onChange={handleChangDate} /> */}
                                             </div>
                                             <div className="me-2">Tổng tiền:</div>
                                             <div className="fw-bold">{FormatMoney(totalAmount)} ₫</div>

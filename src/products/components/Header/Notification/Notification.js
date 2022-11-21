@@ -63,7 +63,6 @@ function Notification({ countOrder, myOrderDetails }) {
                             </li>
                             <li>
                                 <Link to={"/product/my-shop"} style={{ fontSize: '14px' }}>
-                                    {/* <i style={{ position: 'relative', color: '#1779ba' }} className="fa-solid fa-message"></i> */}
                                     <i style={{ position: 'relative', color: '#1779ba' }} className="fa-solid fa-store"></i>
                                     {myOrderDetails > 0 ? (
                                         <span className='notifi-dot'

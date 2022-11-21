@@ -11,7 +11,7 @@ import AccountService from '../../../../services/AccountService';
 
 let flag = false;
 const ModalAccountResetPassword = (props) => {
-    const { showEditPassword, onCloseEditPasswordAccount, accountEditPasswordId } = props;
+    const { showEditPassword, onCloseEditPasswordAccount } = props;
     const [submitFrm, setSubmitFrm] = useState({
         password: '',
     });

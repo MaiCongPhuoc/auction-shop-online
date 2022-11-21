@@ -43,8 +43,6 @@ function ContentAuctionDetail() {
         } catch (error) { }
     }, [auctionId]);
 
-    console.log("listAuctions", listAuctions === undefined);
-
     const { Product, imageProductAuctions, loading, auction } = AuctionProduct;
 
     let max_visibility = imageProductAuctions.length;

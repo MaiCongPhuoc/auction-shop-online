@@ -4,7 +4,6 @@ function TongQuanThuNhap() {
     return (
         <div className="col-xl-12 col-lg-12">
             <div className="card shadow mb-4">
-                {/* Card Header - Dropdown */}
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between right-chart">
                     <h6 className="m-0 font-weight-bold text-primary">Doanh thu năm</h6>
                     <div className="dropdown no-arrow">
@@ -26,11 +25,7 @@ function TongQuanThuNhap() {
                         </div>
                     </div>
                 </div>
-                {/* Card Body */}
                 <div className="card-body right-chart">
-                    {/* <div className="chart-area">
-                        <canvas id="myAreaChart" />
-                    </div> */}
                     <BarChart />
                 </div>
             </div>

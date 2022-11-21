@@ -1,6 +1,5 @@
 import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-// Css template
 import './asset/css/intro331js.min.css';
 import './asset/css/slick181.min.css';
 import './asset/css/slick181.min.css';

@@ -76,7 +76,6 @@ const Checkout = ({ items }) => {
                         phone: account.phone,
                         email: account.email,
                         locationRegion: {
-                            // id: state.orders.locationRegion.provinceId ?? account.locationRegion.id,
                             provinceId: state.orders.locationRegion.provinceId ?? account.locationRegion.provinceId,
                             provinceName:
                                 state.orders.locationRegion.provinceName ?? account.locationRegion.provinceName,

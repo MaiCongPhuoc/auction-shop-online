@@ -11,7 +11,6 @@ const Posts = ({ products }) => {
     const dispatch = useDispatch();
     const [watchLists, setWatchLists] = useState([]);
 
-    // debugger;
     const handleShowInfoProduct = (product) => {
         dispatch(setShowInfoProduct(true));
         dispatch(setProduct(product));
@@ -85,10 +84,6 @@ const Posts = ({ products }) => {
                                                     <b>Giá khởi điểm:</b>
                                                     <div className="stat__price">{FormatMoney(product.price)} ₫</div>
                                                 </div>
-                                                {/* <div className="stats-group__stat">
-                                                    <b>Giá hiện tại:</b>
-                                                    <div className="stat__price">4,600</div>
-                                                </div> */}
                                             </div>
                                             <div className="card__tertiary-container">
                                                 <span className="tertiary-container__optional-group" />

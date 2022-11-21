@@ -1,12 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ProductService from './../../../../service/Product/ProductService';
 import { Carousel, FormatMoney } from '../../../../Hooks/Hooks';
 import BuyComponent from './BuyComponent';
 import ReviewProductShop from '../Review/ReviewProductShop';
 import LoadCart from './../../../Loading/LoadCart';
-import NotFound from './../../../Loading/NotFound';
 import { useSelector } from 'react-redux';
 import { getAccount } from '../../../../redux/selector';
 
@@ -93,12 +91,6 @@ function TheShopDetail() {
                                         <div className="lot-tab-item" tab="lot-overview">
                                             Tổng quan
                                         </div>
-                                        {/* <div className="lot-tab-item" tab="lot-rules">
-                                            Điều kiện bán hàng
-                                        </div>
-                                        <div className="lot-tab-item" tab="lot-shipping">
-                                            Giao hàng &amp; Đổi trả
-                                        </div> */}
                                     </div>
                                     <div className="ms-5 lot-content">
                                         <div className="item-lot-overview active">
@@ -125,10 +117,7 @@ function TheShopDetail() {
                         </div>
 
                         <BuyComponent product={product} />
-                        {/* Them component BUY */}
                     </div>
-
-                    {/* more */}
                     <div id="related-lots" style={{ clear: 'both' }}>
                         {productsByCategory.length === 0 ? null : (
                             <div>

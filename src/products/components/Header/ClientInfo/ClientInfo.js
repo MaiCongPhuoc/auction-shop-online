@@ -1,31 +1,26 @@
 import './ClientInfo.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAccount } from '../../../../products/redux/selector';
-import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useState } from 'react';
 import ModalDetail from './ModalClientInfo/ModalClientInfo';
 import { loginStatus, setAccount, setWatchLists } from '../../../../products/redux/actions';
 import ModalClientResetPassword from './ModalClientInfo/ModalClientResetPassword';
 import ModalEditClient from './ModalClientInfo/ModalEditClient';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMonero } from '@fortawesome/free-brands-svg-icons';
 import { faMoneyBill1 } from '@fortawesome/free-regular-svg-icons';
 import ModalClientDeposit from './ModalClientInfo/ModalClientDeposit';
 
 function ClientInfo() {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
-    const [cookies, setCookie] = useCookies(['JWT']);
 
     const navigate = useNavigate();
     const logout = () => {
         localStorage.removeItem('loginUser');
     };
-    // modal edit
     const hanldeCloseEditAccount = () => setShowEdit(false);
     const [showEdit, setShowEdit] = useState({
         account: {},
@@ -34,7 +29,6 @@ function ClientInfo() {
     });
     const { accountEditId, showedit } = showEdit;
 
-    //modal edit pass
     const hanldeCloseEditPasswordAccount = () => setShowEditPassword(false);
     const [showEditPassword, setShowEditPassword] = useState({
         account: {},
@@ -42,14 +36,12 @@ function ClientInfo() {
         showeditpassword: false,
     });
     const { accountEditPasswordId, showeditpassword } = showEditPassword;
-    //modal deposit
     const hanldeCloseDeposit = () => setShowDeposit(false);
     const [showDeposit, setShowDeposit] = useState({
         accountDepositId: 0,
         showeDeposit: false,
     });
     const { accountDepositId, showeDeposit } = showDeposit;
-    // modal detail
     const [showDetail, setShowDetail] = useState({
         showdetail: false,
         accountId: 0,

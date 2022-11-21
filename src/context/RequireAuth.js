@@ -19,13 +19,11 @@ const RequireAuth = ({ allowedRoles }) => {
     const token = getCookie('JWT');
     let decoded = jwt_decode(token);
     const account = useSelector(getAccount);
-    console.log('account: ', account);
     if (Object.keys(account).length === 0 && token) {
         async function getAccoun() {
             await axios
                 .get(`${'https://api.auctionshop.tk/api/accounts/getAccountEmail'}/${decoded.sub}`)
                 .then((account) => {
-                    // toast.success('Kiểm tra email thành công!');
                     dispatch(loginStatus(true));
                     dispatch(setAccount(account.data));
                 })

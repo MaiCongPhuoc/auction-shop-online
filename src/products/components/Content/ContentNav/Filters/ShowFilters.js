@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Col, Row, Input, Typography, Radio, Select, Tag } from 'antd';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getAllCategories, searchTextSelector, productsRemainingCategorySelector, getTypeFiltersChange, productsRemainingSortSelector, getSortFiltersChange } from './../../../../redux/selector';
+import { getAllCategories, searchTextSelector, getTypeFiltersChange, productsRemainingSortSelector, getSortFiltersChange } from './../../../../redux/selector';
 import { setResultsFilterChange, searchFilterChange, typeFiltersChange, setSearchingFilters, categoryFiltersChange, sortFiltersChange } from './../../../../redux/actions';
 
 const { Search } = Input;
@@ -76,17 +76,6 @@ const ShowFilters = () => {
                         <Radio value='Cửa hàng'>Cửa hàng</Radio>
                     </Radio.Group>
                 </Col>
-                {/* <Col sm={24}>
-                    <Typography.Paragraph
-                        style={{ fontWeight: 'bold', marginBottom: 3, marginTop: 10 }}
-                    >
-                        Lọc theo giá
-                    </Typography.Paragraph>
-                    <Radio.Group onChange={handleSortByPrice}>
-                        <Radio value='asc'>Tăng dần</Radio>
-                        <Radio value='desc'>Giảm dần</Radio>
-                    </Radio.Group>
-                </Col> */}
                 <Col sm={24}>
                     <Typography.Paragraph
                         style={{ fontWeight: 'bold', marginBottom: 3, marginTop: 10 }}

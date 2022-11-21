@@ -3,13 +3,11 @@ import { useSelector } from "react-redux";
 import { getAccount, getReloadOrder } from "../../../redux/selector";
 import Header from '../../Header/Header';
 import SideBar from "./SideBar.tsx";
-import ProductService from './../../../service/Product/ProductService';
 import { toast, ToastContainer } from "react-toastify";
 import MyProduct from "./MyProduct";
 import OrdersDetailService from './../../../service/OrdersDetail/OrderDetail';
 import { getMenu } from './../../../redux/selector';
 import MyNotification from "./MyNotification";
-import LoadCart from "../../Loading/LoadCart";
 
 function ShowMyShop() {
     const account = useSelector(getAccount);

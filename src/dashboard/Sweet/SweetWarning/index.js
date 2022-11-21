@@ -15,9 +15,6 @@ function AlertWarning(props) {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!',
-            // onOpen: () => {
-            //     console.log('chi day');
-            // },
         }).then((result) => {
             async function deleteProduct(id) {
                 await ProductService.DeleteProduct(id);
@@ -26,7 +23,6 @@ function AlertWarning(props) {
             deleteProduct(id);
 
             if (result.value) {
-                console.log('result.value');
                 Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
             }
         });

@@ -1,7 +1,6 @@
 import './AdminInfo.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { getAccount } from '../../../../products/redux/selector';
 import { ToastContainer } from 'react-toastify';
@@ -15,7 +14,6 @@ import ModalEditAccount from './modalAccountInfo/ModalEditAccount';
 function AdminInfo() {
     const dispatch = useDispatch();
     const account = useSelector(getAccount);
-    const [cookies, setCookie] = useCookies(['JWT']);
 
     const navigate = useNavigate();
     const logout = () => {
