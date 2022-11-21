@@ -22,7 +22,7 @@ class ProductsComponent extends React.Component {
     getProductsByPagination(currentPage) {
         currentPage = currentPage - 1;
         axios
-            .get('http://localhost:8080/api/products/p?page=' + currentPage + '&size=' + this.state.recordPerPage)
+            .get('https://api.auctionshop.tk/api/products/p?page=' + currentPage + '&size=' + this.state.recordPerPage)
             .then((response) => response.data)
             .then((data) => {
                 this.setState({
@@ -88,7 +88,7 @@ class ProductsComponent extends React.Component {
         currentPage = currentPage - 1;
         axios
             .get(
-                'http://localhost:8080/api/products/p/' +
+                'https://api.auctionshop.tk/api/products/p/' +
                     this.state.search +
                     '?page=' +
                     currentPage +

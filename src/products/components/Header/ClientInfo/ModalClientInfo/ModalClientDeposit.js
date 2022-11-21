@@ -20,7 +20,7 @@ const ModalClientDeposit = (props) => {
         if (flag) {
             try {
                 axios
-                    .post('http://localhost:8080/api/accounts/deposit', submitFrm)
+                    .post('https://api.auctionshop.tk/api/accounts/deposit', submitFrm)
                     .then(() => {
                         toast.success('Bạn đã nạp tiền thành công!');
                         handleReset();

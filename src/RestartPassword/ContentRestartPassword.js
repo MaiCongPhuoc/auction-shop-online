@@ -47,7 +47,7 @@ const ContentRestartPassword = () => {
     const handleCheckEmail = () => {
         let email = document.querySelector('#email').value;
         axios
-            .get('http://localhost:8080/api/accounts/getAccountEmail/' + email)
+            .get('https://api.auctionshop.tk/api/accounts/getAccountEmail/' + email)
             .then((account) => {
                 toast.success('Kiểm tra email thành công!');
                 document.querySelector('#email').disabled = true;
